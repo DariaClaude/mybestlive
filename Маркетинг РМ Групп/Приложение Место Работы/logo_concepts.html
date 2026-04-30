@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Место работы — Концепции логотипа</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Rubik:wght@400;700;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F2F2F2;
+      padding: 48px 40px;
+      color: #1C1C2E;
+    }
+    h1 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 28px;
+      font-weight: 900;
+      color: #1C1C2E;
+      margin-bottom: 48px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+    .card-name {
+      font-size: 20px;
+      font-weight: 900;
+      color: #1C1C2E;
+      margin-top: 4px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.6;
+      margin-top: 2px;
+    }
+
+    .logo-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Bg variants */
+    .bg-white { background: #fff; border: 1.5px solid #eee; }
+    .bg-lime   { background: #C5DF3A; }
+    .bg-dark   { background: #1C1C2E; }
+
+    .logo-bg {
+      border-radius: 14px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-bg.small {
+      padding: 16px 20px;
+    }
+    .logo-row {
+      display: flex;
+      gap: 12px;
+    }
+    .logo-row .logo-bg {
+      flex: 1;
+    }
+
+    /* ── CONCEPT 1: Пин геолокации ── */
+    .pin-icon {
+      width: 44px;
+      height: 52px;
+      flex-shrink: 0;
+    }
+    .logo-text-1 { line-height: 1.15; }
+    .logo-text-1 .top { font-size: 19px; font-weight: 900; font-family: 'Inter', sans-serif; }
+    .logo-text-1 .bot { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; opacity: 0.55; text-transform: uppercase; }
+
+    /* ── CONCEPT 2: Монограмма МР ── */
+    .monogram {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+
+    /* ── CONCEPT 3: Wordmark ── */
+    .wordmark { line-height: 1; }
+    .wordmark .mesto { font-size: 26px; font-weight: 900; }
+    .wordmark .raboty { font-size: 26px; font-weight: 400; }
+
+    /* ── CONCEPT 4: Пин + человек ── */
+    .pin-person { width: 44px; height: 52px; flex-shrink: 0; }
+
+    /* ── CONCEPT 5: Квадратная иконка ── */
+    .square-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ── CONCEPT 6: Стрела + М ── */
+    .arrow-m { width: 52px; height: 48px; flex-shrink: 0; }
+
+  </style>
+</head>
+<body>
+
+  <h1>Место работы</h1>
+  <div class="subtitle">Концепции логотипа — 6 направлений</div>
+
+  <div class="grid">
+
+    <!-- ═══ CONCEPT 1: Пин геолокации ═══ -->
+    <div class="card">
+      <div>
+        <div class="card-label">Концепция 01</div>
+        <div class="card-name">Пин места</div>
+        <div class="card-desc">Маркер геолокации с буквой М внутри. Прямая ассоциация с «местом». Работает как иконка приложения.</div>
+      </div>
+      <div class="logo-showcase">
+        <div class="logo-bg bg-white">
+          <svg class="pin-icon" viewBox="0 0 44 52" fill="none">
+            <path d="M22 0C12.06 0 4 8.06 4 18C4 30 22 52 22 52C22 52 40 30 40 18C40 8.06 31.94 0 22 0Z" fill="#FF5B1F"/>
+            <text x="22" y="23" text-anchor="middle" font-family="Inter" font-weight="900" font-size="16" fill="white">М</text>
+          </svg>
+          <div class="logo-text-1">
+            <div class="top" style="color:#1C1C2E;">Место работы</div>
+            <div class="bot" style="color:#1C1C2E;">Найдём работу рядом</div>
+          </div>
+        </div>
+        <div class="logo-row">
+          <div class="logo-bg bg-dark small">
+            <svg class="pin-icon" viewBox="0 0 44 52" fill="none" style="width:32px;height:38px">
+              <path d="M22 0C12.06 0 4 8.06 4 18C4 30 22 52 22 52C22 52 40 30 40 18C40 8.06 31.94 0 22 0Z" fill="#FF5B1F"/>
+              <text x="22" y="23" text-anchor="middle" font-family="Inter" font-weight="900" font-size="16" fill="white">М</text>
+            </svg>
+            <div class="logo-text-1">
+              <div class="top" style="color:#fff;font-size:15px;">Место работы</div>
+            </div>
+          </div>
+          <div class="logo-bg bg-lime small">
+            <svg class="pin-icon" viewBox="0 0 44 52" fill="none" style="width:32px;height:38px">
+              <path d="M22 0C12.06 0 4 8.06 4 18C4 30 22 52 22 52C22 52 40 30 40 18C40 8.06 31.94 0 22 0Z" fill="#1C1C2E"/>
+              <text x="22" y="23" text-anchor="middle" font-family="Inter" font-weight="900" font-size="16" fill="#C5DF3A">М</text>
+            </svg>
+            <div class="logo-text-1">
+              <div class="top" style="color:#1C1C2E;font-size:15px;">Место работы</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONCEPT 2: Монограмма МР ═══ -->
+    <div class="card">
+      <div>
+        <div class="card-label">Концепция 02</div>
+        <div class="card-name">Монограмма МР</div>
+        <div class="card-desc">Буквы М и Р объединены в единый знак. Лаконично, запоминаемо, работает на маленьких размерах.</div>
+      </div>
+      <div class="logo-showcase">
+        <div class="logo-bg bg-white">
+          <svg class="monogram" viewBox="0 0 48 48" fill="none">
+            <rect width="48" height="48" rx="12" fill="#FF5B1F"/>
+            <text x="8" y="34" font-family="Inter" font-weight="900" font-size="28" fill="white">М</text>
+            <text x="26" y="34" font-family="Inter" font-weight="400" font-size="22" fill="white" opacity="0.7">Р</text>
+          </svg>
+          <div class="logo-text-1">
+            <div class="top" style="color:#1C1C2E;">Место работы</div>
+            <div class="bot" style="color:#1C1C2E;">Найдём работу рядом</div>
+          </div>
+        </div>
+        <div class="logo-row">
+          <div class="logo-bg bg-dark small">
+            <svg viewBox="0 0 48 48" fill="none" style="width:36px;height:36px;flex-shrink:0">
+              <rect width="48" height="48" rx="12" fill="#FF5B1F"/>
+              <text x="8" y="34" font-family="Inter" font-weight="900" font-size="28" fill="white">М</text>
+              <text x="26" y="34" font-family="Inter" font-weight="400" font-size="22" fill="white" opacity="0.7">Р</text>
+            </svg>
+            <div class="top" style="color:#fff;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+          <div class="logo-bg bg-lime small">
+            <svg viewBox="0 0 48 48" fill="none" style="width:36px;height:36px;flex-shrink:0">
+              <rect width="48" height="48" rx="12" fill="#1C1C2E"/>
+              <text x="8" y="34" font-family="Inter" font-weight="900" font-size="28" fill="#C5DF3A">М</text>
+              <text x="26" y="34" font-family="Inter" font-weight="400" font-size="22" fill="#1C1C2E" opacity="0.9">Р</text>
+            </svg>
+            <div class="top" style="color:#1C1C2E;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONCEPT 3: Wordmark ═══ -->
+    <div class="card">
+      <div>
+        <div class="card-label">Концепция 03</div>
+        <div class="card-name">Wordmark</div>
+        <div class="card-desc">Только текст — «Место» жирно, «работы» легко. Чисто, современно. Отлично работает в digital.</div>
+      </div>
+      <div class="logo-showcase">
+        <div class="logo-bg bg-white" style="flex-direction:column;align-items:flex-start;gap:2px;">
+          <div style="display:flex;align-items:baseline;gap:0">
+            <span style="font-size:30px;font-weight:900;color:#1C1C2E;font-family:'Inter',sans-serif;">Место</span>
+            <span style="font-size:30px;font-weight:400;color:#FF5B1F;font-family:'Inter',sans-serif;">&nbsp;работы</span>
+          </div>
+          <div style="width:100%;height:3px;background:#FF5B1F;border-radius:2px;margin-top:2px;"></div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;color:#999;text-transform:uppercase;margin-top:4px;">Найдём работу рядом</div>
+        </div>
+        <div class="logo-row">
+          <div class="logo-bg bg-dark small" style="flex-direction:column;align-items:flex-start;gap:2px;">
+            <div style="display:flex;align-items:baseline;">
+              <span style="font-size:22px;font-weight:900;color:#fff;font-family:'Inter',sans-serif;">Место</span>
+              <span style="font-size:22px;font-weight:400;color:#FF5B1F;font-family:'Inter',sans-serif;">&nbsp;работы</span>
+            </div>
+          </div>
+          <div class="logo-bg bg-lime small" style="flex-direction:column;align-items:flex-start;gap:2px;">
+            <div style="display:flex;align-items:baseline;">
+              <span style="font-size:22px;font-weight:900;color:#1C1C2E;font-family:'Inter',sans-serif;">Место</span>
+              <span style="font-size:22px;font-weight:400;color:#1C1C2E;font-family:'Inter',sans-serif;opacity:0.5">&nbsp;работы</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONCEPT 4: Пин + человек ═══ -->
+    <div class="card">
+      <div>
+        <div class="card-label">Концепция 04</div>
+        <div class="card-name">Человек в месте</div>
+        <div class="card-desc">Пин геолокации с силуэтом человека внутри. «Ты — на своём месте». Тепло, человечно.</div>
+      </div>
+      <div class="logo-showcase">
+        <div class="logo-bg bg-white">
+          <svg viewBox="0 0 44 52" fill="none" style="width:44px;height:52px;flex-shrink:0">
+            <path d="M22 0C12.06 0 4 8.06 4 18C4 30 22 52 22 52C22 52 40 30 40 18C40 8.06 31.94 0 22 0Z" fill="#1C1C2E"/>
+            <!-- person silhouette -->
+            <circle cx="22" cy="13" r="5" fill="#C5DF3A"/>
+            <path d="M13 28C13 23 17 20 22 20C27 20 31 23 31 28" fill="#C5DF3A"/>
+          </svg>
+          <div class="logo-text-1">
+            <div class="top" style="color:#1C1C2E;">Место работы</div>
+            <div class="bot" style="color:#1C1C2E;">Найдём работу рядом</div>
+          </div>
+        </div>
+        <div class="logo-row">
+          <div class="logo-bg bg-dark small">
+            <svg viewBox="0 0 44 52" fill="none" style="width:32px;height:38px;flex-shrink:0">
+              <path d="M22 0C12.06 0 4 8.06 4 18C4 30 22 52 22 52C22 52 40 30 40 18C40 8.06 31.94 0 22 0Z" fill="#FF5B1F"/>
+              <circle cx="22" cy="13" r="5" fill="white"/>
+              <path d="M13 28C13 23 17 20 22 20C27 20 31 23 31 28" fill="white"/>
+            </svg>
+            <div class="top" style="color:#fff;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+          <div class="logo-bg bg-lime small">
+            <svg viewBox="0 0 44 52" fill="none" style="width:32px;height:38px;flex-shrink:0">
+              <path d="M22 0C12.06 0 4 8.06 4 18C4 30 22 52 22 52C22 52 40 30 40 18C40 8.06 31.94 0 22 0Z" fill="#1C1C2E"/>
+              <circle cx="22" cy="13" r="5" fill="#C5DF3A"/>
+              <path d="M13 28C13 23 17 20 22 20C27 20 31 23 31 28" fill="#C5DF3A"/>
+            </svg>
+            <div class="top" style="color:#1C1C2E;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONCEPT 5: Буква М геометричная ═══ -->
+    <div class="card">
+      <div>
+        <div class="card-label">Концепция 05</div>
+        <div class="card-name">Геометричная М</div>
+        <div class="card-desc">Строгая буква М в квадрате. Технологично, масштабируемо. Хорошо работает как иконка приложения.</div>
+      </div>
+      <div class="logo-showcase">
+        <div class="logo-bg bg-white">
+          <svg viewBox="0 0 48 48" fill="none" style="width:48px;height:48px;flex-shrink:0">
+            <rect width="48" height="48" rx="14" fill="#FF5B1F"/>
+            <path d="M10 36V14L24 28L38 14V36" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <div class="logo-text-1">
+            <div class="top" style="color:#1C1C2E;">Место работы</div>
+            <div class="bot" style="color:#1C1C2E;">Найдём работу рядом</div>
+          </div>
+        </div>
+        <div class="logo-row">
+          <div class="logo-bg bg-dark small">
+            <svg viewBox="0 0 48 48" fill="none" style="width:36px;height:36px;flex-shrink:0">
+              <rect width="48" height="48" rx="14" fill="#FF5B1F"/>
+              <path d="M10 36V14L24 28L38 14V36" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="top" style="color:#fff;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+          <div class="logo-bg bg-lime small">
+            <svg viewBox="0 0 48 48" fill="none" style="width:36px;height:36px;flex-shrink:0">
+              <rect width="48" height="48" rx="14" fill="#1C1C2E"/>
+              <path d="M10 36V14L24 28L38 14V36" stroke="#C5DF3A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="top" style="color:#1C1C2E;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONCEPT 6: Стрела вверх ═══ -->
+    <div class="card">
+      <div>
+        <div class="card-label">Концепция 06</div>
+        <div class="card-name">Рост + место</div>
+        <div class="card-desc">Пин с интегрированной стрелкой вверх. «Найди место — расти». Про карьеру и движение вперёд.</div>
+      </div>
+      <div class="logo-showcase">
+        <div class="logo-bg bg-white">
+          <svg viewBox="0 0 48 52" fill="none" style="width:48px;height:52px;flex-shrink:0">
+            <!-- pin shape -->
+            <path d="M24 0C13.5 0 5 8.5 5 19C5 31 24 52 24 52C24 52 43 31 43 19C43 8.5 34.5 0 24 0Z" fill="#FF5B1F"/>
+            <!-- arrow up -->
+            <path d="M24 27V11" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M17 18L24 11L31 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <div class="logo-text-1">
+            <div class="top" style="color:#1C1C2E;">Место работы</div>
+            <div class="bot" style="color:#1C1C2E;">Найдём работу рядом</div>
+          </div>
+        </div>
+        <div class="logo-row">
+          <div class="logo-bg bg-dark small">
+            <svg viewBox="0 0 48 52" fill="none" style="width:32px;height:36px;flex-shrink:0">
+              <path d="M24 0C13.5 0 5 8.5 5 19C5 31 24 52 24 52C24 52 43 31 43 19C43 8.5 34.5 0 24 0Z" fill="#FF5B1F"/>
+              <path d="M24 27V11" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M17 18L24 11L31 18" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="top" style="color:#fff;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+          <div class="logo-bg bg-lime small">
+            <svg viewBox="0 0 48 52" fill="none" style="width:32px;height:36px;flex-shrink:0">
+              <path d="M24 0C13.5 0 5 8.5 5 19C5 31 24 52 24 52C24 52 43 31 43 19C43 8.5 34.5 0 24 0Z" fill="#1C1C2E"/>
+              <path d="M24 27V11" stroke="#C5DF3A" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M17 18L24 11L31 18" stroke="#C5DF3A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <div class="top" style="color:#1C1C2E;font-size:15px;font-weight:900;">Место работы</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- App icon preview -->
+  <div style="margin-top:48px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#999;margin-bottom:16px;">Как будет выглядеть иконка приложения</div>
+    <div style="display:flex;gap:16px;align-items:flex-end;">
+
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;display:block;border-radius:20px;overflow:hidden;">
+          <rect width="80" height="80" fill="#FF5B1F"/>
+          <path d="M40 8C27.3 8 17 18.3 17 31C17 46 40 72 40 72C40 72 63 46 63 31C63 18.3 52.7 8 40 8Z" fill="white" opacity="0.95"/>
+          <text x="40" y="38" text-anchor="middle" font-family="Inter" font-weight="900" font-size="20" fill="#FF5B1F">М</text>
+        </svg>
+        <div style="font-size:11px;color:#aaa;margin-top:8px;">01 · Пин М</div>
+      </div>
+
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;display:block;border-radius:20px;overflow:hidden;">
+          <rect width="80" height="80" fill="#1C1C2E"/>
+          <rect x="16" y="16" width="48" height="48" rx="12" fill="#FF5B1F"/>
+          <text x="26" y="50" font-family="Inter" font-weight="900" font-size="32" fill="white">М</text>
+          <text x="46" y="50" font-family="Inter" font-weight="400" font-size="26" fill="white" opacity="0.65">Р</text>
+        </svg>
+        <div style="font-size:11px;color:#aaa;margin-top:8px;">02 · МР</div>
+      </div>
+
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;display:block;border-radius:20px;overflow:hidden;">
+          <rect width="80" height="80" fill="#C5DF3A"/>
+          <text x="40" y="52" text-anchor="middle" font-family="Inter" font-weight="900" font-size="42" fill="#1C1C2E">М</text>
+        </svg>
+        <div style="font-size:11px;color:#aaa;margin-top:8px;">05 · М геом.</div>
+      </div>
+
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;display:block;border-radius:20px;overflow:hidden;">
+          <rect width="80" height="80" fill="#FF5B1F"/>
+          <path d="M40 10C28.4 10 19 19.4 19 31C19 45 40 70 40 70C40 70 61 45 61 31C61 19.4 51.6 10 40 10Z" fill="white"/>
+          <path d="M40 42V22" stroke="#FF5B1F" stroke-width="4" stroke-linecap="round"/>
+          <path d="M31 31L40 22L49 31" stroke="#FF5B1F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div style="font-size:11px;color:#aaa;margin-top:8px;">06 · Рост</div>
+      </div>
+
+      <div style="text-align:center;">
+        <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;display:block;border-radius:20px;overflow:hidden;">
+          <rect width="80" height="80" fill="#1C1C2E"/>
+          <path d="M40 10C28.4 10 19 19.4 19 31C19 45 40 70 40 70C40 70 61 45 61 31C61 19.4 51.6 10 40 10Z" fill="#C5DF3A"/>
+          <circle cx="40" cy="27" r="7" fill="#1C1C2E"/>
+          <path d="M28 44C28 37.4 33.4 32 40 32C46.6 32 52 37.4 52 44" fill="#1C1C2E"/>
+        </svg>
+        <div style="font-size:11px;color:#aaa;margin-top:8px;">04 · Человек</div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

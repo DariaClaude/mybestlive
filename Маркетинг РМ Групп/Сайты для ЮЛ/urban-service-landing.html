@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Урбан Сервис — Персонал для бизнеса</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #10B981;
+      --primary-lt: #34D399;
+      --accent-bg:  #D1FAE5;
+      --accent-mid: #6ee7b7;
+      --dark:       #111827;
+      --dark-lt:    #1f2937;
+      --cta:        #FCD34D;
+      --cta-hover:  #f5c326;
+      --white:      #ffffff;
+      --gray-bg:    #f0fdf8;
+      --gray-text:  #4b6b5e;
+      --gray-line:  #bbf7d0;
+      --text:       #111827;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(17, 24, 39, 0.96);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%; height: 64px;
+    }
+    .nav-logo { color: var(--white); font-size: 1.1rem; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
+    .nav-logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.75); font-size: .88rem; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--primary); color: var(--white); border: none; cursor: pointer;
+      padding: 9px 22px; border-radius: 6px; font-size: .88rem; font-weight: 600;
+      text-decoration: none; transition: background .2s;
+    }
+    .nav-cta:hover { background: #0d9668; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(135deg, rgba(240,253,248,.93) 0%, rgba(255,255,255,.88) 55%, rgba(209,250,229,.91) 100%),
+        url('https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      display: flex; align-items: center;
+      padding: 100px 6% 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(16,185,129,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; left: -100px; bottom: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.35);
+      color: #0d9668; font-size: .8rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; line-height: 1.18;
+      color: var(--dark); margin-bottom: 22px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.7; color: #374151;
+      margin-bottom: 40px; max-width: 560px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--primary); color: var(--white); text-decoration: none;
+      padding: 14px 32px; border-radius: 8px; font-size: .95rem; font-weight: 700;
+      transition: background .2s, transform .12s;
+      box-shadow: 0 4px 20px rgba(16,185,129,.3);
+    }
+    .btn-primary:hover { background: #0d9668; }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-outline {
+      background: rgba(255,255,255,.7); color: var(--dark); text-decoration: none;
+      border: 2px solid rgba(17,24,39,.2);
+      padding: 12px 30px; border-radius: 8px; font-size: .95rem; font-weight: 500;
+      transition: border-color .2s, background .2s;
+      backdrop-filter: blur(4px);
+    }
+    .btn-outline:hover { border-color: var(--primary); background: rgba(255,255,255,.9); }
+    .hero-scroll {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(17,24,39,.35); font-size: .75rem;
+    }
+    .hero-scroll-dot {
+      width: 6px; height: 6px; background: var(--primary); border-radius: 50%;
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 80px 6%; }
+    .section-label {
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 10px;
+    }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; color: var(--dark); line-height: 1.25; }
+    .section-sub { font-size: 1rem; color: var(--gray-text); margin-top: 12px; max-width: 560px; line-height: 1.7; }
+    .divider { width: 48px; height: 4px; background: var(--primary); border-radius: 2px; margin: 18px 0 40px; }
+
+    /* ─── ABOUT ─── */
+    .about { background: var(--gray-bg); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: start; margin-top: 40px;
+    }
+    .about-text p { font-size: 1rem; line-height: 1.8; color: #2d4a3e; }
+    .about-perks { display: flex; flex-direction: column; gap: 20px; }
+    .perk {
+      background: var(--white); border-radius: 10px; padding: 22px 24px;
+      border-left: 4px solid var(--primary);
+      box-shadow: 0 2px 12px rgba(16,185,129,.08);
+    }
+    .perk-title { font-size: .95rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .perk-text { font-size: .88rem; color: var(--gray-text); line-height: 1.6; }
+
+    /* ─── SERVICES ─── */
+    .services { background: var(--white); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 40px;
+    }
+    .service-card {
+      background: var(--gray-bg); border-radius: 12px; padding: 28px 24px;
+      border: 1px solid var(--gray-line); transition: box-shadow .2s, transform .2s;
+    }
+    .service-card:hover { box-shadow: 0 8px 32px rgba(16,185,129,.12); transform: translateY(-3px); }
+    .service-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--accent-bg); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px; font-size: 1.4rem;
+    }
+    .service-title { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .service-text { font-size: .85rem; color: var(--gray-text); line-height: 1.6; }
+
+    /* ─── SPECIALTIES ─── */
+    .specialties { background: var(--dark); }
+    .specialties .section-label { color: var(--accent-mid); }
+    .specialties .section-title { color: var(--white); }
+    .specialties .section-sub { color: rgba(255,255,255,.65); }
+    .specialties .divider { background: var(--primary); }
+    .tags-grid {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px;
+    }
+    .tag {
+      background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3);
+      color: rgba(255,255,255,.85); font-size: .83rem; font-weight: 500;
+      padding: 7px 16px; border-radius: 20px;
+      transition: background .2s, border-color .2s;
+    }
+    .tag:hover { background: rgba(16,185,129,.25); border-color: var(--primary); }
+
+    /* ─── STEPS ─── */
+    .steps { background: var(--gray-bg); }
+    .steps .section-label { color: var(--primary); }
+    .steps .section-title { color: var(--dark); }
+    .steps .section-sub { color: var(--gray-text); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; position: relative; margin-top: 40px;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute; top: 28px; left: calc(10% + 14px); right: calc(10% + 14px);
+      height: 2px; background: rgba(16,185,129,.25);
+    }
+    .step { text-align: center; padding: 0 12px; position: relative; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--primary); color: var(--white);
+      font-size: 1.2rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; position: relative; z-index: 1;
+      box-shadow: 0 0 0 6px rgba(16,185,129,.15);
+    }
+    .step-title { font-size: .9rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .step-text { font-size: .8rem; color: var(--gray-text); line-height: 1.6; }
+
+    /* ─── CONTACTS ─── */
+    .contacts { background: var(--accent-bg); }
+    .contacts-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; margin-top: 40px;
+    }
+    .contact-block h3 {
+      font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 20px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--accent-mid);
+    }
+    .contact-row { display: flex; flex-direction: column; gap: 14px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 14px; }
+    .contact-icon {
+      width: 40px; height: 40px; min-width: 40px; border-radius: 8px;
+      background: var(--white); display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; box-shadow: 0 2px 8px rgba(16,185,129,.12);
+    }
+    .contact-info { display: flex; flex-direction: column; }
+    .contact-label { font-size: .75rem; color: var(--gray-text); font-weight: 500; text-transform: uppercase; letter-spacing: .07em; }
+    .contact-value { font-size: .95rem; font-weight: 600; color: var(--dark); margin-top: 2px; }
+    .contact-value a { color: #0d9668; text-decoration: none; }
+    .contact-value a:hover { text-decoration: underline; }
+
+    .requisites-table { width: 100%; border-collapse: collapse; }
+    .requisites-table tr { border-bottom: 1px solid var(--gray-line); }
+    .requisites-table tr:last-child { border-bottom: none; }
+    .requisites-table td { padding: 10px 0; font-size: .88rem; vertical-align: top; }
+    .requisites-table td:first-child { color: var(--gray-text); width: 45%; font-weight: 500; }
+    .requisites-table td:last-child { color: var(--dark); font-weight: 600; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.5);
+      padding: 28px 6%; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; font-size: .82rem;
+    }
+    .footer-logo { color: var(--white); font-weight: 700; font-size: .95rem; }
+    .footer-logo span { color: var(--primary); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+      .steps-grid::before { display: none; }
+      .step { display: flex; align-items: flex-start; gap: 18px; text-align: left; }
+      .step-num { min-width: 56px; margin: 0; }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 0 5%; }
+      .nav-links { display: none; }
+      .about-grid, .contacts-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Урбан<span>Сервис</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">О компании</a></li>
+    <li><a href="#services">Направления</a></li>
+    <li><a href="#specialties">Специальности</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a href="#contacts" class="nav-cta">Связаться</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Аутсорсинг персонала · Москва</div>
+    <h1>Урбан Сервис — <span>Персонал для любых задач</span> вашего бизнеса</h1>
+    <p class="hero-sub">Полный цикл работы с исполнителями: от массового подбора и аутстаффинга до операционного управления командой на объекте. Закрываем любые направления — от склада до HoReCa.</p>
+    <div class="hero-btns">
+      <a href="#contacts" class="btn-primary">Оставить заявку</a>
+      <a href="#services" class="btn-outline">Направления</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Листайте вниз</span>
+    <div class="hero-scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">О компании</div>
+  <div class="section-title">Профессиональное кадровое решение для любой отрасли</div>
+  <div class="divider"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>ООО «Урбан Сервис» — многопрофильная операционная компания, специализирующаяся на предоставлении персонала для бизнеса. Мы охватываем весь спектр задач: складскую логистику, ритейл, HoReCa, клининг, курьерские и сельскохозяйственные направления.</p>
+      <br/>
+      <p>Берём на себя полный цикл: подбор, оформление, управление персоналом и отчётность. Вы получаете готовую команду исполнителей без лишних затрат времени и ресурсов.</p>
+    </div>
+    <div class="about-perks">
+      <div class="perk">
+        <div class="perk-title">Широкий охват</div>
+        <div class="perk-text">11 направлений и более 35 специальностей. Закрываем потребности в персонале любого профиля и сложности.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-title">Скорость и надёжность</div>
+        <div class="perk-text">Закрываем вакансии в сжатые сроки. Работаем строго в рамках законодательства — прозрачное оформление и документация.</div>
+      </div>
+      <div class="perk">
+        <div class="perk-title">Индивидуальный подход</div>
+        <div class="perk-text">Учитываем специфику каждого бизнеса. Комплексные решения по подбору, аутсорсингу и аутстаффингу персонала.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES / DIRECTIONS -->
+<section class="services" id="services">
+  <div class="section-label">Направления</div>
+  <div class="section-title">Работаем во всех ключевых отраслях</div>
+  <div class="divider"></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🏭</div>
+      <div class="service-title">Складская логистика</div>
+      <div class="service-text">Сборщики, комплектовщики, кладовщики, операторы склада. Полное закрытие потребностей логистических комплексов.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛒</div>
+      <div class="service-title">Продуктовый ритейл</div>
+      <div class="service-text">Продавцы, кассиры, работники торгового зала, приёмщики товара для сетевых и независимых магазинов.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⛽</div>
+      <div class="service-title">Топливный ритейл</div>
+      <div class="service-text">Персонал для АЗС и топливных объектов. Операторы, кассиры, подсобные работники.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏗</div>
+      <div class="service-title">Производство</div>
+      <div class="service-text">Операторы конвейерных линий, штабелеристы, упаковщики, фасовщики и подсобные рабочие.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🍽</div>
+      <div class="service-title">HoReCa</div>
+      <div class="service-text">Повара, помощники повара, официанты, кондитеры, посудомойщики для ресторанов и кафе.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚴</div>
+      <div class="service-title">Курьерское направление</div>
+      <div class="service-text">Курьеры, велокурьеры и водители для доставки на последней миле и логистики e-commerce.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌾</div>
+      <div class="service-title">Сельскохозяйственное</div>
+      <div class="service-text">Сезонный и постоянный персонал для сельскохозяйственных объектов и предприятий АПК.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <div class="service-title">Клининг</div>
+      <div class="service-text">Уборщики и клинеры для коммерческих объектов, торговых площадей и производственных помещений.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👥</div>
+      <div class="service-title">Аутстаффинг</div>
+      <div class="service-text">Вывод персонала за штат с полным юридическим оформлением. Снижаем налоговую нагрузку клиента.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎯</div>
+      <div class="service-title">Кадровое агентство</div>
+      <div class="service-text">Подбор и оформление персонала под трудоустройство у клиента. Экономия ресурсов HR-отдела.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <div class="service-title">Массовый подбор</div>
+      <div class="service-text">Оперативное закрытие больших объёмов вакансий. Рекрутинг под открытие новых объектов и сезонные пики.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="specialties" id="specialties">
+  <div class="section-label">Специальности</div>
+  <div class="section-title">Исполнители любого профиля</div>
+  <div class="section-sub">Предоставляем персонал более чем 35 специальностей — закрываем любую потребность вашего объекта</div>
+  <div class="divider"></div>
+  <div class="tags-grid">
+    <span class="tag">Велокурьер</span>
+    <span class="tag">Водитель погрузчика</span>
+    <span class="tag">Грузчик</span>
+    <span class="tag">Кассир</span>
+    <span class="tag">Кладовщик</span>
+    <span class="tag">Комплектовщик</span>
+    <span class="tag">Кондитер</span>
+    <span class="tag">Курьер</span>
+    <span class="tag">Маркировщик</span>
+    <span class="tag">Официант</span>
+    <span class="tag">Оператор конвейерной линии</span>
+    <span class="tag">Оператор штабелера</span>
+    <span class="tag">Повар</span>
+    <span class="tag">Подсобный рабочий</span>
+    <span class="tag">Помощник повара</span>
+    <span class="tag">Посудомойщик</span>
+    <span class="tag">Приёмщик товара</span>
+    <span class="tag">Продавец</span>
+    <span class="tag">Продавец-консультант</span>
+    <span class="tag">Работник торгового зала</span>
+    <span class="tag">Разнорабочий</span>
+    <span class="tag">Сборщик заказов</span>
+    <span class="tag">Сортировщик</span>
+    <span class="tag">Уборщик</span>
+    <span class="tag">Упаковщик</span>
+    <span class="tag">Фасовщик</span>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps" id="steps">
+  <div class="section-label">Этапы сотрудничества</div>
+  <div class="section-title">Сотрудничество с нами — это просто</div>
+  <div class="section-sub">Пять шагов от заявки до работающей команды</div>
+  <div class="divider"></div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Заявка</div>
+        <div class="step-text">Вы оставляете заявку или звоните нам</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Анализ</div>
+        <div class="step-text">Детально изучаем ваши потребности и задачи</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Договор</div>
+        <div class="step-text">Заключаем официальный договор со всеми условиями</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Подбор</div>
+        <div class="step-text">Находим, проверяем и предоставляем исполнителей</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Работа и отчётность</div>
+        <div class="step-text">Исполнители работают, мы ведём всю документацию</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div class="section-label">Контакты</div>
+  <div class="section-title">Свяжитесь с нами</div>
+  <div class="divider"></div>
+  <div class="contacts-grid">
+    <div class="contact-block">
+      <h3>Контактная информация</h3>
+      <div class="contact-row">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-info">
+            <span class="contact-label">Адрес</span>
+            <span class="contact-value">г. Москва, Нагатинская наб., д. 54, цоколь, пом. II, ком. 1, оф. 5</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-info">
+            <span class="contact-label">Телефон</span>
+            <span class="contact-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-info">
+            <span class="contact-label">E-mail</span>
+            <span class="contact-value"><a href="mailto:info@urban-service.ru">info@urban-service.ru</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-block">
+      <h3>Реквизиты</h3>
+      <table class="requisites-table">
+        <tr>
+          <td>Полное наименование</td>
+          <td>ООО «Урбан Сервис»</td>
+        </tr>
+        <tr>
+          <td>ИНН</td>
+          <td>9725041650</td>
+        </tr>
+        <tr>
+          <td>КПП</td>
+          <td>772501001</td>
+        </tr>
+        <tr>
+          <td>Юридический адрес</td>
+          <td>115407, г. Москва, Нагатинская наб., д. 54, цоколь, пом. II, ком. 1, оф. 5</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Урбан<span>Сервис</span></div>
+  <div>© 2025 ООО «Урбан Сервис». Все права защищены.</div>
+  <div>ИНН 9725041650 · КПП 772501001</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="sq-clip">
+      <rect width="200" height="200" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <!-- Фон: тёмный квадрат -->
+  <rect width="200" height="200" rx="20" fill="#241b30"/>
+
+  <!-- Персонаж: акцентный -->
+  <!-- Голова -->
+  <circle cx="100" cy="76" r="30" fill="#c0cf1f"/>
+  <!-- Тело (обрезается по квадрату) -->
+  <path d="M28 210 C28 162 55 132 100 132 C145 132 172 162 172 210"
+        fill="#c0cf1f" clip-path="url(#sq-clip)"/>
+</svg>

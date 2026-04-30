@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Место работы — 10 концепций логотипа</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:   #2563EB;
+      --amber:  #F59E0B;
+      --dark:   #1C1C2E;
+      --gray:   #F4F6FB;
+      --border: #E8EDF5;
+      --mid:    #8A8FA8;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F0F2F7;
+      padding: 56px 44px 100px;
+      color: var(--dark);
+    }
+
+    /* Header */
+    .header { margin-bottom: 52px; }
+    .header-eye { font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--mid); margin-bottom:8px; }
+    .header-title { font-size:34px; font-weight:900; letter-spacing:-.02em; }
+    .header-sub { font-size:15px; color:var(--mid); margin-top:6px; line-height:1.6; }
+
+    /* Grid */
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+
+    /* Card */
+    .card {
+      background:white; border-radius:28px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+
+    /* Logo showcase area */
+    .showcase {
+      display:flex; gap:0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .logo-cell {
+      flex:1; padding:36px 32px;
+      display:flex; align-items:center; justify-content:center;
+      min-height:160px;
+    }
+    .logo-cell.white { background:white; }
+    .logo-cell.dark  { background:var(--dark); flex:0 0 140px; }
+    .logo-cell.blue  { background:var(--blue); flex:0 0 140px; }
+
+    /* Logo inner */
+    .logo-wrap { display:flex; align-items:center; gap:14px; }
+    .logo-wrap.col { flex-direction:column; align-items:flex-start; gap:6px; }
+    .logo-name { font-size:18px; font-weight:800; line-height:1.1; letter-spacing:-.01em; }
+    .logo-sub  { font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; opacity:.4; }
+
+    /* App icon preview */
+    .icon-preview {
+      flex:0 0 80px; padding:20px 16px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:8px; background:var(--gray); border-left:1px solid var(--border);
+    }
+    .icon-label { font-size:8px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--mid); }
+
+    /* Info section */
+    .info { padding:24px 28px; display:flex; flex-direction:column; gap:10px; }
+    .info-top { display:flex; align-items:center; gap:12px; }
+    .num { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
+    .concept-name { font-size:18px; font-weight:800; }
+    .why-label { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--mid); }
+    .why-text { font-size:13px; color:#4A5060; line-height:1.65; }
+    .assoc {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:11px; font-weight:600; color:var(--blue);
+      background:var(--gray); border-radius:8px; padding:5px 12px;
+      width:fit-content;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eye">Место работы · Логотип · Раунд 3</div>
+  <div class="header-title">10 концепций с обоснованием</div>
+  <div class="header-sub">Каждый вариант — отдельная идея: знак + описание почему + что он транслирует аудитории</div>
+</div>
+
+<div class="grid">
+
+  <!-- ══ 01 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <path d="M18 2C10.27 2 4 8.27 4 16C4 26 18 42 18 42C18 42 32 26 32 16C32 8.27 25.73 2 18 2Z" stroke="#2563EB" stroke-width="2" fill="none"/>
+            <circle cx="18" cy="16" r="5" fill="#2563EB"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <svg width="28" height="34" viewBox="0 0 36 44" fill="none">
+          <path d="M18 2C10.27 2 4 8.27 4 16C4 26 18 42 18 42C18 42 32 26 32 16C32 8.27 25.73 2 18 2Z" stroke="white" stroke-width="2" fill="none"/>
+          <circle cx="18" cy="16" r="5" fill="#F59E0B"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#2563EB"/>
+          <path d="M26 6C18.27 6 12 12.27 12 20C12 30 26 46 26 46C26 46 40 30 40 20C40 12.27 33.73 6 26 6Z" stroke="white" stroke-width="2" fill="none"/>
+          <circle cx="26" cy="20" r="5.5" fill="white"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">01</div>
+        <div class="concept-name">Outline пин + заливная точка</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Контур пина — это место. Заливная точка внутри — это ты, уже нашедший своё место. Два слоя смысла в одном знаке. Тонкая линия даёт воздух, точка — вес и фокус.</div>
+      <div class="assoc">📍 «Я здесь. Я нашёл.»</div>
+    </div>
+  </div>
+
+  <!-- ══ 02 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap col">
+          <div style="display:flex;align-items:center;gap:0;line-height:1;letter-spacing:-.02em">
+            <span style="font-size:28px;font-weight:900;color:var(--dark)">мест</span>
+            <span style="position:relative;display:inline-block;width:22px;height:28px;">
+              <svg width="22" height="28" viewBox="0 0 22 28" style="position:absolute;top:0;left:0">
+                <path d="M11 2C6.58 2 3 5.58 3 10C3 16 11 26 11 26C11 26 19 16 19 10C19 5.58 15.42 2 11 2Z" fill="#2563EB"/>
+                <circle cx="11" cy="10" r="3.5" fill="white"/>
+              </svg>
+            </span>
+            <span style="font-size:28px;font-weight:300;color:var(--dark)"> работы</span>
+          </div>
+          <div class="logo-sub" style="padding-left:2px;">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <div style="display:flex;align-items:center;gap:0;line-height:1">
+          <span style="font-size:20px;font-weight:900;color:white">мест</span>
+          <svg width="16" height="20" viewBox="0 0 22 28">
+            <path d="M11 2C6.58 2 3 5.58 3 10C3 16 11 26 11 26C11 26 19 16 19 10C19 5.58 15.42 2 11 2Z" fill="#F59E0B"/>
+            <circle cx="11" cy="10" r="3.5" fill="white"/>
+          </svg>
+          <span style="font-size:20px;font-weight:300;color:white"> работы</span>
+        </div>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#1C1C2E"/>
+          <path d="M26 8C20.48 8 16 12.48 16 18C16 25 26 44 26 44C26 44 36 25 36 18C36 12.48 31.52 8 26 8Z" fill="#2563EB"/>
+          <circle cx="26" cy="18" r="5" fill="white"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">02</div>
+        <div class="concept-name">О как пин внутри слова</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Буква «О» в слове «место» заменена на пин — знак геолокации прячется прямо в названии. Это умный wordplay: название говорит само за себя. Такой логотип запоминается, потому что в нём есть загадка.</div>
+      <div class="assoc">🧩 «Место — это точка на карте»</div>
+    </div>
+  </div>
+
+  <!-- ══ 03 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Two dots connected — employer + employee -->
+            <circle cx="10" cy="22" r="8" fill="#2563EB"/>
+            <circle cx="34" cy="22" r="8" stroke="#2563EB" stroke-width="2" fill="none"/>
+            <line x1="18" y1="22" x2="26" y2="22" stroke="#2563EB" stroke-width="2" stroke-dasharray="3 2"/>
+            <circle cx="10" cy="22" r="3" fill="white"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <circle cx="10" cy="22" r="8" fill="#2563EB"/>
+          <circle cx="34" cy="22" r="8" stroke="white" stroke-width="2" fill="none"/>
+          <line x1="18" y1="22" x2="26" y2="22" stroke="white" stroke-width="2" stroke-dasharray="3 2"/>
+          <circle cx="10" cy="22" r="3" fill="white"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#2563EB"/>
+          <circle cx="16" cy="26" r="9" fill="white"/>
+          <circle cx="36" cy="26" r="9" stroke="white" stroke-width="2.5" fill="none"/>
+          <line x1="25" y1="26" x2="27" y2="26" stroke="white" stroke-width="2.5" stroke-dasharray="3 2"/>
+          <circle cx="16" cy="26" r="4" fill="#2563EB"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">03</div>
+        <div class="concept-name">Два круга — соединение</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Заливной круг — соискатель, контурный — работодатель. Пунктирная линия — процесс поиска. Это про связь, а не просто про карту. Хорошо читается для аудитории, которая ищет не просто вакансию, а своё место.</div>
+      <div class="assoc">🤝 «Человек встречает работу»</div>
+    </div>
+  </div>
+
+  <!-- ══ 04 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Employee badge: rounded rect + clip + person -->
+            <rect x="8" y="14" width="28" height="26" rx="5" stroke="#2563EB" stroke-width="2" fill="none"/>
+            <rect x="17" y="10" width="10" height="7" rx="3" stroke="#2563EB" stroke-width="1.8" fill="none"/>
+            <circle cx="22" cy="25" r="4.5" stroke="#2563EB" stroke-width="1.8" fill="none"/>
+            <path d="M13 36 C13 30 31 30 31 36" stroke="#2563EB" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell blue">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <rect x="8" y="14" width="28" height="26" rx="5" stroke="white" stroke-width="2" fill="none"/>
+          <rect x="17" y="10" width="10" height="7" rx="3" stroke="white" stroke-width="1.8" fill="none"/>
+          <circle cx="22" cy="25" r="4.5" stroke="#F59E0B" stroke-width="1.8" fill="none"/>
+          <path d="M13 36 C13 30 31 30 31 36" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#2563EB"/>
+          <rect x="10" y="17" width="32" height="30" rx="6" stroke="white" stroke-width="2.2" fill="none"/>
+          <rect x="20" y="12" width="12" height="8" rx="3.5" stroke="white" stroke-width="2" fill="none"/>
+          <circle cx="26" cy="28" r="5" stroke="#F59E0B" stroke-width="2" fill="none"/>
+          <path d="M15 42 C15 35 37 35 37 42" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">04</div>
+        <div class="concept-name">Бейдж — первый рабочий день</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Бейдж сотрудника — это то, что каждый линейный работник получает в первый рабочий день. Кассир, повар, курьер — все носят бейджи. Знак сразу считывается как «работа», без лишних объяснений. Личный и конкретный.</div>
+      <div class="assoc">🪪 «Получи свой бейдж»</div>
+    </div>
+  </div>
+
+  <!-- ══ 05 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Briefcase + location dot merged into handle -->
+            <rect x="7" y="18" width="30" height="22" rx="5" stroke="#2563EB" stroke-width="2" fill="none"/>
+            <path d="M15 18V14C15 12 17 11 19 11H25C27 11 29 12 29 14V18" stroke="#2563EB" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="33" cy="12" r="5" fill="#2563EB"/>
+            <path d="M33 17 L33 20" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+            <line x1="7" y1="29" x2="37" y2="29" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="2 2"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <rect x="7" y="18" width="30" height="22" rx="5" stroke="white" stroke-width="2" fill="none"/>
+          <path d="M15 18V14C15 12 17 11 19 11H25C27 11 29 12 29 14V18" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="33" cy="12" r="5" fill="#F59E0B"/>
+          <path d="M33 17 L33 20" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+          <line x1="7" y1="29" x2="37" y2="29" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#1C1C2E"/>
+          <rect x="8" y="22" width="34" height="25" rx="6" stroke="#2563EB" stroke-width="2.2" fill="none"/>
+          <path d="M17 22V17C17 14 19 13 22 13H30C33 13 35 14 35 17V22" stroke="#2563EB" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="39" cy="13" r="6" fill="#F59E0B"/>
+          <path d="M39 19 L39 22" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">05</div>
+        <div class="concept-name">Портфель + пин — работа рядом</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Буквальное прочтение бренда: портфель = работа, янтарный пин = место рядом. Два слова из названия — два элемента знака. Лаконично, конкретно, профессионально. Пин не на карте, а на портфеле — нестандартный ход, запоминается.</div>
+      <div class="assoc">💼 «Работа — вот она, рядом»</div>
+    </div>
+  </div>
+
+  <!-- ══ 06 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Compass -->
+            <circle cx="22" cy="22" r="18" stroke="#2563EB" stroke-width="2" fill="none"/>
+            <path d="M22 8L26 22L22 36L18 22Z" fill="#2563EB"/>
+            <path d="M22 8L26 22L22 36L18 22Z" fill="#2563EB"/>
+            <path d="M8 22L22 18L36 22L22 26Z" fill="#E8EDF5"/>
+            <circle cx="22" cy="22" r="3" fill="white" stroke="#2563EB" stroke-width="1.5"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell blue">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="white" stroke-width="2" fill="none"/>
+          <path d="M22 8L26 22L22 36L18 22Z" fill="white"/>
+          <path d="M8 22L22 18L36 22L22 26Z" fill="rgba(255,255,255,0.25)"/>
+          <circle cx="22" cy="22" r="3" fill="#2563EB" stroke="white" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#1C1C2E"/>
+          <circle cx="26" cy="26" r="19" stroke="#2563EB" stroke-width="2" fill="none"/>
+          <path d="M26 10L30 26L26 42L22 26Z" fill="#2563EB"/>
+          <path d="M10 26L26 22L42 26L26 30Z" fill="#2563EB" opacity=".3"/>
+          <circle cx="26" cy="26" r="3.5" fill="white"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">06</div>
+        <div class="concept-name">Компас — ориентир</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Компас — это про ориентацию и направление. «Место работы» как компас помогает найти нужное направление в жизни. Стрелка компаса всегда показывает «верно» — это про надёжность платформы. Уникален для рынка jobtech в России.</div>
+      <div class="assoc">🧭 «Покажем правильное направление»</div>
+    </div>
+  </div>
+
+  <!-- ══ 07 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Person + location pin merged -->
+            <circle cx="22" cy="10" r="7" stroke="#2563EB" stroke-width="2" fill="none"/>
+            <path d="M8 36C8 28 14 23 22 23C30 23 36 28 36 36" stroke="#2563EB" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <!-- small pin on shoulder -->
+            <path d="M32 20C32 17.24 34.24 15 37 15C39.76 15 42 17.24 42 20C42 23.5 37 28 37 28C37 28 32 23.5 32 20Z" fill="#F59E0B"/>
+            <circle cx="37" cy="20" r="2.5" fill="white"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="10" r="7" stroke="white" stroke-width="2" fill="none"/>
+          <path d="M8 36C8 28 14 23 22 23C30 23 36 28 36 36" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M32 20C32 17.24 34.24 15 37 15C39.76 15 42 17.24 42 20C42 23.5 37 28 37 28C37 28 32 23.5 32 20Z" fill="#2563EB"/>
+          <circle cx="37" cy="20" r="2.5" fill="white"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#2563EB"/>
+          <circle cx="22" cy="14" r="7" stroke="white" stroke-width="2" fill="none"/>
+          <path d="M8 40C8 32 14 27 22 27C30 27 36 32 36 40" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M36 22C36 19.24 38.24 17 41 17C43.76 17 46 19.24 46 22C46 25.5 41 30 41 30C41 30 36 25.5 36 22Z" fill="#F59E0B"/>
+          <circle cx="41" cy="22" r="2.5" fill="white"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">07</div>
+        <div class="concept-name">Человек + пин на плече</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Силуэт человека с маленьким пином рядом — платформа сопровождает тебя. Янтарный пин контрастирует с синим силуэтом, создавая иерархию. Человечный, тёплый знак — важно для аудитории, которой нужно доверие, а не холодный tech.</div>
+      <div class="assoc">👤 «Мы рядом с тобой»</div>
+    </div>
+  </div>
+
+  <!-- ══ 08 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Abstract M as path/route -->
+            <path d="M4 36 L4 14 L22 28 L40 14 L40 36" stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="40" cy="36" r="4" fill="#F59E0B"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell blue">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <path d="M4 36 L4 14 L22 28 L40 14 L40 36" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="40" cy="36" r="4" fill="#F59E0B"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#1C1C2E"/>
+          <path d="M6 44 L6 14 L26 32 L46 14 L46 44" stroke="#2563EB" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="46" cy="44" r="5" fill="#F59E0B"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">08</div>
+        <div class="concept-name">М как маршрут с точкой назначения</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Буква М нарисована одной линией — как маршрут на карте. Янтарная точка в конце = пункт назначения, твоя работа. Это про движение и достижение цели. Простая геометрия работает на любом размере — от иконки до баннера.</div>
+      <div class="assoc">➡️ «Конец маршрута — твоя работа»</div>
+    </div>
+  </div>
+
+  <!-- ══ 09 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <!-- Split circle — two halves = место + работы -->
+            <path d="M22 4 A18 18 0 0 1 22 40" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M22 4 A18 18 0 0 0 22 40" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <circle cx="22" cy="4" r="3" fill="#2563EB"/>
+            <circle cx="22" cy="40" r="3" fill="#F59E0B"/>
+            <line x1="22" y1="4" x2="22" y2="40" stroke="#E8EDF5" stroke-width="1" stroke-dasharray="3 3"/>
+          </svg>
+          <div>
+            <div class="logo-name">Место работы</div>
+            <div class="logo-sub">Найдём работу рядом</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <path d="M22 4 A18 18 0 0 1 22 40" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M22 4 A18 18 0 0 0 22 40" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <circle cx="22" cy="4" r="3" fill="#2563EB"/>
+          <circle cx="22" cy="40" r="3" fill="#F59E0B"/>
+        </svg>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#1C1C2E"/>
+          <path d="M26 6 A20 20 0 0 1 26 46" stroke="#2563EB" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M26 6 A20 20 0 0 0 26 46" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <circle cx="26" cy="6" r="4" fill="#2563EB"/>
+          <circle cx="26" cy="46" r="4" fill="#F59E0B"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">09</div>
+        <div class="concept-name">Двойная дуга — два мира</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">Синяя дуга — соискатель, янтарная — работодатель. Вместе образуют круг — полноту. Это про экосистему, где оба находят друг друга. Минималистичный знак, который хорошо работает как монограмма на маленьких размерах.</div>
+      <div class="assoc">⚖️ «Два в одном — полный круг»</div>
+    </div>
+  </div>
+
+  <!-- ══ 10 ══ -->
+  <div class="card">
+    <div class="showcase">
+      <div class="logo-cell white">
+        <div class="logo-wrap col">
+          <div style="display:flex;align-items:center;gap:10px">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect width="32" height="32" rx="10" fill="#2563EB"/>
+              <path d="M8 24V10L16 18L24 10V24" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)">место</div>
+              <div style="font-size:18px;font-weight:900;color:var(--dark);letter-spacing:-.01em;margin-top:-2px">работы</div>
+            </div>
+          </div>
+          <div class="logo-sub" style="padding-left:42px;">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="logo-cell dark">
+        <div style="display:flex;align-items:center;gap:10px">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="10" fill="#2563EB"/>
+            <path d="M8 24V10L16 18L24 10V24" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#2563EB">место</div>
+            <div style="font-size:16px;font-weight:900;color:white;letter-spacing:-.01em;margin-top:-1px">работы</div>
+          </div>
+        </div>
+      </div>
+      <div class="icon-preview">
+        <svg width="52" height="52" style="border-radius:14px;display:block">
+          <rect width="52" height="52" fill="#2563EB"/>
+          <rect x="6" y="6" width="40" height="40" rx="12" fill="white" opacity=".15"/>
+          <path d="M12 38V18L26 30L40 18V38" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="icon-label">Иконка</div>
+      </div>
+    </div>
+    <div class="info">
+      <div class="info-top">
+        <div class="num">10</div>
+        <div class="concept-name">Иконка + двухуровневый текст</div>
+      </div>
+      <div class="why-label">Почему</div>
+      <div class="why-text">«МЕСТО» мелко сверху как категория, «работы» крупно снизу как главное слово. Квадратный бейдж с М создаёт ощущение приложения — сразу понятно что это digital-продукт. Иерархия текста создаёт воздух и делает логотип современным.</div>
+      <div class="assoc">📱 «Это приложение, это современно»</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

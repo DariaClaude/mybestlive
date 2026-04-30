@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Место работы — Лого в приложении</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #FF5B1F;
+      --dark:   #1C1C2E;
+      --gray:   #F4F6FB;
+      --border: #E8EDF5;
+      --mid:    #7B8794;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #111520;
+      padding: 52px 48px 100px;
+      color: white;
+    }
+
+    .page-eyebrow { font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:8px; }
+    .page-title   { font-size:30px; font-weight:900; margin-bottom:6px; }
+    .page-sub     { font-size:14px; color:rgba(255,255,255,.4); margin-bottom:56px; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 64px; }
+    .section-label {
+      font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+      color:rgba(255,255,255,.3); margin-bottom:20px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .section-label::after {
+      content:''; flex:1; height:1px; background:rgba(255,255,255,.08);
+    }
+
+    /* ── Row of phones ── */
+    .phones { display:flex; gap:20px; align-items:flex-start; }
+
+    .phone-col { display:flex; flex-direction:column; align-items:center; gap:14px; }
+    .phone-concept-label {
+      font-size:11px; font-weight:600; color:rgba(255,255,255,.35);
+      letter-spacing:.06em; text-align:center;
+    }
+
+    /* Phone shell */
+    .phone {
+      width:220px;
+      background:#1A2236;
+      border-radius:40px;
+      padding:12px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 32px 64px rgba(0,0,0,.5);
+    }
+    .screen {
+      width:196px;
+      border-radius:30px;
+      overflow:hidden;
+      background:#F4F6FB;
+    }
+
+    /* Status bar */
+    .sb {
+      height:32px; display:flex; align-items:center;
+      justify-content:space-between; padding:0 16px;
+      font-size:10px; font-weight:700;
+    }
+    .sb-dark { background:#1C1C2E; color:rgba(255,255,255,.6); }
+    .sb-white { background:white; color:var(--dark); }
+    .sb-orange { background:#FF5B1F; color:rgba(255,255,255,.7); }
+
+    /* App header */
+    .app-header {
+      height:56px; display:flex; align-items:center;
+      padding:0 18px; justify-content:space-between;
+    }
+    .app-header.white { background:white; border-bottom:1px solid var(--border); }
+    .app-header.dark  { background:var(--dark); }
+    .app-header.orange{ background:#FF5B1F; }
+
+    .notif { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; }
+    .notif.light { background:var(--gray); }
+    .notif.dim   { background:rgba(255,255,255,.15); }
+
+    /* Feed cards */
+    .feed { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
+    .fc {
+      background:white; border-radius:14px; padding:12px;
+      border:1px solid var(--border);
+    }
+    .fc-title { font-size:12px; font-weight:700; color:var(--dark); margin-bottom:2px; }
+    .fc-company { font-size:10px; color:var(--mid); margin-bottom:6px; }
+    .fc-salary { font-size:13px; font-weight:900; color:#FF5B1F; margin-bottom:6px; }
+    .fc-tags { display:flex; gap:4px; }
+    .fc-tag { font-size:9px; font-weight:600; padding:2px 7px; border-radius:5px; }
+    .fc-tag.o { background:#FFE0D4; color:#FF5B1F; }
+    .fc-tag.g { background:var(--gray); color:var(--mid); border:1px solid var(--border); }
+
+    /* Nav */
+    .nav {
+      height:52px; background:white;
+      border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-around;
+    }
+    .nav-i { display:flex; flex-direction:column; align-items:center; gap:2px; }
+    .nav-i-icon { font-size:16px; }
+    .nav-i-label { font-size:8px; font-weight:600; }
+
+    /* Splash screen */
+    .splash {
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      height:320px; gap:16px;
+    }
+    .splash-sub { font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; opacity:.5; }
+    .splash-btn {
+      margin-top:8px;
+      width:160px; height:44px; border-radius:14px;
+      background:#FF5B1F;
+      display:flex; align-items:center; justify-content:center;
+      font-size:13px; font-weight:700; color:white;
+    }
+
+    /* App icon grid */
+    .icons-row { display:flex; gap:16px; flex-wrap:wrap; }
+    .icon-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .icon-item-label { font-size:10px; color:rgba(255,255,255,.3); text-align:center; }
+    .app-icon { border-radius:20px; display:flex; align-items:center; justify-content:center; }
+  </style>
+</head>
+<body>
+
+<div class="page-eyebrow">Место работы · Логотип в интерфейсе</div>
+<div class="page-title">Как логотип живёт в приложении</div>
+<div class="page-sub">Иконка + знак · Иконка alone · Wordmark в хедере · Сплэш-экран</div>
+
+<!-- ══════════════════════════════════
+     SECTION 1: В хедере приложения
+═══════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Хедер приложения — иконка + название</div>
+  <div class="phones">
+
+    <!-- 01 Outline пин -->
+    <div class="phone-col">
+      <div class="phone-concept-label">01 · Outline пин</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="sb sb-white"><span style="color:var(--dark)">9:41</span><span>●●●</span></div>
+          <div class="app-header white">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <svg width="22" height="28" viewBox="0 0 36 44" fill="none">
+                <path d="M18 1C9.72 1 3 7.72 3 16C3 27 18 43 18 43C18 43 33 27 33 16C33 7.72 26.28 1 18 1Z" stroke="#FF5B1F" stroke-width="2.5" fill="none"/>
+                <circle cx="18" cy="16" r="5" stroke="#FF5B1F" stroke-width="2" fill="none"/>
+              </svg>
+              <span style="font-size:16px;font-weight:800;color:var(--dark);">Место работы</span>
+            </div>
+            <div class="notif light">🔔</div>
+          </div>
+          <div class="feed">
+            <div class="fc"><div class="fc-title">Курьер на авто</div><div class="fc-company">Яндекс Доставка</div><div class="fc-salary">от 90 000 ₽</div><div class="fc-tags"><div class="fc-tag o">Срочно</div><div class="fc-tag g">Москва</div></div></div>
+            <div class="fc"><div class="fc-title">Повар горячего цеха</div><div class="fc-company">Буфет</div><div class="fc-salary">от 65 000 ₽</div><div class="fc-tags"><div class="fc-tag g">2/2</div><div class="fc-tag g">Питание</div></div></div>
+            <div class="fc"><div class="fc-title">Кассир</div><div class="fc-company">Магнит</div><div class="fc-salary">от 52 000 ₽</div><div class="fc-tags"><div class="fc-tag g">5/2</div></div></div>
+          </div>
+          <div class="nav">
+            <div class="nav-i"><span class="nav-i-icon">⚡</span><span class="nav-i-label" style="color:#FF5B1F">Вакансии</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">🔖</span><span class="nav-i-label" style="color:var(--mid)">Избранное</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">✉️</span><span class="nav-i-label" style="color:var(--mid)">Отклики</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">👤</span><span class="nav-i-label" style="color:var(--mid)">Профиль</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Точка -->
+    <div class="phone-col">
+      <div class="phone-concept-label">02 · Точка</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="sb sb-white"><span style="color:var(--dark)">9:41</span><span>●●●</span></div>
+          <div class="app-header white">
+            <div style="display:flex;align-items:center;gap:6px;line-height:1">
+              <span style="font-size:16px;font-weight:900;color:var(--dark);">место</span>
+              <svg width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" fill="#FF5B1F"/></svg>
+              <span style="font-size:16px;font-weight:300;color:var(--dark);">работы</span>
+            </div>
+            <div class="notif light">🔔</div>
+          </div>
+          <div class="feed">
+            <div class="fc"><div class="fc-title">Курьер на авто</div><div class="fc-company">Яндекс Доставка</div><div class="fc-salary">от 90 000 ₽</div><div class="fc-tags"><div class="fc-tag o">Срочно</div><div class="fc-tag g">Москва</div></div></div>
+            <div class="fc"><div class="fc-title">Повар горячего цеха</div><div class="fc-company">Буфет</div><div class="fc-salary">от 65 000 ₽</div><div class="fc-tags"><div class="fc-tag g">2/2</div></div></div>
+            <div class="fc"><div class="fc-title">Кассир</div><div class="fc-company">Магнит</div><div class="fc-salary">от 52 000 ₽</div></div>
+          </div>
+          <div class="nav">
+            <div class="nav-i"><span class="nav-i-icon">⚡</span><span class="nav-i-label" style="color:#FF5B1F">Вакансии</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">🔖</span><span class="nav-i-label" style="color:var(--mid)">Избранное</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">✉️</span><span class="nav-i-label" style="color:var(--mid)">Отклики</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">👤</span><span class="nav-i-label" style="color:var(--mid)">Профиль</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 Тонкий пин -->
+    <div class="phone-col">
+      <div class="phone-concept-label">05 · Тонкий пин</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="sb sb-white"><span style="color:var(--dark)">9:41</span><span>●●●</span></div>
+          <div class="app-header white">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <svg width="14" height="32" viewBox="0 0 22 48" fill="none">
+                <path d="M11 1C5.48 1 1 5.48 1 11C1 18.5 11 31 11 31C11 31 21 18.5 21 11C21 5.48 16.52 1 11 1Z" stroke="#FF5B1F" stroke-width="2" fill="none"/>
+                <circle cx="11" cy="11" r="3.5" fill="#FF5B1F"/>
+                <line x1="11" y1="31" x2="11" y2="47" stroke="#FF5B1F" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span style="font-size:16px;font-weight:800;color:var(--dark);">Место работы</span>
+            </div>
+            <div class="notif light">🔔</div>
+          </div>
+          <div class="feed">
+            <div class="fc"><div class="fc-title">Курьер на авто</div><div class="fc-company">Яндекс Доставка</div><div class="fc-salary">от 90 000 ₽</div><div class="fc-tags"><div class="fc-tag o">Срочно</div><div class="fc-tag g">Москва</div></div></div>
+            <div class="fc"><div class="fc-title">Повар горячего цеха</div><div class="fc-company">Буфет</div><div class="fc-salary">от 65 000 ₽</div><div class="fc-tags"><div class="fc-tag g">2/2</div></div></div>
+            <div class="fc"><div class="fc-title">Кассир</div><div class="fc-company">Магнит</div><div class="fc-salary">от 52 000 ₽</div></div>
+          </div>
+          <div class="nav">
+            <div class="nav-i"><span class="nav-i-icon">⚡</span><span class="nav-i-label" style="color:#FF5B1F">Вакансии</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">🔖</span><span class="nav-i-label" style="color:var(--mid)">Избранное</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">✉️</span><span class="nav-i-label" style="color:var(--mid)">Отклики</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">👤</span><span class="nav-i-label" style="color:var(--mid)">Профиль</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 Заливной пин маленький -->
+    <div class="phone-col">
+      <div class="phone-concept-label">06 · Пин + текст</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="sb sb-white"><span style="color:var(--dark)">9:41</span><span>●●●</span></div>
+          <div class="app-header white">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <svg width="14" height="18" viewBox="0 0 16 20" fill="none">
+                <path d="M8 0C3.58 0 0 3.58 0 8C0 13 8 20 8 20C8 20 16 13 16 8C16 3.58 12.42 0 8 0Z" fill="#FF5B1F"/>
+                <circle cx="8" cy="8" r="3" fill="white"/>
+              </svg>
+              <span style="font-size:16px;font-weight:800;color:var(--dark);">Место работы</span>
+            </div>
+            <div class="notif light">🔔</div>
+          </div>
+          <div class="feed">
+            <div class="fc"><div class="fc-title">Курьер на авто</div><div class="fc-company">Яндекс Доставка</div><div class="fc-salary">от 90 000 ₽</div><div class="fc-tags"><div class="fc-tag o">Срочно</div><div class="fc-tag g">Москва</div></div></div>
+            <div class="fc"><div class="fc-title">Повар горячего цеха</div><div class="fc-company">Буфет</div><div class="fc-salary">от 65 000 ₽</div><div class="fc-tags"><div class="fc-tag g">2/2</div></div></div>
+            <div class="fc"><div class="fc-title">Кассир</div><div class="fc-company">Магнит</div><div class="fc-salary">от 52 000 ₽</div></div>
+          </div>
+          <div class="nav">
+            <div class="nav-i"><span class="nav-i-icon">⚡</span><span class="nav-i-label" style="color:#FF5B1F">Вакансии</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">🔖</span><span class="nav-i-label" style="color:var(--mid)">Избранное</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">✉️</span><span class="nav-i-label" style="color:var(--mid)">Отклики</span></div>
+            <div class="nav-i"><span class="nav-i-icon" style="opacity:.3">👤</span><span class="nav-i-label" style="color:var(--mid)">Профиль</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECTION 2: Сплэш / онбординг
+═══════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Сплэш-экран — крупный логотип</div>
+  <div class="phones">
+
+    <!-- Outline пин -->
+    <div class="phone-col">
+      <div class="phone-concept-label">Тёмный фон</div>
+      <div class="phone">
+        <div class="screen" style="background:var(--dark)">
+          <div class="sb sb-dark">9:41 <span>●●●</span></div>
+          <div class="splash">
+            <svg width="52" height="64" viewBox="0 0 36 44" fill="none">
+              <path d="M18 1C9.72 1 3 7.72 3 16C3 27 18 43 18 43C18 43 33 27 33 16C33 7.72 26.28 1 18 1Z" stroke="#FF5B1F" stroke-width="2" fill="none"/>
+              <circle cx="18" cy="16" r="5" stroke="#FF5B1F" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div style="text-align:center;">
+              <div style="font-size:26px;font-weight:900;color:white;letter-spacing:-.02em">Место работы</div>
+              <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:6px">Найдём работу рядом</div>
+            </div>
+            <div class="splash-btn">Начать поиск</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Оранжевый сплэш -->
+    <div class="phone-col">
+      <div class="phone-concept-label">Оранжевый фон</div>
+      <div class="phone">
+        <div class="screen" style="background:#FF5B1F">
+          <div class="sb sb-orange">9:41 <span>●●●</span></div>
+          <div class="splash">
+            <svg width="52" height="64" viewBox="0 0 36 44" fill="none">
+              <path d="M18 1C9.72 1 3 7.72 3 16C3 27 18 43 18 43C18 43 33 27 33 16C33 7.72 26.28 1 18 1Z" stroke="white" stroke-width="2" fill="none"/>
+              <circle cx="18" cy="16" r="5" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div style="text-align:center;">
+              <div style="font-size:26px;font-weight:900;color:white;letter-spacing:-.02em">Место работы</div>
+              <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-top:6px">Найдём работу рядом</div>
+            </div>
+            <div style="margin-top:8px;width:160px;height:44px;border-radius:14px;background:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#FF5B1F">Начать поиск</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Белый сплэш -->
+    <div class="phone-col">
+      <div class="phone-concept-label">Белый фон</div>
+      <div class="phone">
+        <div class="screen" style="background:white">
+          <div class="sb sb-white">9:41 <span>●●●</span></div>
+          <div class="splash">
+            <svg width="52" height="64" viewBox="0 0 16 20" fill="none" style="width:44px;height:56px">
+              <path d="M8 0C3.58 0 0 3.58 0 8C0 13 8 20 8 20C8 20 16 13 16 8C16 3.58 12.42 0 8 0Z" fill="#FF5B1F"/>
+              <circle cx="8" cy="8" r="3" fill="white"/>
+            </svg>
+            <div style="text-align:center;">
+              <div style="font-size:26px;font-weight:900;color:var(--dark);letter-spacing:-.02em">Место работы</div>
+              <div style="font-size:11px;font-weight:500;color:var(--mid);letter-spacing:.1em;text-transform:uppercase;margin-top:6px">Найдём работу рядом</div>
+            </div>
+            <div style="margin-top:8px;width:160px;height:44px;border-radius:14px;background:#FF5B1F;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white">Начать поиск</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Точка-сплэш -->
+    <div class="phone-col">
+      <div class="phone-concept-label">02 · Точка на тёмном</div>
+      <div class="phone">
+        <div class="screen" style="background:var(--dark)">
+          <div class="sb sb-dark">9:41 <span>●●●</span></div>
+          <div class="splash">
+            <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#FF5B1F"/></svg>
+            <div style="text-align:center;">
+              <div style="display:flex;align-items:center;justify-content:center;gap:10px;line-height:1">
+                <span style="font-size:26px;font-weight:900;color:white">место</span>
+                <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#FF5B1F"/></svg>
+                <span style="font-size:26px;font-weight:300;color:white">работы</span>
+              </div>
+              <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;margin-top:8px">Найдём работу рядом</div>
+            </div>
+            <div class="splash-btn">Начать поиск</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SECTION 3: App icons
+═══════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Иконка приложения — 96×96</div>
+  <div class="icons-row">
+
+    <div class="icon-item">
+      <svg width="96" height="96" style="border-radius:22px;display:block">
+        <rect width="96" height="96" fill="#FF5B1F"/>
+        <g transform="translate(28,14)">
+          <path d="M20 1C11.16 1 4 8.16 4 17C4 28 20 43 20 43C20 43 36 28 36 17C36 8.16 28.84 1 20 1Z" stroke="white" stroke-width="2.5" fill="none"/>
+          <circle cx="20" cy="17" r="6" stroke="white" stroke-width="2" fill="none"/>
+        </g>
+      </svg>
+      <div class="icon-item-label">01 · Outline пин<br>Оранжевый фон</div>
+    </div>
+
+    <div class="icon-item">
+      <svg width="96" height="96" style="border-radius:22px;display:block">
+        <rect width="96" height="96" fill="#1C1C2E"/>
+        <g transform="translate(28,14)">
+          <path d="M20 1C11.16 1 4 8.16 4 17C4 28 20 43 20 43C20 43 36 28 36 17C36 8.16 28.84 1 20 1Z" stroke="#FF5B1F" stroke-width="2.5" fill="none"/>
+          <circle cx="20" cy="17" r="6" fill="#FF5B1F"/>
+        </g>
+      </svg>
+      <div class="icon-item-label">01 · Outline пин<br>Тёмный фон</div>
+    </div>
+
+    <div class="icon-item">
+      <svg width="96" height="96" style="border-radius:22px;display:block">
+        <rect width="96" height="96" fill="#FF5B1F"/>
+        <g transform="translate(28,12)">
+          <path d="M20 0C11.16 0 4 7.16 4 16C4 27 20 42 20 42C20 42 36 27 36 16C36 7.16 28.84 0 20 0Z" fill="white"/>
+          <circle cx="20" cy="16" r="6" fill="#FF5B1F"/>
+        </g>
+      </svg>
+      <div class="icon-item-label">06 · Заливной пин<br>Оранжевый фон</div>
+    </div>
+
+    <div class="icon-item">
+      <svg width="96" height="96" style="border-radius:22px;display:block">
+        <rect width="96" height="96" fill="#1C1C2E"/>
+        <circle cx="48" cy="48" r="16" fill="#FF5B1F"/>
+        <circle cx="48" cy="48" r="7" fill="white"/>
+      </svg>
+      <div class="icon-item-label">02 · Точка<br>Только знак</div>
+    </div>
+
+    <div class="icon-item">
+      <svg width="96" height="96" style="border-radius:22px;display:block">
+        <rect width="96" height="96" fill="white"/>
+        <g transform="translate(28,12)">
+          <path d="M20 0C11.16 0 4 7.16 4 16C4 27 20 42 20 42C20 42 36 27 36 16C36 7.16 28.84 0 20 0Z" fill="#FF5B1F"/>
+          <circle cx="20" cy="16" r="6" fill="white"/>
+        </g>
+      </svg>
+      <div class="icon-item-label">06 · Заливной пин<br>Белый фон</div>
+    </div>
+
+    <div class="icon-item">
+      <svg width="96" height="96" style="border-radius:22px;display:block">
+        <rect width="96" height="96" fill="#FF5B1F"/>
+        <g transform="translate(30,16)">
+          <path d="M18 0C10.82 0 5 5.82 5 13C5 22 18 38 18 38C18 38 31 22 31 13C31 5.82 25.18 0 18 0Z" stroke="white" stroke-width="2.5" fill="none"/>
+          <line x1="18" y1="38" x2="18" y2="54" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="18" cy="13" r="4.5" fill="white"/>
+        </g>
+      </svg>
+      <div class="icon-item-label">05 · Тонкий пин<br>Оранжевый фон</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

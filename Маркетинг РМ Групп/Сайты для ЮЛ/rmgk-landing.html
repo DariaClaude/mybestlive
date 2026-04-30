@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>РМГК — Комплексные операционные услуги</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #FF5B1F;
+      --primary-lt: #FF8C5A;
+      --accent-bg:  #FFE0D4;
+      --accent-mid: #ffc4a8;
+      --dark:       #1C1C2E;
+      --dark-lt:    #2d2d45;
+      --white:      #ffffff;
+      --gray-bg:    #faf7f5;
+      --gray-text:  #5c5566;
+      --gray-line:  #eeddd6;
+      --text:       #1C1C2E;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(28, 28, 46, 0.96);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%; height: 64px;
+    }
+    .nav-logo { color: var(--white); font-size: 1.15rem; font-weight: 700; letter-spacing: .03em; text-decoration: none; }
+    .nav-logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.75); font-size: .88rem; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--primary); color: var(--white); border: none; cursor: pointer;
+      padding: 9px 22px; border-radius: 6px; font-size: .88rem; font-weight: 600;
+      text-decoration: none; transition: background .2s;
+    }
+    .nav-cta:hover { background: #e04d15; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(135deg, rgba(28,28,46,.91) 0%, rgba(28,28,46,.82) 55%, rgba(58,34,16,.9) 100%),
+        url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      display: flex; align-items: center;
+      padding: 100px 6% 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(255,91,31,.18) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,91,31,.18); border: 1px solid rgba(255,91,31,.45);
+      color: var(--accent-mid); font-size: .8rem; font-weight: 600; letter-spacing: .09em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; line-height: 1.18;
+      color: var(--white); margin-bottom: 22px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,.78);
+      margin-bottom: 40px; max-width: 560px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--primary); color: var(--white); text-decoration: none;
+      padding: 14px 32px; border-radius: 8px; font-size: .95rem; font-weight: 600;
+      transition: background .2s, transform .12s;
+    }
+    .btn-primary:hover { background: #e04d15; }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-outline {
+      background: transparent; color: var(--white); text-decoration: none;
+      border: 2px solid rgba(255,255,255,.4);
+      padding: 12px 30px; border-radius: 8px; font-size: .95rem; font-weight: 500;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .hero-scroll {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(255,255,255,.4); font-size: .75rem;
+    }
+    .hero-scroll-dot {
+      width: 6px; height: 6px; background: rgba(255,91,31,.6); border-radius: 50%;
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 80px 6%; }
+    .section-label {
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 10px;
+    }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; color: var(--dark); line-height: 1.25; }
+    .section-sub { font-size: 1rem; color: var(--gray-text); margin-top: 12px; max-width: 560px; line-height: 1.7; }
+    .divider { width: 48px; height: 4px; background: var(--primary); border-radius: 2px; margin: 18px 0 40px; }
+
+    /* ─── ABOUT ─── */
+    .about { background: var(--dark); }
+    .about .section-label { color: var(--accent-mid); }
+    .about .section-title { color: var(--white); }
+    .about .divider { background: var(--primary); }
+    .about-lead {
+      font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,.7);
+      max-width: 680px; margin-bottom: 56px;
+    }
+    .about-features {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: rgba(255,255,255,.06); border-radius: 16px; overflow: hidden;
+    }
+    .feature {
+      padding: 40px 36px; background: var(--dark-lt);
+      position: relative; overflow: hidden;
+      transition: background .25s;
+    }
+    .feature:hover { background: #252540; }
+    .feature-num {
+      font-size: 4rem; font-weight: 800; line-height: 1;
+      color: rgba(255,91,31,.18); letter-spacing: -.04em;
+      margin-bottom: 20px; display: block;
+    }
+    .feature-icon {
+      font-size: 1.8rem; margin-bottom: 16px; display: block;
+    }
+    .feature-title {
+      font-size: 1.05rem; font-weight: 700; color: var(--white);
+      margin-bottom: 12px;
+    }
+    .feature-title span { color: var(--primary); }
+    .feature-text {
+      font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.7;
+    }
+    .feature-line {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--primary); transform: scaleX(0);
+      transform-origin: left; transition: transform .3s ease;
+    }
+    .feature:hover .feature-line { transform: scaleX(1); }
+
+    /* ─── SERVICES ─── */
+    .services { background: var(--white); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 40px;
+    }
+    .service-card {
+      background: var(--gray-bg); border-radius: 12px; padding: 32px 28px;
+      border: 1px solid var(--gray-line); transition: box-shadow .2s, transform .2s;
+    }
+    .service-card:hover { box-shadow: 0 8px 32px rgba(255,91,31,.12); transform: translateY(-3px); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--accent-bg); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; font-size: 1.5rem;
+    }
+    .service-title { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+    .service-text { font-size: .88rem; color: var(--gray-text); line-height: 1.65; }
+
+    /* ─── STEPS ─── */
+    .steps { background: var(--dark); }
+    .steps .section-label { color: var(--accent-mid); }
+    .steps .section-title { color: var(--white); }
+    .steps .section-sub { color: rgba(255,255,255,.65); }
+    .steps .divider { background: var(--primary); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; position: relative; margin-top: 40px;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute; top: 28px; left: calc(10% + 14px); right: calc(10% + 14px);
+      height: 2px; background: rgba(255,91,31,.25);
+    }
+    .step { text-align: center; padding: 0 12px; position: relative; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--primary); color: var(--white);
+      font-size: 1.2rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; position: relative; z-index: 1;
+      box-shadow: 0 0 0 6px rgba(255,91,31,.15);
+    }
+    .step-title { font-size: .9rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .step-text { font-size: .8rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+
+    /* ─── CONTACTS ─── */
+    .contacts { background: var(--accent-bg); }
+    .contacts-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; margin-top: 40px;
+    }
+    .contact-block h3 {
+      font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 20px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--accent-mid);
+    }
+    .contact-row { display: flex; flex-direction: column; gap: 14px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 14px; }
+    .contact-icon {
+      width: 40px; height: 40px; min-width: 40px; border-radius: 8px;
+      background: var(--white); display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; box-shadow: 0 2px 8px rgba(255,91,31,.12);
+    }
+    .contact-info { display: flex; flex-direction: column; }
+    .contact-label { font-size: .75rem; color: var(--gray-text); font-weight: 500; text-transform: uppercase; letter-spacing: .07em; }
+    .contact-value { font-size: .95rem; font-weight: 600; color: var(--dark); margin-top: 2px; }
+    .contact-value a { color: var(--primary); text-decoration: none; }
+    .contact-value a:hover { text-decoration: underline; }
+
+    .requisites-table { width: 100%; border-collapse: collapse; }
+    .requisites-table tr { border-bottom: 1px solid var(--gray-line); }
+    .requisites-table tr:last-child { border-bottom: none; }
+    .requisites-table td { padding: 10px 0; font-size: .88rem; vertical-align: top; }
+    .requisites-table td:first-child { color: var(--gray-text); width: 45%; font-weight: 500; }
+    .requisites-table td:last-child { color: var(--dark); font-weight: 600; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.5);
+      padding: 28px 6%; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; font-size: .82rem;
+    }
+    .footer-logo { color: var(--white); font-weight: 700; font-size: .95rem; }
+    .footer-logo span { color: var(--primary); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .about-features { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .hero { padding: 100px 5% 60px; }
+      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+      .steps-grid::before { display: none; }
+      .step { display: flex; align-items: flex-start; gap: 18px; text-align: left; }
+      .step-num { min-width: 56px; margin: 0; }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 0 5%; }
+      .nav-links { display: none; }
+      .about-grid, .contacts-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">РМ<span>ГК</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">О компании</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#steps">Сотрудничество</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a href="#contacts" class="nav-cta">Связаться</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Операционные услуги · Москва</div>
+    <h1>РМГК — Комплексные <span>операционные решения</span> для вашего бизнеса</h1>
+    <p class="hero-sub">Широкий спектр услуг: от складской логистики и доставки до клининга и HoReCa. Берём на себя непрофильные операции — вы сосредотачиваетесь на росте.</p>
+    <div class="hero-btns">
+      <a href="#contacts" class="btn-primary">Оставить заявку</a>
+      <a href="#services" class="btn-outline">Наши услуги</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Листайте вниз</span>
+    <div class="hero-scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">О компании</div>
+  <div class="section-title">Надёжный партнёр с сильным брендом и технологиями</div>
+  <div class="divider"></div>
+  <p class="about-lead">ООО «РМГК» — многопрофильная операционная компания с защищённым товарным знаком, франшизой и собственными IT-продуктами. Берём на себя весь цикл непрофильных операций — вы сосредотачиваетесь на росте бизнеса.</p>
+  <div class="about-features">
+    <div class="feature">
+      <span class="feature-num">01</span>
+      <span class="feature-icon">™</span>
+      <div class="feature-title">Товарный знак <span>РМГ</span></div>
+      <div class="feature-text">Работаем под защищённым брендом с устойчивой репутацией на рынке операционных услуг России. Узнаваемость и доверие партнёров.</div>
+      <div class="feature-line"></div>
+    </div>
+    <div class="feature">
+      <span class="feature-num">02</span>
+      <span class="feature-icon">🤝</span>
+      <div class="feature-title">Франшиза</div>
+      <div class="feature-text">Проверенная масштабируемая бизнес-модель, успешно тиражируемая в регионах. Единый стандарт качества на каждом объекте.</div>
+      <div class="feature-line"></div>
+    </div>
+    <div class="feature">
+      <span class="feature-num">03</span>
+      <span class="feature-icon">💻</span>
+      <div class="feature-title">IT-продукты</div>
+      <div class="feature-text">Собственные технологические решения для управления операциями, контроля исполнителей и прозрачной отчётности в реальном времени.</div>
+      <div class="feature-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">Услуги</div>
+  <div class="section-title">Что мы делаем для вашего бизнеса</div>
+  <div class="divider"></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🏭</div>
+      <div class="service-title">Складская логистика</div>
+      <div class="service-text">Сборка, размещение и выдача заказов. Сортировка и стикеровка товара. Хранение и перемещение товара на складе.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚛</div>
+      <div class="service-title">Погрузка и разгрузка</div>
+      <div class="service-text">Профессиональные бригады для погрузочно-разгрузочных работ любого объёма и сложности.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📦</div>
+      <div class="service-title">Комплектовка и упаковка</div>
+      <div class="service-text">Комплектовка заказов и упаковка товара в соответствии со стандартами и требованиями клиента.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚗</div>
+      <div class="service-title">Доставка товара</div>
+      <div class="service-text">Организация и сопровождение доставки товара. Курьерские услуги и логистика последней мили.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🍽</div>
+      <div class="service-title">HoReCa</div>
+      <div class="service-text">Приготовление блюд и напитков. Операционные услуги в сфере деятельности кафе и ресторанов.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <div class="service-title">Клининг и подсобные работы</div>
+      <div class="service-text">Профессиональный клининг, подсобные услуги и расчётно-кассовое обслуживание.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps" id="steps">
+  <div class="section-label">Этапы сотрудничества</div>
+  <div class="section-title">Сотрудничество с нами — это просто</div>
+  <div class="section-sub">Пять шагов от заявки до работающей команды</div>
+  <div class="divider"></div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Заявка</div>
+        <div class="step-text">Вы оставляете заявку или звоните нам</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Анализ</div>
+        <div class="step-text">Детально изучаем ваши потребности и задачи</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Договор</div>
+        <div class="step-text">Заключаем официальный договор со всеми условиями</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Запуск</div>
+        <div class="step-text">Оперативно формируем команду и приступаем к работе</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>
+        <div class="step-title">Контроль и отчётность</div>
+        <div class="step-text">Обеспечиваем прозрачный контроль и полную документацию</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div class="section-label">Контакты</div>
+  <div class="section-title">Свяжитесь с нами</div>
+  <div class="divider"></div>
+  <div class="contacts-grid">
+    <div class="contact-block">
+      <h3>Контактная информация</h3>
+      <div class="contact-row">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-info">
+            <span class="contact-label">Адрес</span>
+            <span class="contact-value">г. Москва, Большая Почтовая ул., д. 26в стр. 1</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-info">
+            <span class="contact-label">Телефон</span>
+            <span class="contact-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-info">
+            <span class="contact-label">E-mail</span>
+            <span class="contact-value"><a href="mailto:info@rmgk.ru">info@rmgk.ru</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🌐</div>
+          <div class="contact-info">
+            <span class="contact-label">Сайт</span>
+            <span class="contact-value"><a href="https://rmgc.pro" target="_blank">rmgc.pro</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-block">
+      <h3>Реквизиты</h3>
+      <table class="requisites-table">
+        <tr>
+          <td>Полное наименование</td>
+          <td>ООО «РМГК»</td>
+        </tr>
+        <tr>
+          <td>ИНН</td>
+          <td>9701311770</td>
+        </tr>
+        <tr>
+          <td>КПП</td>
+          <td>770101001</td>
+        </tr>
+        <tr>
+          <td>Юридический адрес</td>
+          <td>105082, г. Москва, Большая Почтовая ул., д. 26в стр. 1</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">РМ<span>ГК</span></div>
+  <div>© 2025 ООО «РМГК». Все права защищены.</div>
+  <div>ИНН 9701311770 · КПП 770101001</div>
+</footer>
+
+</body>
+</html>

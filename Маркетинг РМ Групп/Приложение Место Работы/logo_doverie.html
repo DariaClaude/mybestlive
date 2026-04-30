@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Место работы — Логотипы / Доверие</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:    #2563EB;
+      --blue2:   #60A0FA;
+      --bluebg:  #DBEAFE;
+      --amber:   #F59E0B;
+      --dark:    #1C1C2E;
+      --neutral: #F8FAFC;
+      --mid:     #888;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #EFEFEF;
+      padding: 52px 44px 80px;
+      color: var(--dark);
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .page-title { font-size: 28px; font-weight: 900; }
+    .palette-row { display: flex; gap: 10px; align-items: center; }
+    .dot { width: 28px; height: 28px; border-radius: 50%; }
+    .palette-label { font-size: 12px; color: var(--mid); margin-left: 4px; }
+
+    .concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .card { background: #fff; border-radius: 24px; overflow: hidden; }
+    .card-header { padding: 28px 28px 20px; border-bottom: 1px solid #F0F0F0; }
+    .card-num { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+    .card-name { font-size: 20px; font-weight: 900; }
+    .card-desc { font-size: 13px; color: var(--mid); line-height: 1.6; margin-top: 6px; }
+
+    .cells { display: flex; flex-direction: column; }
+    .cell {
+      padding: 28px 32px;
+      display: flex; align-items: center; gap: 16px;
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    .cell:last-child { border-bottom: none; }
+    .cell.on-white  { background: #fff; }
+    .cell.on-dark   { background: var(--dark); }
+    .cell.on-blue   { background: var(--blue); }
+    .cell.on-bluebg { background: var(--bluebg); }
+    .cell.on-amber  { background: var(--amber); }
+
+    .cell-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; opacity: .4; margin-bottom: 2px; }
+    .logo-name  { font-size: 20px; font-weight: 900; line-height: 1.1; }
+    .logo-slogan{ font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .5; margin-top: 3px; }
+
+    .ico { flex-shrink: 0; }
+    .ico-lg { width: 52px; height: 60px; }
+    .ico-md { width: 40px; height: 46px; }
+
+    .strip-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); margin: 48px 0 18px; }
+    .strip { display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; }
+    .app-icon { text-align: center; }
+    .app-icon svg { display: block; border-radius: 22px; }
+    .app-icon-label { font-size: 11px; color: var(--mid); margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:6px">Место работы · Логотип</div>
+    <div class="page-title">6 концепций — палитра «Доверие»</div>
+  </div>
+  <div class="palette-row">
+    <div class="dot" style="background:var(--blue)"></div>
+    <div class="dot" style="background:var(--blue2)"></div>
+    <div class="dot" style="background:var(--bluebg)"></div>
+    <div class="dot" style="background:var(--amber)"></div>
+    <div class="dot" style="background:var(--neutral);border:1.5px solid #ddd"></div>
+    <span class="palette-label">Доверие · #2563EB · #60A0FA · #DBEAFE · #F59E0B</span>
+  </div>
+</div>
+
+<div class="concepts">
+
+  <!-- ══ 01 Пин + М ══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">01</div>
+      <div class="card-name">Пин + М</div>
+      <div class="card-desc">Маркер геолокации с буквой М. Прямая ассоциация с «местом». Сильно работает как иконка приложения.</div>
+    </div>
+    <div class="cells">
+      <div class="cell on-white">
+        <svg class="ico ico-lg" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <text x="26" y="26" text-anchor="middle" dominant-baseline="middle" font-family="Inter" font-weight="900" font-size="18" fill="white">М</text>
+        </svg>
+        <div>
+          <div class="cell-label">Светлый фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+          <div class="logo-slogan" style="color:var(--dark)">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="cell on-dark">
+        <svg class="ico ico-md" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <text x="26" y="26" text-anchor="middle" dominant-baseline="middle" font-family="Inter" font-weight="900" font-size="18" fill="white">М</text>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Тёмный фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+      <div class="cell on-blue">
+        <svg class="ico ico-md" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="white"/>
+          <text x="26" y="26" text-anchor="middle" dominant-baseline="middle" font-family="Inter" font-weight="900" font-size="18" fill="#2563EB">М</text>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Синий фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 02 Монограмма МР ══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">02</div>
+      <div class="card-name">Монограмма МР</div>
+      <div class="card-desc">М — жирная, Р — лёгкая. В квадрате с закруглёнными углами. Лаконично, запоминаемо.</div>
+    </div>
+    <div class="cells">
+      <div class="cell on-white">
+        <svg class="ico ico-lg" viewBox="0 0 52 52" fill="none">
+          <rect width="52" height="52" rx="14" fill="#2563EB"/>
+          <text x="10" y="38" font-family="Inter" font-weight="900" font-size="30" fill="white">М</text>
+          <text x="30" y="38" font-family="Inter" font-weight="400" font-size="24" fill="white" opacity=".7">Р</text>
+        </svg>
+        <div>
+          <div class="cell-label">Светлый фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+          <div class="logo-slogan" style="color:var(--dark)">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="cell on-dark">
+        <svg class="ico ico-md" viewBox="0 0 52 52" fill="none">
+          <rect width="52" height="52" rx="14" fill="#2563EB"/>
+          <text x="10" y="38" font-family="Inter" font-weight="900" font-size="30" fill="white">М</text>
+          <text x="30" y="38" font-family="Inter" font-weight="400" font-size="24" fill="white" opacity=".7">Р</text>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Тёмный фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+      <div class="cell on-amber">
+        <svg class="ico ico-md" viewBox="0 0 52 52" fill="none">
+          <rect width="52" height="52" rx="14" fill="#2563EB"/>
+          <text x="10" y="38" font-family="Inter" font-weight="900" font-size="30" fill="white">М</text>
+          <text x="30" y="38" font-family="Inter" font-weight="400" font-size="24" fill="white" opacity=".7">Р</text>
+        </svg>
+        <div>
+          <div class="cell-label">Янтарный фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 03 Wordmark ══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">03</div>
+      <div class="card-name">Wordmark</div>
+      <div class="card-desc">«Место» — жирное и тёмное, «работы» — синее. Акцентная черта снизу. Только текст, максимально чисто.</div>
+    </div>
+    <div class="cells">
+      <div class="cell on-white" style="flex-direction:column;align-items:flex-start;gap:6px;">
+        <div class="cell-label">Светлый фон</div>
+        <div style="display:flex;align-items:baseline;line-height:1">
+          <span style="font-size:28px;font-weight:900;color:#1C1C2E">Место</span>
+          <span style="font-size:28px;font-weight:400;color:#2563EB">&nbsp;работы</span>
+        </div>
+        <div style="width:120px;height:3px;background:#F59E0B;border-radius:2px"></div>
+        <div class="logo-slogan" style="color:var(--dark);margin-top:2px">Найдём работу рядом</div>
+      </div>
+      <div class="cell on-dark" style="flex-direction:column;align-items:flex-start;gap:4px;">
+        <div class="cell-label" style="color:white">Тёмный фон</div>
+        <div style="display:flex;align-items:baseline;line-height:1">
+          <span style="font-size:24px;font-weight:900;color:white">Место</span>
+          <span style="font-size:24px;font-weight:400;color:#60A0FA">&nbsp;работы</span>
+        </div>
+        <div style="width:100px;height:2px;background:#F59E0B;border-radius:2px"></div>
+      </div>
+      <div class="cell on-blue" style="flex-direction:column;align-items:flex-start;gap:4px;">
+        <div class="cell-label" style="color:white">Синий фон</div>
+        <div style="display:flex;align-items:baseline;line-height:1">
+          <span style="font-size:24px;font-weight:900;color:white">Место</span>
+          <span style="font-size:24px;font-weight:400;color:#F59E0B">&nbsp;работы</span>
+        </div>
+        <div style="width:100px;height:2px;background:#F59E0B;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 04 Человек в пине ══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">04</div>
+      <div class="card-name">Человек в месте</div>
+      <div class="card-desc">Силуэт человека внутри пина. «Ты — на своём месте». Человечно, тепло, про людей.</div>
+    </div>
+    <div class="cells">
+      <div class="cell on-white">
+        <svg class="ico ico-lg" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <circle cx="26" cy="15" r="6" fill="white"/>
+          <path d="M15 32C15 25.4 20 21 26 21C32 21 37 25.4 37 32" fill="white"/>
+        </svg>
+        <div>
+          <div class="cell-label">Светлый фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+          <div class="logo-slogan" style="color:var(--dark)">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="cell on-dark">
+        <svg class="ico ico-md" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <circle cx="26" cy="15" r="6" fill="white"/>
+          <path d="M15 32C15 25.4 20 21 26 21C32 21 37 25.4 37 32" fill="white"/>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Тёмный фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+      <div class="cell on-amber">
+        <svg class="ico ico-md" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <circle cx="26" cy="15" r="6" fill="white"/>
+          <path d="M15 32C15 25.4 20 21 26 21C32 21 37 25.4 37 32" fill="white"/>
+        </svg>
+        <div>
+          <div class="cell-label">Янтарный фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 05 Геометричная М ══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">05</div>
+      <div class="card-name">Геометричная М</div>
+      <div class="card-desc">Строгая М из линий в квадрате. Технологично, масштабируемо. Хорошо читается на любом размере.</div>
+    </div>
+    <div class="cells">
+      <div class="cell on-white">
+        <svg class="ico ico-lg" viewBox="0 0 52 52" fill="none">
+          <rect width="52" height="52" rx="14" fill="#2563EB"/>
+          <path d="M12 40V16L26 30L40 16V40" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cell-label">Светлый фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+          <div class="logo-slogan" style="color:var(--dark)">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="cell on-dark">
+        <svg class="ico ico-md" viewBox="0 0 52 52" fill="none">
+          <rect width="52" height="52" rx="14" fill="#2563EB"/>
+          <path d="M12 40V16L26 30L40 16V40" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Тёмный фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+      <div class="cell on-amber">
+        <svg class="ico ico-md" viewBox="0 0 52 52" fill="none">
+          <rect width="52" height="52" rx="14" fill="#2563EB"/>
+          <path d="M12 40V16L26 30L40 16V40" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cell-label">Янтарный фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 06 Рост + место ══ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">06</div>
+      <div class="card-name">Рост + место</div>
+      <div class="card-desc">Пин со стрелкой вверх — «найди место, расти». Про движение и карьеру. Энергичный и динамичный.</div>
+    </div>
+    <div class="cells">
+      <div class="cell on-white">
+        <svg class="ico ico-lg" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <path d="M26 30V10" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M18 18L26 10L34 18" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cell-label">Светлый фон</div>
+          <div class="logo-name" style="color:var(--dark)">Место работы</div>
+          <div class="logo-slogan" style="color:var(--dark)">Найдём работу рядом</div>
+        </div>
+      </div>
+      <div class="cell on-dark">
+        <svg class="ico ico-md" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="#2563EB"/>
+          <path d="M26 30V10" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M18 18L26 10L34 18" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Тёмный фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+      <div class="cell on-blue">
+        <svg class="ico ico-md" viewBox="0 0 52 60" fill="none">
+          <path d="M26 0C14.95 0 6 8.95 6 20C6 34 26 60 26 60C26 60 46 34 46 20C46 8.95 37.05 0 26 0Z" fill="white"/>
+          <path d="M26 30V10" stroke="#2563EB" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M18 18L26 10L34 18" stroke="#2563EB" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cell-label" style="color:white">Синий фон</div>
+          <div class="logo-name" style="color:white">Место работы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- App icons -->
+<div class="strip-title">Иконка приложения — как выглядит на экране телефона</div>
+<div class="strip">
+
+  <div class="app-icon">
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" style="border-radius:22px">
+      <rect width="96" height="96" fill="#2563EB"/>
+      <path d="M48 10C34 10 22 22 22 36C22 54 48 86 48 86C48 86 74 54 74 36C74 22 62 10 48 10Z" fill="white"/>
+      <text x="48" y="44" text-anchor="middle" dominant-baseline="middle" font-family="Inter" font-weight="900" font-size="22" fill="#2563EB">М</text>
+    </svg>
+    <div class="app-icon-label">01 · Пин М</div>
+  </div>
+
+  <div class="app-icon">
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" style="border-radius:22px">
+      <rect width="96" height="96" fill="#1C1C2E"/>
+      <rect x="18" y="18" width="60" height="60" rx="16" fill="#2563EB"/>
+      <text x="30" y="58" font-family="Inter" font-weight="900" font-size="36" fill="white">М</text>
+      <text x="54" y="58" font-family="Inter" font-weight="400" font-size="28" fill="white" opacity=".7">Р</text>
+    </svg>
+    <div class="app-icon-label">02 · МР</div>
+  </div>
+
+  <div class="app-icon">
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" style="border-radius:22px">
+      <rect width="96" height="96" fill="#F59E0B"/>
+      <rect x="16" y="16" width="64" height="64" rx="16" fill="#2563EB"/>
+      <path d="M24 68V30L48 54L72 30V68" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="app-icon-label">05 · М геом.</div>
+  </div>
+
+  <div class="app-icon">
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" style="border-radius:22px">
+      <rect width="96" height="96" fill="#DBEAFE"/>
+      <path d="M48 10C34 10 22 22 22 36C22 54 48 86 48 86C48 86 74 54 74 36C74 22 62 10 48 10Z" fill="#2563EB"/>
+      <circle cx="48" cy="30" r="9" fill="white"/>
+      <path d="M30 52C30 42 38 36 48 36C58 36 66 42 66 52" fill="white"/>
+    </svg>
+    <div class="app-icon-label">04 · Человек</div>
+  </div>
+
+  <div class="app-icon">
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" style="border-radius:22px">
+      <rect width="96" height="96" fill="#2563EB"/>
+      <path d="M48 10C34 10 22 22 22 36C22 54 48 86 48 86C48 86 74 54 74 36C74 22 62 10 48 10Z" fill="white"/>
+      <path d="M48 52V22" stroke="#2563EB" stroke-width="5" stroke-linecap="round"/>
+      <path d="M36 34L48 22L60 34" stroke="#2563EB" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <div class="app-icon-label">06 · Рост</div>
+  </div>
+
+</div>
+
+</body>
+</html>
