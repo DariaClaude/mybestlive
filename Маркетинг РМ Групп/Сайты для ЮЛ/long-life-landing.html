@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Лонг Лайф — Персонал на долгосрок</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal:    #0D9488;
+      --teal-lt: #2DD4BF;
+      --teal-dk: #0F766E;
+      --dark:    #111827;
+      --mid:     #374151;
+      --muted:   #9CA3AF;
+      --bg:      #FAFAFA;
+      --white:   #FFFFFF;
+      --line:    rgba(0,0,0,0.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,250,0.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      height: 56px; padding: 0 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700; color: var(--dark); text-decoration: none; letter-spacing: -0.3px;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; letter-spacing: 0.2px; }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-cta {
+      font-size: 13px; font-weight: 600; color: var(--teal); text-decoration: none;
+      border-bottom: 1.5px solid var(--teal); padding-bottom: 1px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.7; }
+
+    /* HERO */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 140px 60px 80px;
+      display: grid; grid-template-columns: 1fr 380px; gap: 80px; align-items: end;
+    }
+    .hero-left {}
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--teal); font-weight: 600; margin-bottom: 28px;
+    }
+    .hero-tag::before { content: ''; width: 28px; height: 1.5px; background: var(--teal); }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5.5vw, 72px); line-height: 1.05;
+      letter-spacing: -2px; color: var(--dark); margin-bottom: 28px;
+    }
+    h1 em { font-style: italic; color: var(--teal); font-weight: 400; }
+    .hero-sub {
+      font-size: 16px; line-height: 1.7; color: var(--mid);
+      font-weight: 300; max-width: 480px; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 32px; background: var(--teal); color: var(--white);
+      border: none; border-radius: 4px; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--teal-dk); transform: translateY(-1px); }
+    .btn-ghost {
+      padding: 14px 32px; background: transparent; color: var(--dark);
+      border: 1.5px solid rgba(0,0,0,0.15); border-radius: 4px; font-size: 14px;
+      cursor: pointer; text-decoration: none; transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--dark); }
+
+    .hero-right {
+      padding-bottom: 8px;
+    }
+    .hero-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: 8px; padding: 36px; margin-bottom: 12px;
+    }
+    .hero-card:last-child { margin-bottom: 0; }
+    .hc-num {
+      font-size: 48px; font-weight: 700; color: var(--teal); letter-spacing: -2px;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .hc-num sup { font-size: 22px; vertical-align: super; }
+    .hc-label { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* DIVIDER */
+    .divider {
+      max-width: 1100px; margin: 0 auto; padding: 0 60px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ABOUT */
+    .about {
+      max-width: 1100px; margin: 0 auto; padding: 80px 60px;
+      display: grid; grid-template-columns: 240px 1fr; gap: 80px; align-items: start;
+    }
+    .about-label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; padding-top: 4px;
+    }
+    .about-content {}
+    .about-lead {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; line-height: 1.45; color: var(--dark);
+      margin-bottom: 20px; font-weight: 400;
+    }
+    .about-lead strong { color: var(--teal); font-weight: 700; }
+    .about-text { font-size: 15px; line-height: 1.75; color: var(--mid); font-weight: 300; }
+    .about-perks {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px;
+    }
+    .perk-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .perk-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .perk-line { width: 24px; height: 2px; background: var(--teal); margin-bottom: 14px; }
+
+    /* SERVICES */
+    .services {
+      background: var(--dark); padding: 80px 0;
+    }
+    .services-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 60px;
+    }
+    .section-label-light {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 8px;
+    }
+    .section-title-light {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--white);
+      margin-bottom: 48px; letter-spacing: -0.5px;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden;
+    }
+    .svc-item {
+      padding: 28px 32px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+    }
+    .svc-item:nth-child(even) { border-right: none; }
+    .svc-item:nth-last-child(-n+2) { border-bottom: none; }
+    .svc-item:hover { background: rgba(255,255,255,0.03); }
+    .svc-num { font-size: 11px; color: var(--teal-lt); font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+    .svc-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+    .svc-text { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+    /* STEPS */
+    .steps {
+      max-width: 1100px; margin: 0 auto; padding: 80px 60px;
+    }
+    .steps-header {
+      display: grid; grid-template-columns: 240px 1fr; gap: 80px; margin-bottom: 56px;
+    }
+    .steps-label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; padding-top: 4px;
+    }
+    .steps-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+    .timeline {
+      display: flex; position: relative; padding-top: 0;
+    }
+    .timeline::before {
+      content: ''; position: absolute;
+      top: 20px; left: calc(10% + 20px); right: calc(10% + 20px);
+      height: 1px; background: var(--line); z-index: 0;
+    }
+    .t-step {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .t-dot {
+      width: 40px; height: 40px; background: var(--white);
+      border: 1.5px solid var(--line); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; transition: border-color 0.2s, background 0.2s;
+    }
+    .t-step:first-child .t-dot { background: var(--teal); border-color: var(--teal); }
+    .t-step:first-child .t-dot-num { color: var(--white); }
+    .t-step:hover .t-dot { border-color: var(--teal); }
+    .t-dot-num { font-size: 12px; font-weight: 700; color: var(--muted); }
+    .t-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; text-align: center; }
+    .t-text { font-size: 12px; color: var(--muted); line-height: 1.55; text-align: center; max-width: 130px; }
+
+    /* CONTACTS */
+    .contacts {
+      max-width: 1100px; margin: 0 auto; padding: 0 60px 80px;
+    }
+    .contacts-grid {
+      display: grid; grid-template-columns: 240px 1fr; gap: 80px; align-items: start;
+    }
+    .contacts-label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; padding-top: 4px;
+    }
+    .contacts-right {}
+    .contacts-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 700; color: var(--dark);
+      margin-bottom: 32px; letter-spacing: -0.5px;
+    }
+    .contacts-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 40px;
+    }
+    .c-field-label {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; margin-bottom: 6px;
+    }
+    .c-field-val {
+      font-size: 15px; color: var(--dark); font-weight: 500;
+    }
+    .c-field-val a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(13,148,136,0.3); }
+    .c-field-val a:hover { border-color: var(--teal); }
+    .req-box {
+      border-top: 1px solid var(--line); padding-top: 28px; margin-top: 0;
+    }
+    .req-title { font-size: 12px; font-weight: 700; color: var(--mid); margin-bottom: 14px; letter-spacing: 0.3px; }
+    .req-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .req-item {}
+    .req-key { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .req-val { font-size: 13px; color: var(--dark); font-weight: 600; }
+    .btn-cta {
+      display: inline-block; margin-bottom: 32px;
+      padding: 14px 32px; background: var(--teal); color: var(--white);
+      border-radius: 4px; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-cta:hover { background: var(--teal-dk); }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark); padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none;
+    }
+    .footer-logo span { color: var(--teal-lt); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 48px; gap: 40px; }
+      .hero-right { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .hero-card { margin-bottom: 0; }
+      .about { grid-template-columns: 1fr; gap: 24px; padding: 48px 24px; }
+      .about-perks { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .services-inner { padding: 0 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .svc-item { border-right: none; }
+      .svc-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .svc-item:last-child { border-bottom: none; }
+      .steps { padding: 48px 24px; }
+      .steps-header { grid-template-columns: 1fr; gap: 12px; }
+      .contacts { padding: 0 24px 48px; }
+      .contacts-grid { grid-template-columns: 1fr; gap: 24px; }
+      .contacts-row { grid-template-columns: 1fr 1fr; }
+      .req-grid { grid-template-columns: 1fr 1fr; }
+      footer { padding: 20px 24px; }
+      .divider { padding: 0 24px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      h1 { letter-spacing: -1px; }
+      .hero-right { grid-template-columns: 1fr; }
+      .about-perks { grid-template-columns: 1fr; }
+      .timeline { flex-direction: column; align-items: flex-start; gap: 0; }
+      .timeline::before { display: none; }
+      .t-step { flex-direction: row; align-items: flex-start; gap: 16px; width: 100%; padding-bottom: 24px; }
+      .t-step:last-child { padding-bottom: 0; }
+      .t-dot { margin-bottom: 0; flex-shrink: 0; }
+      .t-title, .t-text { text-align: left; }
+      .contacts-row { grid-template-columns: 1fr; }
+      .req-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Лонг<span>Лайф</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">О компании</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#steps">Этапы</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a href="#contacts" class="nav-cta">Оставить заявку</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Аутсорсинг персонала · Москва</div>
+    <h1>Персонал,<br>которому <em>доверяют</em><br>долгосрочно</h1>
+    <p class="hero-sub">Предоставляем проверенных сотрудников для склада, ритейла, HoReCa и производства. Работаем на результат — берём на себя подбор, оформление и операционное сопровождение.</p>
+    <div class="hero-btns">
+      <a href="#contacts" class="btn-primary">Обсудить задачу</a>
+      <a href="#services" class="btn-ghost">Наши услуги</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hc-num">5<sup>+</sup></div>
+      <div class="hc-label">лет стабильной работы<br>на рынке персонала</div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-num">200<sup>+</sup></div>
+      <div class="hc-label">сотрудников выведены<br>на объекты ежемесячно</div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-num">10<sup>+</sup></div>
+      <div class="hc-label">направлений<br>деятельности</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-label">О компании</div>
+  <div class="about-content">
+    <p class="about-lead">
+      ООО «Лонг Лайф» — это агентство долгосрочного партнёрства.<br>
+      Мы не закрываем вакансию — мы <strong>выстраиваем команду</strong>.
+    </p>
+    <p class="about-text">
+      Работаем с объектами, где нужны надёжность и стабильность: склады, торговые сети, производство, кейтеринг. Берём на себя полный операционный цикл: от подбора и проверки кандидатов до кадрового сопровождения на протяжении всего договора.
+    </p>
+    <div class="about-perks">
+      <div>
+        <div class="perk-line"></div>
+        <div class="perk-title">Долгосрочная ориентация</div>
+        <div class="perk-text">Строим отношения, а не разовые сделки. Персонал работает — мы сопровождаем.</div>
+      </div>
+      <div>
+        <div class="perk-line"></div>
+        <div class="perk-title">Полная документация</div>
+        <div class="perk-text">Всё оформление, учёт и отчётность на нас. Вы получаете чистый результат.</div>
+      </div>
+      <div>
+        <div class="perk-line"></div>
+        <div class="perk-title">Оперативная замена</div>
+        <div class="perk-text">Гарантируем бесперебойность объекта — в случае выбытия сотрудника заменяем без простоя.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="section-label-light">Услуги</div>
+    <div class="section-title-light">Что мы делаем</div>
+    <div class="services-grid">
+      <div class="svc-item">
+        <div class="svc-num">01</div>
+        <div class="svc-title">Складская логистика</div>
+        <div class="svc-text">Управление заказами: сборка, размещение и выдача. Грузообработка — механизированная и ручная.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">02</div>
+        <div class="svc-title">Комплектация и упаковка</div>
+        <div class="svc-text">Индивидуальная комплектация товаров, упаковка, предпродажная подготовка и стикерование.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">03</div>
+        <div class="svc-title">Подсобные и вспомогательные работы</div>
+        <div class="svc-text">Ручной физический труд, сортировка, маркировка, внутрискладское перемещение.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">04</div>
+        <div class="svc-title">Ответственное хранение</div>
+        <div class="svc-text">Складское администрирование: перемещение запасов и режим ответственного хранения.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">05</div>
+        <div class="svc-title">Клининг и благоустройство</div>
+        <div class="svc-text">Промышленная уборка объектов, поддержание чистоты территорий и помещений.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">06</div>
+        <div class="svc-title">Курьерская логистика</div>
+        <div class="svc-text">Доставка «последней мили», курьеры и водители для логистических операций.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">07</div>
+        <div class="svc-title">HoReCa — персонал</div>
+        <div class="svc-text">Поддержка бизнес-процессов в гостинично-ресторанном бизнесе: сервис и организация.</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">08</div>
+        <div class="svc-title">Аутсорсинг и рекрутинг</div>
+        <div class="svc-text">Передача непрофильных функций и закрытие кадровых потребностей под ключ.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps" id="steps">
+  <div class="steps-header">
+    <div class="steps-label">Этапы</div>
+    <div class="steps-title">Как мы работаем</div>
+  </div>
+  <div class="timeline">
+    <div class="t-step">
+      <div class="t-dot"><div class="t-dot-num">01</div></div>
+      <div class="t-title">Заявка</div>
+      <div class="t-text">Оставляете запрос — описываете объект и потребность</div>
+    </div>
+    <div class="t-step">
+      <div class="t-dot"><div class="t-dot-num">02</div></div>
+      <div class="t-title">Анализ</div>
+      <div class="t-text">Изучаем задачу, предлагаем формат сотрудничества</div>
+    </div>
+    <div class="t-step">
+      <div class="t-dot"><div class="t-dot-num">03</div></div>
+      <div class="t-title">Договор</div>
+      <div class="t-text">Согласуем условия и заключаем официальный договор</div>
+    </div>
+    <div class="t-step">
+      <div class="t-dot"><div class="t-dot-num">04</div></div>
+      <div class="t-title">Подбор</div>
+      <div class="t-text">Находим, проверяем и выводим персонал на объект</div>
+    </div>
+    <div class="t-step">
+      <div class="t-dot"><div class="t-dot-num">05</div></div>
+      <div class="t-title">Сопровождение</div>
+      <div class="t-text">Ведём весь учёт и поддерживаем бесперебойность</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div style="height:48px;"></div>
+  <div class="contacts-grid">
+    <div class="contacts-label">Контакты</div>
+    <div class="contacts-right">
+      <div class="contacts-title">Свяжитесь с нами</div>
+      <div class="contacts-row">
+        <div>
+          <div class="c-field-label">Телефон</div>
+          <div class="c-field-val"><a href="tel:+7">+7 (___) ___-__-__</a></div>
+        </div>
+        <div>
+          <div class="c-field-label">E-mail</div>
+          <div class="c-field-val"><a href="mailto:info@long-life.ru">info@long-life.ru</a></div>
+        </div>
+        <div>
+          <div class="c-field-label">Адрес</div>
+          <div class="c-field-val" style="font-size:13px;">г. Москва<br><span style="color:var(--muted);">уточняется</span></div>
+        </div>
+      </div>
+      <a href="mailto:info@long-life.ru" class="btn-cta">Оставить заявку</a>
+      <div class="req-box">
+        <div class="req-title">Реквизиты</div>
+        <div class="req-grid">
+          <div class="req-item">
+            <div class="req-key">Компания</div>
+            <div class="req-val">ООО «Лонг Лайф»</div>
+          </div>
+          <div class="req-item">
+            <div class="req-key">ИНН</div>
+            <div class="req-val">уточняется</div>
+          </div>
+          <div class="req-item">
+            <div class="req-key">КПП</div>
+            <div class="req-val">уточняется</div>
+          </div>
+          <div class="req-item">
+            <div class="req-key">ОГРН</div>
+            <div class="req-val">уточняется</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Лонг<span>Лайф</span></a>
+  <div class="footer-copy">© 2025 ООО «Лонг Лайф». Все права защищены.</div>
+  <div class="footer-copy">Аутсорсинг персонала · Москва</div>
+</footer>
+
+</body>
+</html>
