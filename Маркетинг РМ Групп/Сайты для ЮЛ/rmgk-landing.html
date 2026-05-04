@@ -4,261 +4,258 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>РМГК — Комплексные операционные услуги</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --primary:    #FF5B1F;
-      --primary-lt: #FF8C5A;
-      --accent-bg:  #FFE0D4;
-      --accent-mid: #ffc4a8;
-      --dark:       #1C1C2E;
-      --dark-lt:    #2d2d45;
-      --white:      #ffffff;
-      --gray-bg:    #faf7f5;
-      --gray-text:  #5c5566;
-      --gray-line:  #eeddd6;
-      --text:       #1C1C2E;
+      --bg:      #FFF8F2;
+      --orange:  #FF5B1F;
+      --yellow:  #FFE44D;
+      --black:   #111111;
+      --white:   #ffffff;
+      --card-bg: #ffffff;
+      --muted:   #555555;
     }
-
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', Arial, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--black); -webkit-font-smoothing: antialiased; }
 
-    /* ─── NAV ─── */
+    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(28, 28, 46, 0.96);
-      backdrop-filter: blur(8px);
+      background: var(--black); padding: 0 40px; height: 60px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 6%; height: 64px;
+      border-bottom: 3px solid var(--orange);
     }
-    .nav-logo { color: var(--white); font-size: 1.15rem; font-weight: 700; letter-spacing: .03em; text-decoration: none; }
-    .nav-logo span { color: var(--primary); }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,.75); font-size: .88rem; text-decoration: none; transition: color .2s; }
-    .nav-links a:hover { color: var(--white); }
+    .nav-logo { color: var(--white); font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-decoration: none; }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 700;
+      text-decoration: none; padding: 6px 14px;
+      border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all 0.15s;
+    }
+    .nav-links a:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
     .nav-cta {
-      background: var(--primary); color: var(--white); border: none; cursor: pointer;
-      padding: 9px 22px; border-radius: 6px; font-size: .88rem; font-weight: 600;
-      text-decoration: none; transition: background .2s;
+      padding: 9px 22px; background: var(--orange); color: var(--white);
+      border: 2px solid var(--orange); font-size: 13px; font-weight: 800;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
+      box-shadow: 3px 3px 0 var(--yellow); transition: all 0.1s;
     }
-    .nav-cta:hover { background: #e04d15; }
+    .nav-cta:hover { box-shadow: 1px 1px 0 var(--yellow); transform: translate(2px, 2px); }
 
-    /* ─── HERO ─── */
+    /* HERO */
     .hero {
-      min-height: 100vh;
-      background:
-        linear-gradient(135deg, rgba(28,28,46,.91) 0%, rgba(28,28,46,.82) 55%, rgba(58,34,16,.9) 100%),
-        url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-      display: flex; align-items: center;
-      padding: 100px 6% 60px;
-      position: relative; overflow: hidden;
+      min-height: 100vh; background: var(--bg);
+      padding: 120px 40px 60px;
+      display: grid; grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px; align-items: center;
+      max-width: 1200px; margin: 0 auto;
     }
-    .hero::after {
-      content: '';
-      position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
-      width: 480px; height: 480px;
-      background: radial-gradient(circle, rgba(255,91,31,.18) 0%, transparent 68%);
-      pointer-events: none;
-    }
-    .hero-inner { max-width: 680px; position: relative; z-index: 1; }
-    .hero-badge {
+    .hero-left {}
+    .hero-tag {
       display: inline-block;
-      background: rgba(255,91,31,.18); border: 1px solid rgba(255,91,31,.45);
-      color: var(--accent-mid); font-size: .8rem; font-weight: 600; letter-spacing: .09em;
-      text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
+      background: var(--orange); color: var(--white);
+      font-size: 11px; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; padding: 6px 14px;
+      border: 2px solid var(--black); box-shadow: 3px 3px 0 var(--black);
+      margin-bottom: 28px;
     }
     .hero h1 {
-      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; line-height: 1.18;
-      color: var(--white); margin-bottom: 22px;
+      font-size: clamp(48px, 7vw, 88px); font-weight: 900;
+      line-height: 0.95; letter-spacing: -2px; text-transform: uppercase;
+      margin-bottom: 28px;
     }
-    .hero h1 span { color: var(--primary); }
+    .hero h1 .h-accent {
+      display: inline-block;
+      background: var(--yellow); padding: 0 8px;
+      border: 3px solid var(--black);
+      transform: rotate(-1.5deg); font-style: italic;
+    }
     .hero-sub {
-      font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,.78);
-      margin-bottom: 40px; max-width: 560px;
+      font-size: 16px; color: var(--muted); line-height: 1.7;
+      max-width: 480px; margin-bottom: 36px; font-weight: 400;
     }
     .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--primary); color: var(--white); text-decoration: none;
-      padding: 14px 32px; border-radius: 8px; font-size: .95rem; font-weight: 600;
-      transition: background .2s, transform .12s;
+    .btn-brutal {
+      padding: 14px 28px; background: var(--black); color: var(--white);
+      border: 3px solid var(--black); font-size: 14px; font-weight: 800;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
+      box-shadow: 5px 5px 0 var(--orange); transition: all 0.1s;
     }
-    .btn-primary:hover { background: #e04d15; }
-    .btn-primary:active { transform: scale(.97); }
-    .btn-outline {
-      background: transparent; color: var(--white); text-decoration: none;
-      border: 2px solid rgba(255,255,255,.4);
-      padding: 12px 30px; border-radius: 8px; font-size: .95rem; font-weight: 500;
-      transition: border-color .2s, background .2s;
+    .btn-brutal:hover { box-shadow: 2px 2px 0 var(--orange); transform: translate(3px, 3px); }
+    .btn-brutal-outline {
+      padding: 14px 28px; background: transparent; color: var(--black);
+      border: 3px solid var(--black); font-size: 14px; font-weight: 800;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
+      box-shadow: 5px 5px 0 var(--black); transition: all 0.1s;
     }
-    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
-    .hero-scroll {
-      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      color: rgba(255,255,255,.4); font-size: .75rem;
-    }
-    .hero-scroll-dot {
-      width: 6px; height: 6px; background: rgba(255,91,31,.6); border-radius: 50%;
-      animation: bounce 1.6s ease-in-out infinite;
-    }
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+    .btn-brutal-outline:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(3px, 3px); }
 
-    /* ─── SECTIONS ─── */
-    section { padding: 80px 6%; }
-    .section-label {
-      font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--primary); margin-bottom: 10px;
+    .hero-right {}
+    .hero-box {
+      background: var(--white); border: 3px solid var(--black);
+      box-shadow: 10px 10px 0 var(--black); padding: 36px;
+      transform: rotate(1.5deg);
     }
-    .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; color: var(--dark); line-height: 1.25; }
-    .section-sub { font-size: 1rem; color: var(--gray-text); margin-top: 12px; max-width: 560px; line-height: 1.7; }
-    .divider { width: 48px; height: 4px; background: var(--primary); border-radius: 2px; margin: 18px 0 40px; }
+    .hero-box-label {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      font-weight: 700; color: #999; margin-bottom: 12px;
+    }
+    .hero-box-num { font-size: 64px; font-weight: 900; letter-spacing: -3px; line-height: 1; color: var(--black); }
+    .hero-box-num span { color: var(--orange); }
+    .hero-box-desc { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+    .hero-box-divider { border: none; border-top: 2px solid #eee; margin: 20px 0; }
+    .hero-box-list { display: flex; flex-direction: column; gap: 8px; }
+    .hero-box-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--black); }
+    .hero-box-item::before { content: '■'; color: var(--orange); font-size: 10px; }
 
-    /* ─── ABOUT ─── */
-    .about { background: var(--dark); }
-    .about .section-label { color: var(--accent-mid); }
-    .about .section-title { color: var(--white); }
-    .about .divider { background: var(--primary); }
-    .about-lead {
-      font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,.7);
-      max-width: 680px; margin-bottom: 56px;
+    /* ABOUT */
+    .about { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+    .section-stamp {
+      display: inline-block;
+      background: var(--black); color: var(--white);
+      font-size: 10px; font-weight: 900; letter-spacing: 3px;
+      text-transform: uppercase; padding: 5px 14px;
+      margin-bottom: 20px;
     }
-    .about-features {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; background: rgba(255,255,255,.06); border-radius: 16px; overflow: hidden;
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 900;
+      text-transform: uppercase; letter-spacing: -1px; line-height: 1;
+      margin-bottom: 40px;
     }
-    .feature {
-      padding: 40px 36px; background: var(--dark-lt);
-      position: relative; overflow: hidden;
-      transition: background .25s;
+    .section-title .accent { color: var(--orange); }
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .about-card {
+      background: var(--white); border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black); padding: 32px;
     }
-    .feature:hover { background: #252540; }
-    .feature-num {
-      font-size: 4rem; font-weight: 800; line-height: 1;
-      color: rgba(255,91,31,.18); letter-spacing: -.04em;
-      margin-bottom: 20px; display: block;
+    .about-card-icon { font-size: 32px; margin-bottom: 16px; }
+    .about-card-title { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .about-card-text { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .about-card-stripe {
+      height: 4px; background: var(--orange); margin-bottom: 20px;
     }
-    .feature-icon {
-      font-size: 1.8rem; margin-bottom: 16px; display: block;
-    }
-    .feature-title {
-      font-size: 1.05rem; font-weight: 700; color: var(--white);
-      margin-bottom: 12px;
-    }
-    .feature-title span { color: var(--primary); }
-    .feature-text {
-      font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.7;
-    }
-    .feature-line {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 3px; background: var(--primary); transform: scaleX(0);
-      transform-origin: left; transition: transform .3s ease;
-    }
-    .feature:hover .feature-line { transform: scaleX(1); }
 
-    /* ─── SERVICES ─── */
-    .services { background: var(--white); }
+    /* SERVICES */
+    .services { background: var(--black); padding: 80px 40px; }
+    .services .section-stamp { background: var(--orange); }
+    .services .section-title { color: var(--white); }
+    .services .section-title .accent { color: var(--yellow); }
     .services-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 24px; margin-top: 40px;
+      gap: 3px; background: #333; border: 3px solid #333;
+      margin-top: 0;
     }
-    .service-card {
-      background: var(--gray-bg); border-radius: 12px; padding: 32px 28px;
-      border: 1px solid var(--gray-line); transition: box-shadow .2s, transform .2s;
+    .svc-card {
+      background: var(--black); padding: 32px 28px;
+      border: none; transition: background 0.2s;
     }
-    .service-card:hover { box-shadow: 0 8px 32px rgba(255,91,31,.12); transform: translateY(-3px); }
-    .service-icon {
-      width: 52px; height: 52px; border-radius: 12px;
-      background: var(--accent-bg); display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; font-size: 1.5rem;
+    .svc-card:hover { background: #1a1a1a; }
+    .svc-icon { font-size: 28px; margin-bottom: 14px; }
+    .svc-num-label {
+      font-size: 10px; letter-spacing: 2px; color: var(--orange);
+      font-weight: 700; margin-bottom: 10px; text-transform: uppercase;
     }
-    .service-title { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
-    .service-text { font-size: .88rem; color: var(--gray-text); line-height: 1.65; }
+    .svc-title { font-size: 14px; font-weight: 800; color: var(--white); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 10px; }
+    .svc-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
 
-    /* ─── STEPS ─── */
-    .steps { background: var(--dark); }
-    .steps .section-label { color: var(--accent-mid); }
-    .steps .section-title { color: var(--white); }
-    .steps .section-sub { color: rgba(255,255,255,.65); }
-    .steps .divider { background: var(--primary); }
-    .steps-grid {
+    /* STEPS */
+    .steps { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+    .steps-row {
       display: grid; grid-template-columns: repeat(5, 1fr);
-      gap: 0; position: relative; margin-top: 40px;
+      gap: 0; margin-top: 40px; position: relative;
     }
-    .steps-grid::before {
-      content: '';
-      position: absolute; top: 28px; left: calc(10% + 14px); right: calc(10% + 14px);
-      height: 2px; background: rgba(255,91,31,.25);
+    .steps-row::before {
+      content: ''; position: absolute;
+      top: 28px; left: calc(10% + 10px); right: calc(10% + 10px);
+      height: 3px; background: var(--orange);
     }
-    .step { text-align: center; padding: 0 12px; position: relative; }
-    .step-num {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--primary); color: var(--white);
-      font-size: 1.2rem; font-weight: 700;
+    .step { text-align: center; padding: 0 8px; }
+    .step-circle {
+      width: 56px; height: 56px; border-radius: 0;
+      background: var(--yellow); color: var(--black);
+      border: 3px solid var(--black); box-shadow: 3px 3px 0 var(--black);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 18px; position: relative; z-index: 1;
-      box-shadow: 0 0 0 6px rgba(255,91,31,.15);
+      margin: 0 auto 16px; position: relative; z-index: 1;
+      font-size: 18px; font-weight: 900;
     }
-    .step-title { font-size: .9rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .step-text { font-size: .8rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+    .step-title { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .step-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-    /* ─── CONTACTS ─── */
-    .contacts { background: var(--accent-bg); }
-    .contacts-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 40px; margin-top: 40px;
+    /* CONTACTS */
+    .contacts { background: var(--bg); padding: 80px 40px; }
+    .contacts-wrap { max-width: 1200px; margin: 0 auto; }
+    .contacts-inner {
+      background: var(--white); border: 3px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      margin-top: 0;
     }
-    .contact-block h3 {
-      font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 20px;
-      padding-bottom: 12px; border-bottom: 2px solid var(--accent-mid);
+    .c-left { padding: 48px; border-right: 3px solid var(--black); }
+    .c-right { padding: 48px; }
+    .c-block-title {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      font-weight: 900; color: var(--orange); margin-bottom: 24px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--black);
     }
-    .contact-row { display: flex; flex-direction: column; gap: 14px; }
-    .contact-item { display: flex; align-items: flex-start; gap: 14px; }
-    .contact-icon {
-      width: 40px; height: 40px; min-width: 40px; border-radius: 8px;
-      background: var(--white); display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; box-shadow: 0 2px 8px rgba(255,91,31,.12);
+    .c-row { display: flex; flex-direction: column; gap: 20px; }
+    .c-item { display: flex; flex-direction: column; gap: 3px; }
+    .c-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800; color: #999; }
+    .c-value { font-size: 14px; color: var(--black); font-weight: 600; }
+    .c-value a { color: var(--orange); text-decoration: none; border-bottom: 2px solid var(--orange); }
+    .c-cta {
+      margin-top: 32px; display: inline-block;
+      background: var(--orange); color: var(--white);
+      padding: 14px 28px; font-size: 13px; font-weight: 900;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
+      border: 3px solid var(--black); box-shadow: 5px 5px 0 var(--black);
+      transition: all 0.1s;
     }
-    .contact-info { display: flex; flex-direction: column; }
-    .contact-label { font-size: .75rem; color: var(--gray-text); font-weight: 500; text-transform: uppercase; letter-spacing: .07em; }
-    .contact-value { font-size: .95rem; font-weight: 600; color: var(--dark); margin-top: 2px; }
-    .contact-value a { color: var(--primary); text-decoration: none; }
-    .contact-value a:hover { text-decoration: underline; }
+    .c-cta:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(3px, 3px); }
+    .req-table { width: 100%; border-collapse: collapse; }
+    .req-table tr { border-bottom: 2px solid #f0f0f0; }
+    .req-table tr:last-child { border-bottom: none; }
+    .req-table td { padding: 10px 0; font-size: 13px; vertical-align: top; }
+    .req-table td:first-child { color: #999; width: 45%; font-weight: 500; }
+    .req-table td:last-child { color: var(--black); font-weight: 700; }
 
-    .requisites-table { width: 100%; border-collapse: collapse; }
-    .requisites-table tr { border-bottom: 1px solid var(--gray-line); }
-    .requisites-table tr:last-child { border-bottom: none; }
-    .requisites-table td { padding: 10px 0; font-size: .88rem; vertical-align: top; }
-    .requisites-table td:first-child { color: var(--gray-text); width: 45%; font-weight: 500; }
-    .requisites-table td:last-child { color: var(--dark); font-weight: 600; }
-
-    /* ─── FOOTER ─── */
+    /* FOOTER */
     footer {
-      background: var(--dark); color: rgba(255,255,255,.5);
-      padding: 28px 6%; display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; font-size: .82rem;
+      background: var(--black); padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      border-top: 3px solid var(--orange);
     }
-    .footer-logo { color: var(--white); font-weight: 700; font-size: .95rem; }
-    .footer-logo span { color: var(--primary); }
+    .footer-logo { color: var(--white); font-size: 18px; font-weight: 900; }
+    .footer-logo span { color: var(--orange); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer-inn { font-size: 12px; color: rgba(255,255,255,0.3); }
 
-    /* ─── RESPONSIVE ─── */
+    /* RESPONSIVE */
     @media (max-width: 900px) {
-      .about-features { grid-template-columns: 1fr; }
+      nav { padding: 0 20px; }
+      .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; }
+      .about, .steps { padding: 60px 20px; }
+      .services { padding: 60px 20px; }
+      .about-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
       .services-grid { grid-template-columns: 1fr 1fr; }
-      .hero { padding: 100px 5% 60px; }
-      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
-      .steps-grid::before { display: none; }
-      .step { display: flex; align-items: flex-start; gap: 18px; text-align: left; }
-      .step-num { min-width: 56px; margin: 0; }
+      .steps-row { grid-template-columns: 1fr; gap: 20px; }
+      .steps-row::before { display: none; }
+      .step { text-align: left; display: flex; align-items: flex-start; gap: 16px; padding: 0; }
+      .step-circle { min-width: 56px; margin: 0; }
+      .contacts { padding: 60px 20px; }
+      .contacts-inner { grid-template-columns: 1fr; }
+      .c-left { border-right: none; border-bottom: 3px solid var(--black); }
+      footer { padding: 24px 20px; }
     }
     @media (max-width: 680px) {
-      nav { padding: 0 5%; }
+      nav { padding: 0 16px; }
       .nav-links { display: none; }
-      .about-grid, .contacts-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 44px; }
+      .about-grid { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
-      section { padding: 60px 5%; }
+      .contacts-inner { box-shadow: 4px 4px 0 var(--black); }
     }
   </style>
 </head>
@@ -270,203 +267,180 @@
   <ul class="nav-links">
     <li><a href="#about">О компании</a></li>
     <li><a href="#services">Услуги</a></li>
-    <li><a href="#steps">Сотрудничество</a></li>
+    <li><a href="#steps">Этапы</a></li>
     <li><a href="#contacts">Контакты</a></li>
   </ul>
   <a href="#contacts" class="nav-cta">Связаться</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">Операционные услуги · Москва</div>
-    <h1>РМГК — Комплексные <span>операционные решения</span> для вашего бизнеса</h1>
+<div class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Операционные услуги · Москва</div>
+    <h1>Комплексные<br><span class="h-accent">решения</span></h1>
     <p class="hero-sub">Широкий спектр услуг: от складской логистики и доставки до клининга и HoReCa. Берём на себя непрофильные операции — вы сосредотачиваетесь на росте.</p>
     <div class="hero-btns">
-      <a href="#contacts" class="btn-primary">Оставить заявку</a>
-      <a href="#services" class="btn-outline">Наши услуги</a>
+      <a href="#contacts" class="btn-brutal">Оставить заявку</a>
+      <a href="#services" class="btn-brutal-outline">Наши услуги</a>
     </div>
   </div>
-  <div class="hero-scroll">
-    <span>Листайте вниз</span>
-    <div class="hero-scroll-dot"></div>
+  <div class="hero-right">
+    <div class="hero-box">
+      <div class="hero-box-label">Направлений работы</div>
+      <div class="hero-box-num">6<span>+</span></div>
+      <div class="hero-box-desc">операционных сервисов под ключ</div>
+      <div class="hero-box-divider"></div>
+      <div class="hero-box-list">
+        <div class="hero-box-item">Складская логистика</div>
+        <div class="hero-box-item">Погрузка и разгрузка</div>
+        <div class="hero-box-item">HoReCa</div>
+        <div class="hero-box-item">Клининг</div>
+        <div class="hero-box-item">Доставка товара</div>
+      </div>
+    </div>
   </div>
-</section>
+</div>
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <div class="section-label">О компании</div>
-  <div class="section-title">Надёжный партнёр с сильным брендом и технологиями</div>
-  <div class="divider"></div>
-  <p class="about-lead">ООО «РМГК» — многопрофильная операционная компания с защищённым товарным знаком, франшизой и собственными IT-продуктами. Берём на себя весь цикл непрофильных операций — вы сосредотачиваетесь на росте бизнеса.</p>
-  <div class="about-features">
-    <div class="feature">
-      <span class="feature-num">01</span>
-      <span class="feature-icon">™</span>
-      <div class="feature-title">Товарный знак <span>РМГ</span></div>
-      <div class="feature-text">Работаем под защищённым брендом с устойчивой репутацией на рынке операционных услуг России. Узнаваемость и доверие партнёров.</div>
-      <div class="feature-line"></div>
+  <div class="section-stamp">О компании</div>
+  <div class="section-title">Надёжный <span class="accent">партнёр</span><br>с технологиями</div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-card-stripe"></div>
+      <div class="about-card-icon">™</div>
+      <div class="about-card-title">Товарный знак РМГ</div>
+      <div class="about-card-text">Работаем под защищённым брендом с устойчивой репутацией на рынке операционных услуг России. Узнаваемость и доверие партнёров.</div>
     </div>
-    <div class="feature">
-      <span class="feature-num">02</span>
-      <span class="feature-icon">🤝</span>
-      <div class="feature-title">Франшиза</div>
-      <div class="feature-text">Проверенная масштабируемая бизнес-модель, успешно тиражируемая в регионах. Единый стандарт качества на каждом объекте.</div>
-      <div class="feature-line"></div>
+    <div class="about-card">
+      <div class="about-card-stripe"></div>
+      <div class="about-card-icon">🤝</div>
+      <div class="about-card-title">Франшиза</div>
+      <div class="about-card-text">Проверенная масштабируемая бизнес-модель, успешно тиражируемая в регионах. Единый стандарт качества на каждом объекте.</div>
     </div>
-    <div class="feature">
-      <span class="feature-num">03</span>
-      <span class="feature-icon">💻</span>
-      <div class="feature-title">IT-продукты</div>
-      <div class="feature-text">Собственные технологические решения для управления операциями, контроля исполнителей и прозрачной отчётности в реальном времени.</div>
-      <div class="feature-line"></div>
+    <div class="about-card">
+      <div class="about-card-stripe"></div>
+      <div class="about-card-icon">💻</div>
+      <div class="about-card-title">IT-продукты</div>
+      <div class="about-card-text">Собственные технологические решения для управления операциями, контроля исполнителей и прозрачной отчётности в реальном времени.</div>
     </div>
   </div>
 </section>
 
 <!-- SERVICES -->
 <section class="services" id="services">
-  <div class="section-label">Услуги</div>
-  <div class="section-title">Что мы делаем для вашего бизнеса</div>
-  <div class="divider"></div>
+  <div class="section-stamp">Услуги</div>
+  <div class="section-title">Что мы<br><span class="accent">делаем</span></div>
   <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">🏭</div>
-      <div class="service-title">Складская логистика</div>
-      <div class="service-text">Сборка, размещение и выдача заказов. Сортировка и стикеровка товара. Хранение и перемещение товара на складе.</div>
+    <div class="svc-card">
+      <div class="svc-icon">🏭</div>
+      <div class="svc-num-label">01</div>
+      <div class="svc-title">Складская логистика</div>
+      <div class="svc-text">Сборка, размещение и выдача заказов. Сортировка и стикеровка товара. Хранение и перемещение на складе.</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🚛</div>
-      <div class="service-title">Погрузка и разгрузка</div>
-      <div class="service-text">Профессиональные бригады для погрузочно-разгрузочных работ любого объёма и сложности.</div>
+    <div class="svc-card">
+      <div class="svc-icon">🚛</div>
+      <div class="svc-num-label">02</div>
+      <div class="svc-title">Погрузка и разгрузка</div>
+      <div class="svc-text">Профессиональные бригады для погрузочно-разгрузочных работ любого объёма и сложности.</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">📦</div>
-      <div class="service-title">Комплектовка и упаковка</div>
-      <div class="service-text">Комплектовка заказов и упаковка товара в соответствии со стандартами и требованиями клиента.</div>
+    <div class="svc-card">
+      <div class="svc-icon">📦</div>
+      <div class="svc-num-label">03</div>
+      <div class="svc-title">Комплектовка и упаковка</div>
+      <div class="svc-text">Комплектовка заказов и упаковка товара в соответствии со стандартами и требованиями клиента.</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🚗</div>
-      <div class="service-title">Доставка товара</div>
-      <div class="service-text">Организация и сопровождение доставки товара. Курьерские услуги и логистика последней мили.</div>
+    <div class="svc-card">
+      <div class="svc-icon">🚗</div>
+      <div class="svc-num-label">04</div>
+      <div class="svc-title">Доставка товара</div>
+      <div class="svc-text">Организация и сопровождение доставки. Курьерские услуги и логистика последней мили.</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🍽</div>
-      <div class="service-title">HoReCa</div>
-      <div class="service-text">Приготовление блюд и напитков. Операционные услуги в сфере деятельности кафе и ресторанов.</div>
+    <div class="svc-card">
+      <div class="svc-icon">🍽</div>
+      <div class="svc-num-label">05</div>
+      <div class="svc-title">HoReCa</div>
+      <div class="svc-text">Приготовление блюд и напитков. Операционные услуги в сфере деятельности кафе и ресторанов.</div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🧹</div>
-      <div class="service-title">Клининг и подсобные работы</div>
-      <div class="service-text">Профессиональный клининг, подсобные услуги и расчётно-кассовое обслуживание.</div>
+    <div class="svc-card">
+      <div class="svc-icon">🧹</div>
+      <div class="svc-num-label">06</div>
+      <div class="svc-title">Клининг</div>
+      <div class="svc-text">Профессиональный клининг, подсобные услуги и расчётно-кассовое обслуживание.</div>
     </div>
   </div>
 </section>
 
 <!-- STEPS -->
 <section class="steps" id="steps">
-  <div class="section-label">Этапы сотрудничества</div>
-  <div class="section-title">Сотрудничество с нами — это просто</div>
-  <div class="section-sub">Пять шагов от заявки до работающей команды</div>
-  <div class="divider"></div>
-  <div class="steps-grid">
+  <div class="section-stamp">Этапы</div>
+  <div class="section-title">Как мы <span class="accent">работаем</span></div>
+  <div class="steps-row">
     <div class="step">
-      <div class="step-num">1</div>
-      <div>
-        <div class="step-title">Заявка</div>
-        <div class="step-text">Вы оставляете заявку или звоните нам</div>
-      </div>
+      <div class="step-circle">1</div>
+      <div class="step-title">Заявка</div>
+      <div class="step-text">Оставляете заявку или звоните нам</div>
     </div>
     <div class="step">
-      <div class="step-num">2</div>
-      <div>
-        <div class="step-title">Анализ</div>
-        <div class="step-text">Детально изучаем ваши потребности и задачи</div>
-      </div>
+      <div class="step-circle">2</div>
+      <div class="step-title">Анализ</div>
+      <div class="step-text">Детально изучаем потребности и задачи</div>
     </div>
     <div class="step">
-      <div class="step-num">3</div>
-      <div>
-        <div class="step-title">Договор</div>
-        <div class="step-text">Заключаем официальный договор со всеми условиями</div>
-      </div>
+      <div class="step-circle">3</div>
+      <div class="step-title">Договор</div>
+      <div class="step-text">Заключаем официальный договор</div>
     </div>
     <div class="step">
-      <div class="step-num">4</div>
-      <div>
-        <div class="step-title">Запуск</div>
-        <div class="step-text">Оперативно формируем команду и приступаем к работе</div>
-      </div>
+      <div class="step-circle">4</div>
+      <div class="step-title">Запуск</div>
+      <div class="step-text">Формируем команду и приступаем</div>
     </div>
     <div class="step">
-      <div class="step-num">5</div>
-      <div>
-        <div class="step-title">Контроль и отчётность</div>
-        <div class="step-text">Обеспечиваем прозрачный контроль и полную документацию</div>
-      </div>
+      <div class="step-circle">5</div>
+      <div class="step-title">Контроль</div>
+      <div class="step-text">Прозрачный контроль и отчётность</div>
     </div>
   </div>
 </section>
 
 <!-- CONTACTS -->
 <section class="contacts" id="contacts">
-  <div class="section-label">Контакты</div>
-  <div class="section-title">Свяжитесь с нами</div>
-  <div class="divider"></div>
-  <div class="contacts-grid">
-    <div class="contact-block">
-      <h3>Контактная информация</h3>
-      <div class="contact-row">
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div class="contact-info">
-            <span class="contact-label">Адрес</span>
-            <span class="contact-value">г. Москва, Большая Почтовая ул., д. 26в стр. 1</span>
+  <div class="contacts-wrap">
+    <div class="section-stamp">Контакты</div>
+    <div class="section-title">Свяжитесь <span class="accent">с нами</span></div>
+    <div class="contacts-inner">
+      <div class="c-left">
+        <div class="c-block-title">Контактная информация</div>
+        <div class="c-row">
+          <div class="c-item">
+            <span class="c-label">Адрес</span>
+            <span class="c-value">г. Москва, Большая Почтовая ул., д. 26в стр. 1</span>
+          </div>
+          <div class="c-item">
+            <span class="c-label">Телефон</span>
+            <span class="c-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
+          </div>
+          <div class="c-item">
+            <span class="c-label">E-mail</span>
+            <span class="c-value"><a href="mailto:info@rmgk.ru">info@rmgk.ru</a></span>
+          </div>
+          <div class="c-item">
+            <span class="c-label">Сайт</span>
+            <span class="c-value"><a href="https://rmgc.pro" target="_blank">rmgc.pro</a></span>
           </div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon">📞</div>
-          <div class="contact-info">
-            <span class="contact-label">Телефон</span>
-            <span class="contact-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">✉️</div>
-          <div class="contact-info">
-            <span class="contact-label">E-mail</span>
-            <span class="contact-value"><a href="mailto:info@rmgk.ru">info@rmgk.ru</a></span>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">🌐</div>
-          <div class="contact-info">
-            <span class="contact-label">Сайт</span>
-            <span class="contact-value"><a href="https://rmgc.pro" target="_blank">rmgc.pro</a></span>
-          </div>
-        </div>
+        <a href="mailto:info@rmgk.ru" class="c-cta">Написать нам</a>
       </div>
-    </div>
-    <div class="contact-block">
-      <h3>Реквизиты</h3>
-      <table class="requisites-table">
-        <tr>
-          <td>Полное наименование</td>
-          <td>ООО «РМГК»</td>
-        </tr>
-        <tr>
-          <td>ИНН</td>
-          <td>9701311770</td>
-        </tr>
-        <tr>
-          <td>КПП</td>
-          <td>770101001</td>
-        </tr>
-        <tr>
-          <td>Юридический адрес</td>
-          <td>105082, г. Москва, Большая Почтовая ул., д. 26в стр. 1</td>
-        </tr>
-      </table>
+      <div class="c-right">
+        <div class="c-block-title">Реквизиты</div>
+        <table class="req-table">
+          <tr><td>Полное наименование</td><td>ООО «РМГК»</td></tr>
+          <tr><td>ИНН</td><td>9701311770</td></tr>
+          <tr><td>КПП</td><td>770101001</td></tr>
+          <tr><td>Юридический адрес</td><td>105082, г. Москва, Большая Почтовая ул., д. 26в стр. 1</td></tr>
+        </table>
+      </div>
     </div>
   </div>
 </section>
@@ -474,8 +448,8 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">РМ<span>ГК</span></div>
-  <div>© 2025 ООО «РМГК». Все права защищены.</div>
-  <div>ИНН 9701311770 · КПП 770101001</div>
+  <div class="footer-copy">© 2025 ООО «РМГК». Все права защищены.</div>
+  <div class="footer-inn">ИНН 9701311770 · КПП 770101001</div>
 </footer>
 
 </body>

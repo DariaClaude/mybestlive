@@ -4,376 +4,274 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Тим Про — Аутсорсинг персонала</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy:      #0B1E3D;
-      --navy-lt:   #132952;
-      --gold:      #C9A84C;
-      --gold-lt:   #E8C96A;
-      --gold-bg:   #F5EDD8;
-      --cream:     #F9F6F1;
-      --white:     #ffffff;
-      --ink:       #1A1A2E;
-      --muted:     #6B7280;
-      --line:      #E5DDD0;
+      --navy:    #0B2545;
+      --navy-lt: #0f3461;
+      --gold:    #C9A84C;
+      --gold-lt: #E8C570;
+      --white:   #ffffff;
+      --gray:    #f4f4f4;
+      --text:    #1a1a1a;
+      --muted:   #6b7280;
+      --line:    #e5e5e5;
     }
-
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', Arial, sans-serif;
-      color: var(--ink);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
 
-    /* ─── NAV ─── */
+    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(11,30,61,.97);
+      background: var(--white);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 6%; height: 68px;
-      border-bottom: 1px solid rgba(201,168,76,.15);
+      padding: 0 56px; height: 72px;
+      border-bottom: 1px solid var(--line);
     }
-    .nav-logo {
-      font-family: 'Playfair Display', Georgia, serif;
-      color: var(--white); font-size: 1.2rem; font-weight: 700;
-      text-decoration: none; letter-spacing: .02em;
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 36px; height: 36px; background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-family: 'Playfair Display', serif;
+      font-size: 17px; font-weight: 900;
     }
-    .nav-logo em { color: var(--gold); font-style: normal; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--navy); }
+    .nav-logo-divider { width: 1px; height: 20px; background: var(--line); }
+    .nav-logo-sub { font-size: 12px; color: var(--muted); }
+    .nav-links { display: flex; }
     .nav-links a {
-      color: rgba(255,255,255,.65); font-size: .85rem; font-weight: 400;
-      text-decoration: none; letter-spacing: .04em;
-      text-transform: uppercase; transition: color .2s;
+      font-size: 13px; color: #444; text-decoration: none; font-weight: 500;
+      padding: 8px 18px; border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: var(--navy); border-bottom-color: var(--navy); }
     .nav-cta {
-      background: transparent; color: var(--gold);
-      border: 1px solid var(--gold); cursor: pointer;
-      padding: 8px 22px; font-size: .82rem; font-weight: 500;
-      letter-spacing: .06em; text-transform: uppercase;
-      text-decoration: none; transition: background .2s, color .2s;
+      padding: 10px 24px; background: var(--navy); color: var(--white);
+      border: none; font-size: 13px; font-weight: 600;
+      cursor: pointer; text-decoration: none; margin-left: 16px;
+      transition: background 0.2s;
     }
-    .nav-cta:hover { background: var(--gold); color: var(--navy); }
+    .nav-cta:hover { background: var(--navy-lt); }
 
-    /* ─── HERO ─── */
+    /* HERO */
     .hero {
-      min-height: 100vh;
-      background: var(--navy);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 100px 6% 80px;
-      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 540px; margin-top: 72px;
     }
-    /* Dot pattern */
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(201,168,76,.12) 1px, transparent 1px);
-      background-size: 44px 44px;
-      pointer-events: none;
+    .hero-left {
+      padding: 72px 56px;
+      border-right: 1px solid var(--line);
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    /* Gold glow bottom */
-    .hero::after {
-      content: '';
-      position: absolute; bottom: -120px; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 300px;
-      background: radial-gradient(ellipse, rgba(201,168,76,.12) 0%, transparent 70%);
-      pointer-events: none;
+    .hero-kicker {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 24px;
     }
-    .hero-eyebrow {
-      font-size: .72rem; font-weight: 600; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 32px; position: relative; z-index: 1;
-    }
+    .hero-kicker::before { content: ''; width: 24px; height: 2px; background: var(--gold); }
     .hero h1 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.4rem, 5.5vw, 4rem);
-      font-weight: 700; line-height: 1.14;
-      color: var(--white); max-width: 800px;
-      margin-bottom: 0; position: relative; z-index: 1;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 4.5vw, 56px); font-weight: 700;
+      line-height: 1.1; color: var(--navy); margin-bottom: 28px;
     }
     .hero h1 em { color: var(--gold); font-style: italic; }
-    .hero-rule {
-      width: 60px; height: 1px; background: var(--gold);
-      margin: 36px auto; position: relative; z-index: 1;
+    .hero-intro {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+      max-width: 480px; margin-bottom: 40px; font-weight: 300;
+      border-left: 3px solid var(--gold); padding-left: 20px;
     }
-    .hero-sub {
-      font-size: 1rem; line-height: 1.8; font-weight: 300;
-      color: rgba(255,255,255,.65); max-width: 520px;
-      margin-bottom: 48px; position: relative; z-index: 1;
-    }
-    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
-    .btn-gold {
-      background: var(--gold); color: var(--navy);
-      text-decoration: none; padding: 14px 36px;
-      font-size: .88rem; font-weight: 600; letter-spacing: .05em;
-      text-transform: uppercase;
-      transition: background .2s, transform .12s;
-    }
-    .btn-gold:hover { background: var(--gold-lt); }
-    .btn-ghost {
-      background: transparent; color: rgba(255,255,255,.8);
-      text-decoration: none; padding: 13px 35px;
-      border: 1px solid rgba(255,255,255,.3);
-      font-size: .88rem; font-weight: 400; letter-spacing: .05em;
-      text-transform: uppercase;
-      transition: border-color .2s, color .2s;
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ─── ABOUT ─── */
-    .about { background: var(--cream); padding: 100px 6%; }
-    .about-statement {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
-      font-weight: 600; line-height: 1.35;
-      color: var(--navy); max-width: 780px;
-      border-left: 3px solid var(--gold);
-      padding-left: 32px; margin-bottom: 64px;
-    }
-    .about-cols {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 0; border-top: 1px solid var(--line);
-    }
-    .about-col {
-      padding: 40px 40px 40px 0;
-      border-right: 1px solid var(--line);
-    }
-    .about-col:first-child { padding-left: 0; }
-    .about-col:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
-    .about-col:nth-child(2) { padding-left: 40px; }
-    .about-col-num {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2.8rem; font-weight: 700; color: var(--gold);
-      line-height: 1; margin-bottom: 12px; display: block;
-    }
-    .about-col-title {
-      font-size: .95rem; font-weight: 600; color: var(--navy);
-      margin-bottom: 10px; letter-spacing: .01em;
-    }
-    .about-col-text {
-      font-size: .88rem; color: var(--muted); line-height: 1.7; font-weight: 300;
-    }
-
-    /* ─── SERVICES ─── */
-    .services { background: var(--white); padding: 100px 6%; }
-    .services-header {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 56px; padding-bottom: 24px; border-bottom: 1px solid var(--line);
-    }
-    .services-header-left {}
-    .services-eyebrow {
-      font-size: .72rem; font-weight: 600; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
-    }
-    .services-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
-      color: var(--navy); line-height: 1.2;
-    }
-    .services-count {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 4rem; font-weight: 700; color: var(--gold-bg);
-      line-height: 1; letter-spacing: -.04em;
-    }
-    .svc-list { display: flex; flex-direction: column; }
-    .svc-item {
-      display: grid; grid-template-columns: 80px 1fr auto;
-      align-items: center; gap: 32px;
-      padding: 32px 0; border-bottom: 1px solid var(--line);
-      transition: background .2s;
-      cursor: default;
-    }
-    .svc-item:last-child { border-bottom: none; }
-    .svc-item:hover .svc-title { color: var(--gold); }
-    .svc-item:hover .svc-num { color: var(--gold); }
-    .svc-num {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.8rem; font-weight: 400; color: var(--line);
-      transition: color .2s; line-height: 1;
-    }
-    .svc-body {}
-    .svc-title {
-      font-size: 1.1rem; font-weight: 600; color: var(--navy);
-      margin-bottom: 6px; transition: color .2s;
-    }
-    .svc-text { font-size: .88rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
-    .svc-arrow {
-      font-size: 1.2rem; color: var(--line);
-      transition: color .2s, transform .2s;
-    }
-    .svc-item:hover .svc-arrow { color: var(--gold); transform: translateX(4px); }
-
-    /* ─── PROCESS (timeline) ─── */
-    .process { background: var(--navy); padding: 100px 6%; }
-    .process-header { margin-bottom: 64px; }
-    .process-eyebrow {
-      font-size: .72rem; font-weight: 600; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
-    }
-    .process-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
-      color: var(--white); line-height: 1.2;
-    }
-    .timeline {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0 80px; position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute; left: 50%; top: 12px; bottom: 12px;
-      width: 1px; background: rgba(201,168,76,.2);
-      transform: translateX(-50%);
-    }
-    .tl-item {
-      padding: 0 0 52px;
-      position: relative;
-    }
-    .tl-item:nth-child(odd) { padding-right: 40px; text-align: right; }
-    .tl-item:nth-child(even) { padding-left: 40px; margin-top: 60px; }
-    .tl-item:nth-child(odd)::after {
-      content: '';
-      position: absolute; right: -6px; top: 10px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 0 4px rgba(201,168,76,.2);
-    }
-    .tl-item:nth-child(even)::before {
-      content: '';
-      position: absolute; left: -6px; top: 10px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 0 4px rgba(201,168,76,.2);
-    }
-    .tl-num {
-      font-size: .72rem; font-weight: 600; letter-spacing: .15em;
-      color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
-    }
-    .tl-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.1rem; font-weight: 600; color: var(--white);
-      margin-bottom: 8px;
-    }
-    .tl-text {
-      font-size: .85rem; color: rgba(255,255,255,.5);
-      font-weight: 300; line-height: 1.7;
-    }
-
-    /* ─── CONTACTS ─── */
-    .contacts { background: var(--cream); padding: 100px 6%; }
-    .contacts-top {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: start; margin-bottom: 64px;
-      padding-bottom: 64px; border-bottom: 1px solid var(--line);
-    }
-    .contacts-left {}
-    .contacts-eyebrow {
-      font-size: .72rem; font-weight: 600; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
-    }
-    .contacts-heading {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700;
-      color: var(--navy); line-height: 1.2; margin-bottom: 28px;
-    }
-    .contacts-heading em { color: var(--gold); font-style: italic; }
-    .contacts-desc {
-      font-size: .95rem; color: var(--muted); line-height: 1.8;
-      font-weight: 300; margin-bottom: 36px;
-    }
+    .hero-btns { display: flex; gap: 12px; align-items: center; }
     .btn-navy {
-      display: inline-block; background: var(--navy); color: var(--white);
-      text-decoration: none; padding: 14px 36px;
-      font-size: .85rem; font-weight: 500; letter-spacing: .07em;
-      text-transform: uppercase; transition: background .2s;
+      padding: 14px 32px; background: var(--navy); color: var(--white);
+      border: none; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
     }
     .btn-navy:hover { background: var(--navy-lt); }
-    .contacts-right {}
-    .cinfo-list { display: flex; flex-direction: column; gap: 28px; }
-    .cinfo-item {}
-    .cinfo-label {
-      font-size: .7rem; font-weight: 600; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 4px;
+    .btn-text {
+      font-size: 14px; font-weight: 600; color: var(--navy);
+      text-decoration: none; border-bottom: 1px solid var(--navy);
+      padding-bottom: 1px; transition: color 0.2s, border-color 0.2s;
     }
-    .cinfo-value {
-      font-size: .95rem; font-weight: 500; color: var(--navy);
+    .btn-text:hover { color: var(--gold); border-color: var(--gold); }
+    .hero-right {
+      position: relative; overflow: hidden; min-height: 440px;
+      display: flex; align-items: flex-end;
     }
-    .cinfo-value a { color: var(--navy); text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color .2s; }
-    .cinfo-value a:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-img-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(11,37,69,0.1) 30%, rgba(11,37,69,0.82) 100%),
+        url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80') center/cover;
+    }
+    .hero-img-caption {
+      position: relative; z-index: 2; padding: 32px;
+    }
+    .hero-img-caption-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 6px;
+    }
+    .hero-img-caption-sub { font-size: 13px; color: rgba(255,255,255,0.7); }
 
-    /* Requisites */
-    .req-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+    /* STATS */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
     }
-    .req-item {
-      padding: 24px 32px 24px 0;
-      border-right: 1px solid var(--line);
+    .stat { padding: 36px 48px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 800; letter-spacing: -2px;
+      color: var(--navy); line-height: 1; margin-bottom: 8px;
     }
-    .req-item:last-child { border-right: none; }
-    .req-item:nth-child(n+2) { padding-left: 32px; }
-    .req-label {
-      font-size: .7rem; font-weight: 600; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
-    }
-    .req-value { font-size: .9rem; font-weight: 600; color: var(--navy); }
-    .req-value.small { font-size: .82rem; }
+    .stat-num .accent { color: var(--gold); }
+    .stat-label { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
-    /* ─── FOOTER ─── */
+    /* ABOUT */
+    .about { padding: 56px 56px 60px; }
+    .section-kicker {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 10px;
+    }
+    .section-kicker::before { content: ''; width: 24px; height: 2px; background: var(--gold); }
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 32px;
+    }
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .about-card { border-top: 3px solid var(--line); padding-top: 20px; cursor: default; }
+    .about-card:first-child { border-top-color: var(--gold); }
+    .about-card-tag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
+    .about-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700; color: var(--navy); line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .about-card-text { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* SERVICES */
+    .services { background: var(--gray); padding: 56px 56px; }
+    .services-list { margin-top: 32px; }
+    .svc-item {
+      display: grid; grid-template-columns: 56px 1fr 32px;
+      align-items: center; gap: 24px;
+      padding: 28px 0; border-bottom: 1px solid var(--line);
+      cursor: default;
+    }
+    .svc-item:first-child { border-top: 1px solid var(--line); }
+    .svc-item:hover .svc-title { color: var(--gold); }
+    .svc-item:hover .svc-num { color: var(--gold); }
+    .svc-item:hover .svc-arrow { color: var(--gold); transform: translateX(4px); }
+    .svc-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 400; color: #ccc;
+      transition: color 0.2s;
+    }
+    .svc-title { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 5px; transition: color 0.2s; }
+    .svc-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .svc-arrow { font-size: 16px; color: #ccc; transition: color 0.2s, transform 0.2s; }
+
+    /* PROCESS */
+    .process { padding: 56px 56px; }
+    .process-row {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; margin-top: 32px; position: relative;
+    }
+    .process-row::before {
+      content: ''; position: absolute;
+      top: 21px; left: calc(10% + 10px); right: calc(10% + 10px);
+      height: 1px; background: rgba(201,168,76,0.3);
+    }
+    .p-step { padding: 0 12px; text-align: center; }
+    .p-dot {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 2px solid var(--gold); background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px; position: relative; z-index: 1;
+      font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--gold);
+    }
+    .p-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .p-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* CONTACTS */
+    .contacts { background: var(--navy); padding: 56px 56px; }
+    .contacts .section-kicker { color: var(--gold-lt); }
+    .contacts .section-kicker::before { background: var(--gold-lt); }
+    .contacts .section-heading { color: var(--white); }
+    .contacts-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; margin-top: 0;
+    }
+    .c-block-title {
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .c-row { display: flex; flex-direction: column; gap: 18px; }
+    .c-item { display: flex; flex-direction: column; gap: 3px; }
+    .c-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    .c-value { font-size: 14px; color: rgba(255,255,255,0.82); font-weight: 400; }
+    .c-value a { color: rgba(255,255,255,0.82); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.35); }
+    .c-value a:hover { color: var(--gold); }
+    .c-cta {
+      margin-top: 32px; display: inline-block;
+      background: var(--gold); color: var(--navy);
+      padding: 14px 32px; font-size: 13px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .c-cta:hover { background: var(--gold-lt); }
+    .req-table { width: 100%; border-collapse: collapse; }
+    .req-table tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .req-table tr:last-child { border-bottom: none; }
+    .req-table td { padding: 10px 0; font-size: 13px; vertical-align: top; }
+    .req-table td:first-child { color: rgba(255,255,255,0.4); width: 45%; }
+    .req-table td:last-child { color: rgba(255,255,255,0.82); font-weight: 600; }
+
+    /* FOOTER */
     footer {
-      background: var(--navy);
-      padding: 32px 6%;
+      background: #060f1e;
+      padding: 28px 56px;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 12px;
-      border-top: 1px solid rgba(201,168,76,.2);
     }
-    .footer-logo {
-      font-family: 'Playfair Display', Georgia, serif;
-      color: var(--white); font-size: 1rem; font-weight: 600;
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-mark {
+      width: 28px; height: 28px; background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-family: 'Playfair Display', serif;
+      font-size: 13px; font-weight: 900;
     }
-    .footer-logo em { color: var(--gold); font-style: normal; }
-    .footer-copy { font-size: .8rem; color: rgba(255,255,255,.35); font-weight: 300; }
-    .footer-inn { font-size: .8rem; color: rgba(255,255,255,.35); font-weight: 300; }
+    .footer-name { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.28); }
+    .footer-inn { font-size: 12px; color: rgba(255,255,255,0.28); }
 
-    /* ─── RESPONSIVE ─── */
+    /* RESPONSIVE */
     @media (max-width: 960px) {
-      .about-cols { grid-template-columns: 1fr 1fr; }
-      .about-col:last-child { border-right: none; grid-column: span 2; border-top: 1px solid var(--line); padding: 40px 0 0; }
-      .timeline { grid-template-columns: 1fr; }
-      .timeline::before { display: none; }
-      .tl-item { padding: 0 0 40px !important; text-align: left !important; margin-top: 0 !important; }
-      .tl-item::after, .tl-item::before { display: none !important; }
-      .req-grid { grid-template-columns: 1fr 1fr; }
-      .req-item:nth-child(2) { border-right: none; }
-      .req-item:nth-child(n+3) { border-top: 1px solid var(--line); }
+      nav { padding: 0 24px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 320px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat { padding: 24px; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid var(--line); }
+      .about, .services, .process, .contacts { padding: 40px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+      .process-row { grid-template-columns: 1fr; gap: 24px; }
+      .process-row::before { display: none; }
+      .p-step { text-align: left; display: flex; align-items: flex-start; gap: 16px; padding: 0; }
+      .p-dot { min-width: 42px; margin: 0; }
+      .contacts-grid { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 24px; }
     }
     @media (max-width: 680px) {
-      nav { padding: 0 5%; }
+      nav { padding: 0 16px; }
       .nav-links { display: none; }
-      .about { padding: 72px 5%; }
-      .about-cols { grid-template-columns: 1fr; }
-      .about-col { border-right: none; padding: 32px 0 0; border-top: 1px solid var(--line); }
-      .about-col:first-child { border-top: none; }
-      .about-col:last-child { grid-column: auto; }
-      .services { padding: 72px 5%; }
-      .services-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .svc-item { grid-template-columns: 56px 1fr; }
+      .hero-left { padding: 56px 20px; }
+      .svc-item { grid-template-columns: 48px 1fr; }
       .svc-arrow { display: none; }
-      .process { padding: 72px 5%; }
-      .contacts { padding: 72px 5%; }
-      .contacts-top { grid-template-columns: 1fr; gap: 48px; }
-      .req-grid { grid-template-columns: 1fr; }
-      .req-item { border-right: none; border-top: 1px solid var(--line); padding: 20px 0; }
-      .req-item:first-child { border-top: none; }
-      footer { padding: 28px 5%; flex-direction: column; align-items: flex-start; gap: 6px; }
     }
   </style>
 </head>
@@ -381,63 +279,94 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Тим <em>Про</em></a>
-  <ul class="nav-links">
-    <li><a href="#about">О компании</a></li>
-    <li><a href="#services">Услуги</a></li>
-    <li><a href="#process">Как работаем</a></li>
-    <li><a href="#contacts">Контакты</a></li>
-  </ul>
-  <a href="#contacts" class="nav-cta">Связаться</a>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">Т</div>
+    <div class="nav-logo-name">Тим Про</div>
+    <div class="nav-logo-divider"></div>
+    <div class="nav-logo-sub">Аутсорсинг персонала</div>
+  </a>
+  <div class="nav-links">
+    <a href="#about">О компании</a>
+    <a href="#services">Услуги</a>
+    <a href="#process">Как работаем</a>
+    <a href="#contacts">Контакты</a>
+  </div>
+  <a href="#contacts" class="nav-cta">Оставить заявку</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-eyebrow">Аутсорсинг персонала · Москва · Россия</div>
-  <h1>Ваша команда —<br>наша <em>ответственность</em></h1>
-  <div class="hero-rule"></div>
-  <p class="hero-sub">Предоставляем квалифицированных исполнителей под ключ. Подбор, оформление, управление и отчётность — всё на нас.</p>
-  <div class="hero-btns">
-    <a href="#contacts" class="btn-gold">Оставить заявку</a>
-    <a href="#services" class="btn-ghost">Наши услуги</a>
+<div class="hero" id="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-kicker">Аутсорсинг персонала · Москва · 2025</div>
+      <h1>Ваша команда —<br>наша <em>ответственность</em></h1>
+      <p class="hero-intro">Предоставляем квалифицированных исполнителей под ключ. Подбор, оформление, управление и отчётность — всё на нас.</p>
+      <div class="hero-btns">
+        <a href="#contacts" class="btn-navy">Оставить заявку</a>
+        <a href="#services" class="btn-text">Наши услуги →</a>
+      </div>
+    </div>
   </div>
-</section>
+  <div class="hero-right">
+    <div class="hero-img-bg"></div>
+    <div class="hero-img-caption">
+      <div class="hero-img-caption-title">Профессиональные кадры</div>
+      <div class="hero-img-caption-sub">Полный цикл управления персоналом</div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">500<span class="accent">+</span></div>
+    <div class="stat-label">Закрытых вакансий</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num"><span class="accent">3</span> дня</div>
+    <div class="stat-label">Среднее время закрытия</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100<span class="accent">%</span></div>
+    <div class="stat-label">Работа в рамках закона</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">24<span class="accent">/7</span></div>
+    <div class="stat-label">Поддержка клиентов</div>
+  </div>
+</div>
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <p class="about-statement">ООО «Тим Про» — профессиональное кадровое решение для бизнеса. Мы берём на себя весь цикл работы с персоналом, пока вы занимаетесь тем, что важно.</p>
-  <div class="about-cols">
-    <div class="about-col">
-      <span class="about-col-num">01</span>
-      <div class="about-col-title">Опыт и экспертиза</div>
-      <div class="about-col-text">Знаем специфику разных отраслей и регионов. Работаем строго в рамках российского законодательства.</div>
+  <div class="section-kicker">О компании</div>
+  <div class="section-heading">Профессиональное кадровое решение для бизнеса</div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-card-tag">Экспертиза</div>
+      <div class="about-card-title">Опыт и знание рынка</div>
+      <div class="about-card-text">Знаем специфику разных отраслей и регионов. Работаем строго в рамках российского законодательства. ООО «Тим Про» берёт на себя весь цикл работы с персоналом.</div>
     </div>
-    <div class="about-col">
-      <span class="about-col-num">02</span>
-      <div class="about-col-title">Скорость</div>
-      <div class="about-col-text">Закрываем вакансии в сжатые сроки благодаря обширной базе соискателей и отлаженным процессам.</div>
+    <div class="about-card">
+      <div class="about-card-tag">Скорость</div>
+      <div class="about-card-title">Закрываем вакансии быстро</div>
+      <div class="about-card-text">Обширная база соискателей и отлаженные процессы позволяют закрывать потребности клиента в сжатые сроки — без потери качества.</div>
     </div>
-    <div class="about-col">
-      <span class="about-col-num">03</span>
-      <div class="about-col-title">Индивидуальный подход</div>
-      <div class="about-col-text">Учитываем специфику вашего бизнеса и подбираем исполнителей, которые подходят именно вам.</div>
+    <div class="about-card">
+      <div class="about-card-tag">Подход</div>
+      <div class="about-card-title">Индивидуальные решения</div>
+      <div class="about-card-text">Учитываем специфику вашего бизнеса и подбираем исполнителей, которые подходят именно вам. Гибкие форматы сотрудничества.</div>
     </div>
   </div>
 </section>
 
 <!-- SERVICES -->
 <section class="services" id="services">
-  <div class="services-header">
-    <div class="services-header-left">
-      <div class="services-eyebrow">Что мы делаем</div>
-      <div class="services-title">Услуги Тим Про</div>
-    </div>
-    <div class="services-count">03</div>
-  </div>
-  <div class="svc-list">
+  <div class="section-kicker">Услуги</div>
+  <div class="section-heading">Что мы делаем для вашего бизнеса</div>
+  <div class="services-list">
     <div class="svc-item">
       <div class="svc-num">01</div>
-      <div class="svc-body">
+      <div>
         <div class="svc-title">Аутсорсинг персонала</div>
         <div class="svc-text">Полный перевод непрофильных функций на нас: подбор, оплата труда, налогообложение и вся отчётность. Вы управляете результатом — мы управляем людьми.</div>
       </div>
@@ -445,7 +374,7 @@
     </div>
     <div class="svc-item">
       <div class="svc-num">02</div>
-      <div class="svc-body">
+      <div>
         <div class="svc-title">Временный персонал под проект</div>
         <div class="svc-text">Сезонные исполнители, персонал для запуска нового направления или выполнения разового задания. Гибко, быстро, в рамках закона.</div>
       </div>
@@ -453,7 +382,7 @@
     </div>
     <div class="svc-item">
       <div class="svc-num">03</div>
-      <div class="svc-body">
+      <div>
         <div class="svc-title">Подбор и оформление персонала</div>
         <div class="svc-text">Мы находим и нанимаем исполнителей, а вы их трудоустраиваете. Экономим время и ресурсы вашего HR-отдела.</div>
       </div>
@@ -464,92 +393,80 @@
 
 <!-- PROCESS -->
 <section class="process" id="process">
-  <div class="process-header">
-    <div class="process-eyebrow">Как мы работаем</div>
-    <div class="process-title">Пять шагов до готовой команды</div>
-  </div>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-num">Шаг 01</div>
-      <div class="tl-title">Заявка</div>
-      <div class="tl-text">Вы оставляете заявку или звоните нам. Мы отвечаем в течение рабочего дня.</div>
+  <div class="section-kicker">Как мы работаем</div>
+  <div class="section-heading">Пять шагов до готовой команды</div>
+  <div class="process-row">
+    <div class="p-step">
+      <div class="p-dot">01</div>
+      <div class="p-title">Заявка</div>
+      <div class="p-text">Оставляете заявку или звоните нам. Отвечаем в течение рабочего дня.</div>
     </div>
-    <div class="tl-item">
-      <div class="tl-num">Шаг 02</div>
-      <div class="tl-title">Анализ потребностей</div>
-      <div class="tl-text">Детально изучаем вашу задачу: объём, требования к исполнителям, сроки и формат работы.</div>
+    <div class="p-step">
+      <div class="p-dot">02</div>
+      <div class="p-title">Анализ</div>
+      <div class="p-text">Детально изучаем задачу: объём, требования, сроки и формат работы.</div>
     </div>
-    <div class="tl-item">
-      <div class="tl-num">Шаг 03</div>
-      <div class="tl-title">Договор</div>
-      <div class="tl-text">Заключаем официальный договор. Все условия прозрачны и зафиксированы документально.</div>
+    <div class="p-step">
+      <div class="p-dot">03</div>
+      <div class="p-title">Договор</div>
+      <div class="p-text">Заключаем официальный договор. Все условия прозрачно зафиксированы.</div>
     </div>
-    <div class="tl-item">
-      <div class="tl-num">Шаг 04</div>
-      <div class="tl-title">Подбор исполнителей</div>
-      <div class="tl-text">Находим, проверяем и предоставляем персонал, соответствующий вашим требованиям.</div>
+    <div class="p-step">
+      <div class="p-dot">04</div>
+      <div class="p-title">Подбор</div>
+      <div class="p-text">Находим, проверяем и предоставляем персонал по вашим требованиям.</div>
     </div>
-    <div class="tl-item">
-      <div class="tl-num">Шаг 05</div>
-      <div class="tl-title">Работа и отчётность</div>
-      <div class="tl-text">Исполнители приступают к работе. Мы ведём всю документацию и остаёмся на связи.</div>
+    <div class="p-step">
+      <div class="p-dot">05</div>
+      <div class="p-title">Работа</div>
+      <div class="p-text">Исполнители приступают. Мы ведём документацию и остаёмся на связи.</div>
     </div>
   </div>
 </section>
 
 <!-- CONTACTS -->
 <section class="contacts" id="contacts">
-  <div class="contacts-top">
-    <div class="contacts-left">
-      <div class="contacts-eyebrow">Контакты</div>
-      <div class="contacts-heading">Готовы начать <em>сотрудничество?</em></div>
-      <p class="contacts-desc">Оставьте заявку — мы свяжемся с вами и обсудим задачу без обязательств.</p>
-      <a href="mailto:info@timpro.ru" class="btn-navy">Написать нам</a>
-    </div>
-    <div class="contacts-right">
-      <div class="cinfo-list">
-        <div class="cinfo-item">
-          <div class="cinfo-label">Адрес</div>
-          <div class="cinfo-value">г. Москва, ул. Новая Басманная, д. 10, стр. 1, помещ. 1/34</div>
+  <div class="section-kicker">Контакты</div>
+  <div class="section-heading">Готовы начать сотрудничество?</div>
+  <div class="contacts-grid">
+    <div>
+      <div class="c-block-title">Контактная информация</div>
+      <div class="c-row">
+        <div class="c-item">
+          <span class="c-label">Адрес</span>
+          <span class="c-value">г. Москва, ул. Новая Басманная, д. 10, стр. 1, помещ. 1/34</span>
         </div>
-        <div class="cinfo-item">
-          <div class="cinfo-label">Телефон</div>
-          <div class="cinfo-value"><a href="tel:+7">+7 (___) ___-__-__</a></div>
+        <div class="c-item">
+          <span class="c-label">Телефон</span>
+          <span class="c-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
         </div>
-        <div class="cinfo-item">
-          <div class="cinfo-label">E-mail</div>
-          <div class="cinfo-value"><a href="mailto:info@timpro.ru">info@timpro.ru</a></div>
+        <div class="c-item">
+          <span class="c-label">E-mail</span>
+          <span class="c-value"><a href="mailto:info@timpro.ru">info@timpro.ru</a></span>
         </div>
       </div>
+      <a href="mailto:info@timpro.ru" class="c-cta">Написать нам</a>
     </div>
-  </div>
-  <div class="req-grid">
-    <div class="req-item">
-      <div class="req-label">Полное наименование</div>
-      <div class="req-value">ООО «Тим Про»</div>
-    </div>
-    <div class="req-item">
-      <div class="req-label">ИНН / КПП</div>
-      <div class="req-value">9701311843 / 770101001</div>
-    </div>
-    <div class="req-item">
-      <div class="req-label">ОГРН</div>
-      <div class="req-value">1257700211020</div>
-    </div>
-    <div class="req-item">
-      <div class="req-label">Расчётный счёт</div>
-      <div class="req-value small">40702810102590008130</div>
-    </div>
-    <div class="req-item">
-      <div class="req-label">Банк</div>
-      <div class="req-value">АО «Альфа-Банк»</div>
+    <div>
+      <div class="c-block-title">Реквизиты</div>
+      <table class="req-table">
+        <tr><td>Полное наименование</td><td>ООО «Тим Про»</td></tr>
+        <tr><td>ИНН / КПП</td><td>9701311843 / 770101001</td></tr>
+        <tr><td>ОГРН</td><td>1257700211020</td></tr>
+        <tr><td>Расчётный счёт</td><td>40702810102590008130</td></tr>
+        <tr><td>Банк</td><td>АО «Альфа-Банк»</td></tr>
+        <tr><td>Юридический адрес</td><td>г. Москва, ул. Новая Басманная, д. 10, стр. 1, помещ. 1/34</td></tr>
+      </table>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Тим <em>Про</em></div>
+  <div class="footer-logo">
+    <div class="footer-mark">Т</div>
+    <div class="footer-name">Тим Про</div>
+  </div>
   <div class="footer-copy">© 2025 ООО «Тим Про». Все права защищены.</div>
   <div class="footer-inn">ИНН 9701311843 · ОГРН 1257700211020</div>
 </footer>
