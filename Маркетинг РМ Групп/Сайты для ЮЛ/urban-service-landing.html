@@ -148,24 +148,46 @@
     }
     .tag:hover { background: rgba(16,185,129,0.25); border-color: var(--green); }
 
-    /* STEPS */
+    /* STEPS TIMELINE */
     .steps { max-width: 1140px; margin: 0 auto; padding: 0 48px 32px; }
-    .steps-bento {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+    .timeline {
+      display: flex; position: relative; padding: 8px 0 4px;
     }
-    .s-cell {
-      background: var(--white); border-radius: 16px; padding: 24px;
-      position: relative;
+    .timeline::before {
+      content: ''; position: absolute;
+      top: 30px; left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green) 0%, var(--green-lt) 100%);
+      z-index: 0;
     }
-    .s-cell:first-child { background: var(--green); color: var(--white); }
-    .s-num {
-      font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-      font-weight: 700; margin-bottom: 12px; opacity: 0.5;
+    .t-step {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; position: relative; z-index: 1;
     }
-    .s-cell:first-child .s-num { opacity: 0.7; }
-    .s-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-    .s-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
-    .s-cell:first-child .s-text { color: rgba(255,255,255,0.7); }
+    .t-dot {
+      width: 60px; height: 60px; background: var(--white);
+      border: 2.5px solid var(--green); border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin-bottom: 20px; position: relative;
+      box-shadow: 0 0 0 6px rgba(16,185,129,0.08);
+      transition: transform 0.2s;
+    }
+    .t-step:hover .t-dot { transform: scale(1.08); }
+    .t-step:first-child .t-dot { background: var(--green); }
+    .t-dot-num {
+      font-size: 11px; font-weight: 800; color: var(--green);
+      letter-spacing: 0.5px; line-height: 1;
+    }
+    .t-step:first-child .t-dot-num { color: var(--white); }
+    .t-dot-icon { font-size: 16px; line-height: 1; }
+    .t-title {
+      font-size: 14px; font-weight: 700; color: var(--dark);
+      margin-bottom: 6px; text-align: center;
+    }
+    .t-text {
+      font-size: 12px; color: var(--muted);
+      line-height: 1.55; text-align: center; max-width: 150px;
+    }
 
     /* CONTACTS */
     .contacts { max-width: 1140px; margin: 0 auto; padding: 0 48px 48px; }
@@ -230,7 +252,9 @@
       .directions, .specialties, .steps, .contacts { padding-left: 24px; padding-right: 24px; }
       .dir-grid { grid-template-columns: 1fr 1fr; }
       .spec-bento { grid-template-columns: 1fr; gap: 24px; }
-      .steps-bento { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .timeline { flex-wrap: wrap; gap: 24px; }
+      .timeline::before { display: none; }
+      .t-step { flex: 0 0 calc(50% - 12px); }
       .contacts-grid { grid-template-columns: 1fr; }
       .c-main, .c-req { grid-column: span 1; }
       .c-info-grid { grid-template-columns: 1fr; }
@@ -242,7 +266,12 @@
       .hero-bento { padding: 60px 16px 16px; grid-template-columns: 1fr; gap: 12px; }
       .bc-main, .bc-stat1, .bc-perk1, .bc-perk2, .bc-perk3 { grid-column: span 1; }
       .dir-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .steps-bento { grid-template-columns: 1fr; }
+      .timeline { flex-direction: column; align-items: flex-start; gap: 0; }
+      .timeline::before { display: none; }
+      .t-step { flex-direction: row; align-items: flex-start; gap: 16px; width: 100%; padding-bottom: 24px; }
+      .t-step:last-child { padding-bottom: 0; }
+      .t-dot { margin-bottom: 0; flex-shrink: 0; }
+      .t-title, .t-text { text-align: left; }
     }
   </style>
 </head>
@@ -266,9 +295,9 @@
   <!-- Main cell -->
   <div class="bc bc-main">
     <div class="bc-main-top">
-      <div class="bc-eyebrow">Аутсорсинг персонала · Москва</div>
+      <div class="bc-eyebrow">Частное агентство занятости · Аутсорсинг персонала · Москва</div>
       <h1 class="bc-h1">Персонал для<br>любых задач<br><span class="g">вашего бизнеса</span></h1>
-      <p class="bc-sub">Полный цикл: от массового подбора и аутстаффинга до операционного управления. Склад, ритейл, HoReCa — любое направление.</p>
+      <p class="bc-sub">Частное агентство занятости — полный цикл от подбора и аутстаффинга до операционного управления командой. Склад, ритейл, HoReCa — любое направление.</p>
     </div>
     <div class="bc-main-bottom">
       <a href="#contacts" class="btn-bento">Оставить заявку</a>
@@ -297,9 +326,9 @@
   </div>
 
   <div class="bc bc-perk3">
-    <div class="bc-icon">🎯</div>
-    <div class="bc-card-title" style="color:#fff;">Индивидуально</div>
-    <div class="bc-card-text" style="color:rgba(255,255,255,0.5);">Аутсорсинг, аутстаффинг или кадровое агентство — выбор за вами.</div>
+    <div class="bc-icon">⚖️</div>
+    <div class="bc-card-title" style="color:#fff;">Частное агентство занятости</div>
+    <div class="bc-card-text" style="color:rgba(255,255,255,0.5);">Статус частного агентства занятости — аутсорсинг, аутстаффинг и подбор персонала под ключ с прозрачным оформлением.</div>
   </div>
 </div>
 
@@ -410,32 +439,53 @@
 <section class="steps" id="steps">
   <div class="section-label">Этапы сотрудничества</div>
   <div class="section-title">Сотрудничество с нами — это просто</div>
-  <div class="steps-bento">
-    <div class="s-cell">
-      <div class="s-num">Шаг 01</div>
-      <div class="s-title">Заявка</div>
-      <div class="s-text">Оставляете заявку или звоните нам</div>
+  <div class="timeline">
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">01</div>
+        <div class="t-dot-icon">📋</div>
+      </div>
+      <div class="t-title">Заявка</div>
+      <div class="t-text">Оставляете заявку или звоните нам</div>
     </div>
-    <div class="s-cell">
-      <div class="s-num">Шаг 02</div>
-      <div class="s-title">Анализ</div>
-      <div class="s-text">Детально изучаем ваши потребности и задачи</div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">02</div>
+        <div class="t-dot-icon">🔍</div>
+      </div>
+      <div class="t-title">Анализ</div>
+      <div class="t-text">Детально изучаем ваши потребности и задачи</div>
     </div>
-    <div class="s-cell">
-      <div class="s-num">Шаг 03</div>
-      <div class="s-title">Договор</div>
-      <div class="s-text">Заключаем официальный договор со всеми условиями</div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">03</div>
+        <div class="t-dot-icon">📝</div>
+      </div>
+      <div class="t-title">Договор</div>
+      <div class="t-text">Заключаем официальный договор со всеми условиями</div>
     </div>
-    <div class="s-cell">
-      <div class="s-num">Шаг 04</div>
-      <div class="s-title">Подбор</div>
-      <div class="s-text">Находим, проверяем и предоставляем исполнителей</div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">04</div>
+        <div class="t-dot-icon">👥</div>
+      </div>
+      <div class="t-title">Подбор</div>
+      <div class="t-text">Находим, проверяем и предоставляем исполнителей</div>
     </div>
-    <div class="s-cell">
-      <div class="s-num">Шаг 05</div>
-      <div class="s-title">Работа</div>
-      <div class="s-text">Исполнители работают, мы ведём всю документацию</div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">05</div>
+        <div class="t-dot-icon">✅</div>
+      </div>
+      <div class="t-title">Работа</div>
+      <div class="t-text">Исполнители работают, мы ведём всю документацию</div>
     </div>
+
   </div>
 </section>
 
