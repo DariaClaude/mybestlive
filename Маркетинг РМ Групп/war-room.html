@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>РМ Групп — Маркетинговый штаб</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050A0F;
+    --card: #0D1117;
+    --card2: #111820;
+    --border: #1C2A35;
+    --accent: #22D3EE;
+    --accent2: #0EA5E9;
+    --green: #22C55E;
+    --yellow: #EAB308;
+    --red: #EF4444;
+    --text: #E2E8F0;
+    --muted: #64748B;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 16px;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-mark {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 14px;
+    color: #050A0F;
+    letter-spacing: -0.5px;
+  }
+
+  .header-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .header-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  #clock {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  #clock .date { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* KPI BAR */
+  .kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .kpi-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .kpi-value span { color: var(--accent); }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .kpi-progress {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .kpi-progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    transition: width 1s ease;
+  }
+
+  .kpi-progress-fill.warn { background: linear-gradient(90deg, #CA8A04, var(--yellow)); }
+  .kpi-progress-fill.danger { background: linear-gradient(90deg, #B91C1C, var(--red)); }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .main-left { display: flex; flex-direction: column; gap: 16px; }
+
+  /* ВОРОНКА */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .funnel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .funnel-step {
+    flex: 1;
+    text-align: center;
+  }
+
+  .funnel-bar {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 8px;
+    margin-bottom: 6px;
+    transition: border-color 0.2s;
+  }
+
+  .funnel-bar:hover { border-color: var(--accent); }
+
+  .funnel-num {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .funnel-name {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .funnel-arrow {
+    color: var(--border);
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-bottom: 24px;
+  }
+
+  .funnel-cr {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .plan-block { margin-top: 4px; }
+
+  .plan-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .plan-label strong { color: var(--text); font-family: var(--mono); }
+
+  .plan-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .plan-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 4px;
+    width: 78%;
+    position: relative;
+    animation: grow 1.2s ease-out;
+  }
+
+  @keyframes grow {
+    from { width: 0; }
+  }
+
+  /* КАНАЛЫ */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead th {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(34, 211, 238, 0.03); }
+
+  tbody td {
+    padding: 11px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  td.channel-name {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .trend-up { color: var(--green); }
+  .trend-down { color: var(--red); }
+  .trend-flat { color: var(--muted); }
+
+  .cpl-good { color: var(--green); }
+  .cpl-warn { color: var(--yellow); }
+  .cpl-bad { color: var(--red); }
+
+  /* АНОМАЛИИ */
+  .alerts-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .alerts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .clear-btn {
+    font-size: 11px;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .clear-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .alert-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .alert-item:last-child { border-bottom: none; }
+
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .alert-body { flex: 1; }
+
+  .alert-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .alert-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ЗАДАЧИ */
+  .tasks-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .task-item:last-of-type { border-bottom: none; }
+
+  .task-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .task-text {
+    font-size: 13px;
+    flex: 1;
+    transition: color 0.2s;
+  }
+
+  .task-item input:checked + .task-text + .task-priority,
+  .task-item input:checked ~ .task-text {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  .task-priority {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .p-high { background: rgba(239,68,68,0.15); color: var(--red); }
+  .p-med  { background: rgba(234,179,8,0.15);  color: var(--yellow); }
+  .p-low  { background: rgba(34,197,94,0.15);  color: var(--green); }
+
+  .add-task-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .add-task-input {
+    flex: 1;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .add-task-input:focus { border-color: var(--accent); }
+  .add-task-input::placeholder { color: var(--muted); }
+
+  .add-task-btn {
+    background: var(--accent);
+    color: #050A0F;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: opacity 0.2s;
+  }
+
+  .add-task-btn:hover { opacity: 0.85; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .kpi-bar { grid-template-columns: repeat(2, 1fr); }
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .kpi-bar { grid-template-columns: 1fr 1fr; }
+    .header-right { gap: 12px; }
+    #clock .date { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="logo-mark">РМ</div>
+    <div>
+      <div class="header-title">РМ Групп — Маркетинговый штаб</div>
+      <div class="header-sub">Единый командный центр · Группа компаний</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div id="clock">
+      <div id="time">—</div>
+      <div class="date" id="datestr">—</div>
+    </div>
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+  </div>
+</header>
+
+<!-- KPI BAR -->
+<div class="kpi-bar">
+  <div class="kpi-card">
+    <div class="kpi-label">Лиды сегодня</div>
+    <div class="kpi-value">47 <span style="font-size:16px;color:var(--muted)">/60</span></div>
+    <div class="kpi-sub">план 60 лидов · выполнение 78%</div>
+    <div class="kpi-progress"><div class="kpi-progress-fill warn" style="width:78%"></div></div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">CPL текущий</div>
+    <div class="kpi-value">1 240 <span style="font-size:14px">₽</span></div>
+    <div class="kpi-sub" style="color:var(--yellow)">▲ +18% к цели 1 050 ₽</div>
+    <div class="kpi-progress"><div class="kpi-progress-fill danger" style="width:118%"></div></div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Расход Директ</div>
+    <div class="kpi-value">58 <span style="font-size:16px;color:var(--muted)">280 ₽</span></div>
+    <div class="kpi-sub">бюджет 180 000 ₽/мес · 32%</div>
+    <div class="kpi-progress"><div class="kpi-progress-fill" style="width:32%"></div></div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Конверсия сайта</div>
+    <div class="kpi-value">2.8<span style="font-size:18px">%</span></div>
+    <div class="kpi-sub" style="color:var(--green)">▲ +0.3% к прошлой неделе</div>
+    <div class="kpi-progress"><div class="kpi-progress-fill" style="width:56%"></div></div>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+  <div class="main-left">
+
+    <!-- ВОРОНКА -->
+    <div class="card">
+      <div class="card-title">Воронка продаж</div>
+      <div class="funnel">
+        <div class="funnel-step">
+          <div class="funnel-bar">
+            <div class="funnel-num">124 800</div>
+            <div class="funnel-name">Показы</div>
+          </div>
+          <div class="funnel-cr">—</div>
+        </div>
+        <div class="funnel-arrow">›</div>
+        <div class="funnel-step">
+          <div class="funnel-bar">
+            <div class="funnel-num">1 678</div>
+            <div class="funnel-name">Клики</div>
+          </div>
+          <div class="funnel-cr">CTR 1.34%</div>
+        </div>
+        <div class="funnel-arrow">›</div>
+        <div class="funnel-step">
+          <div class="funnel-bar">
+            <div class="funnel-num" style="color:var(--accent)">47</div>
+            <div class="funnel-name">Лиды</div>
+          </div>
+          <div class="funnel-cr">CR 2.8%</div>
+        </div>
+        <div class="funnel-arrow">›</div>
+        <div class="funnel-step">
+          <div class="funnel-bar">
+            <div class="funnel-num" style="color:var(--yellow)">31</div>
+            <div class="funnel-name">Квал.</div>
+          </div>
+          <div class="funnel-cr">66%</div>
+        </div>
+        <div class="funnel-arrow">›</div>
+        <div class="funnel-step">
+          <div class="funnel-bar">
+            <div class="funnel-num" style="color:var(--green)">9</div>
+            <div class="funnel-name">Сделки</div>
+          </div>
+          <div class="funnel-cr">29%</div>
+        </div>
+      </div>
+      <div class="plan-block">
+        <div class="plan-label">
+          <span>Прогресс к месячному плану</span>
+          <strong>47 / 60 лидов</strong>
+        </div>
+        <div class="plan-bar"><div class="plan-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- КАНАЛЫ -->
+    <div class="card">
+      <div class="card-title">Каналы трафика</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Канал</th>
+            <th>Визиты</th>
+            <th>Лиды</th>
+            <th>CR%</th>
+            <th>CPL, ₽</th>
+            <th>Расход, ₽</th>
+            <th>Тренд</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="channel-name"><span class="status-dot" style="background:var(--yellow)"></span>Директ (Поиск)</td>
+            <td>612</td>
+            <td>21</td>
+            <td>3.43</td>
+            <td class="cpl-warn">1 380</td>
+            <td>28 980</td>
+            <td class="trend-down">▼ −18%</td>
+          </tr>
+          <tr>
+            <td class="channel-name"><span class="status-dot" style="background:var(--red)"></span>Директ (РСЯ)</td>
+            <td>448</td>
+            <td>14</td>
+            <td>3.12</td>
+            <td class="cpl-bad">1 660</td>
+            <td>23 240</td>
+            <td class="trend-down">▼ −23%</td>
+          </tr>
+          <tr>
+            <td class="channel-name"><span class="status-dot" style="background:var(--green)"></span>ВКонтакте</td>
+            <td>187</td>
+            <td>6</td>
+            <td>3.21</td>
+            <td class="cpl-good">920</td>
+            <td>5 520</td>
+            <td class="trend-up">▲ +7%</td>
+          </tr>
+          <tr>
+            <td class="channel-name"><span class="status-dot" style="background:var(--green)"></span>Telegram</td>
+            <td>134</td>
+            <td>4</td>
+            <td>2.99</td>
+            <td class="cpl-good">540</td>
+            <td>2 160</td>
+            <td class="trend-up">▲ +12%</td>
+          </tr>
+          <tr>
+            <td class="channel-name"><span class="status-dot" style="background:var(--green)"></span>SEO</td>
+            <td>218</td>
+            <td>7</td>
+            <td>3.21</td>
+            <td class="cpl-good">0</td>
+            <td>—</td>
+            <td class="trend-flat">→ 0%</td>
+          </tr>
+          <tr>
+            <td class="channel-name"><span class="status-dot" style="background:var(--muted)"></span>Прямые</td>
+            <td>79</td>
+            <td>5</td>
+            <td>6.33</td>
+            <td class="cpl-good">0</td>
+            <td>—</td>
+            <td class="trend-up">▲ +3%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- АНОМАЛИИ -->
+  <div class="alerts-panel">
+    <div class="alerts-header">
+      <div class="card-title" style="margin-bottom:0">Аномалии и алерты</div>
+      <button class="clear-btn" onclick="clearAlerts()">Очистить</button>
+    </div>
+    <div id="alerts-list">
+      <div class="alert-item">
+        <div class="alert-icon">🔴</div>
+        <div class="alert-body">
+          <div class="alert-text">CTR упал на <strong>23%</strong> в РСЯ. Ср. CTR: 0.41% → 0.31%</div>
+          <div class="alert-time">сегодня · 09:17</div>
+        </div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body">
+          <div class="alert-text">CPL вырос на <strong>18%</strong> в Поиске. 1 050 → 1 380 ₽</div>
+          <div class="alert-time">сегодня · 08:45</div>
+        </div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body">
+          <div class="alert-text">Лиды отстают от плана на <strong>22%</strong> (47 из 60)</div>
+          <div class="alert-time">сегодня · 10:00</div>
+        </div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">✅</div>
+        <div class="alert-body">
+          <div class="alert-text">Telegram канал: конверсия +12% к прошлой неделе</div>
+          <div class="alert-time">вчера · 18:30</div>
+        </div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">✅</div>
+        <div class="alert-body">
+          <div class="alert-text">SEO: рост органики +8% MoM, 7 новых лидов</div>
+          <div class="alert-time">вчера · 12:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ТОП ЗАДАЧИ -->
+<div class="tasks-card">
+  <div class="card-title">Топ задачи</div>
+  <div id="tasks-list">
+    <div class="task-item">
+      <input type="checkbox" onchange="toggleTask(this)">
+      <span class="task-text">Проверить ставки РСЯ — CTR упал, возможно проблема с площадками</span>
+      <span class="task-priority p-high">HIGH</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" onchange="toggleTask(this)">
+      <span class="task-text">Обновить объявления Поиска — протестировать новые заголовки</span>
+      <span class="task-priority p-high">HIGH</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" onchange="toggleTask(this)">
+      <span class="task-text">Выгрузить отчёт по лидам за апрель для руководства</span>
+      <span class="task-priority p-med">MED</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" onchange="toggleTask(this)">
+      <span class="task-text">Запустить A/B тест посадочных страниц для Тим Про</span>
+      <span class="task-priority p-med">MED</span>
+    </div>
+    <div class="task-item">
+      <input type="checkbox" onchange="toggleTask(this)">
+      <span class="task-text">Подготовить контент-план Telegram на май</span>
+      <span class="task-priority p-low">LOW</span>
+    </div>
+  </div>
+  <div class="add-task-row">
+    <input type="text" class="add-task-input" id="new-task-input" placeholder="Добавить задачу..." onkeydown="if(event.key==='Enter')addTask()">
+    <button class="add-task-btn" onclick="addTask()">+ Добавить</button>
+  </div>
+</div>
+
+<script>
+  // Живые часы
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('time').textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('datestr').textContent = now.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Очистить алерты
+  function clearAlerts() {
+    const list = document.getElementById('alerts-list');
+    list.innerHTML = '<div style="padding:24px 0;text-align:center;color:var(--muted);font-size:13px;">Нет активных алертов</div>';
+  }
+
+  // Чекбокс задачи
+  function toggleTask(cb) {
+    const text = cb.nextElementSibling;
+    if (cb.checked) {
+      text.style.color = 'var(--muted)';
+      text.style.textDecoration = 'line-through';
+    } else {
+      text.style.color = '';
+      text.style.textDecoration = '';
+    }
+  }
+
+  // Добавить задачу
+  function addTask() {
+    const input = document.getElementById('new-task-input');
+    const val = input.value.trim();
+    if (!val) return;
+    const list = document.getElementById('tasks-list');
+    const div = document.createElement('div');
+    div.className = 'task-item';
+    div.innerHTML = `
+      <input type="checkbox" onchange="toggleTask(this)">
+      <span class="task-text">${val}</span>
+      <span class="task-priority p-med">MED</span>
+    `;
+    list.appendChild(div);
+    input.value = '';
+  }
+</script>
+</body>
+</html>

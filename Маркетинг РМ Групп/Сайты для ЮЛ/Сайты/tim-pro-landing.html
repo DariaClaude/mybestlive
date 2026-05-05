@@ -31,10 +31,9 @@
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .nav-logo-mark {
-      width: 36px; height: 36px; background: var(--navy);
+      width: 36px; height: 36px;
       display: flex; align-items: center; justify-content: center;
-      color: var(--gold); font-family: 'Playfair Display', serif;
-      font-size: 17px; font-weight: 900;
+      flex-shrink: 0;
     }
     .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--navy); }
     .nav-logo-divider { width: 1px; height: 20px; background: var(--line); }
@@ -173,61 +172,76 @@
     .svc-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
     .svc-arrow { font-size: 16px; color: #ccc; transition: color 0.2s, transform 0.2s; }
 
-    /* PROCESS */
+    /* PROCESS — editorial table */
     .process { padding: 56px 56px; }
-    .process-row {
-      display: grid; grid-template-columns: repeat(5, 1fr);
-      gap: 0; margin-top: 32px; position: relative;
+    .process-table { margin-top: 32px; border-top: 2px solid var(--navy); }
+    .process-row-item {
+      display: grid; grid-template-columns: 80px 200px 1fr;
+      align-items: baseline; gap: 0;
+      padding: 26px 0; border-bottom: 1px solid var(--line);
+      cursor: default; transition: background 0.25s;
     }
-    .process-row::before {
-      content: ''; position: absolute;
-      top: 21px; left: calc(10% + 10px); right: calc(10% + 10px);
-      height: 1px; background: rgba(201,168,76,0.3);
+    .process-row-item:hover { background: rgba(201,168,76,0.03); }
+    .process-row-item:hover .p-num { color: var(--gold); }
+    .p-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px; font-weight: 400; color: rgba(11,37,69,0.15);
+      line-height: 1; transition: color 0.3s;
     }
-    .p-step { padding: 0 12px; text-align: center; }
-    .p-dot {
-      width: 42px; height: 42px; border-radius: 50%;
-      border: 2px solid var(--gold); background: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 14px; position: relative; z-index: 1;
-      font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--gold);
+    .p-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 700; color: var(--navy);
+      padding-right: 28px; padding-top: 3px;
     }
-    .p-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-    .p-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .p-desc {
+      font-size: 13px; color: var(--muted); line-height: 1.7;
+      border-left: 1px solid var(--line); padding-left: 28px;
+    }
 
-    /* CONTACTS */
-    .contacts { background: var(--navy); padding: 56px 56px; }
-    .contacts .section-kicker { color: var(--gold-lt); }
+    /* CONTACTS — centered */
+    .contacts { background: var(--navy); padding: 72px 56px; }
+    .contacts .section-kicker { color: var(--gold-lt); justify-content: center; }
     .contacts .section-kicker::before { background: var(--gold-lt); }
-    .contacts .section-heading { color: var(--white); }
-    .contacts-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 48px; margin-top: 0;
+    .contacts-inner { max-width: 840px; margin: 0 auto; text-align: center; }
+    .contacts-inner .section-heading { color: var(--white); text-align: center; margin-bottom: 8px; }
+    .contacts-subline {
+      font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 44px;
+      font-weight: 300;
     }
-    .c-block-title {
-      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5);
-      text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    .c-details-row {
+      display: flex; justify-content: center; gap: 0;
+      margin-bottom: 40px; border: 1px solid rgba(255,255,255,0.1);
     }
-    .c-row { display: flex; flex-direction: column; gap: 18px; }
-    .c-item { display: flex; flex-direction: column; gap: 3px; }
-    .c-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
-    .c-value { font-size: 14px; color: rgba(255,255,255,0.82); font-weight: 400; }
-    .c-value a { color: rgba(255,255,255,0.82); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.35); }
+    .c-detail {
+      flex: 1; padding: 28px 24px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .c-detail:last-child { border-right: none; }
+    .c-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    .c-value { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.5; }
+    .c-value a { color: rgba(255,255,255,0.82); text-decoration: none; transition: color 0.2s; }
     .c-value a:hover { color: var(--gold); }
-    .c-cta {
-      margin-top: 32px; display: inline-block;
-      background: var(--gold); color: var(--navy);
-      padding: 14px 32px; font-size: 13px; font-weight: 700;
+    .c-cta-center {
+      display: inline-block; background: var(--gold); color: var(--navy);
+      padding: 14px 44px; font-size: 13px; font-weight: 700;
       text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
-      transition: background 0.2s;
+      transition: background 0.2s; margin-bottom: 52px;
     }
-    .c-cta:hover { background: var(--gold-lt); }
-    .req-table { width: 100%; border-collapse: collapse; }
+    .c-cta-center:hover { background: var(--gold-lt); }
+    .req-centered {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 36px;
+    }
+    .req-centered-title {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 20px;
+    }
+    .req-table { width: 100%; border-collapse: collapse; max-width: 560px; margin: 0 auto; }
     .req-table tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
     .req-table tr:last-child { border-bottom: none; }
-    .req-table td { padding: 10px 0; font-size: 13px; vertical-align: top; }
-    .req-table td:first-child { color: rgba(255,255,255,0.4); width: 45%; }
+    .req-table td { padding: 10px 16px; font-size: 13px; vertical-align: top; text-align: left; }
+    .req-table td:first-child { color: rgba(255,255,255,0.4); width: 48%; }
     .req-table td:last-child { color: rgba(255,255,255,0.82); font-weight: 600; }
 
     /* FOOTER */
@@ -239,10 +253,9 @@
     }
     .footer-logo { display: flex; align-items: center; gap: 10px; }
     .footer-mark {
-      width: 28px; height: 28px; background: var(--navy);
+      width: 28px; height: 28px;
       display: flex; align-items: center; justify-content: center;
-      color: var(--gold); font-family: 'Playfair Display', serif;
-      font-size: 13px; font-weight: 900;
+      flex-shrink: 0;
     }
     .footer-name { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.28); }
@@ -259,11 +272,12 @@
       .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid var(--line); }
       .about, .services, .process, .contacts { padding: 40px 24px; }
       .about-grid { grid-template-columns: 1fr; gap: 24px; }
-      .process-row { grid-template-columns: 1fr; gap: 24px; }
-      .process-row::before { display: none; }
-      .p-step { text-align: left; display: flex; align-items: flex-start; gap: 16px; padding: 0; }
-      .p-dot { min-width: 42px; margin: 0; }
-      .contacts-grid { grid-template-columns: 1fr; gap: 32px; }
+      .process-row-item { grid-template-columns: 60px 1fr; gap: 0 16px; }
+      .p-desc { grid-column: 2; border-left: none; padding-left: 0; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 6px; }
+      .p-num { font-size: 28px; }
+      .c-details-row { flex-direction: column; }
+      .c-detail { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .c-detail:last-child { border-bottom: none; }
       footer { padding: 24px; }
     }
     @media (max-width: 680px) {
@@ -280,7 +294,20 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <div class="nav-logo-mark">Т</div>
+    <div class="nav-logo-mark">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left team member -->
+        <circle cx="8"  cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.6"/>
+        <!-- Center — Pro (larger, slightly elevated) -->
+        <circle cx="18" cy="11" r="7" fill="rgba(201,168,76,0.1)" stroke="#C9A84C" stroke-width="1.9"/>
+        <!-- Right team member -->
+        <circle cx="28" cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.6"/>
+        <!-- Horizontal connector -->
+        <line x1="8" y1="20.5" x2="28" y2="20.5" stroke="#C9A84C" stroke-width="1.3" stroke-opacity="0.35" stroke-linecap="round"/>
+        <!-- Vertical stem (forms the T) -->
+        <line x1="18" y1="20.5" x2="18" y2="31" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
     <div class="nav-logo-name">Тим Про</div>
     <div class="nav-logo-divider"></div>
     <div class="nav-logo-sub">Аутсорсинг персонала</div>
@@ -298,7 +325,7 @@
 <div class="hero" id="hero">
   <div class="hero-left">
     <div>
-      <div class="hero-kicker">Аутсорсинг персонала · Москва · 2025</div>
+      <div class="hero-kicker">Аутсорсинг персонала</div>
       <h1>Ваша команда —<br>наша <em>ответственность</em></h1>
       <p class="hero-intro">Предоставляем квалифицированных исполнителей под ключ. Подбор, оформление, управление и отчётность — всё на нас.</p>
       <div class="hero-btns">
@@ -395,31 +422,31 @@
 <section class="process" id="process">
   <div class="section-kicker">Как мы работаем</div>
   <div class="section-heading">Пять шагов до готовой команды</div>
-  <div class="process-row">
-    <div class="p-step">
-      <div class="p-dot">01</div>
-      <div class="p-title">Заявка</div>
-      <div class="p-text">Оставляете заявку или звоните нам. Отвечаем в течение рабочего дня.</div>
+  <div class="process-table">
+    <div class="process-row-item">
+      <div class="p-num">01</div>
+      <div class="p-label">Заявка</div>
+      <div class="p-desc">Оставляете заявку или звоните нам. Отвечаем в течение рабочего дня, уточняем детали.</div>
     </div>
-    <div class="p-step">
-      <div class="p-dot">02</div>
-      <div class="p-title">Анализ</div>
-      <div class="p-text">Детально изучаем задачу: объём, требования, сроки и формат работы.</div>
+    <div class="process-row-item">
+      <div class="p-num">02</div>
+      <div class="p-label">Анализ</div>
+      <div class="p-desc">Детально изучаем задачу: объём, требования к кандидатам, сроки и формат работы.</div>
     </div>
-    <div class="p-step">
-      <div class="p-dot">03</div>
-      <div class="p-title">Договор</div>
-      <div class="p-text">Заключаем официальный договор. Все условия прозрачно зафиксированы.</div>
+    <div class="process-row-item">
+      <div class="p-num">03</div>
+      <div class="p-label">Договор</div>
+      <div class="p-desc">Заключаем официальный договор. Все условия прозрачно зафиксированы на бумаге.</div>
     </div>
-    <div class="p-step">
-      <div class="p-dot">04</div>
-      <div class="p-title">Подбор</div>
-      <div class="p-text">Находим, проверяем и предоставляем персонал по вашим требованиям.</div>
+    <div class="process-row-item">
+      <div class="p-num">04</div>
+      <div class="p-label">Подбор</div>
+      <div class="p-desc">Находим, проверяем и предоставляем персонал, соответствующий вашим требованиям.</div>
     </div>
-    <div class="p-step">
-      <div class="p-dot">05</div>
-      <div class="p-title">Работа</div>
-      <div class="p-text">Исполнители приступают. Мы ведём документацию и остаёмся на связи.</div>
+    <div class="process-row-item">
+      <div class="p-num">05</div>
+      <div class="p-label">Сопровождение</div>
+      <div class="p-desc">Исполнители приступают к работе. Мы ведём документацию и остаёмся на связи.</div>
     </div>
   </div>
 </section>
@@ -427,28 +454,26 @@
 <!-- CONTACTS -->
 <section class="contacts" id="contacts">
   <div class="section-kicker">Контакты</div>
-  <div class="section-heading">Готовы начать сотрудничество?</div>
-  <div class="contacts-grid">
-    <div>
-      <div class="c-block-title">Контактная информация</div>
-      <div class="c-row">
-        <div class="c-item">
-          <span class="c-label">Адрес</span>
-          <span class="c-value">г. Москва, ул. Новая Басманная, д. 10, стр. 1, помещ. 1/34</span>
-        </div>
-        <div class="c-item">
-          <span class="c-label">Телефон</span>
-          <span class="c-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
-        </div>
-        <div class="c-item">
-          <span class="c-label">E-mail</span>
-          <span class="c-value"><a href="mailto:info@timpro.ru">info@timpro.ru</a></span>
-        </div>
+  <div class="contacts-inner">
+    <div class="section-heading">Готовы начать сотрудничество?</div>
+    <p class="contacts-subline">Ответим в течение рабочего дня и подготовим предложение под вашу задачу</p>
+    <div class="c-details-row">
+      <div class="c-detail">
+        <span class="c-label">Адрес</span>
+        <span class="c-value">г. Москва, ул. Новая Басманная,<br>д. 10, стр. 1, помещ. 1/34</span>
       </div>
-      <a href="mailto:info@timpro.ru" class="c-cta">Написать нам</a>
+      <div class="c-detail">
+        <span class="c-label">Телефон</span>
+        <span class="c-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
+      </div>
+      <div class="c-detail">
+        <span class="c-label">E-mail</span>
+        <span class="c-value"><a href="mailto:info@timpro.ru">info@timpro.ru</a></span>
+      </div>
     </div>
-    <div>
-      <div class="c-block-title">Реквизиты</div>
+    <a href="mailto:info@timpro.ru" class="c-cta-center">Написать нам</a>
+    <div class="req-centered">
+      <div class="req-centered-title">Реквизиты</div>
       <table class="req-table">
         <tr><td>Полное наименование</td><td>ООО «Тим Про»</td></tr>
         <tr><td>ИНН / КПП</td><td>9701311843 / 770101001</td></tr>
@@ -464,7 +489,15 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <div class="footer-mark">Т</div>
+    <div class="footer-mark">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8"  cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.4"/>
+        <circle cx="18" cy="11" r="7" stroke="#C9A84C" stroke-width="1.9" stroke-opacity="0.55"/>
+        <circle cx="28" cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.4"/>
+        <line x1="8" y1="20.5" x2="28" y2="20.5" stroke="#C9A84C" stroke-width="1.3" stroke-opacity="0.25" stroke-linecap="round"/>
+        <line x1="18" y1="20.5" x2="18" y2="31" stroke="#C9A84C" stroke-width="2" stroke-opacity="0.5" stroke-linecap="round"/>
+      </svg>
+    </div>
     <div class="footer-name">Тим Про</div>
   </div>
   <div class="footer-copy">© 2025 ООО «Тим Про». Все права защищены.</div>

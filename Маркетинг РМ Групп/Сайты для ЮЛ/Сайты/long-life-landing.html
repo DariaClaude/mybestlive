@@ -21,6 +21,16 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
 
+    /* ── LOGO MARK ── */
+    .logo-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .logo-wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700; color: var(--dark); letter-spacing: -0.3px; line-height: 1;
+    }
+    .logo-wordmark span { color: var(--teal); }
+    .logo-mark-light .logo-wordmark { color: rgba(255,255,255,0.7); }
+    .logo-mark-light .logo-wordmark span { color: var(--teal-lt); }
+
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -29,11 +39,6 @@
       height: 56px; padding: 0 60px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px; font-weight: 700; color: var(--dark); text-decoration: none; letter-spacing: -0.3px;
-    }
-    .nav-logo span { color: var(--teal); }
     .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; letter-spacing: 0.2px; }
     .nav-links a:hover { color: var(--dark); }
@@ -175,34 +180,88 @@
       font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: var(--dark);
       letter-spacing: -0.5px;
     }
-    .timeline {
-      display: flex; position: relative; padding-top: 0;
-    }
+    .timeline { display: flex; position: relative; }
+    /* base line */
     .timeline::before {
       content: ''; position: absolute;
-      top: 20px; left: calc(10% + 20px); right: calc(10% + 20px);
-      height: 1px; background: var(--line); z-index: 0;
+      top: 19px; left: calc(10% + 19px); right: calc(10% + 19px);
+      height: 2px; background: var(--line); z-index: 0;
     }
+    /* progress line */
+    .timeline::after {
+      content: ''; position: absolute;
+      top: 19px; left: calc(10% + 19px);
+      height: 2px; background: var(--teal); z-index: 1;
+      width: 0; transition: width 1.6s cubic-bezier(0.4,0,0.2,1) 0.2s;
+    }
+    .timeline.active::after { width: calc(80% - 38px); }
     .t-step {
       flex: 1; display: flex; flex-direction: column; align-items: center;
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
+    .t-step.visible { opacity: 1; transform: none; }
+    /* diamond shape */
     .t-dot {
-      width: 40px; height: 40px; background: var(--white);
-      border: 1.5px solid var(--line); border-radius: 50%;
+      width: 38px; height: 38px; background: var(--white);
+      border: 2px solid rgba(0,0,0,0.12);
+      transform: rotate(45deg);
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 22px;
+      transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
+      position: relative; z-index: 2;
     }
-    .t-step:first-child .t-dot { background: var(--teal); border-color: var(--teal); }
-    .t-step:first-child .t-dot-num { color: var(--white); }
-    .t-step:hover .t-dot { border-color: var(--teal); }
-    .t-dot-num { font-size: 12px; font-weight: 700; color: var(--muted); }
+    .t-step.visible .t-dot { border-color: var(--teal); }
+    .t-step.visible:first-child .t-dot,
+    .t-step:hover .t-dot {
+      background: var(--teal); border-color: var(--teal);
+      box-shadow: 0 0 0 6px rgba(13,148,136,0.12);
+    }
+    .t-step.visible:first-child .t-dot-num,
+    .t-step:hover .t-dot-num { color: var(--white); }
+    .t-dot-num {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      transform: rotate(-45deg); transition: color 0.4s;
+    }
     .t-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; text-align: center; }
     .t-text { font-size: 12px; color: var(--muted); line-height: 1.55; text-align: center; max-width: 130px; }
 
     /* CONTACTS */
-    .contacts {
-      max-width: 1100px; margin: 0 auto; padding: 0 60px 80px;
+    .contacts { max-width: 100%; }
+    .contacts-split {
+      display: grid; grid-template-columns: 400px 1fr;
+      min-height: 520px;
+    }
+    .contacts-image-panel {
+      position: relative; overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+    }
+    .cip-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(170deg, rgba(13,148,136,0.72) 0%, rgba(17,24,39,0.9) 100%);
+      display: flex; flex-direction: column; justify-content: space-between; padding: 48px 40px;
+    }
+    .cip-top { }
+    .cip-tag {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); font-weight: 600; margin-bottom: 16px;
+    }
+    .cip-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: var(--white);
+      line-height: 1.3; letter-spacing: -0.3px;
+    }
+    .cip-headline em { font-style: italic; color: var(--teal-lt); font-weight: 400; }
+    .cip-bottom { }
+    .cip-logo { display: flex; align-items: center; gap: 10px; }
+    .cip-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.55);
+    }
+    .cip-name span { color: var(--teal-lt); }
+    .contacts-form-panel {
+      padding: 56px 60px; background: var(--white); border-top: 1px solid var(--line);
     }
     .contacts-grid {
       display: grid; grid-template-columns: 240px 1fr; gap: 80px; align-items: start;
@@ -245,17 +304,47 @@
     }
     .btn-cta:hover { background: var(--teal-dk); }
 
+    /* ── PHOTO SECTION ── */
+    .photo-section {
+      position: relative; overflow: hidden; height: 500px;
+      background: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(13,148,136,0.88) 0%, rgba(17,24,39,0.82) 100%);
+    }
+    .photo-content {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto; padding: 0 60px;
+      height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 80px;
+    }
+    .photo-left { flex: 1; }
+    .photo-logo-wrap { margin-bottom: 28px; }
+    .photo-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 2.8vw, 36px); font-weight: 400; font-style: italic;
+      color: var(--white); line-height: 1.4; letter-spacing: -0.5px; max-width: 540px;
+    }
+    .photo-quote strong { font-style: normal; font-weight: 700; color: var(--teal-lt); }
+    .photo-attribution {
+      font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 20px;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .photo-stats { display: flex; flex-direction: column; gap: 32px; flex-shrink: 0; }
+    .ps-item { border-left: 2px solid rgba(255,255,255,0.2); padding-left: 24px; }
+    .ps-num {
+      font-size: 40px; font-weight: 700; color: var(--white);
+      letter-spacing: -2px; line-height: 1;
+    }
+    .ps-num sup { font-size: 18px; color: var(--teal-lt); }
+    .ps-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; line-height: 1.4; }
+
     /* FOOTER */
     footer {
       background: var(--dark); padding: 28px 60px;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 12px;
     }
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none;
-    }
-    .footer-logo span { color: var(--teal-lt); }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
     /* RESPONSIVE */
@@ -273,12 +362,17 @@
       .svc-item:last-child { border-bottom: none; }
       .steps { padding: 48px 24px; }
       .steps-header { grid-template-columns: 1fr; gap: 12px; }
-      .contacts { padding: 0 24px 48px; }
+      .contacts-split { grid-template-columns: 1fr; }
+      .contacts-image-panel { min-height: 280px; }
+      .contacts-form-panel { padding: 40px 24px; }
       .contacts-grid { grid-template-columns: 1fr; gap: 24px; }
       .contacts-row { grid-template-columns: 1fr 1fr; }
       .req-grid { grid-template-columns: 1fr 1fr; }
       footer { padding: 20px 24px; }
       .divider { padding: 0 24px; }
+      .photo-content { flex-direction: column; justify-content: center; gap: 40px; padding: 40px 24px; }
+      .photo-stats { flex-direction: row; gap: 24px; flex-wrap: wrap; }
+      .ps-item { border-left: none; border-top: 2px solid rgba(255,255,255,0.2); padding-left: 0; padding-top: 16px; }
     }
     @media (max-width: 640px) {
       .nav-links { display: none; }
@@ -286,13 +380,14 @@
       .hero-right { grid-template-columns: 1fr; }
       .about-perks { grid-template-columns: 1fr; }
       .timeline { flex-direction: column; align-items: flex-start; gap: 0; }
-      .timeline::before { display: none; }
-      .t-step { flex-direction: row; align-items: flex-start; gap: 16px; width: 100%; padding-bottom: 24px; }
+      .timeline::before, .timeline::after { display: none; }
+      .t-step { flex-direction: row; align-items: flex-start; gap: 20px; width: 100%; padding-bottom: 28px; }
       .t-step:last-child { padding-bottom: 0; }
       .t-dot { margin-bottom: 0; flex-shrink: 0; }
       .t-title, .t-text { text-align: left; }
       .contacts-row { grid-template-columns: 1fr; }
       .req-grid { grid-template-columns: 1fr 1fr; }
+      .photo-section { height: auto; min-height: 480px; }
     }
   </style>
 </head>
@@ -300,7 +395,14 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Лонг<span>Лайф</span></a>
+  <a href="#" class="logo-mark">
+    <svg width="34" height="19" viewBox="0 0 36 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 10C18 5.582 14.418 2 10 2C5.582 2 2 5.582 2 10C2 14.418 5.582 18 10 18C14.418 18 18 14.418 18 10C18 5.582 21.582 2 26 2C30.418 2 34 5.582 34 10C34 14.418 30.418 18 26 18C21.582 18 18 14.418 18 10Z"
+        stroke="#0D9488" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="18" cy="10" r="2" fill="#0D9488"/>
+    </svg>
+    <div class="logo-wordmark">Лонг<span>Лайф</span></div>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">О компании</a></li>
     <li><a href="#services">Услуги</a></li>
@@ -313,7 +415,7 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-left">
-    <div class="hero-tag">Аутсорсинг персонала · Москва</div>
+    <div class="hero-tag">Долгосрочное партнёрство</div>
     <h1>Персонал,<br>которому <em>доверяют</em><br>долгосрочно</h1>
     <p class="hero-sub">Предоставляем проверенных сотрудников для склада, ритейла, HoReCa и производства. Работаем на результат — берём на себя подбор, оформление и операционное сопровождение.</p>
     <div class="hero-btns">
@@ -344,8 +446,7 @@
   <div class="about-label">О компании</div>
   <div class="about-content">
     <p class="about-lead">
-      ООО «Лонг Лайф» — это агентство долгосрочного партнёрства.<br>
-      Мы не закрываем вакансию — мы <strong>выстраиваем команду</strong>.
+      ООО «Лонг Лайф» — агентство <strong>долгосрочного аутсорсинга</strong> персонала для объектов, где нужны стабильность и надёжность.
     </p>
     <p class="about-text">
       Работаем с объектами, где нужны надёжность и стабильность: склады, торговые сети, производство, кейтеринг. Берём на себя полный операционный цикл: от подбора и проверки кандидатов до кадрового сопровождения на протяжении всего договора.
@@ -370,7 +471,26 @@
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- PHOTO SECTION -->
+<section class="photo-section">
+  <div class="photo-overlay"></div>
+  <div class="photo-content">
+    <div class="photo-left">
+      <div class="photo-logo-wrap">
+        <svg width="56" height="32" viewBox="0 0 36 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 10C18 5.582 14.418 2 10 2C5.582 2 2 5.582 2 10C2 14.418 5.582 18 10 18C14.418 18 18 14.418 18 10C18 5.582 21.582 2 26 2C30.418 2 34 5.582 34 10C34 14.418 30.418 18 26 18C21.582 18 18 14.418 18 10Z"
+            stroke="rgba(255,255,255,0.85)" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="18" cy="10" r="2.2" fill="rgba(255,255,255,0.85)"/>
+        </svg>
+      </div>
+      <p class="photo-quote">
+        Мы не просто закрываем вакансии —<br>
+        мы <strong>строим команды, которые остаются</strong>.
+      </p>
+      <div class="photo-attribution">Лонг Лайф · Аутсорсинг персонала</div>
+    </div>
+  </div>
+</section>
 
 <!-- SERVICES -->
 <section class="services" id="services">
@@ -457,48 +577,56 @@
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- CONTACTS -->
 <section class="contacts" id="contacts">
-  <div style="height:48px;"></div>
-  <div class="contacts-grid">
-    <div class="contacts-label">Контакты</div>
-    <div class="contacts-right">
-      <div class="contacts-title">Свяжитесь с нами</div>
-      <div class="contacts-row">
-        <div>
-          <div class="c-field-label">Телефон</div>
-          <div class="c-field-val"><a href="tel:+7">+7 (___) ___-__-__</a></div>
+  <div class="contacts-split">
+    <div class="contacts-image-panel">
+      <div class="cip-overlay">
+        <div class="cip-top">
+          <div class="cip-tag">Контакты</div>
+          <div class="cip-headline">Готовы начать<br><em>долгосрочное</em><br>сотрудничество?</div>
         </div>
-        <div>
-          <div class="c-field-label">E-mail</div>
-          <div class="c-field-val"><a href="mailto:info@long-life.ru">info@long-life.ru</a></div>
-        </div>
-        <div>
-          <div class="c-field-label">Адрес</div>
-          <div class="c-field-val" style="font-size:13px;">г. Москва<br><span style="color:var(--muted);">уточняется</span></div>
-        </div>
+        <div class="cip-bottom"></div>
       </div>
-      <a href="mailto:info@long-life.ru" class="btn-cta">Оставить заявку</a>
-      <div class="req-box">
-        <div class="req-title">Реквизиты</div>
-        <div class="req-grid">
-          <div class="req-item">
-            <div class="req-key">Компания</div>
-            <div class="req-val">ООО «Лонг Лайф»</div>
+    </div>
+    <div class="contacts-form-panel">
+      <div class="contacts-right">
+          <div class="contacts-title">Обсудим вашу задачу</div>
+          <div class="contacts-row">
+            <div>
+              <div class="c-field-label">Телефон</div>
+              <div class="c-field-val"><a href="tel:+7">+7 (___) ___-__-__</a></div>
+            </div>
+            <div>
+              <div class="c-field-label">E-mail</div>
+              <div class="c-field-val"><a href="mailto:info@long-life.ru">info@long-life.ru</a></div>
+            </div>
+            <div>
+              <div class="c-field-label">Адрес</div>
+              <div class="c-field-val" style="font-size:13px;">г. Москва<br><span style="color:var(--muted);">уточняется</span></div>
+            </div>
           </div>
-          <div class="req-item">
-            <div class="req-key">ИНН</div>
-            <div class="req-val">уточняется</div>
-          </div>
-          <div class="req-item">
-            <div class="req-key">КПП</div>
-            <div class="req-val">уточняется</div>
-          </div>
-          <div class="req-item">
-            <div class="req-key">ОГРН</div>
-            <div class="req-val">уточняется</div>
+          <a href="mailto:info@long-life.ru" class="btn-cta">Оставить заявку</a>
+          <div class="req-box">
+            <div class="req-title">Реквизиты</div>
+            <div class="req-grid">
+              <div class="req-item">
+                <div class="req-key">Компания</div>
+                <div class="req-val">ООО «Лонг Лайф»</div>
+              </div>
+              <div class="req-item">
+                <div class="req-key">ИНН</div>
+                <div class="req-val">уточняется</div>
+              </div>
+              <div class="req-item">
+                <div class="req-key">КПП</div>
+                <div class="req-val">уточняется</div>
+              </div>
+              <div class="req-item">
+                <div class="req-key">ОГРН</div>
+                <div class="req-val">уточняется</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -508,10 +636,35 @@
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo">Лонг<span>Лайф</span></a>
+  <a href="#" class="logo-mark logo-mark-light">
+    <svg width="28" height="16" viewBox="0 0 36 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 10C18 5.582 14.418 2 10 2C5.582 2 2 5.582 2 10C2 14.418 5.582 18 10 18C14.418 18 18 14.418 18 10C18 5.582 21.582 2 26 2C30.418 2 34 5.582 34 10C34 14.418 30.418 18 26 18C21.582 18 18 14.418 18 10Z"
+        stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="18" cy="10" r="2" fill="rgba(255,255,255,0.45)"/>
+    </svg>
+    <div class="logo-wordmark" style="font-size:15px;">Лонг<span>Лайф</span></div>
+  </a>
   <div class="footer-copy">© 2025 ООО «Лонг Лайф». Все права защищены.</div>
   <div class="footer-copy">Аутсорсинг персонала · Москва</div>
 </footer>
 
+<script>
+  const timeline = document.querySelector('.timeline');
+  const steps    = document.querySelectorAll('.t-step');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        timeline.classList.add('active');
+        steps.forEach((s, i) => {
+          setTimeout(() => s.classList.add('visible'), i * 180);
+        });
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  if (timeline) obs.observe(timeline);
+</script>
 </body>
 </html>

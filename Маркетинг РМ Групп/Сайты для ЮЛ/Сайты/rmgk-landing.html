@@ -4,258 +4,319 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>РМГК — Комплексные операционные услуги</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:      #FFF8F2;
-      --orange:  #FF5B1F;
-      --yellow:  #FFE44D;
-      --black:   #111111;
-      --white:   #ffffff;
-      --card-bg: #ffffff;
-      --muted:   #555555;
+      --orange:    #FF5B1F;
+      --orange-dk: #E04A0F;
+      --white:     #FFFFFF;
+      --bg:        #F9FAFB;
+      --dark:      #111827;
+      --text:      #111827;
+      --muted:     #6B7280;
+      --border:    #E5E7EB;
+      --border-2:  #D1D5DB;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--black); -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); -webkit-font-smoothing: antialiased; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--black); padding: 0 40px; height: 60px;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      height: 64px; padding: 0 64px;
       display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 3px solid var(--orange);
     }
-    .nav-logo { color: var(--white); font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-decoration: none; }
-    .nav-logo span { color: var(--orange); }
-    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-bar { width: 4px; height: 30px; background: var(--orange); flex-shrink: 0; }
+    .nav-name { font-size: 19px; font-weight: 900; color: var(--dark); letter-spacing: -0.5px; }
+    .nav-sep { width: 1px; height: 18px; background: var(--border); }
+    .nav-sub { font-size: 12px; color: var(--muted); }
+    .nav-links { display: flex; list-style: none; }
     .nav-links a {
-      color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 700;
-      text-decoration: none; padding: 6px 14px;
-      border: 2px solid transparent; text-transform: uppercase; letter-spacing: 0.5px;
-      transition: all 0.15s;
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      padding: 8px 18px; border-bottom: 2px solid transparent;
+      font-weight: 500; transition: color 0.2s, border-color 0.2s;
+      display: block; height: 64px; line-height: 48px;
     }
-    .nav-links a:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+    .nav-links a:hover { color: var(--dark); border-bottom-color: var(--orange); }
     .nav-cta {
-      padding: 9px 22px; background: var(--orange); color: var(--white);
-      border: 2px solid var(--orange); font-size: 13px; font-weight: 800;
-      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
-      box-shadow: 3px 3px 0 var(--yellow); transition: all 0.1s;
+      padding: 10px 24px; background: var(--orange); color: var(--white);
+      font-size: 13px; font-weight: 700; text-decoration: none; transition: background 0.2s;
     }
-    .nav-cta:hover { box-shadow: 1px 1px 0 var(--yellow); transform: translate(2px, 2px); }
+    .nav-cta:hover { background: var(--orange-dk); }
 
-    /* HERO */
+    /* ── HERO ── */
     .hero {
-      min-height: 100vh; background: var(--bg);
-      padding: 120px 40px 60px;
-      display: grid; grid-template-columns: 1.2fr 0.8fr;
-      gap: 40px; align-items: center;
-      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 420px;
+      min-height: calc(100vh - 64px); margin-top: 64px;
     }
-    .hero-left {}
-    .hero-tag {
-      display: inline-block;
-      background: var(--orange); color: var(--white);
-      font-size: 11px; font-weight: 900; letter-spacing: 2px;
-      text-transform: uppercase; padding: 6px 14px;
-      border: 2px solid var(--black); box-shadow: 3px 3px 0 var(--black);
-      margin-bottom: 28px;
+    .hero-left {
+      padding: 80px 64px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid var(--border);
     }
-    .hero h1 {
-      font-size: clamp(48px, 7vw, 88px); font-weight: 900;
-      line-height: 0.95; letter-spacing: -2px; text-transform: uppercase;
-      margin-bottom: 28px;
+    .hero-kicker {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--orange); font-weight: 700; margin-bottom: 28px;
     }
-    .hero h1 .h-accent {
-      display: inline-block;
-      background: var(--yellow); padding: 0 8px;
-      border: 3px solid var(--black);
-      transform: rotate(-1.5deg); font-style: italic;
+    .hero-kicker::before { content: ''; width: 32px; height: 2px; background: var(--orange); flex-shrink: 0; }
+    h1 {
+      font-size: clamp(40px, 5.5vw, 68px); font-weight: 800;
+      line-height: 1.0; letter-spacing: -2.5px; color: var(--dark); margin-bottom: 24px;
     }
-    .hero-sub {
-      font-size: 16px; color: var(--muted); line-height: 1.7;
-      max-width: 480px; margin-bottom: 36px; font-weight: 400;
+    .hero-lead {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+      max-width: 480px; margin-bottom: 40px; font-weight: 300;
+      border-left: 3px solid var(--orange); padding-left: 20px;
     }
-    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-brutal {
-      padding: 14px 28px; background: var(--black); color: var(--white);
-      border: 3px solid var(--black); font-size: 14px; font-weight: 800;
-      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
-      box-shadow: 5px 5px 0 var(--orange); transition: all 0.1s;
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-fill {
+      padding: 14px 32px; background: var(--orange); color: var(--white);
+      font-size: 14px; font-weight: 700; text-decoration: none;
+      transition: background 0.2s; display: inline-block;
     }
-    .btn-brutal:hover { box-shadow: 2px 2px 0 var(--orange); transform: translate(3px, 3px); }
-    .btn-brutal-outline {
-      padding: 14px 28px; background: transparent; color: var(--black);
-      border: 3px solid var(--black); font-size: 14px; font-weight: 800;
-      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
-      box-shadow: 5px 5px 0 var(--black); transition: all 0.1s;
+    .btn-fill:hover { background: var(--orange-dk); }
+    .btn-line {
+      padding: 14px 32px; background: transparent; color: var(--dark);
+      border: 2px solid var(--dark); font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
     }
-    .btn-brutal-outline:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(3px, 3px); }
+    .btn-line:hover { background: var(--dark); color: var(--white); }
 
-    .hero-right {}
-    .hero-box {
-      background: var(--white); border: 3px solid var(--black);
-      box-shadow: 10px 10px 0 var(--black); padding: 36px;
-      transform: rotate(1.5deg);
+    /* Hero dark panel */
+    .hero-right {
+      background: var(--dark); padding: 64px 44px;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
     }
-    .hero-box-label {
-      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-      font-weight: 700; color: #999; margin-bottom: 12px;
+    .hero-right::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--orange);
     }
-    .hero-box-num { font-size: 64px; font-weight: 900; letter-spacing: -3px; line-height: 1; color: var(--black); }
-    .hero-box-num span { color: var(--orange); }
-    .hero-box-desc { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
-    .hero-box-divider { border: none; border-top: 2px solid #eee; margin: 20px 0; }
-    .hero-box-list { display: flex; flex-direction: column; gap: 8px; }
-    .hero-box-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--black); }
-    .hero-box-item::before { content: '■'; color: var(--orange); font-size: 10px; }
+    .hp-label {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); font-weight: 700; margin-bottom: 20px;
+      padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hp-num {
+      font-size: 88px; font-weight: 900; letter-spacing: -5px;
+      line-height: 1; color: var(--white); margin-bottom: 8px;
+    }
+    .hp-num sup { font-size: 32px; color: var(--orange); vertical-align: super; letter-spacing: 0; }
+    .hp-desc { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 36px; line-height: 1.4; }
+    .hp-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin-bottom: 28px; }
+    .hp-list { display: flex; flex-direction: column; gap: 12px; }
+    .hp-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65);
+    }
+    .hp-dot { width: 6px; height: 6px; background: var(--orange); flex-shrink: 0; }
 
-    /* ABOUT */
-    .about { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
-    .section-stamp {
-      display: inline-block;
-      background: var(--black); color: var(--white);
-      font-size: 10px; font-weight: 900; letter-spacing: 3px;
-      text-transform: uppercase; padding: 5px 14px;
-      margin-bottom: 20px;
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
     }
-    .section-title {
-      font-size: clamp(28px, 4vw, 44px); font-weight: 900;
-      text-transform: uppercase; letter-spacing: -1px; line-height: 1;
-      margin-bottom: 40px;
+    .st {
+      padding: 32px 40px; border-right: 1px solid var(--border); transition: background 0.2s;
     }
-    .section-title .accent { color: var(--orange); }
+    .st:last-child { border-right: none; }
+    .st:hover { background: var(--bg); }
+    .st-num {
+      font-size: 48px; font-weight: 900; letter-spacing: -2.5px;
+      color: var(--dark); line-height: 1; margin-bottom: 6px;
+    }
+    .st-num .o { color: var(--orange); }
+    .st-lbl { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* ── SECTION ── */
+    .sec { padding: 80px 64px; }
+    .sec-bg { background: var(--bg); }
+    .inner { max-width: 1200px; margin: 0 auto; }
+    .s-tag {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--orange); font-weight: 700; margin-bottom: 8px;
+    }
+    .s-tag::before { content: ''; width: 20px; height: 2px; background: var(--orange); }
+    .s-head {
+      font-size: clamp(26px, 3vw, 40px); font-weight: 800;
+      color: var(--dark); letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 48px;
+    }
+
+    /* ── ABOUT ── */
     .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .about-card {
-      background: var(--white); border: 3px solid var(--black);
-      box-shadow: 6px 6px 0 var(--black); padding: 32px;
+    .ac {
+      background: var(--white); padding: 36px;
+      border: 1px solid var(--border); border-top: 3px solid var(--border);
+      transition: border-top-color 0.3s, transform 0.3s;
     }
-    .about-card-icon { font-size: 32px; margin-bottom: 16px; }
-    .about-card-title { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-    .about-card-text { font-size: 13px; color: var(--muted); line-height: 1.65; }
-    .about-card-stripe {
-      height: 4px; background: var(--orange); margin-bottom: 20px;
-    }
+    .ac:hover { border-top-color: var(--orange); transform: translateY(-4px); }
+    .ac-icon { margin-bottom: 20px; }
+    .ac-title { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+    .ac-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-    /* SERVICES */
-    .services { background: var(--black); padding: 80px 40px; }
-    .services .section-stamp { background: var(--orange); }
-    .services .section-title { color: var(--white); }
-    .services .section-title .accent { color: var(--yellow); }
-    .services-grid {
+    /* ── SERVICES ── */
+    .svc-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 3px; background: #333; border: 3px solid #333;
-      margin-top: 0;
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
     }
-    .svc-card {
-      background: var(--black); padding: 32px 28px;
-      border: none; transition: background 0.2s;
+    .sc {
+      background: var(--white); padding: 32px 28px;
+      position: relative; overflow: hidden;
+      border-top: 3px solid transparent;
+      transition: border-top-color 0.3s, box-shadow 0.3s;
     }
-    .svc-card:hover { background: #1a1a1a; }
-    .svc-icon { font-size: 28px; margin-bottom: 14px; }
-    .svc-num-label {
-      font-size: 10px; letter-spacing: 2px; color: var(--orange);
-      font-weight: 700; margin-bottom: 10px; text-transform: uppercase;
+    .sc:hover {
+      border-top-color: var(--orange);
+      box-shadow: inset 0 0 0 1px rgba(255,91,31,0.12);
     }
-    .svc-title { font-size: 14px; font-weight: 800; color: var(--white); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 10px; }
-    .svc-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .sc-watermark {
+      position: absolute; right: -10px; bottom: -22px;
+      font-size: 96px; font-weight: 900; color: var(--orange);
+      opacity: 0; line-height: 1; letter-spacing: -6px;
+      transition: opacity 0.35s; pointer-events: none; user-select: none;
+    }
+    .sc:hover .sc-watermark { opacity: 0.08; }
+    .sc-icon { margin-bottom: 14px; }
+    .sc-num { font-size: 11px; color: var(--border-2); font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+    .sc-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .sc-text { font-size: 12px; color: var(--muted); line-height: 1.65; }
 
-    /* STEPS */
-    .steps { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
-    .steps-row {
-      display: grid; grid-template-columns: repeat(5, 1fr);
-      gap: 0; margin-top: 40px; position: relative;
+    /* ── STEPS ── */
+    .vtl { position: relative; max-width: 800px; }
+    .vtl-line {
+      position: absolute; left: 19px; top: 0; bottom: 0; width: 2px;
+      background: var(--border);
     }
-    .steps-row::before {
-      content: ''; position: absolute;
-      top: 28px; left: calc(10% + 10px); right: calc(10% + 10px);
-      height: 3px; background: var(--orange);
+    .vtl-line-fill {
+      position: absolute; left: 0; top: 0; width: 100%;
+      background: var(--orange); height: 0%;
+      transition: height 1.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .step { text-align: center; padding: 0 8px; }
-    .step-circle {
-      width: 56px; height: 56px; border-radius: 0;
-      background: var(--yellow); color: var(--black);
-      border: 3px solid var(--black); box-shadow: 3px 3px 0 var(--black);
+    .vtl-line-fill.animated { height: 100%; }
+    .vt-step {
+      display: flex; gap: 36px; align-items: flex-start;
+      padding-bottom: 44px; position: relative;
+      opacity: 0; transform: translateX(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .vt-step:last-child { padding-bottom: 0; }
+    .vt-step.visible { opacity: 1; transform: none; }
+    .vt-dot {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--white); border: 2px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px; position: relative; z-index: 1;
-      font-size: 18px; font-weight: 900;
+      position: relative; z-index: 1;
+      transition: border-color 0.4s, background 0.4s;
     }
-    .step-title { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-    .step-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .vt-step.visible .vt-dot { border-color: var(--orange); background: var(--orange); }
+    .vt-num-label { font-size: 12px; font-weight: 800; color: var(--muted); transition: color 0.4s; }
+    .vt-step.visible .vt-num-label { color: var(--white); }
+    .vt-body { padding-top: 6px; position: relative; flex: 1; }
+    .vt-ghost {
+      position: absolute; top: -32px; right: 0;
+      font-size: 96px; font-weight: 900; color: var(--orange);
+      opacity: 0.05; letter-spacing: -5px; line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+    .vt-title { font-size: 17px; font-weight: 800; color: var(--dark); margin-bottom: 8px; letter-spacing: -0.3px; }
+    .vt-text { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 560px; }
 
-    /* CONTACTS */
-    .contacts { background: var(--bg); padding: 80px 40px; }
-    .contacts-wrap { max-width: 1200px; margin: 0 auto; }
-    .contacts-inner {
-      background: var(--white); border: 3px solid var(--black);
-      box-shadow: 8px 8px 0 var(--black);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-      margin-top: 0;
+    /* ── CONTACTS ── */
+    .contacts-wrap { background: var(--dark); }
+    .contacts-top {
+      max-width: 1200px; margin: 0 auto;
+      padding: 72px 64px 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    .c-left { padding: 48px; border-right: 3px solid var(--black); }
-    .c-right { padding: 48px; }
-    .c-block-title {
-      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-      font-weight: 900; color: var(--orange); margin-bottom: 24px;
-      padding-bottom: 12px; border-bottom: 2px solid var(--black);
+    .c-head {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+      color: var(--white); letter-spacing: -2px; line-height: 1;
+      margin-bottom: 8px;
     }
-    .c-row { display: flex; flex-direction: column; gap: 20px; }
-    .c-item { display: flex; flex-direction: column; gap: 3px; }
-    .c-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800; color: #999; }
-    .c-value { font-size: 14px; color: var(--black); font-weight: 600; }
-    .c-value a { color: var(--orange); text-decoration: none; border-bottom: 2px solid var(--orange); }
-    .c-cta {
-      margin-top: 32px; display: inline-block;
-      background: var(--orange); color: var(--white);
-      padding: 14px 28px; font-size: 13px; font-weight: 900;
-      text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px;
-      border: 3px solid var(--black); box-shadow: 5px 5px 0 var(--black);
-      transition: all 0.1s;
+    .c-head span { color: var(--orange); }
+    .c-tagline { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 48px; }
+    .c-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(255,255,255,0.08);
     }
-    .c-cta:hover { box-shadow: 2px 2px 0 var(--black); transform: translate(3px, 3px); }
-    .req-table { width: 100%; border-collapse: collapse; }
-    .req-table tr { border-bottom: 2px solid #f0f0f0; }
-    .req-table tr:last-child { border-bottom: none; }
-    .req-table td { padding: 10px 0; font-size: 13px; vertical-align: top; }
-    .req-table td:first-child { color: #999; width: 45%; font-weight: 500; }
-    .req-table td:last-child { color: var(--black); font-weight: 700; }
+    .c-block {
+      padding: 28px 32px; border-right: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .c-block:last-child { border-right: none; }
+    .c-block-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border: 1px solid rgba(255,91,31,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .c-block-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 6px; }
+    .c-block-val { font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 500; line-height: 1.5; }
+    .c-block-val a { color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.2s; }
+    .c-block-val a:hover { color: var(--orange); }
+    .c-cta-row {
+      display: flex; align-items: center; gap: 24px; margin-top: 36px;
+    }
+    .btn-cta-big {
+      padding: 14px 40px; background: var(--orange); color: var(--white);
+      font-size: 15px; font-weight: 700; text-decoration: none;
+      transition: background 0.2s; display: inline-block;
+    }
+    .btn-cta-big:hover { background: var(--orange-dk); }
+    .c-cta-note { font-size: 12px; color: rgba(255,255,255,0.25); }
+    .req-strip {
+      max-width: 1200px; margin: 0 auto;
+      padding: 28px 64px;
+      display: flex; gap: 0; flex-wrap: wrap;
+    }
+    .rq-item {
+      padding: 0 36px 0 0; margin-right: 36px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .rq-item:last-child { border-right: none; }
+    .rq-k { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.22); margin-bottom: 4px; }
+    .rq-v { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 600; }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
-      background: var(--black); padding: 28px 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
+      background: var(--dark); padding: 28px 64px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
       border-top: 3px solid var(--orange);
     }
-    .footer-logo { color: var(--white); font-size: 18px; font-weight: 900; }
-    .footer-logo span { color: var(--orange); }
-    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
-    .footer-inn { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .f-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .f-bar { width: 4px; height: 22px; background: var(--orange); }
+    .f-name { font-size: 16px; font-weight: 900; color: var(--white); letter-spacing: -0.3px; }
+    .f-copy { font-size: 12px; color: rgba(255,255,255,0.28); }
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      nav { padding: 0 20px; }
-      .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; }
-      .about, .steps { padding: 60px 20px; }
-      .services { padding: 60px 20px; }
-      .about-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .services-grid { grid-template-columns: 1fr 1fr; }
-      .steps-row { grid-template-columns: 1fr; gap: 20px; }
-      .steps-row::before { display: none; }
-      .step { text-align: left; display: flex; align-items: flex-start; gap: 16px; padding: 0; }
-      .step-circle { min-width: 56px; margin: 0; }
-      .contacts { padding: 60px 20px; }
-      .contacts-inner { grid-template-columns: 1fr; }
-      .c-left { border-right: none; border-bottom: 3px solid var(--black); }
-      footer { padding: 24px 20px; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav { padding: 0 28px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 80px 28px 48px; border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-right { padding: 48px 28px; }
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .st:nth-child(2) { border-right: none; }
+      .st:nth-child(3), .st:nth-child(4) { border-top: 1px solid var(--border); }
+      .st:nth-child(4) { border-right: none; }
+      .sec { padding: 60px 28px; }
+      .about-grid { grid-template-columns: 1fr 1fr; }
+      .contacts-top { padding: 56px 28px 40px; }
+      .c-row { grid-template-columns: 1fr; }
+      .c-block { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .c-block:last-child { border-bottom: none; }
+      .req-strip { padding: 24px 28px; gap: 20px; }
+      .rq-item { margin-right: 0; padding-right: 0; border-right: none; flex: 1 1 40%; }
+      footer { padding: 24px 28px; }
     }
     @media (max-width: 680px) {
-      nav { padding: 0 16px; }
       .nav-links { display: none; }
-      .hero h1 { font-size: 44px; }
+      h1 { letter-spacing: -1.5px; }
       .about-grid { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: 1fr; }
-      .contacts-inner { box-shadow: 4px 4px 0 var(--black); }
+      .svc-grid { grid-template-columns: 1fr; }
+      .vt-ghost { display: none; }
     }
   </style>
 </head>
@@ -263,7 +324,12 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">РМ<span>ГК</span></a>
+  <a href="#" class="nav-logo">
+    <div class="nav-bar"></div>
+    <span class="nav-name">РМГК</span>
+    <div class="nav-sep"></div>
+    <span class="nav-sub">Операционные услуги</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">О компании</a></li>
     <li><a href="#services">Услуги</a></li>
@@ -276,181 +342,332 @@
 <!-- HERO -->
 <div class="hero" id="hero">
   <div class="hero-left">
-    <div class="hero-tag">Операционные услуги · Москва</div>
-    <h1>Комплексные<br><span class="h-accent">решения</span></h1>
-    <p class="hero-sub">Широкий спектр услуг: от складской логистики и доставки до клининга и HoReCa. Берём на себя непрофильные операции — вы сосредотачиваетесь на росте.</p>
+    <div class="hero-kicker">Комплексные операционные услуги · Москва</div>
+    <h1>Надёжный партнёр<br>для вашего<br>бизнеса</h1>
+    <p class="hero-lead">Широкий спектр услуг: от складской логистики и доставки до клининга и HoReCa. Берём на себя непрофильные операции — вы сосредотачиваетесь на росте.</p>
     <div class="hero-btns">
-      <a href="#contacts" class="btn-brutal">Оставить заявку</a>
-      <a href="#services" class="btn-brutal-outline">Наши услуги</a>
+      <a href="#contacts" class="btn-fill">Оставить заявку</a>
+      <a href="#services" class="btn-line">Наши услуги</a>
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-box">
-      <div class="hero-box-label">Направлений работы</div>
-      <div class="hero-box-num">6<span>+</span></div>
-      <div class="hero-box-desc">операционных сервисов под ключ</div>
-      <div class="hero-box-divider"></div>
-      <div class="hero-box-list">
-        <div class="hero-box-item">Складская логистика</div>
-        <div class="hero-box-item">Погрузка и разгрузка</div>
-        <div class="hero-box-item">HoReCa</div>
-        <div class="hero-box-item">Клининг</div>
-        <div class="hero-box-item">Доставка товара</div>
-      </div>
+    <div class="hp-label">Направлений работы</div>
+    <div class="hp-num">6<sup>+</sup></div>
+    <div class="hp-desc">операционных сервисов под ключ</div>
+    <div class="hp-divider"></div>
+    <div class="hp-list">
+      <div class="hp-item"><div class="hp-dot"></div>Складская логистика</div>
+      <div class="hp-item"><div class="hp-dot"></div>Погрузка и разгрузка</div>
+      <div class="hp-item"><div class="hp-dot"></div>HoReCa</div>
+      <div class="hp-item"><div class="hp-dot"></div>Клининг</div>
+      <div class="hp-item"><div class="hp-dot"></div>Доставка товара</div>
     </div>
   </div>
 </div>
 
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="st">
+    <div class="st-num">6<span class="o">+</span></div>
+    <div class="st-lbl">операционных направлений</div>
+  </div>
+  <div class="st">
+    <div class="st-num">24<span class="o">ч</span></div>
+    <div class="st-lbl">время реакции на заявку</div>
+  </div>
+  <div class="st">
+    <div class="st-num">100<span class="o">%</span></div>
+    <div class="st-lbl">документальное оформление</div>
+  </div>
+  <div class="st">
+    <div class="st-num">1<span class="o">®</span></div>
+    <div class="st-lbl">защищённый товарный знак РМГ</div>
+  </div>
+</div>
+
 <!-- ABOUT -->
-<section class="about" id="about">
-  <div class="section-stamp">О компании</div>
-  <div class="section-title">Надёжный <span class="accent">партнёр</span><br>с технологиями</div>
-  <div class="about-grid">
-    <div class="about-card">
-      <div class="about-card-stripe"></div>
-      <div class="about-card-icon">™</div>
-      <div class="about-card-title">Товарный знак РМГ</div>
-      <div class="about-card-text">Работаем под защищённым брендом с устойчивой репутацией на рынке операционных услуг России. Узнаваемость и доверие партнёров.</div>
-    </div>
-    <div class="about-card">
-      <div class="about-card-stripe"></div>
-      <div class="about-card-icon">🤝</div>
-      <div class="about-card-title">Франшиза</div>
-      <div class="about-card-text">Проверенная масштабируемая бизнес-модель, успешно тиражируемая в регионах. Единый стандарт качества на каждом объекте.</div>
-    </div>
-    <div class="about-card">
-      <div class="about-card-stripe"></div>
-      <div class="about-card-icon">💻</div>
-      <div class="about-card-title">IT-продукты</div>
-      <div class="about-card-text">Собственные технологические решения для управления операциями, контроля исполнителей и прозрачной отчётности в реальном времени.</div>
+<section class="sec sec-bg" id="about">
+  <div class="inner">
+    <div class="s-tag">О компании</div>
+    <div class="s-head">Надёжный партнёр<br>с технологиями</div>
+    <div class="about-grid">
+      <div class="ac">
+        <div class="ac-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <div class="ac-title">Товарный знак РМГ</div>
+        <div class="ac-text">Работаем под защищённым брендом с устойчивой репутацией на рынке операционных услуг России. Узнаваемость и доверие партнёров.</div>
+      </div>
+      <div class="ac">
+        <div class="ac-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="4" r="2"/>
+            <circle cx="4" cy="20" r="2"/>
+            <circle cx="20" cy="20" r="2"/>
+            <line x1="12" y1="6" x2="12" y2="13"/>
+            <line x1="12" y1="13" x2="4" y2="18"/>
+            <line x1="12" y1="13" x2="20" y2="18"/>
+          </svg>
+        </div>
+        <div class="ac-title">Франшиза</div>
+        <div class="ac-text">Проверенная масштабируемая бизнес-модель, успешно тиражируемая в регионах. Единый стандарт качества на каждом объекте.</div>
+      </div>
+      <div class="ac">
+        <div class="ac-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+            <line x1="14" y1="4" x2="10" y2="20"/>
+          </svg>
+        </div>
+        <div class="ac-title">IT-продукты</div>
+        <div class="ac-text">Собственные технологические решения для управления операциями, контроля исполнителей и прозрачной отчётности в реальном времени.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section class="services" id="services">
-  <div class="section-stamp">Услуги</div>
-  <div class="section-title">Что мы<br><span class="accent">делаем</span></div>
-  <div class="services-grid">
-    <div class="svc-card">
-      <div class="svc-icon">🏭</div>
-      <div class="svc-num-label">01</div>
-      <div class="svc-title">Складская логистика</div>
-      <div class="svc-text">Сборка, размещение и выдача заказов. Сортировка и стикеровка товара. Хранение и перемещение на складе.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">🚛</div>
-      <div class="svc-num-label">02</div>
-      <div class="svc-title">Погрузка и разгрузка</div>
-      <div class="svc-text">Профессиональные бригады для погрузочно-разгрузочных работ любого объёма и сложности.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">📦</div>
-      <div class="svc-num-label">03</div>
-      <div class="svc-title">Комплектовка и упаковка</div>
-      <div class="svc-text">Комплектовка заказов и упаковка товара в соответствии со стандартами и требованиями клиента.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">🚗</div>
-      <div class="svc-num-label">04</div>
-      <div class="svc-title">Доставка товара</div>
-      <div class="svc-text">Организация и сопровождение доставки. Курьерские услуги и логистика последней мили.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">🍽</div>
-      <div class="svc-num-label">05</div>
-      <div class="svc-title">HoReCa</div>
-      <div class="svc-text">Приготовление блюд и напитков. Операционные услуги в сфере деятельности кафе и ресторанов.</div>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon">🧹</div>
-      <div class="svc-num-label">06</div>
-      <div class="svc-title">Клининг</div>
-      <div class="svc-text">Профессиональный клининг, подсобные услуги и расчётно-кассовое обслуживание.</div>
+<section class="sec" id="services">
+  <div class="inner">
+    <div class="s-tag">Услуги</div>
+    <div class="s-head">Что мы делаем</div>
+    <div class="svc-grid">
+      <div class="sc">
+        <div class="sc-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <div class="sc-num">01</div>
+        <div class="sc-title">Складская логистика</div>
+        <div class="sc-text">Сборка, размещение и выдача заказов. Сортировка и стикеровка товара. Хранение и перемещение на складе.</div>
+        <div class="sc-watermark">01</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="3" x2="12" y2="21"/>
+            <polyline points="8 7 12 3 16 7"/>
+            <polyline points="8 17 12 21 16 17"/>
+          </svg>
+        </div>
+        <div class="sc-num">02</div>
+        <div class="sc-title">Погрузка и разгрузка</div>
+        <div class="sc-text">Профессиональные бригады для погрузочно-разгрузочных работ любого объёма и сложности.</div>
+        <div class="sc-watermark">02</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="sc-num">03</div>
+        <div class="sc-title">Комплектовка и упаковка</div>
+        <div class="sc-text">Комплектовка заказов и упаковка товара в соответствии со стандартами и требованиями клиента.</div>
+        <div class="sc-watermark">03</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="1"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <div class="sc-num">04</div>
+        <div class="sc-title">Доставка товара</div>
+        <div class="sc-text">Организация и сопровождение доставки. Курьерские услуги и логистика последней мили.</div>
+        <div class="sc-watermark">04</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/>
+            <line x1="10" y1="1" x2="10" y2="4"/>
+            <line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+        </div>
+        <div class="sc-num">05</div>
+        <div class="sc-title">HoReCa</div>
+        <div class="sc-text">Приготовление блюд и напитков. Операционные услуги в сфере деятельности кафе и ресторанов.</div>
+        <div class="sc-watermark">05</div>
+      </div>
+      <div class="sc">
+        <div class="sc-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/>
+          </svg>
+        </div>
+        <div class="sc-num">06</div>
+        <div class="sc-title">Клининг</div>
+        <div class="sc-text">Профессиональный клининг, подсобные услуги и расчётно-кассовое обслуживание.</div>
+        <div class="sc-watermark">06</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- STEPS -->
-<section class="steps" id="steps">
-  <div class="section-stamp">Этапы</div>
-  <div class="section-title">Как мы <span class="accent">работаем</span></div>
-  <div class="steps-row">
-    <div class="step">
-      <div class="step-circle">1</div>
-      <div class="step-title">Заявка</div>
-      <div class="step-text">Оставляете заявку или звоните нам</div>
-    </div>
-    <div class="step">
-      <div class="step-circle">2</div>
-      <div class="step-title">Анализ</div>
-      <div class="step-text">Детально изучаем потребности и задачи</div>
-    </div>
-    <div class="step">
-      <div class="step-circle">3</div>
-      <div class="step-title">Договор</div>
-      <div class="step-text">Заключаем официальный договор</div>
-    </div>
-    <div class="step">
-      <div class="step-circle">4</div>
-      <div class="step-title">Запуск</div>
-      <div class="step-text">Формируем команду и приступаем</div>
-    </div>
-    <div class="step">
-      <div class="step-circle">5</div>
-      <div class="step-title">Контроль</div>
-      <div class="step-text">Прозрачный контроль и отчётность</div>
+<section class="sec sec-bg" id="steps">
+  <div class="inner">
+    <div class="s-tag">Этапы</div>
+    <div class="s-head">Как мы работаем</div>
+    <div class="vtl" id="vtl">
+      <div class="vtl-line"><div class="vtl-line-fill" id="vtl-fill"></div></div>
+      <div class="vt-step">
+        <div class="vt-dot"><div class="vt-num-label">1</div></div>
+        <div class="vt-body">
+          <div class="vt-ghost">01</div>
+          <div class="vt-title">Заявка</div>
+          <div class="vt-text">Оставляете заявку или звоните нам — мы уточняем задачу, объект, объём работ и требования к персоналу</div>
+        </div>
+      </div>
+      <div class="vt-step">
+        <div class="vt-dot"><div class="vt-num-label">2</div></div>
+        <div class="vt-body">
+          <div class="vt-ghost">02</div>
+          <div class="vt-title">Анализ</div>
+          <div class="vt-text">Детально изучаем потребности и задачи, формируем состав команды и готовим коммерческое предложение</div>
+        </div>
+      </div>
+      <div class="vt-step">
+        <div class="vt-dot"><div class="vt-num-label">3</div></div>
+        <div class="vt-body">
+          <div class="vt-ghost">03</div>
+          <div class="vt-title">Договор</div>
+          <div class="vt-text">Заключаем официальный договор аутсорсинга, согласуем SLA и ключевые показатели качества</div>
+        </div>
+      </div>
+      <div class="vt-step">
+        <div class="vt-dot"><div class="vt-num-label">4</div></div>
+        <div class="vt-body">
+          <div class="vt-ghost">04</div>
+          <div class="vt-title">Запуск</div>
+          <div class="vt-text">Формируем и выводим команду на объект. Проводим инструктаж, оформляем все необходимые документы</div>
+        </div>
+      </div>
+      <div class="vt-step">
+        <div class="vt-dot"><div class="vt-num-label">5</div></div>
+        <div class="vt-body">
+          <div class="vt-ghost">05</div>
+          <div class="vt-title">Контроль</div>
+          <div class="vt-text">Прозрачный контроль присутствия, выполнения задач и отчётность в режиме реального времени</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- CONTACTS -->
-<section class="contacts" id="contacts">
-  <div class="contacts-wrap">
-    <div class="section-stamp">Контакты</div>
-    <div class="section-title">Свяжитесь <span class="accent">с нами</span></div>
-    <div class="contacts-inner">
-      <div class="c-left">
-        <div class="c-block-title">Контактная информация</div>
-        <div class="c-row">
-          <div class="c-item">
-            <span class="c-label">Адрес</span>
-            <span class="c-value">г. Москва, Большая Почтовая ул., д. 26в стр. 1</span>
-          </div>
-          <div class="c-item">
-            <span class="c-label">Телефон</span>
-            <span class="c-value"><a href="tel:+7">+7 (___) ___-__-__</a></span>
-          </div>
-          <div class="c-item">
-            <span class="c-label">E-mail</span>
-            <span class="c-value"><a href="mailto:info@rmgk.ru">info@rmgk.ru</a></span>
-          </div>
-          <div class="c-item">
-            <span class="c-label">Сайт</span>
-            <span class="c-value"><a href="https://rmgc.pro" target="_blank">rmgc.pro</a></span>
-          </div>
+<div class="contacts-wrap" id="contacts">
+  <div class="contacts-top">
+    <div class="s-tag" style="color:rgba(255,255,255,0.35);margin-bottom:16px;">Контакты</div>
+    <div class="c-head">Готовы к <span>работе</span>?</div>
+    <p class="c-tagline">Ответим в течение рабочего дня и подготовим предложение под вашу задачу</p>
+    <div class="c-row">
+      <div class="c-block">
+        <div class="c-block-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
         </div>
-        <a href="mailto:info@rmgk.ru" class="c-cta">Написать нам</a>
+        <div>
+          <div class="c-block-label">Адрес</div>
+          <div class="c-block-val">г. Москва, Большая Почтовая ул., д. 26в стр. 1</div>
+        </div>
       </div>
-      <div class="c-right">
-        <div class="c-block-title">Реквизиты</div>
-        <table class="req-table">
-          <tr><td>Полное наименование</td><td>ООО «РМГК»</td></tr>
-          <tr><td>ИНН</td><td>9701311770</td></tr>
-          <tr><td>КПП</td><td>770101001</td></tr>
-          <tr><td>Юридический адрес</td><td>105082, г. Москва, Большая Почтовая ул., д. 26в стр. 1</td></tr>
-        </table>
+      <div class="c-block">
+        <div class="c-block-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.61 5.61l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="c-block-label">Телефон</div>
+          <div class="c-block-val"><a href="tel:+7">+7 (___) ___-__-__</a></div>
+        </div>
+      </div>
+      <div class="c-block">
+        <div class="c-block-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5B1F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="c-block-label">E-mail</div>
+          <div class="c-block-val"><a href="mailto:info@rmgk.ru">info@rmgk.ru</a></div>
+        </div>
       </div>
     </div>
+    <div class="c-cta-row">
+      <a href="mailto:info@rmgk.ru" class="btn-cta-big">Написать нам</a>
+      <span class="c-cta-note">или позвоните — ответим быстро</span>
+    </div>
   </div>
-</section>
+  <div class="req-strip">
+    <div class="rq-item">
+      <div class="rq-k">Компания</div>
+      <div class="rq-v">ООО «РМГК»</div>
+    </div>
+    <div class="rq-item">
+      <div class="rq-k">ИНН</div>
+      <div class="rq-v">9701311770</div>
+    </div>
+    <div class="rq-item">
+      <div class="rq-k">КПП</div>
+      <div class="rq-v">770101001</div>
+    </div>
+    <div class="rq-item">
+      <div class="rq-k">Юр. адрес</div>
+      <div class="rq-v" style="font-size:11px;">105082, г. Москва, Большая Почтовая ул., д. 26в стр. 1</div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">РМ<span>ГК</span></div>
-  <div class="footer-copy">© 2025 ООО «РМГК». Все права защищены.</div>
-  <div class="footer-inn">ИНН 9701311770 · КПП 770101001</div>
+  <a href="#" class="f-logo">
+    <div class="f-bar"></div>
+    <span class="f-name">РМГК</span>
+  </a>
+  <div class="f-copy">© 2025 ООО «РМГК». Все права защищены.</div>
+  <div class="f-copy">ИНН 9701311770 · КПП 770101001</div>
 </footer>
 
+<script>
+  const steps = document.querySelectorAll('.vt-step');
+  const fill  = document.getElementById('vtl-fill');
+  let activated = 0;
+
+  const stepObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        activated++;
+        if (fill) fill.style.height = (activated / steps.length * 100) + '%';
+        stepObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  steps.forEach((s, i) => {
+    s.style.transitionDelay = (i * 0.12) + 's';
+    stepObs.observe(s);
+  });
+</script>
 </body>
 </html>
