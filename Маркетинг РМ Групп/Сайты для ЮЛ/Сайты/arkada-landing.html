@@ -3,282 +3,333 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Аркада — Персонал для строительства и производства</title>
+  <title>Аркада — Промышленный персонал</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --red:     #DC2626;
-      --red-dk:  #B91C1C;
-      --red-lt:  #EF4444;
-      --dark:    #111111;
-      --dark2:   #1A1A1A;
-      --mid:     #444444;
-      --muted:   #888888;
-      --bg:      #F4F4F4;
-      --white:   #FFFFFF;
-      --line:    #E0E0E0;
-      --yellow:  #FBBF24;
+      --copper:    #B07040;
+      --copper-lt: #C98F60;
+      --copper-dk: #8A5530;
+      --dark:      #263040;
+      --dark2:     #1C2A3C;
+      --mid:       #445566;
+      --muted:     #8090A4;
+      --bg:        #F5F3F0;
+      --bg2:       #EDEAE6;
+      --white:     #FFFFFF;
+      --line:      rgba(0,0,0,0.09);
+      --line-lt:   rgba(255,255,255,0.08);
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--dark); height: 56px; padding: 0 60px;
+      background: var(--dark2); height: 58px; padding: 0 60px;
       display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 3px solid var(--red);
+      border-bottom: 2px solid rgba(176,112,64,0.3);
     }
-    .nav-logo {
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-mark { width: 32px; height: 26px; flex-shrink: 0; }
+    .nav-logo-text {
       font-family: 'Oswald', sans-serif;
-      font-size: 20px; font-weight: 700; color: var(--white); text-decoration: none; letter-spacing: 2px; text-transform: uppercase;
+      font-size: 18px; font-weight: 700; color: var(--copper-lt);
+      letter-spacing: 3px; text-transform: uppercase;
     }
-    .nav-logo span { color: var(--red); }
     .nav-links { display: flex; gap: 0; list-style: none; }
     .nav-links a {
-      display: block; padding: 0 18px; line-height: 53px;
-      font-size: 12px; font-weight: 600; letter-spacing: 1px;
-      text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none;
-      transition: color 0.15s;
+      display: block; padding: 0 18px; line-height: 56px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.38); text-decoration: none;
+      transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover { color: rgba(255,255,255,0.85); }
     .nav-cta {
-      padding: 8px 20px; background: var(--red); color: var(--white);
-      font-size: 12px; font-weight: 700; text-decoration: none;
-      text-transform: uppercase; letter-spacing: 1px; transition: background 0.15s;
+      padding: 8px 22px; background: var(--copper); color: var(--white);
+      font-size: 11px; font-weight: 700; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      transition: background 0.2s, transform 0.15s;
     }
-    .nav-cta:hover { background: var(--red-dk); }
+    .nav-cta:hover { background: var(--copper-lt); transform: scale(1.02); }
 
-    /* HERO — split editorial */
+    /* ── HERO ── */
     .hero {
-      display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 56px); margin-top: 56px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 72vh; margin-top: 58px;
     }
-    .hero-left {
-      background: var(--dark); padding: 80px 60px; display: flex; flex-direction: column; justify-content: space-between;
+    .hero-left { position: relative; background: var(--dark2); overflow: hidden; }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    /* industry tags inside left panel */
+    .hero-tags {
+      position: absolute; bottom: 40px; left: 40px; right: 40px; z-index: 1;
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .hero-tag-chip {
+      padding: 5px 13px;
+      background: rgba(176,112,64,0.1);
+      border: 1px solid rgba(176,112,64,0.28);
+      font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+    .hero-right {
+      background: var(--dark); padding: 64px 56px;
+      display: flex; flex-direction: column; justify-content: center; gap: 32px;
     }
     .hero-eyebrow {
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--red); font-weight: 700;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--copper-lt); font-weight: 700;
     }
     .hero-h1 {
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(52px, 7vw, 96px); font-weight: 700;
-      line-height: 0.95; letter-spacing: -2px; color: var(--white);
+      font-size: clamp(40px, 5vw, 68px); font-weight: 700;
+      line-height: 0.95; letter-spacing: -1px; color: var(--white);
       text-transform: uppercase;
     }
-    .hero-h1 .red { color: var(--red); }
-    .hero-h1 .outline {
-      -webkit-text-stroke: 2px var(--white); color: transparent;
+    .hero-h1 .cu { color: var(--copper-lt); }
+    .hero-h1 .outline { -webkit-text-stroke: 1.5px rgba(255,255,255,0.25); color: transparent; }
+    .hero-divider { width: 48px; height: 2px; background: var(--copper); opacity: 0.6; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-copper {
+      padding: 14px 32px; background: var(--copper); color: var(--white);
+      font-size: 12px; font-weight: 700; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      transition: background 0.2s, transform 0.15s; display: inline-block;
     }
-    .hero-bottom {
-      display: flex; flex-direction: column; gap: 20px;
+    .btn-copper:hover { background: var(--copper-lt); transform: translateY(-1px); }
+    .btn-ghost {
+      padding: 14px 32px; background: transparent; color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.15); font-size: 12px; font-weight: 600;
+      text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px;
+      transition: border-color 0.2s, color 0.2s; display: inline-block;
     }
-    .hero-sub {
-      font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.45);
-      font-weight: 300; max-width: 400px;
-    }
-    .hero-btns { display: flex; gap: 0; }
-    .btn-red {
-      padding: 15px 32px; background: var(--red); color: var(--white);
-      font-size: 13px; font-weight: 700; text-decoration: none;
-      text-transform: uppercase; letter-spacing: 1px; transition: background 0.15s;
-    }
-    .btn-red:hover { background: var(--red-dk); }
-    .btn-white {
-      padding: 15px 32px; background: var(--white); color: var(--dark);
-      font-size: 13px; font-weight: 700; text-decoration: none;
-      text-transform: uppercase; letter-spacing: 1px; transition: background 0.15s;
-    }
-    .btn-white:hover { background: var(--bg); }
-    .hero-right {
-      background: var(--red); padding: 80px 60px;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .hero-num-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .hero-num {}
-    .hn-val {
-      font-family: 'Oswald', sans-serif;
-      font-size: 64px; font-weight: 700; color: var(--white);
-      letter-spacing: -2px; line-height: 1;
-    }
-    .hn-label { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; line-height: 1.4; text-transform: uppercase; letter-spacing: 0.5px; }
-    .hero-tagline {
-      font-family: 'Oswald', sans-serif;
-      font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.3);
-      text-transform: uppercase; letter-spacing: 2px; line-height: 1.3;
-    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
 
-    /* TICKER */
-    .ticker {
-      background: var(--yellow); padding: 10px 0; overflow: hidden; white-space: nowrap;
+    /* ── ADVANTAGES ── */
+    .advantages { background: var(--white); padding: 0; border-bottom: 1px solid var(--line); }
+    .adv-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .adv-item {
+      padding: 40px 36px; border-right: 1px solid var(--line);
+      border-top: 3px solid transparent;
+      transition: border-color 0.2s;
     }
-    .ticker-inner {
-      display: inline-flex; gap: 0; animation: ticker 20s linear infinite;
-    }
-    .ticker-item {
+    .adv-item:last-child { border-right: none; }
+    .adv-item:hover { border-top-color: var(--copper); }
+    .adv-num {
       font-family: 'Oswald', sans-serif;
-      font-size: 13px; font-weight: 600; color: var(--dark);
-      padding: 0 32px; text-transform: uppercase; letter-spacing: 1px;
+      font-size: 52px; font-weight: 700; color: var(--dark);
+      letter-spacing: -2px; line-height: 1; margin-bottom: 8px;
     }
-    .ticker-sep { color: var(--red); font-weight: 900; }
-    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .adv-num span { color: var(--copper); font-size: 32px; }
+    .adv-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-    /* ABOUT */
-    .about { background: var(--white); padding: 80px 60px; }
-    .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
-    .about-left-num {
+    /* ── ABOUT ── */
+    .about { background: var(--bg); padding: 88px 60px; }
+    .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .section-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 14px; }
+    .section-title {
       font-family: 'Oswald', sans-serif;
-      font-size: 120px; font-weight: 700; color: var(--bg);
-      line-height: 1; letter-spacing: -4px; margin-bottom: -20px;
+      font-size: clamp(26px, 3.5vw, 42px); font-weight: 700;
+      color: var(--dark); line-height: 1.08; text-transform: uppercase;
+      letter-spacing: -0.5px; margin-bottom: 24px;
     }
-    .about-label {
-      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--red); font-weight: 700; margin-bottom: 12px;
-    }
-    .about-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(28px, 3.5vw, 44px); font-weight: 700;
-      color: var(--dark); line-height: 1.1; text-transform: uppercase;
-      letter-spacing: -0.5px; margin-bottom: 20px;
-    }
-    .about-text { font-size: 15px; line-height: 1.75; color: var(--mid); font-weight: 300; margin-bottom: 14px; }
-    .about-right-content { padding-top: 16px; }
-    .about-feat { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .about-text { font-size: 15px; line-height: 1.78; color: var(--mid); font-weight: 300; margin-bottom: 14px; }
+    .about-feat { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--line); }
     .about-feat:last-child { border-bottom: none; }
-    .af-num {
-      font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 700;
-      color: var(--red); min-width: 40px; line-height: 1;
+    .af-ico {
+      width: 44px; height: 44px; background: var(--bg2); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    .af-ico svg { width: 20px; height: 20px; }
     .af-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
-    .af-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .af-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    /* SERVICES */
-    .services { background: var(--dark); padding: 80px 60px; }
+    /* ── SERVICES ── */
+    .services { background: var(--dark); padding: 88px 60px; }
     .services-inner { max-width: 1100px; margin: 0 auto; }
-    .svc-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 24px; }
-    .svc-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 8px; }
-    .svc-title {
+    .svc-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--line-lt);
+    }
+    .section-label-lt { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper-lt); font-weight: 700; margin-bottom: 10px; }
+    .section-title-lt {
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(24px, 3vw, 40px); font-weight: 700;
+      font-size: clamp(24px, 3vw, 38px); font-weight: 700;
       color: var(--white); text-transform: uppercase; letter-spacing: -0.5px;
     }
-    .svc-count { font-size: 56px; font-weight: 900; color: rgba(255,255,255,0.06); font-family: 'Oswald', sans-serif; letter-spacing: -2px; }
+    .svc-count { font-family: 'Oswald', sans-serif; font-size: 52px; font-weight: 700; color: rgba(255,255,255,0.05); letter-spacing: -2px; }
     .svc-list { display: grid; grid-template-columns: repeat(3, 1fr); }
     .svc-item {
-      padding: 28px 24px;
-      border-right: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: background 0.15s; position: relative;
+      padding: 28px 26px;
+      border-right: 1px solid var(--line-lt); border-bottom: 1px solid var(--line-lt);
+      transition: background 0.2s; position: relative; overflow: hidden;
     }
+    .svc-item::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--copper); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .svc-item:hover::before { transform: scaleX(1); }
     .svc-item:nth-child(3n) { border-right: none; }
     .svc-item:nth-last-child(-n+3) { border-bottom: none; }
-    .svc-item:hover { background: rgba(220,38,38,0.08); }
-    .svc-item:hover .svc-item-num { color: var(--red); }
-    .svc-item-num {
-      font-family: 'Oswald', sans-serif;
-      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.2);
-      margin-bottom: 10px; transition: color 0.15s; text-transform: uppercase; letter-spacing: 1px;
+    .svc-item:hover { background: rgba(176,112,64,0.07); }
+    .svc-item-ico {
+      width: 36px; height: 36px; background: rgba(176,112,64,0.1);
+      border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
     }
-    .svc-item-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .svc-item-text { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.6; }
+    .svc-item-ico svg { width: 18px; height: 18px; }
+    .svc-item-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .svc-item-text { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; }
 
-    /* STEPS */
-    .steps { background: var(--bg); padding: 80px 60px; }
+    /* ── STEPS (diamonds) ── */
+    .steps { background: var(--white); padding: 88px 60px; }
     .steps-inner { max-width: 1100px; margin: 0 auto; }
-    .steps-head { margin-bottom: 48px; }
-    .steps-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 8px; }
-    .steps-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(28px, 3.5vw, 44px); font-weight: 700;
-      color: var(--dark); text-transform: uppercase; letter-spacing: -0.5px;
-    }
-    .timeline { display: flex; position: relative; }
-    .timeline::before {
+    .steps-head { margin-bottom: 64px; }
+    .steps-track { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; }
+    .steps-track::before {
       content: ''; position: absolute;
-      top: 20px; left: 10%; right: 10%;
-      height: 2px; background: var(--red); opacity: 0.15; z-index: 0;
+      top: 19px; left: 10%; right: 10%; height: 1px;
+      background: var(--line); z-index: 0;
     }
-    .t-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
-    .t-dot {
-      width: 40px; height: 40px; background: var(--bg);
-      border: 2px solid var(--line); border-radius: 0;
-      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
-      transition: border-color 0.15s, background 0.15s;
+    .steps-progress {
+      position: absolute; top: 19px; left: 10%; width: 0; height: 1px;
+      background: linear-gradient(to right, var(--copper), var(--copper-lt));
+      z-index: 1; transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
     }
-    .t-step:first-child .t-dot { background: var(--red); border-color: var(--red); }
-    .t-step:first-child .t-dot-num { color: var(--white); }
-    .t-step:hover .t-dot { border-color: var(--red); }
-    .t-dot-num { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 700; color: var(--muted); }
-    .t-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 6px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
-    .t-text { font-size: 12px; color: var(--muted); line-height: 1.55; text-align: center; max-width: 120px; }
-
-    /* CONTACTS */
-    .contacts { background: var(--dark2); padding: 80px 60px; }
-    .contacts-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 280px; gap: 64px; }
-    .c-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 8px; }
-    .c-title {
+    .steps-progress.active { width: 80%; }
+    .step-col { display: flex; flex-direction: column; align-items: center; padding: 0 8px; position: relative; z-index: 2; }
+    /* diamond shape */
+    .step-diamond {
+      width: 38px; height: 38px;
+      background: var(--white); border: 2px solid var(--line);
+      transform: rotate(45deg);
+      margin-bottom: 8px; flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .step-col:first-child .step-diamond { background: var(--copper); border-color: var(--copper); box-shadow: 0 4px 20px rgba(176,112,64,0.3); }
+    .step-col:hover .step-diamond { border-color: var(--copper); box-shadow: 0 4px 16px rgba(176,112,64,0.2); }
+    /* large number below diamond */
+    .step-num-big {
       font-family: 'Oswald', sans-serif;
-      font-size: 40px; font-weight: 700; color: var(--white);
-      text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 36px;
+      font-size: 38px; font-weight: 700; color: var(--copper);
+      letter-spacing: -1px; line-height: 1; margin-bottom: 12px; text-align: center;
+      opacity: 0.5;
     }
-    .c-info { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
-    .c-field-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 4px; }
-    .c-field-val { font-size: 14px; color: rgba(255,255,255,0.75); font-weight: 500; }
-    .c-field-val a { color: rgba(255,255,255,0.75); text-decoration: none; border-bottom: 1px solid rgba(220,38,38,0.4); }
-    .c-field-val a:hover { color: var(--red-lt); }
-    .btn-contact {
-      display: inline-block; padding: 14px 32px; background: var(--red); color: var(--white);
-      font-size: 13px; font-weight: 700; text-decoration: none;
-      text-transform: uppercase; letter-spacing: 1px; transition: background 0.15s;
-    }
-    .btn-contact:hover { background: var(--red-dk); }
-    .req-panel {
+    .step-col:first-child .step-num-big { opacity: 1; }
+    .step-col:hover .step-num-big { opacity: 0.9; }
+    .step-title { font-size: 12px; font-weight: 700; color: var(--dark); text-align: center; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .step-text { font-size: 11px; color: var(--muted); line-height: 1.6; text-align: center; max-width: 120px; }
+
+    /* ── CONTACTS (swapped: left=requisites, right=info+photo) ── */
+    .contacts { background: var(--dark2); padding: 88px 60px; }
+    .contacts-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 72px; align-items: start; }
+    /* LEFT — requisites */
+    .req-block {
       background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      padding: 28px; border-radius: 0;
+      padding: 32px; margin-top: 56px;
     }
-    .req-panel-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 20px; }
-    .req-row { margin-bottom: 14px; }
-    .req-row:last-child { margin-bottom: 0; }
+    .req-block-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); font-weight: 700; margin-bottom: 24px; }
+    .req-row { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .req-row:last-child { border-bottom: none; }
     .req-key { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 3px; }
-    .req-val { font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 600; }
-
-    /* FOOTER */
-    footer {
-      background: var(--dark); border-top: 3px solid var(--red);
-      padding: 20px 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    .req-val { font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600; }
+    /* RIGHT — main contacts */
+    .c-right {}
+    .c-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper-lt); font-weight: 700; margin-bottom: 16px; }
+    .c-headline {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(32px, 4vw, 54px); font-weight: 700;
+      color: var(--white); text-transform: uppercase;
+      letter-spacing: -1px; line-height: 0.97; margin-bottom: 20px;
     }
-    .footer-logo { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 2px; text-transform: uppercase; }
-    .footer-logo span { color: var(--red); }
-    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+    .c-headline .cu { color: var(--copper-lt); }
+    .c-sub { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.7; font-weight: 300; margin-bottom: 28px; max-width: 420px; }
+    /* manager card */
+    .c-manager {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 22px; margin-bottom: 20px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .c-manager-photo {
+      width: 60px; height: 60px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+      border: 2px solid rgba(176,112,64,0.45);
+    }
+    .c-manager-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .c-manager-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+    .c-manager-role { font-size: 12px; color: rgba(255,255,255,0.38); }
+    /* contact rows */
+    .c-info { display: flex; flex-direction: column; gap: 4px; margin-bottom: 28px; }
+    .c-row {
+      display: flex; align-items: center; gap: 14px; padding: 15px 20px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s, border-color 0.2s; text-decoration: none;
+    }
+    .c-row:hover { background: rgba(255,255,255,0.06); border-color: rgba(176,112,64,0.25); }
+    .c-row-ico {
+      width: 36px; height: 36px; border-radius: 6px;
+      background: rgba(176,112,64,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .c-row-ico svg { width: 15px; height: 15px; }
+    .c-row-label { font-size: 9px; color: var(--copper-lt); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+    .c-row-val { font-size: 14px; color: rgba(255,255,255,0.78); font-weight: 600; }
+    .c-row-val a { color: rgba(255,255,255,0.78); text-decoration: none; }
 
-    /* RESPONSIVE */
+    /* ── CTA STRIP ── */
+    .cta-strip { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 44px 60px; }
+    .cta-strip-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .cta-strip-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(20px, 2.5vw, 30px); font-weight: 600;
+      color: var(--dark); text-transform: uppercase; letter-spacing: -0.3px; line-height: 1.2;
+    }
+    .cta-strip-text span { color: var(--copper); }
+    .cta-strip-sub { font-size: 13px; color: var(--muted); margin-top: 5px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark2); padding: 20px 60px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .footer-logo-mark { width: 24px; height: 20px; opacity: 0.5; }
+    .footer-logo-text { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 2.5px; text-transform: uppercase; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.15); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      nav { padding: 0 24px; }
+      nav, footer { padding-left: 24px; padding-right: 24px; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left, .hero-right { padding: 48px 28px; }
-      .about { padding: 48px 28px; }
-      .about-inner { grid-template-columns: 1fr; gap: 36px; }
-      .services, .steps { padding: 48px 28px; }
-      .svc-list { grid-template-columns: 1fr 1fr; }
-      .svc-item:nth-child(3n) { border-right: 1px solid rgba(255,255,255,0.06); }
-      .svc-item:nth-child(2n) { border-right: none; }
-      .contacts { padding: 48px 28px; }
-      .contacts-inner { grid-template-columns: 1fr; gap: 32px; }
-      .c-info { grid-template-columns: 1fr; }
-      footer { padding: 20px 24px; }
+      .hero-left { min-height: 280px; }
+      .hero-right { padding: 52px 32px; }
+      .about, .services, .steps, .contacts, .cta-strip { padding: 56px 28px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .adv-inner { grid-template-columns: 1fr 1fr; }
+      .contacts-inner { grid-template-columns: 1fr; gap: 40px; }
+      .req-block { margin-top: 0; }
+      .cta-strip-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
     }
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .hero-num-grid { grid-template-columns: 1fr 1fr; }
-      .svc-list { grid-template-columns: 1fr; }
-      .svc-item { border-right: none; }
-      .timeline { flex-direction: column; align-items: flex-start; }
-      .timeline::before { display: none; }
-      .t-step { flex-direction: row; align-items: flex-start; gap: 16px; width: 100%; padding-bottom: 24px; }
-      .t-step:last-child { padding-bottom: 0; }
-      .t-dot { margin-bottom: 0; flex-shrink: 0; }
-      .t-title, .t-text { text-align: left; }
+      .adv-inner { grid-template-columns: 1fr 1fr; }
+      .svc-list { grid-template-columns: 1fr 1fr; }
+      .svc-item:nth-child(3n) { border-right: 1px solid var(--line-lt); }
+      .svc-item:nth-child(2n) { border-right: none; }
+      .steps-track { grid-template-columns: 1fr; gap: 28px; }
+      .steps-track::before, .steps-progress { display: none; }
+      .step-col { flex-direction: row; align-items: flex-start; gap: 16px; }
+      .step-diamond { margin-bottom: 0; flex-shrink: 0; }
+      .step-num-big { text-align: left; }
+      .step-title, .step-text { text-align: left; }
     }
   </style>
 </head>
@@ -286,118 +337,103 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">АРК<span>АДА</span></a>
+  <a href="#" class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Left pillar -->
+      <rect x="1" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
+      <!-- Right pillar -->
+      <rect x="28" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
+      <!-- Arch -->
+      <path d="M2 18 Q2 2 18 2 Q34 2 34 18" stroke="#C98F60" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="nav-logo-text">Аркада</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">О нас</a></li>
     <li><a href="#services">Услуги</a></li>
     <li><a href="#steps">Этапы</a></li>
     <li><a href="#contacts">Контакты</a></li>
   </ul>
-  <a href="#contacts" class="nav-cta">Заявка</a>
+  <a href="#contacts" class="nav-cta">Оставить заявку</a>
 </nav>
 
 <!-- HERO -->
 <div class="hero" id="hero">
   <div class="hero-left">
-    <div class="hero-eyebrow">Промышленный персонал · Строительство · Москва</div>
-    <div class="hero-h1">
-      <div class="red">ЛЮДИ</div>
-      <div>ДЛЯ</div>
-      <div class="outline">РАБОТЫ</div>
-    </div>
-    <div class="hero-bottom">
-      <p class="hero-sub">Аутсорсинг персонала для промышленных объектов, строительства, производства и складской логистики. Работаем с объёмами — от 10 до 1000 человек.</p>
-      <div class="hero-btns">
-        <a href="#contacts" class="btn-red">Оставить заявку</a>
-        <a href="#services" class="btn-white">Услуги</a>
-      </div>
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-tags">
+      <div class="hero-tag-chip">Строительство</div>
+      <div class="hero-tag-chip">Промышленность</div>
+      <div class="hero-tag-chip">Склад</div>
+      <div class="hero-tag-chip">Производство</div>
+      <div class="hero-tag-chip">Логистика</div>
+      <div class="hero-tag-chip">Клининг</div>
+      <div class="hero-tag-chip">HoReCa</div>
+      <div class="hero-tag-chip">Рекрутинг</div>
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-num-grid">
-      <div class="hero-num">
-        <div class="hn-val">7+</div>
-        <div class="hn-label">лет на рынке</div>
-      </div>
-      <div class="hero-num">
-        <div class="hn-val">500+</div>
-        <div class="hn-label">человек ежемесячно</div>
-      </div>
-      <div class="hero-num">
-        <div class="hn-val">48ч</div>
-        <div class="hn-label">закрытие заявки</div>
-      </div>
-      <div class="hero-num">
-        <div class="hn-val">100%</div>
-        <div class="hn-label">официальное оформление</div>
-      </div>
+    <div class="hero-eyebrow">Аутсорсинг персонала</div>
+    <div class="hero-h1">
+      <div>ПРОМЫШЛЕННЫЙ</div>
+      <div class="cu">ПЕРСОНАЛ</div>
+      <div class="outline">БЕЗ ПРОСТОЕВ</div>
     </div>
-    <div class="hero-tagline">
-      Надёжный<br>партнёр на<br>любом объекте
+    <div class="hero-divider"></div>
+    <div class="hero-btns">
+      <a href="#contacts" class="btn-copper">Оставить заявку</a>
+      <a href="#services" class="btn-ghost">Услуги</a>
     </div>
   </div>
 </div>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item">Строительство</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Промышленность</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Склад</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Производство</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Логистика</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Клининг</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">HoReCa</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Рекрутинг</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Строительство</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Промышленность</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Склад</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Производство</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Логистика</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Клининг</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">HoReCa</span><span class="ticker-item ticker-sep">✕</span>
-    <span class="ticker-item">Рекрутинг</span><span class="ticker-item ticker-sep">✕</span>
+<!-- ADVANTAGES -->
+<section class="advantages reveal">
+  <div class="adv-inner">
+    <div class="adv-item">
+      <div class="adv-num">7<span>+</span></div>
+      <div class="adv-label">лет на рынке</div>
+    </div>
+    <div class="adv-item">
+      <div class="adv-num">500<span>+</span></div>
+      <div class="adv-label">человек ежемесячно на объектах</div>
+    </div>
+    <div class="adv-item">
+      <div class="adv-num">48<span>ч</span></div>
+      <div class="adv-label">среднее время закрытия заявки</div>
+    </div>
+    <div class="adv-item">
+      <div class="adv-num">100<span>%</span></div>
+      <div class="adv-label">официальное оформление сотрудников</div>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-inner">
-    <div>
-      <div class="about-left-num">01</div>
-      <div class="about-label">О компании</div>
-      <div class="about-title">Промышленный<br>аутсорсинг<br>без компромиссов</div>
-      <p class="about-text">ООО «Аркада» — агентство аутсорсинга персонала с фокусом на промышленных и строительных объектах. Мы понимаем, что на таких объектах нет места для простоев, некомпетентности и задержек.</p>
+    <div class="reveal">
+      <div class="section-label">О компании</div>
+      <div class="section-title">Промышленный<br>аутсорсинг<br>без компромиссов</div>
+      <p class="about-text">ООО «Аркада» — агентство аутсорсинга персонала с фокусом на промышленных и строительных объектах. Мы понимаем, что на таких объектах нет места простоям и некомпетентности.</p>
       <p class="about-text">Работаем по всей Москве и области. Выводим проверенные команды, соблюдаем требования охраны труда и обеспечиваем полную кадровую документацию.</p>
     </div>
-    <div class="about-right-content">
+    <div class="reveal">
       <div class="about-feat">
-        <div class="af-num">01</div>
-        <div>
-          <div class="af-title">Проверенные бригады</div>
-          <div class="af-text">Каждый сотрудник проходит проверку документов, здоровья и квалификации перед выводом на объект.</div>
-        </div>
+        <div class="af-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#B07040" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div><div class="af-title">Проверенные бригады</div><div class="af-text">Каждый сотрудник проходит проверку документов, здоровья и квалификации перед выводом на объект.</div></div>
       </div>
       <div class="about-feat">
-        <div class="af-num">02</div>
-        <div>
-          <div class="af-title">Охрана труда</div>
-          <div class="af-text">Инструктажи, СИЗ, медосмотры — обеспечиваем соответствие требованиям промышленной безопасности.</div>
-        </div>
+        <div class="af-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#B07040" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><div class="af-title">Охрана труда</div><div class="af-text">Инструктажи, СИЗ, медосмотры — обеспечиваем соответствие требованиям промышленной безопасности.</div></div>
       </div>
       <div class="about-feat">
-        <div class="af-num">03</div>
-        <div>
-          <div class="af-title">Любой масштаб</div>
-          <div class="af-text">От разовой бригады из 10 человек до постоянной команды 500+. Масштабируемся под ваши задачи.</div>
-        </div>
+        <div class="af-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#B07040" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><div class="af-title">Любой масштаб</div><div class="af-text">От разовой бригады из 10 человек до постоянной команды 500+. Масштабируемся под ваши задачи.</div></div>
       </div>
       <div class="about-feat">
-        <div class="af-num">04</div>
-        <div>
-          <div class="af-title">Замена без простоя</div>
-          <div class="af-text">Гарантируем бесперебойность объекта — в случае выбытия сотрудника немедленная замена.</div>
-        </div>
+        <div class="af-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#B07040" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div><div class="af-title">Замена без простоя</div><div class="af-text">Гарантируем бесперебойность объекта — в случае выбытия сотрудника немедленная замена.</div></div>
       </div>
     </div>
   </div>
@@ -406,56 +442,56 @@
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="services-inner">
-    <div class="svc-header">
+    <div class="svc-header reveal">
       <div>
-        <div class="svc-label">Услуги</div>
-        <div class="svc-title">Что мы делаем</div>
+        <div class="section-label-lt">Услуги</div>
+        <div class="section-title-lt">Наша специфика</div>
       </div>
       <div class="svc-count">09</div>
     </div>
-    <div class="svc-list">
+    <div class="svc-list reveal">
       <div class="svc-item">
-        <div class="svc-item-num">01</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <div class="svc-item-title">Строительный персонал</div>
         <div class="svc-item-text">Подсобные рабочие, разнорабочие, операторы спецтехники для строительных объектов.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">02</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
         <div class="svc-item-title">Производственные рабочие</div>
         <div class="svc-item-text">Операторы конвейеров, упаковщики, сортировщики, наладчики оборудования.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">03</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
         <div class="svc-item-title">Складская логистика</div>
         <div class="svc-item-text">Комплектация, погрузка/разгрузка, ответственное хранение и внутренняя логистика.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">04</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
         <div class="svc-item-title">Грузообработка</div>
         <div class="svc-item-text">Механизированная и ручная обработка грузов. Водители погрузчиков и штабелеристы.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">05</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 007-7c0-2-1-3.9-3-5.5S12.5 5 12 2.5C11.5 5 10 7.4 8 9c-2 1.6-3 3.5-3 5a7 7 0 007 7z"/></svg></div>
         <div class="svc-item-title">Промышленный клининг</div>
         <div class="svc-item-text">Уборка производственных помещений, цехов, складов и прилегающих территорий.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">06</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.02 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg></div>
         <div class="svc-item-title">Курьерская логистика</div>
         <div class="svc-item-text">Транспортная логистика и курьерская доставка для промышленных предприятий.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">07</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M14 2a5 5 0 010 10"/><line x1="6" y1="2" x2="6" y2="8"/><line x1="10" y1="2" x2="10" y2="8"/><path d="M6 8a2 2 0 004 0"/></svg></div>
         <div class="svc-item-title">HoReCa</div>
-        <div class="svc-item-text">Комплексное обслуживание столовых при предприятиях и объектах общественного питания.</div>
+        <div class="svc-item-text">Комплексное обслуживание столовых при предприятиях и объектов общественного питания.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">08</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
         <div class="svc-item-title">Кадровый аутсорсинг</div>
         <div class="svc-item-text">Передача кадровых функций и обеспечение непрофильных процессов привлечённым персоналом.</div>
       </div>
       <div class="svc-item">
-        <div class="svc-item-num">09</div>
+        <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
         <div class="svc-item-title">Массовый подбор</div>
         <div class="svc-item-text">Рекрутинг и закрытие кадровых потребностей — от поиска до выхода на ставку.</div>
       </div>
@@ -466,35 +502,41 @@
 <!-- STEPS -->
 <section class="steps" id="steps">
   <div class="steps-inner">
-    <div class="steps-head">
-      <div class="steps-label">Как работаем</div>
-      <div class="steps-title">5 шагов до результата</div>
+    <div class="steps-head reveal">
+      <div class="section-label">Как мы работаем</div>
+      <div class="section-title">5 шагов к результату</div>
     </div>
-    <div class="timeline">
-      <div class="t-step">
-        <div class="t-dot"><div class="t-dot-num">01</div></div>
-        <div class="t-title">Заявка</div>
-        <div class="t-text">Описываете объект, объём, специфику задачи</div>
+    <div class="steps-track reveal" id="steps-track">
+      <div class="steps-progress" id="steps-progress"></div>
+      <div class="step-col">
+        <div class="step-diamond"></div>
+        <div class="step-num-big">01</div>
+        <div class="step-title">Заявка</div>
+        <div class="step-text">Получаем запрос, уточняем объём и специфику</div>
       </div>
-      <div class="t-step">
-        <div class="t-dot"><div class="t-dot-num">02</div></div>
-        <div class="t-title">Брифинг</div>
-        <div class="t-text">Уточняем требования, формируем КП</div>
+      <div class="step-col">
+        <div class="step-diamond"></div>
+        <div class="step-num-big">02</div>
+        <div class="step-title">Брифинг</div>
+        <div class="step-text">Изучаем задачу, формируем коммерческое предложение</div>
       </div>
-      <div class="t-step">
-        <div class="t-dot"><div class="t-dot-num">03</div></div>
-        <div class="t-title">Договор</div>
-        <div class="t-text">Подписываем официальный договор</div>
+      <div class="step-col">
+        <div class="step-diamond"></div>
+        <div class="step-num-big">03</div>
+        <div class="step-title">Договор</div>
+        <div class="step-text">Согласуем условия, подписываем официальный договор</div>
       </div>
-      <div class="t-step">
-        <div class="t-dot"><div class="t-dot-num">04</div></div>
-        <div class="t-title">Вывод</div>
-        <div class="t-text">Проверенная бригада на объекте в срок</div>
+      <div class="step-col">
+        <div class="step-diamond"></div>
+        <div class="step-num-big">04</div>
+        <div class="step-title">Вывод</div>
+        <div class="step-text">Подбираем, проверяем и выводим команду на объект</div>
       </div>
-      <div class="t-step">
-        <div class="t-dot"><div class="t-dot-num">05</div></div>
-        <div class="t-title">Контроль</div>
-        <div class="t-text">Сопровождаем, ведём учёт и отчётность</div>
+      <div class="step-col">
+        <div class="step-diamond"></div>
+        <div class="step-num-big">05</div>
+        <div class="step-title">Сопровождение</div>
+        <div class="step-text">Ведём кадровый учёт, обеспечиваем замены</div>
       </div>
     </div>
   </div>
@@ -503,53 +545,156 @@
 <!-- CONTACTS -->
 <section class="contacts" id="contacts">
   <div class="contacts-inner">
-    <div>
-      <div class="c-label">Контакты</div>
-      <div class="c-title">Получить КП</div>
-      <div class="c-info">
-        <div>
-          <div class="c-field-label">Телефон</div>
-          <div class="c-field-val"><a href="tel:+7">+7 (___) ___-__-__</a></div>
-        </div>
-        <div>
-          <div class="c-field-label">E-mail</div>
-          <div class="c-field-val"><a href="mailto:info@arkada-staff.ru">info@arkada-staff.ru</a></div>
-        </div>
-        <div>
-          <div class="c-field-label">Адрес</div>
-          <div class="c-field-val" style="font-size:13px;color:rgba(255,255,255,0.4);">г. Москва, уточняется</div>
-        </div>
+    <!-- LEFT — реквизиты -->
+    <div class="reveal">
+      <div class="req-block">
+        <div class="req-block-label">Реквизиты</div>
+        <div class="req-row"><div class="req-key">Компания</div><div class="req-val">ООО «Аркада»</div></div>
+        <div class="req-row"><div class="req-key">ИНН</div><div class="req-val">уточняется</div></div>
+        <div class="req-row"><div class="req-key">КПП</div><div class="req-val">уточняется</div></div>
+        <div class="req-row"><div class="req-key">ОГРН</div><div class="req-val">уточняется</div></div>
+        <div class="req-row"><div class="req-key">Юридический адрес</div><div class="req-val">г. Москва, уточняется</div></div>
       </div>
-      <a href="mailto:info@arkada-staff.ru" class="btn-contact">Написать нам</a>
     </div>
-    <div class="req-panel">
-      <div class="req-panel-label">Реквизиты</div>
-      <div class="req-row">
-        <div class="req-key">Компания</div>
-        <div class="req-val">ООО «Аркада»</div>
+    <!-- RIGHT — контакты + фото менеджера -->
+    <div class="c-right reveal">
+      <div class="c-eyebrow">Контакты</div>
+      <div class="c-headline">ГОТОВЫ<br>НАЧАТЬ <span class="cu">РАБОТУ?</span></div>
+      <p class="c-sub">Оставьте заявку — менеджер свяжется в течение рабочего дня и подготовит коммерческое предложение под ваш объект.</p>
+      <div class="c-manager">
+        <div class="c-manager-photo">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&q=80&auto=format&fit=crop&crop=face" alt="Менеджер" />
+        </div>
+        <div>
+          <div class="c-manager-name">Менеджер по работе с клиентами</div>
+          <div class="c-manager-role">Аркада — Промышленный персонал</div>
+        </div>
       </div>
-      <div class="req-row">
-        <div class="req-key">ИНН</div>
-        <div class="req-val">уточняется</div>
+      <div class="c-info">
+        <a href="tel:+7" class="c-row">
+          <div class="c-row-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.02 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg></div>
+          <div><div class="c-row-label">Телефон</div><div class="c-row-val">+7 (___) ___-__-__</div></div>
+        </a>
+        <a href="mailto:info@arkada.ru" class="c-row">
+          <div class="c-row-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="c-row-label">E-mail</div><div class="c-row-val">info@arkada.ru</div></div>
+        </a>
+        <div class="c-row" style="cursor:default;">
+          <div class="c-row-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div class="c-row-label">Адрес</div><div class="c-row-val">г. Москва, уточняется</div></div>
+        </div>
       </div>
-      <div class="req-row">
-        <div class="req-key">КПП</div>
-        <div class="req-val">уточняется</div>
-      </div>
-      <div class="req-row">
-        <div class="req-key">ОГРН</div>
-        <div class="req-val">уточняется</div>
-      </div>
+      <a href="mailto:info@arkada.ru" class="btn-copper">Написать нам</a>
     </div>
   </div>
 </section>
 
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <div class="cta-strip-inner">
+    <div>
+      <div class="cta-strip-text">Нужен персонал? <span>48 часов</span> до результата.</div>
+      <div class="cta-strip-sub">Оставьте заявку — перезвоним в течение рабочего дня.</div>
+    </div>
+    <a href="#contacts" class="btn-copper">Оставить заявку</a>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="footer-logo">АРК<span>АДА</span></a>
+  <a href="#" class="footer-logo">
+    <svg class="footer-logo-mark" viewBox="0 0 36 28" fill="none">
+      <rect x="1" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
+      <rect x="28" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
+      <path d="M2 18 Q2 2 18 2 Q34 2 34 18" stroke="#C98F60" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span class="footer-logo-text">Аркада</span>
+  </a>
   <div class="footer-copy">© 2025 ООО «Аркада». Все права защищены.</div>
-  <div class="footer-copy">Промышленный персонал · Москва</div>
 </footer>
+
+<script>
+/* ── 3D CANVAS ── */
+(function(){
+  const cv = document.getElementById('hero-canvas');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  let W, H, animId;
+  const COPPER = [176,112,64];
+  const WHITE = [255,255,255];
+  let nodes = [], boxes = [];
+  const NUM_NODES = 55, NUM_BOXES = 5;
+
+  function resize(){ W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight; }
+  function rnd(a,b){ return Math.random()*(b-a)+a; }
+
+  function mkNode(){ return { x:rnd(0,W), y:rnd(0,H), vx:rnd(-0.22,0.22), vy:rnd(-0.16,0.16), r:rnd(1,2.5), copper:Math.random()>0.5 }; }
+  function mkBox(){ return { cx:rnd(W*.1,W*.9), cy:rnd(H*.1,H*.9), sz:rnd(28,64), rx:rnd(0,Math.PI*2), ry:rnd(0,Math.PI*2), vrx:rnd(-0.005,0.005), vry:rnd(-0.004,0.004), vx:rnd(-0.1,0.1), vy:rnd(-0.09,0.09) }; }
+
+  function project3D(px,py,pz,cx,cy){ const fov=400,sc=fov/(fov+pz); return {x:cx+px*sc,y:cy+py*sc,s:sc}; }
+
+  function drawBox(b){
+    const s=b.sz;
+    const c3=[[-s,-s,-s],[s,-s,-s],[s,s,-s],[-s,s,-s],[-s,-s,s],[s,-s,s],[s,s,s],[-s,s,s]];
+    const cosX=Math.cos(b.rx),sinX=Math.sin(b.rx),cosY=Math.cos(b.ry),sinY=Math.sin(b.ry);
+    const pts=c3.map(([x,y,z])=>{
+      const x1=x*cosY-z*sinY,z1=x*sinY+z*cosY;
+      const y2=y*cosX-z1*sinX,z2=y*sinX+z1*cosX;
+      return project3D(x1,y2,z2,b.cx,b.cy);
+    });
+    [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,bi])=>{
+      const pa=pts[a],pb=pts[bi],avg=(pa.s+pb.s)/2;
+      ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y);
+      ctx.strokeStyle=`rgba(176,112,64,${avg*0.13})`; ctx.lineWidth=0.8; ctx.stroke();
+    });
+    pts.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.s*1.4,0,Math.PI*2); ctx.fillStyle=`rgba(201,143,96,${p.s*0.28})`; ctx.fill(); });
+  }
+
+  resize();
+  for(let i=0;i<NUM_NODES;i++) nodes.push(mkNode());
+  for(let i=0;i<NUM_BOXES;i++) boxes.push(mkBox());
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(28,42,60,0.15)'; ctx.fillRect(0,0,W,H);
+    boxes.forEach(b=>{
+      b.rx+=b.vrx; b.ry+=b.vry; b.cx+=b.vx; b.cy+=b.vy;
+      if(b.cx<-80||b.cx>W+80) b.vx*=-1;
+      if(b.cy<-80||b.cy>H+80) b.vy*=-1;
+      drawBox(b);
+    });
+    nodes.forEach(n=>{
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1; if(n.y<0||n.y>H) n.vy*=-1;
+      const [r,g,b]=n.copper?COPPER:WHITE;
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${r},${g},${b},${n.copper?0.5:0.18})`; ctx.fill();
+    });
+    for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<85){ ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.strokeStyle=`rgba(176,112,64,${(1-d/85)*0.09})`; ctx.lineWidth=0.5; ctx.stroke(); }
+    }
+    animId=requestAnimationFrame(frame);
+  }
+  frame();
+  window.addEventListener('resize', resize);
+})();
+
+/* ── STEPS PROGRESS ── */
+(function(){
+  const track=document.getElementById('steps-track'),bar=document.getElementById('steps-progress');
+  if(!track||!bar) return;
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ bar.classList.add('active'); } });
+  },{threshold:0.4}).observe(track);
+})();
+
+/* ── SCROLL REVEAL ── */
+(function(){
+  const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }}); },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
 
 </body>
 </html>
