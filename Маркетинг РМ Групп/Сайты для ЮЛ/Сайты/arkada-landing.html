@@ -11,14 +11,15 @@
       --copper:    #B07040;
       --copper-lt: #C98F60;
       --copper-dk: #8A5530;
-      --dark:      #263040;
-      --dark2:     #1C2A3C;
-      --mid:       #445566;
-      --muted:     #8090A4;
-      --bg:        #F5F3F0;
-      --bg2:       #EDEAE6;
+      --dark:      #3A2C1C;
+      --dark2:     #2E2318;
+      --mid:       #7A6858;
+      --muted:     #A89880;
+      --bg:        #FAF6EE;
+      --bg2:       #F0E8D4;
+      --bg3:       #E4D8C4;
       --white:     #FFFFFF;
-      --line:      rgba(0,0,0,0.09);
+      --line:      rgba(0,0,0,0.08);
       --line-lt:   rgba(255,255,255,0.08);
     }
     html { scroll-behavior: smooth; }
@@ -32,7 +33,7 @@
       border-bottom: 2px solid rgba(176,112,64,0.3);
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo-mark { width: 32px; height: 26px; flex-shrink: 0; }
+    .nav-logo-mark { width: 30px; height: 30px; flex-shrink: 0; }
     .nav-logo-text {
       font-family: 'Oswald', sans-serif;
       font-size: 18px; font-weight: 700; color: var(--copper-lt);
@@ -59,7 +60,7 @@
       display: grid; grid-template-columns: 1fr 1fr;
       min-height: 72vh; margin-top: 58px;
     }
-    .hero-left { position: relative; background: var(--dark2); overflow: hidden; }
+    .hero-left { position: relative; background: var(--bg2); overflow: hidden; }
     #hero-canvas {
       position: absolute; inset: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 0;
@@ -70,29 +71,29 @@
       display: flex; flex-wrap: wrap; gap: 8px;
     }
     .hero-tag-chip {
-      padding: 5px 13px;
-      background: rgba(176,112,64,0.1);
-      border: 1px solid rgba(176,112,64,0.28);
-      font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
-      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      padding: 6px 14px;
+      background: rgba(158,84,20,0.14);
+      border: 1px solid rgba(158,84,20,0.55);
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #8A4810;
     }
     .hero-right {
-      background: var(--dark); padding: 64px 56px;
+      background: var(--bg2); padding: 64px 56px;
       display: flex; flex-direction: column; justify-content: center; gap: 32px;
     }
     .hero-eyebrow {
       font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--copper-lt); font-weight: 700;
+      color: var(--copper); font-weight: 700;
     }
     .hero-h1 {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(40px, 5vw, 68px); font-weight: 700;
-      line-height: 0.95; letter-spacing: -1px; color: var(--white);
+      line-height: 0.95; letter-spacing: -1px; color: var(--dark);
       text-transform: uppercase;
     }
-    .hero-h1 .cu { color: var(--copper-lt); }
-    .hero-h1 .outline { -webkit-text-stroke: 1.5px rgba(255,255,255,0.25); color: transparent; }
-    .hero-divider { width: 48px; height: 2px; background: var(--copper); opacity: 0.6; }
+    .hero-h1 .cu { color: var(--copper); }
+    .hero-h1 .outline { -webkit-text-stroke: 2px rgba(158,84,20,0.55); color: transparent; }
+    .hero-divider { width: 48px; height: 2px; background: var(--copper); opacity: 0.7; }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-copper {
       padding: 14px 32px; background: var(--copper); color: var(--white);
@@ -102,12 +103,12 @@
     }
     .btn-copper:hover { background: var(--copper-lt); transform: translateY(-1px); }
     .btn-ghost {
-      padding: 14px 32px; background: transparent; color: rgba(255,255,255,0.5);
-      border: 1px solid rgba(255,255,255,0.15); font-size: 12px; font-weight: 600;
+      padding: 14px 32px; background: transparent; color: var(--mid);
+      border: 1px solid rgba(58,44,28,0.2); font-size: 12px; font-weight: 600;
       text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px;
       transition: border-color 0.2s, color 0.2s; display: inline-block;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+    .btn-ghost:hover { border-color: var(--copper); color: var(--dark); }
 
     /* ── ADVANTAGES ── */
     .advantages { background: var(--white); padding: 0; border-bottom: 1px solid var(--line); }
@@ -149,23 +150,43 @@
     .af-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
     /* ── SERVICES ── */
-    .services { background: var(--dark); padding: 88px 60px; }
+    .services { background: var(--bg); padding: 88px 60px; }
     .services-inner { max-width: 1100px; margin: 0 auto; }
     .svc-header {
       display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--line-lt);
+      margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--line);
     }
-    .section-label-lt { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper-lt); font-weight: 700; margin-bottom: 10px; }
+    .section-label-lt { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 10px; }
     .section-title-lt {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(24px, 3vw, 38px); font-weight: 700;
-      color: var(--white); text-transform: uppercase; letter-spacing: -0.5px;
+      color: var(--dark); text-transform: uppercase; letter-spacing: -0.5px;
     }
-    .svc-count { font-family: 'Oswald', sans-serif; font-size: 52px; font-weight: 700; color: rgba(255,255,255,0.05); letter-spacing: -2px; }
-    .svc-list { display: grid; grid-template-columns: repeat(3, 1fr); }
+    /* carousel nav */
+    .svc-nav { display: flex; align-items: center; gap: 10px; }
+    .svc-counter { font-family: 'Oswald', sans-serif; font-size: 14px; color: var(--muted); letter-spacing: 1px; margin-right: 6px; }
+    .svc-btn {
+      width: 42px; height: 42px; border: 1px solid var(--line); background: var(--white);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s; flex-shrink: 0;
+    }
+    .svc-btn svg { width: 16px; height: 16px; }
+    .svc-btn:hover:not(:disabled) { border-color: var(--copper); background: rgba(176,112,64,0.05); }
+    .svc-btn:disabled { opacity: 0.22; cursor: default; }
+    /* dots */
+    .svc-dots { display: flex; gap: 8px; margin-top: 28px; }
+    .svc-dot { height: 2px; width: 28px; background: var(--line); cursor: pointer; transition: background 0.25s, width 0.25s; }
+    .svc-dot.active { background: var(--copper); width: 44px; }
+    /* carousel track */
+    .svc-carousel-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    }
+    .svc-track { display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
     .svc-item {
+      min-width: calc(100% / 3); flex-shrink: 0;
       padding: 28px 26px;
-      border-right: 1px solid var(--line-lt); border-bottom: 1px solid var(--line-lt);
+      border-right: 1px solid var(--line);
       transition: background 0.2s; position: relative; overflow: hidden;
     }
     .svc-item::before {
@@ -174,16 +195,14 @@
       transition: transform 0.3s ease;
     }
     .svc-item:hover::before { transform: scaleX(1); }
-    .svc-item:nth-child(3n) { border-right: none; }
-    .svc-item:nth-last-child(-n+3) { border-bottom: none; }
-    .svc-item:hover { background: rgba(176,112,64,0.07); }
+    .svc-item:hover { background: rgba(176,112,64,0.05); }
     .svc-item-ico {
       width: 36px; height: 36px; background: rgba(176,112,64,0.1);
       border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
     }
     .svc-item-ico svg { width: 18px; height: 18px; }
-    .svc-item-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .svc-item-text { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+    .svc-item-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .svc-item-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
     /* ── STEPS (diamonds) ── */
     .steps { background: var(--white); padding: 88px 60px; }
@@ -225,59 +244,59 @@
     .step-text { font-size: 11px; color: var(--muted); line-height: 1.6; text-align: center; max-width: 120px; }
 
     /* ── CONTACTS (swapped: left=requisites, right=info+photo) ── */
-    .contacts { background: var(--dark2); padding: 88px 60px; }
+    .contacts { background: var(--bg3); padding: 88px 60px; }
     .contacts-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 72px; align-items: start; }
     /* LEFT — requisites */
     .req-block {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.55); border: 1px solid rgba(0,0,0,0.07);
       padding: 32px; margin-top: 56px;
     }
-    .req-block-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.25); font-weight: 700; margin-bottom: 24px; }
-    .req-row { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .req-block-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 24px; }
+    .req-row { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
     .req-row:last-child { border-bottom: none; }
-    .req-key { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 3px; }
-    .req-val { font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600; }
+    .req-key { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .req-val { font-size: 13px; color: var(--dark); font-weight: 600; }
     /* RIGHT — main contacts */
     .c-right {}
-    .c-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper-lt); font-weight: 700; margin-bottom: 16px; }
+    .c-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 16px; }
     .c-headline {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(32px, 4vw, 54px); font-weight: 700;
-      color: var(--white); text-transform: uppercase;
+      color: var(--dark); text-transform: uppercase;
       letter-spacing: -1px; line-height: 0.97; margin-bottom: 20px;
     }
-    .c-headline .cu { color: var(--copper-lt); }
-    .c-sub { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.7; font-weight: 300; margin-bottom: 28px; max-width: 420px; }
+    .c-headline .cu { color: var(--copper); }
+    .c-sub { font-size: 14px; color: var(--mid); line-height: 1.7; font-weight: 300; margin-bottom: 28px; max-width: 420px; }
     /* manager card */
     .c-manager {
       display: flex; align-items: center; gap: 16px;
       padding: 18px 22px; margin-bottom: 20px;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.55); border: 1px solid rgba(0,0,0,0.07);
     }
     .c-manager-photo {
       width: 60px; height: 60px; border-radius: 50%;
       overflow: hidden; flex-shrink: 0;
-      border: 2px solid rgba(176,112,64,0.45);
+      border: 2px solid rgba(176,112,64,0.5);
     }
     .c-manager-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-    .c-manager-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
-    .c-manager-role { font-size: 12px; color: rgba(255,255,255,0.38); }
+    .c-manager-name { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+    .c-manager-role { font-size: 12px; color: var(--muted); }
     /* contact rows */
     .c-info { display: flex; flex-direction: column; gap: 4px; margin-bottom: 28px; }
     .c-row {
       display: flex; align-items: center; gap: 14px; padding: 15px 20px;
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.4); border: 1px solid rgba(0,0,0,0.06);
       transition: background 0.2s, border-color 0.2s; text-decoration: none;
     }
-    .c-row:hover { background: rgba(255,255,255,0.06); border-color: rgba(176,112,64,0.25); }
+    .c-row:hover { background: rgba(255,255,255,0.75); border-color: rgba(176,112,64,0.35); }
     .c-row-ico {
       width: 36px; height: 36px; border-radius: 6px;
-      background: rgba(176,112,64,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      background: rgba(176,112,64,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .c-row-ico svg { width: 15px; height: 15px; }
-    .c-row-label { font-size: 9px; color: var(--copper-lt); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
-    .c-row-val { font-size: 14px; color: rgba(255,255,255,0.78); font-weight: 600; }
-    .c-row-val a { color: rgba(255,255,255,0.78); text-decoration: none; }
+    .c-row-label { font-size: 9px; color: var(--copper); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+    .c-row-val { font-size: 14px; color: var(--dark); font-weight: 600; }
+    .c-row-val a { color: var(--dark); text-decoration: none; }
 
     /* ── CTA STRIP ── */
     .cta-strip { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 44px 60px; }
@@ -322,7 +341,7 @@
       .nav-links { display: none; }
       .adv-inner { grid-template-columns: 1fr 1fr; }
       .svc-list { grid-template-columns: 1fr 1fr; }
-      .svc-item:nth-child(3n) { border-right: 1px solid var(--line-lt); }
+      .svc-item:nth-child(3n) { border-right: 1px solid var(--line); }
       .svc-item:nth-child(2n) { border-right: none; }
       .steps-track { grid-template-columns: 1fr; gap: 28px; }
       .steps-track::before, .steps-progress { display: none; }
@@ -338,13 +357,18 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <svg class="nav-logo-mark" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Left pillar -->
-      <rect x="1" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
-      <!-- Right pillar -->
-      <rect x="28" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
-      <!-- Arch -->
-      <path d="M2 18 Q2 2 18 2 Q34 2 34 18" stroke="#C98F60" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg class="nav-logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18)">
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(60)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(120)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(180)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(240)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(300)"/>
+        <circle r="11" fill="#C98F60"/>
+        <circle r="5" fill="#2E2318"/>
+        <path d="M-2.4 3.8 L0 -4 L2.4 3.8 M-1.2 1.2 L1.2 1.2" stroke="#C98F60" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
     </svg>
     <span class="nav-logo-text">Аркада</span>
   </a>
@@ -447,9 +471,18 @@
         <div class="section-label-lt">Услуги</div>
         <div class="section-title-lt">Наша специфика</div>
       </div>
-      <div class="svc-count">09</div>
+      <div class="svc-nav">
+        <span class="svc-counter" id="svc-counter">01—03</span>
+        <button class="svc-btn" id="svc-prev" disabled aria-label="Назад">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="svc-btn" id="svc-next" aria-label="Вперёд">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </div>
-    <div class="svc-list reveal">
+    <div class="svc-carousel-wrap reveal">
+    <div class="svc-track" id="svc-track">
       <div class="svc-item">
         <div class="svc-item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#C98F60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <div class="svc-item-title">Строительный персонал</div>
@@ -495,6 +528,12 @@
         <div class="svc-item-title">Массовый подбор</div>
         <div class="svc-item-text">Рекрутинг и закрытие кадровых потребностей — от поиска до выхода на ставку.</div>
       </div>
+    </div>
+    </div>
+    <div class="svc-dots" id="svc-dots">
+      <div class="svc-dot active" data-idx="0"></div>
+      <div class="svc-dot" data-idx="1"></div>
+      <div class="svc-dot" data-idx="2"></div>
     </div>
   </div>
 </section>
@@ -563,7 +602,7 @@
       <p class="c-sub">Оставьте заявку — менеджер свяжется в течение рабочего дня и подготовит коммерческое предложение под ваш объект.</p>
       <div class="c-manager">
         <div class="c-manager-photo">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&q=80&auto=format&fit=crop&crop=face" alt="Менеджер" />
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&q=80&auto=format&fit=crop&crop=face" alt="Менеджер" />
         </div>
         <div>
           <div class="c-manager-name">Менеджер по работе с клиентами</div>
@@ -603,10 +642,18 @@
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo">
-    <svg class="footer-logo-mark" viewBox="0 0 36 28" fill="none">
-      <rect x="1" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
-      <rect x="28" y="14" width="7" height="13" rx="1" fill="#C98F60"/>
-      <path d="M2 18 Q2 2 18 2 Q34 2 34 18" stroke="#C98F60" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <svg class="footer-logo-mark" viewBox="0 0 36 36" fill="none">
+      <g transform="translate(18,18)">
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(60)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(120)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(180)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(240)"/>
+        <rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(300)"/>
+        <circle r="11" fill="#C98F60"/>
+        <circle r="5" fill="#2E2318"/>
+        <path d="M-2.4 3.8 L0 -4 L2.4 3.8 M-1.2 1.2 L1.2 1.2" stroke="#C98F60" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
     </svg>
     <span class="footer-logo-text">Аркада</span>
   </a>
@@ -614,70 +661,146 @@
 </footer>
 
 <script>
-/* ── 3D CANVAS ── */
+/* ── GEAR CANVAS ── */
 (function(){
   const cv = document.getElementById('hero-canvas');
   if (!cv) return;
   const ctx = cv.getContext('2d');
-  let W, H, animId;
-  const COPPER = [176,112,64];
-  const WHITE = [255,255,255];
-  let nodes = [], boxes = [];
-  const NUM_NODES = 55, NUM_BOXES = 5;
+  let W, H, animId, clusters = [], dots = [];
+  const N_DOTS = 48, LINK_DIST = 90;
 
-  function resize(){ W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight; }
   function rnd(a,b){ return Math.random()*(b-a)+a; }
 
-  function mkNode(){ return { x:rnd(0,W), y:rnd(0,H), vx:rnd(-0.22,0.22), vy:rnd(-0.16,0.16), r:rnd(1,2.5), copper:Math.random()>0.5 }; }
-  function mkBox(){ return { cx:rnd(W*.1,W*.9), cy:rnd(H*.1,H*.9), sz:rnd(28,64), rx:rnd(0,Math.PI*2), ry:rnd(0,Math.PI*2), vrx:rnd(-0.005,0.005), vry:rnd(-0.004,0.004), vx:rnd(-0.1,0.1), vy:rnd(-0.09,0.09) }; }
+  function mkDot(){ return { x:rnd(0,W), y:rnd(0,H), vx:rnd(-0.18,0.18), vy:rnd(-0.13,0.13), r:rnd(1.2,2.6) }; }
 
-  function project3D(px,py,pz,cx,cy){ const fov=400,sc=fov/(fov+pz); return {x:cx+px*sc,y:cy+py*sc,s:sc}; }
-
-  function drawBox(b){
-    const s=b.sz;
-    const c3=[[-s,-s,-s],[s,-s,-s],[s,s,-s],[-s,s,-s],[-s,-s,s],[s,-s,s],[s,s,s],[-s,s,s]];
-    const cosX=Math.cos(b.rx),sinX=Math.sin(b.rx),cosY=Math.cos(b.ry),sinY=Math.sin(b.ry);
-    const pts=c3.map(([x,y,z])=>{
-      const x1=x*cosY-z*sinY,z1=x*sinY+z*cosY;
-      const y2=y*cosX-z1*sinX,z2=y*sinX+z1*cosX;
-      return project3D(x1,y2,z2,b.cx,b.cy);
-    });
-    [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,bi])=>{
-      const pa=pts[a],pb=pts[bi],avg=(pa.s+pb.s)/2;
-      ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y);
-      ctx.strokeStyle=`rgba(176,112,64,${avg*0.13})`; ctx.lineWidth=0.8; ctx.stroke();
-    });
-    pts.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.s*1.4,0,Math.PI*2); ctx.fillStyle=`rgba(201,143,96,${p.s*0.28})`; ctx.fill(); });
+  function resize(){
+    W = cv.width = cv.offsetWidth;
+    H = cv.height = cv.offsetHeight;
+    buildClusters();
   }
 
-  resize();
-  for(let i=0;i<NUM_NODES;i++) nodes.push(mkNode());
-  for(let i=0;i<NUM_BOXES;i++) boxes.push(mkBox());
+  /* Draw a single gear outline (thin, no fill) */
+  function drawGear(cx, cy, r, teeth, angle, alpha){
+    const toothH = r * 0.21;
+    const Ro = r + toothH, Ri = r - toothH * 0.45;
+    const step = (Math.PI*2) / teeth;
+    const tw = step * 0.36;
+    const col = `rgba(176,112,64,${alpha})`;
+
+    /* Gear outline */
+    ctx.beginPath();
+    for(let i = 0; i < teeth; i++){
+      const a = angle + i * step;
+      const pts = [
+        [Ri, a - step*0.5 + (step - tw*2)*0.5],
+        [Ro, a - tw],
+        [Ro, a + tw],
+        [Ri, a + step*0.5 - (step - tw*2)*0.5]
+      ];
+      pts.forEach(([rad, ang], j) => {
+        const x = cx + rad * Math.cos(ang), y = cy + rad * Math.sin(ang);
+        (i===0 && j===0) ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      });
+    }
+    ctx.closePath();
+    ctx.strokeStyle = col; ctx.lineWidth = 0.9; ctx.stroke();
+
+    /* Hub ring */
+    const hubR = r * 0.28;
+    ctx.beginPath(); ctx.arc(cx, cy, hubR, 0, Math.PI*2);
+    ctx.strokeStyle = col; ctx.lineWidth = 0.8; ctx.stroke();
+
+    /* Spokes */
+    const sc = teeth > 10 ? 5 : 4;
+    for(let i = 0; i < sc; i++){
+      const a = angle + (Math.PI*2/sc)*i;
+      ctx.beginPath();
+      ctx.moveTo(cx + hubR*Math.cos(a), cy + hubR*Math.sin(a));
+      ctx.lineTo(cx + r*0.68*Math.cos(a), cy + r*0.68*Math.sin(a));
+      ctx.strokeStyle = `rgba(176,112,64,${alpha*0.6})`; ctx.lineWidth = 0.7; ctx.stroke();
+    }
+
+    /* Centre bolt */
+    ctx.beginPath(); ctx.arc(cx, cy, r*0.09, 0, Math.PI*2);
+    ctx.strokeStyle = col; ctx.lineWidth = 0.8; ctx.stroke();
+  }
+
+  /* Build 3 drifting clusters, each with 2 interlocked gears */
+  function buildDots(){
+    dots = [];
+    for(let i=0;i<N_DOTS;i++) dots.push(mkDot());
+  }
+
+  function buildClusters(){
+    const base = Math.min(W, H);
+    const defs = [
+      { x: W*0.22, y: H*0.48, R: base*0.20, N: 14, spd:  0.006 },
+      { x: W*0.68, y: H*0.32, R: base*0.14, N: 10, spd: -0.009 },
+      { x: W*0.55, y: H*0.72, R: base*0.11, N:  8, spd:  0.011 }
+    ];
+    clusters = defs.map(d => {
+      const smallR = d.R * rnd(0.42, 0.58);
+      const smallN = Math.max(6, Math.round(d.N * smallR / d.R));
+      const mA = rnd(0, Math.PI*2);
+      const dist = d.R + smallR;
+      /* phase offset so small gear teeth interlock visually */
+      const phase = Math.PI / smallN;
+      return {
+        cx: d.x, cy: d.y,
+        vx: rnd(-0.08, 0.08), vy: rnd(-0.06, 0.06),
+        gears: [
+          { dx:0, dy:0, r:d.R, N:d.N, angle:rnd(0,Math.PI*2), spd: d.spd },
+          { dx: dist*Math.cos(mA), dy: dist*Math.sin(mA),
+            r: smallR, N: smallN, angle: phase + Math.atan2(dist*Math.sin(mA), dist*Math.cos(mA)),
+            spd: -d.spd * d.R / smallR }
+        ]
+      };
+    });
+  }
 
   function frame(){
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='rgba(28,42,60,0.15)'; ctx.fillRect(0,0,W,H);
-    boxes.forEach(b=>{
-      b.rx+=b.vrx; b.ry+=b.vry; b.cx+=b.vx; b.cy+=b.vy;
-      if(b.cx<-80||b.cx>W+80) b.vx*=-1;
-      if(b.cy<-80||b.cy>H+80) b.vy*=-1;
-      drawBox(b);
+
+    /* ── dots + links (behind gears) ── */
+    dots.forEach(d => {
+      d.x += d.vx; d.y += d.vy;
+      if(d.x < 0 || d.x > W) d.vx *= -1;
+      if(d.y < 0 || d.y > H) d.vy *= -1;
+      ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(176,112,64,0.30)'; ctx.fill();
     });
-    nodes.forEach(n=>{
-      n.x+=n.vx; n.y+=n.vy;
-      if(n.x<0||n.x>W) n.vx*=-1; if(n.y<0||n.y>H) n.vy*=-1;
-      const [r,g,b]=n.copper?COPPER:WHITE;
-      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${r},${g},${b},${n.copper?0.5:0.18})`; ctx.fill();
-    });
-    for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++){
-      const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
-      if(d<85){ ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.strokeStyle=`rgba(176,112,64,${(1-d/85)*0.09})`; ctx.lineWidth=0.5; ctx.stroke(); }
+    for(let i=0;i<dots.length;i++) for(let j=i+1;j<dots.length;j++){
+      const dx=dots[i].x-dots[j].x, dy=dots[i].y-dots[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist < LINK_DIST){
+        ctx.beginPath();
+        ctx.moveTo(dots[i].x, dots[i].y); ctx.lineTo(dots[j].x, dots[j].y);
+        ctx.strokeStyle = `rgba(176,112,64,${(1-dist/LINK_DIST)*0.13})`;
+        ctx.lineWidth = 0.6; ctx.stroke();
+      }
     }
-    animId=requestAnimationFrame(frame);
+
+    clusters.forEach(cl => {
+      cl.cx += cl.vx; cl.cy += cl.vy;
+      const pad = cl.gears[0].r * 2.5;
+      if(cl.cx < -pad || cl.cx > W+pad) cl.vx *= -1;
+      if(cl.cy < -pad || cl.cy > H+pad) cl.vy *= -1;
+      cl.gears.forEach(g => {
+        g.angle += g.spd;
+        /* fade out near edges */
+        const ex = Math.max(0, Math.min(1, (cl.cx/W)*4, 1-(cl.cx/W-0.75)*4,
+                                           (cl.cy/H)*4, 1-(cl.cy/H-0.75)*4));
+        const alpha = 0.28 + 0.22 * ex;
+        drawGear(cl.cx + g.dx, cl.cy + g.dy, g.r, g.N, g.angle, alpha);
+      });
+    });
+    animId = requestAnimationFrame(frame);
   }
+
+  resize();
+  buildDots();
   frame();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => { cancelAnimationFrame(animId); resize(); frame(); });
 })();
 
 /* ── STEPS PROGRESS ── */
@@ -693,6 +816,32 @@
 (function(){
   const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }}); },{threshold:0.1});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
+/* ── SERVICES CAROUSEL ── */
+(function(){
+  const svcTrack = document.getElementById('svc-track');
+  const prevBtn  = document.getElementById('svc-prev');
+  const nextBtn  = document.getElementById('svc-next');
+  const counter  = document.getElementById('svc-counter');
+  const dots     = document.querySelectorAll('#svc-dots .svc-dot');
+  if (!svcTrack) return;
+  const PAGES = 3, PER = 3, TOTAL = 9;
+  let page = 0;
+  function fmt(n){ return String(n).padStart(2,'0'); }
+  function update(){
+    const itemW = svcTrack.parentElement.offsetWidth / 3;
+    svcTrack.style.transform = 'translateX(-' + (page * PER * itemW) + 'px)';
+    const from = page * PER + 1, to = Math.min((page+1)*PER, TOTAL);
+    counter.textContent = fmt(from) + '—' + fmt(to);
+    prevBtn.disabled = page === 0;
+    nextBtn.disabled = page === PAGES - 1;
+    dots.forEach(function(d,i){ d.classList.toggle('active', i === page); });
+  }
+  prevBtn.addEventListener('click', function(){ if(page>0){ page--; update(); }});
+  nextBtn.addEventListener('click', function(){ if(page<PAGES-1){ page++; update(); }});
+  dots.forEach(function(d,i){ d.addEventListener('click', function(){ page=i; update(); }); });
+  update();
 })();
 </script>
 
