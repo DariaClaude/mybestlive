@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пасека Ермакова — паспорт сайта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --amber:#C8870A; --amber-light:#E8A020; --amber-pale:#FEF3DC;
+  --dark:#160D03; --dark-brown:#3D2410; --warm-white:#FFFCF5;
+  --text:#2C1A09; --muted:#7A5C3C; --border:rgba(200,135,10,.22);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--warm-white);color:var(--text);line-height:1.65}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+
+header{background:var(--dark-brown);color:#fff;padding:60px 0 52px;text-align:center}
+header .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-light);font-weight:600;margin-bottom:14px}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.1}
+header p{color:rgba(255,255,255,.7);margin-top:14px;font-weight:300}
+
+section{padding:46px 0;border-bottom:1px solid var(--border)}
+h2{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--dark-brown);margin-bottom:8px;display:flex;align-items:center;gap:12px}
+h2 .ic{font-size:1.4rem}
+.sub{color:var(--muted);margin-bottom:22px;font-size:.97rem}
+
+table{width:100%;border-collapse:collapse;margin:6px 0;font-size:.94rem}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;background:var(--amber-pale)}
+td strong{color:var(--dark-brown)}
+.star{color:var(--amber);font-weight:600}
+
+ul.clean{list-style:none;display:flex;flex-direction:column;gap:10px}
+ul.clean li{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;color:var(--text)}
+ul.clean li::before{content:'';flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-top:8px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px}
+.card h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px;font-weight:600}
+.card .val{font-size:1.02rem;color:var(--dark-brown);font-weight:500;word-break:break-word}
+
+.note{background:var(--amber-pale);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;padding:16px 20px;margin-top:18px;font-size:.93rem;color:var(--dark-brown)}
+.todo{background:#fff;border:1px dashed var(--amber);border-radius:12px;padding:16px 20px;margin-top:14px}
+.todo b{color:var(--amber)}
+code{background:var(--amber-pale);padding:2px 7px;border-radius:6px;font-size:.86em;color:var(--dark-brown)}
+
+footer{padding:34px 0 50px;text-align:center;color:var(--muted);font-size:.85rem}
+
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Паспорт проекта</p>
+    <h1>Пасека Ермакова</h1>
+    <p>Лендинг · натуральный мёд с живой пасеки · Андрей Ермаков</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- О САЙТЕ -->
+  <section>
+    <h2><span class="ic">🍯</span>О сайте</h2>
+    <p class="sub">Одностраничный сайт (лендинг) для прямых продаж мёда напрямую от пасечника.</p>
+    <ul class="clean">
+      <li>Чистый минималистичный дизайн в янтарной палитре, фирменные шрифты Playfair Display + Inter.</li>
+      <li>Полностью адаптивен — корректно открывается на телефоне, планшете и компьютере.</li>
+      <li>Реальные фото пасеки и мёда — вызывают больше доверия, чем сток.</li>
+      <li>Работает без сервера: один файл <code>index.html</code> + папка с изображениями.</li>
+    </ul>
+  </section>
+
+  <!-- СТРУКТУРА -->
+  <section>
+    <h2><span class="ic">🗂️</span>Структура страницы</h2>
+    <p class="sub">Порядок блоков сверху вниз.</p>
+    <table>
+      <tr><th>Блок</th><th>Содержание</th></tr>
+      <tr><td><strong>Hero</strong></td><td>Заголовок «Настоящий мёд с живой пасеки» + кнопки</td></tr>
+      <tr><td><strong>О пасечнике</strong></td><td>История Андрея Ермакова, цитата, опыт 15+ лет</td></tr>
+      <tr><td><strong>Наш мёд</strong></td><td>4 карточки: разнотравный, гречишный, липовый, пыльца</td></tr>
+      <tr><td><strong>Польза мёда</strong></td><td>4 пункта пользы + фото мёда на сотах</td></tr>
+      <tr><td><strong>Галерея</strong></td><td>9 фото пасеки и мёда</td></tr>
+      <tr><td><strong>Почему мы</strong></td><td>Природные угодья · полный цикл · забота о пчёлах · по совести</td></tr>
+      <tr><td><strong>Кочёвка</strong></td><td>Как и зачем возим пчёл к полям</td></tr>
+      <tr><td><strong>Заказать мёд</strong></td><td>Контакты, кнопки (Телефон / MAX / ВКонтакте), форма заявки</td></tr>
+    </table>
+  </section>
+
+  <!-- ДОМЕНЫ -->
+  <section>
+    <h2><span class="ic">🌐</span>Варианты доменов</h2>
+    <p class="sub">Зона <strong>.ru</strong> — доверие и локальность. Проверить занятость: reg.ru или nic.ru.</p>
+    <table>
+      <tr><th>Домен</th><th>Почему</th></tr>
+      <tr><td><span class="star">med-ermakova.ru ⭐</span></td><td>Рекомендую — бренд, коротко, легко диктовать по телефону</td></tr>
+      <tr><td><strong>paseka-ermakova.ru</strong></td><td>Полное название = домен, хорошо для SEO по имени</td></tr>
+      <tr><td><strong>ermakov-med.ru</strong></td><td>Короче, акцент на пасечнике</td></tr>
+      <tr><td>zhivaya-paseka.ru</td><td>Слоган «живая пасека» — игра на образе, а не на фамилии</td></tr>
+      <tr><td>medosbor-ermakova.ru</td><td>Атмосферно, но длиннее</td></tr>
+      <tr><td>ermakovmed.ru</td><td>Слитно, без дефиса — короче в наборе, чуть хуже читается</td></tr>
+    </table>
+    <div class="note">Дубль под рунет-аудиторию в зоне <strong>.рф</strong>: <code>пасека-ермакова.рф</code>.</div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section>
+    <h2><span class="ic">📇</span>Контакты в макете</h2>
+    <p class="sub">Что сейчас зашито в сайт.</p>
+    <div class="grid">
+      <div class="card"><h4>Телефон</h4><div class="val">8 (953) 950-24-86</div></div>
+      <div class="card"><h4>WhatsApp → заменён на MAX</h4><div class="val">кнопка «MAX»</div></div>
+      <div class="card"><h4>Сезон</h4><div class="val">Мёд с июля, бронь заранее</div></div>
+      <div class="card"><h4>Доставка</h4><div class="val">Самовывоз с пасеки + доставка</div></div>
+    </div>
+  </section>
+
+  <!-- ЧТО ПОДСТАВИТЬ -->
+  <section>
+    <h2><span class="ic">✏️</span>Что подставить перед публикацией</h2>
+    <div class="todo">
+      <p><b>1. Ссылка на MAX.</b> В кнопке стоит заглушка <code>max.ru/ВСТАВЬТЕ_ССЫЛКУ</code> — поставьте адрес вашего канала.</p>
+    </div>
+    <div class="todo">
+      <p><b>2. Ссылка на ВКонтакте.</b> Заглушка <code>vk.com/ВСТАВЬТЕ_АДРЕС_ГРУППЫ</code> — поставьте адрес группы.</p>
+    </div>
+    <div class="todo">
+      <p><b>3. Форма заявки.</b> Сейчас это макет (показывает «Заявка принята», но никуда не отправляет). Чтобы заявки приходили — подключите Telegram-бота, e-mail или сервис вроде Formspree.</p>
+    </div>
+  </section>
+
+  <!-- КАК ОПУБЛИКОВАТЬ -->
+  <section>
+    <h2><span class="ic">🚀</span>Как опубликовать</h2>
+    <ul class="clean">
+      <li><strong>Хостинг:</strong> подойдёт любой простой (Reg.ru, Beget, Timeweb) или бесплатный для статики (Netlify, GitHub Pages, Vercel).</li>
+      <li><strong>Что загрузить:</strong> файл <code>index.html</code> и все фото из этой папки (важно сохранить имена файлов).</li>
+      <li><strong>Домен:</strong> купить выбранный домен и привязать к хостингу (займёт 10–15 минут + время на делегирование).</li>
+      <li><strong>SSL:</strong> включить бесплатный сертификат (Let's Encrypt) — чтобы был замочек «https».</li>
+    </ul>
+    <div class="note">Сайт не требует базы данных и сервера — это статика, поэтому хостинг будет дешёвым (или бесплатным).</div>
+  </section>
+
+  <!-- ФАЙЛЫ -->
+  <section style="border-bottom:none">
+    <h2><span class="ic">📁</span>Файлы проекта</h2>
+    <table>
+      <tr><th>Файл / папка</th><th>Что это</th></tr>
+      <tr><td><code>index.html</code></td><td>Сам сайт</td></tr>
+      <tr><td><code>Фото Ермакова/</code></td><td>Все фото с понятными названиями (Пасека + Мёд)</td></tr>
+      <tr><td><code>med-*.jpg, pylca.jpg</code></td><td>Изображения, используемые сайтом</td></tr>
+      <tr><td><code>Посты_Пасека_Ермакова_VK_MAX.docx</code></td><td>14 постов для ВКонтакте и MAX</td></tr>
+      <tr><td><code>Паспорт-сайта.html</code></td><td>Этот документ</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer>
+  Пасека Ермакова · паспорт сайта · обновлено 22.06.2026
+</footer>
+
+</body>
+</html>

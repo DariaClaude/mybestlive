@@ -1,0 +1,673 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+
+.ak-page *, .ak-page *::before, .ak-page *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.ak-page {
+  --slate:    #1E293B;
+  --slate2:   #0F172A;
+  --slate3:   #2D3F55;
+  --sage:     #5C7F62;
+  --sage-lt:  #7DA884;
+  --sage-dk:  #3F5C45;
+  --cream:    #F8F4EE;
+  --cream2:   #EDE8E0;
+  --white:    #FFFFFF;
+  --ts:       #E2E8F0;
+  --tm:       #94A3B8;
+  --tc:       #1E293B;
+  --tmc:      #64748B;
+  --ls:       rgba(255,255,255,0.08);
+  --lc:       rgba(0,0,0,0.08);
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--tc);
+  -webkit-font-smoothing: antialiased;
+}
+.ak-page a { text-decoration: none; }
+
+/* ── NAV ── */
+.ak-page nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: rgba(15,23,42,0.96); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ls);
+  height: 60px; padding: 0 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ak-page .nav-logo { display: flex; align-items: center; gap: 12px; }
+.ak-page .nav-monogram {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: var(--sage);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--white);
+  flex-shrink: 0;
+}
+.ak-page .nav-name { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--ts); letter-spacing: -0.2px; }
+.ak-page .nav-links { display: flex; gap: 32px; list-style: none; }
+.ak-page .nav-links a { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tm); transition: color 0.2s; }
+.ak-page .nav-links a:hover { color: var(--ts); }
+.ak-page .nav-cta { padding: 9px 22px; background: var(--sage); color: var(--white); border-radius: 8px; font-size: 13px; font-weight: 600; transition: background 0.2s; }
+.ak-page .nav-cta:hover { background: var(--sage-dk); }
+.ak-page .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+.ak-page .nav-burger span { display: block; width: 22px; height: 2px; background: var(--tm); border-radius: 2px; transition: all 0.3s; }
+.ak-page .nav-mobile { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(15,23,42,0.98); backdrop-filter: blur(16px); padding: 20px; border-bottom: 1px solid var(--ls); z-index: 9998; }
+.ak-page .nav-mobile.open { display: flex; flex-direction: column; gap: 4px; }
+.ak-page .nav-mobile a { display: block; padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--tm); border-radius: 8px; transition: all 0.2s; }
+.ak-page .nav-mobile a:hover, .ak-page .nav-mobile a:active { color: var(--ts); background: rgba(255,255,255,0.06); }
+.ak-page .nav-mobile .nav-mobile-cta { margin-top: 8px; background: var(--sage); color: var(--white); text-align: center; }
+
+/* ── HERO ── */
+.ak-page .hero {
+  min-height: 100vh;
+  background: var(--slate2);
+  display: flex; flex-direction: column;
+  padding: 120px 60px 0;
+  position: relative;
+}
+.ak-page .hero::before {
+  content: ''; position: absolute;
+  bottom: -120px; right: -120px;
+  width: 720px; height: 720px;
+  background: radial-gradient(circle, rgba(92,127,98,0.13) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.ak-page .hero::after {
+  content: ''; position: absolute;
+  top: 80px; left: -220px;
+  width: 540px; height: 540px;
+  background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+.ak-page .hero-eyebrow {
+  position: relative; z-index: 1;
+  margin-top: 52px;
+  display: flex; align-items: center; gap: 16px;
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--sage-lt);
+}
+.ak-page .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--sage); flex-shrink: 0; }
+.ak-page .hero-main { flex: 1; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 36px 0 44px; }
+.ak-page .hero-h1 { font-family: 'DM Serif Display', serif; font-size: clamp(52px, 9.5vw, 128px); line-height: 0.93; letter-spacing: -3px; color: var(--ts); }
+.ak-page .hero-h1 .h1-num { color: var(--sage-lt); font-style: italic; }
+.ak-page .hero-bottom {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--ls);
+  padding: 28px 0 44px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+}
+.ak-page .hero-stats-row { display: flex; gap: 44px; align-items: center; flex-wrap: wrap; }
+.ak-page .h-stat { display: flex; flex-direction: column; gap: 3px; }
+.ak-page .h-stat-num { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1; color: var(--ts); letter-spacing: -1px; }
+.ak-page .h-stat-num em { font-style: normal; color: var(--sage); }
+.ak-page .h-stat-lbl { font-size: 11px; color: var(--tm); }
+.ak-page .btn-sage { padding: 13px 28px; background: var(--sage); color: var(--white); border-radius: 8px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; display: inline-block; flex-shrink: 0; }
+.ak-page .btn-sage:hover { background: var(--sage-dk); }
+
+/* ── MARQUEE ── */
+.ak-page .marquee-strip { background: var(--slate2); padding: 16px 0; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.ak-page .marquee-track { display: flex; width: max-content; animation: ak-marquee 24s linear infinite; }
+.ak-page .m-item { display: flex; align-items: center; gap: 20px; padding: 0 28px; white-space: nowrap; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--tm); }
+.ak-page .m-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--sage); flex-shrink: 0; }
+@keyframes ak-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── SERVICES ── */
+.ak-page .services { background: var(--cream); padding: 96px 0; }
+.ak-page .svc-head { padding: 0 60px; margin-bottom: 52px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+.ak-page .sec-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); margin-bottom: 12px; }
+.ak-page .sec-title { font-family: 'DM Serif Display', serif; font-size: clamp(30px, 3.5vw, 46px); color: var(--tc); line-height: 1.1; letter-spacing: -1px; }
+.ak-page .svc-sub { font-size: 14px; color: var(--tmc); line-height: 1.65; max-width: 340px; text-align: right; flex-shrink: 0; }
+.ak-page .svc-scroll { padding: 0 60px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.ak-page .svc-scroll::-webkit-scrollbar { display: none; }
+.ak-page .svc-track { display: flex; gap: 14px; width: max-content; }
+.ak-page .svc-card { width: 252px; padding: 32px 26px; background: var(--white); border: 1px solid var(--lc); border-radius: 12px; scroll-snap-align: start; flex-shrink: 0; transition: transform 0.25s, box-shadow 0.25s; }
+.ak-page .svc-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.07); }
+.ak-page .svc-icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(92,127,98,0.10); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+.ak-page .svc-icon svg { width: 20px; height: 20px; }
+.ak-page .svc-name { font-size: 15px; font-weight: 600; color: var(--tc); margin-bottom: 8px; line-height: 1.3; }
+.ak-page .svc-desc { font-size: 13px; color: var(--tmc); line-height: 1.65; }
+.ak-page .svc-nav { padding: 24px 60px 0; display: flex; gap: 10px; }
+.ak-page .svc-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--white); border: 1px solid var(--lc); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; color: var(--tc); }
+.ak-page .svc-btn:hover:not(:disabled) { background: var(--sage); border-color: var(--sage); color: var(--white); }
+.ak-page .svc-btn:disabled { opacity: 0.3; cursor: default; }
+
+/* ── BENTO ── */
+.ak-page .bento { background: var(--slate); padding: 96px 60px; }
+.ak-page .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1300px; margin: 0 auto; }
+.ak-page .b-main { grid-column: 1 / 3; padding: 52px 48px; background: var(--slate3); border-radius: 16px; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; }
+.ak-page .b-main-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--sage-lt); margin-bottom: 20px; }
+.ak-page .b-main-title { font-family: 'DM Serif Display', serif; font-size: clamp(26px, 2.8vw, 40px); color: var(--ts); line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 20px; }
+.ak-page .b-main-title em { font-style: italic; color: var(--sage-lt); }
+.ak-page .b-main-text { font-size: 14px; color: var(--tm); line-height: 1.75; max-width: 500px; }
+.ak-page .b-stat-big { grid-column: 3; padding: 40px 32px; background: var(--sage); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 320px; }
+.ak-page .b-stat-big-num { font-family: 'DM Serif Display', serif; font-size: clamp(56px, 6vw, 80px); line-height: 1; color: var(--white); letter-spacing: -3px; margin-bottom: 10px; }
+.ak-page .b-stat-big-lbl { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.4; }
+.ak-page .b-num-card { padding: 32px 28px; background: rgba(255,255,255,0.04); border: 1px solid var(--ls); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 170px; }
+.ak-page .b-num { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 4.5vw, 60px); line-height: 1; color: var(--ts); letter-spacing: -2px; margin-bottom: 8px; }
+.ak-page .b-num-lbl { font-size: 13px; color: var(--tm); line-height: 1.4; }
+.ak-page .b-quote { padding: 32px 28px; background: rgba(92,127,98,0.10); border: 1px solid rgba(92,127,98,0.20); border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 170px; }
+.ak-page .b-quote-mark { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; color: var(--sage-lt); margin-bottom: 8px; }
+.ak-page .b-quote-text { font-size: 13px; color: var(--tm); line-height: 1.7; font-style: italic; flex: 1; margin-bottom: 16px; }
+.ak-page .b-quote-author { font-size: 11px; color: var(--sage-lt); font-weight: 600; }
+
+/* ── PROCESS ── */
+.ak-page .process { background: var(--cream2); padding: 96px 60px; }
+.ak-page .process-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.ak-page .process-head { margin-bottom: 52px; }
+.ak-page .process-list { max-width: 760px; }
+.ak-page .proc-item { border-bottom: 1px solid var(--lc); }
+.ak-page .proc-trigger { display: flex; align-items: center; gap: 22px; padding: 22px 0; cursor: pointer; user-select: none; }
+.ak-page .proc-num { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--tmc); min-width: 26px; flex-shrink: 0; }
+.ak-page .proc-name { font-size: 16px; font-weight: 600; color: var(--tc); flex: 1; }
+.ak-page .proc-icon { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--lc); display: flex; align-items: center; justify-content: center; transition: all 0.3s; flex-shrink: 0; color: var(--tmc); }
+.ak-page .proc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); padding: 0 0 0 48px; }
+.ak-page .proc-body-text { font-size: 14px; color: var(--tmc); line-height: 1.75; padding-bottom: 22px; }
+.ak-page .proc-item.open .proc-icon { background: var(--sage); border-color: var(--sage); color: var(--white); transform: rotate(45deg); }
+.ak-page .proc-item.open .proc-num { color: var(--sage); }
+.ak-page .proc-item.open .proc-body { max-height: 180px; }
+.ak-page .process-aside { padding: 40px 36px; background: var(--slate3); border-radius: 16px; }
+.ak-page .process-aside-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--sage-lt); margin-bottom: 24px; }
+.ak-page .process-aside-num { font-family: 'DM Serif Display', serif; font-size: 64px; line-height: 1; color: var(--white); letter-spacing: -3px; margin-bottom: 10px; }
+.ak-page .process-aside-text { font-size: 14px; color: var(--tm); line-height: 1.7; }
+
+/* ── CTA ── */
+.ak-page .cta-strip { background: var(--sage); padding: 88px 60px; }
+.ak-page .cta-box { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 60px; }
+.ak-page .cta-left { max-width: 540px; }
+.ak-page .cta-over { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 16px; }
+.ak-page .cta-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 3vw, 44px); color: var(--white); line-height: 1.1; letter-spacing: -1px; margin-bottom: 0; }
+.ak-page .cta-title em { font-style: italic; opacity: 0.8; }
+.ak-page .cta-form { flex: 1; max-width: 400px; display: flex; flex-direction: column; gap: 10px; }
+.ak-page .cta-input {
+  display: block; width: 100%; padding: 13px 16px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
+  color: var(--white); outline: none; transition: border-color 0.2s;
+}
+.ak-page .cta-input::placeholder { color: rgba(255,255,255,0.55); }
+.ak-page .cta-input:focus { border-color: rgba(255,255,255,0.6); }
+.ak-page .btn-white { padding: 14px 32px; background: var(--white); color: var(--sage-dk); border-radius: 8px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; transition: opacity 0.2s; display: block; width: 100%; }
+.ak-page .btn-white:hover { opacity: 0.9; }
+.ak-page .cta-consent { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+/* ── CONTACTS ── */
+.ak-page .contacts { background: var(--slate2); padding: 96px 60px; }
+.ak-page .contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; max-width: 1200px; margin: 0 auto; }
+.ak-page .ct-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--sage-lt); margin-bottom: 16px; }
+.ak-page .ct-title { font-family: 'DM Serif Display', serif; font-size: clamp(26px, 3vw, 40px); color: var(--ts); line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 32px; }
+.ak-page .ct-input { display: block; width: 100%; padding: 12px 16px; margin-bottom: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--ts); outline: none; transition: border-color 0.2s; }
+.ak-page .ct-input::placeholder { color: var(--tm); }
+.ak-page .ct-input:focus { border-color: var(--sage); }
+.ak-page .ct-textarea { resize: none; }
+.ak-page .ct-consent { font-size: 11px; color: var(--tm); margin-top: 10px; line-height: 1.5; }
+.ak-page .ct-right { display: flex; flex-direction: column; gap: 20px; }
+.ak-page .ct-rows { display: flex; flex-direction: column; gap: 2px; }
+.ak-page .ct-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 14px 16px; background: rgba(255,255,255,0.04); border: 1px solid var(--ls); border-radius: 8px; }
+.ak-page .ct-key { font-size: 12px; color: var(--tm); white-space: nowrap; flex-shrink: 0; }
+.ak-page .ct-val { font-size: 13px; color: var(--ts); font-weight: 500; text-align: right; word-break: break-word; }
+.ak-page .ct-val a { color: var(--sage-lt); }
+.ak-page .ct-val a:hover { color: var(--sage); }
+.ak-page .req-block { background: rgba(255,255,255,0.04); border: 1px solid var(--ls); border-radius: 12px; overflow: hidden; }
+.ak-page .req-hd { padding: 16px 20px; border-bottom: 1px solid var(--ls); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tm); }
+.ak-page .req-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--ls); }
+.ak-page .req-row:last-child { border-bottom: none; }
+.ak-page .req-k { font-size: 12px; color: var(--tm); white-space: nowrap; }
+.ak-page .req-v { font-size: 13px; color: var(--ts); font-weight: 600; text-align: right; word-break: break-word; }
+
+/* ── SUCCESS ── */
+.ak-page .ct-success { display: none; padding: 28px; background: rgba(92,127,98,0.12); border: 1px solid rgba(92,127,98,0.25); border-radius: 12px; margin-top: 0; text-align: center; }
+.ak-page .ct-success.show { display: block; }
+.ak-page .ct-success-icon { font-size: 32px; margin-bottom: 12px; }
+.ak-page .ct-success-title { font-size: 16px; font-weight: 700; color: var(--ts); margin-bottom: 6px; }
+.ak-page .ct-success-sub { font-size: 13px; color: var(--tm); }
+
+/* ── FOOTER ── */
+.ak-page footer { background: var(--slate2); border-top: 1px solid var(--ls); padding: 28px 60px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.ak-page .ft-logo { display: flex; align-items: center; gap: 10px; }
+.ak-page .ft-mono { width: 28px; height: 28px; border-radius: 6px; background: var(--sage); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 12px; color: var(--white); }
+.ak-page .ft-name { font-size: 13px; font-weight: 600; color: var(--tm); }
+.ak-page .ft-links { display: flex; gap: 24px; list-style: none; }
+.ak-page .ft-links a { font-size: 12px; color: var(--tm); transition: color 0.2s; }
+.ak-page .ft-links a:hover { color: var(--ts); }
+.ak-page .ft-copy { font-size: 12px; color: var(--tm); }
+
+/* ── RESPONSIVE 1024px ── */
+@media (max-width: 1024px) {
+  .ak-page nav { padding: 0 32px; }
+  .ak-page .hero { padding: 100px 32px 0; }
+  .ak-page .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .ak-page .svc-head { padding: 0 32px; }
+  .ak-page .svc-scroll { padding: 0 32px; }
+  .ak-page .svc-nav { padding: 20px 32px 0; }
+  .ak-page .bento { padding: 80px 32px; }
+  .ak-page .bento-grid { grid-template-columns: 1fr 1fr; }
+  .ak-page .b-main { grid-column: 1 / 3; }
+  .ak-page .b-stat-big { grid-column: 1; }
+  .ak-page .process { padding: 80px 32px; }
+  .ak-page .process-inner { grid-template-columns: 1fr; gap: 48px; }
+  .ak-page .process-aside { display: none; }
+  .ak-page .cta-strip { padding: 72px 32px; }
+  .ak-page .cta-box { flex-direction: column; gap: 40px; }
+  .ak-page .cta-left { max-width: 100%; }
+  .ak-page .cta-form { max-width: 480px; }
+  .ak-page .contacts { padding: 80px 32px; }
+  .ak-page .contacts-grid { gap: 48px; }
+  .ak-page footer { padding: 24px 32px; }
+}
+
+/* ── RESPONSIVE 640px ── */
+@media (max-width: 640px) {
+  .ak-page nav { padding: 0 20px; }
+  .ak-page .nav-links, .ak-page .nav-cta { display: none; }
+  .ak-page .nav-burger { display: flex; }
+  .ak-page .hero { padding: 80px 20px 0; min-height: auto; }
+  .ak-page .hero-eyebrow { margin-top: 24px; }
+  .ak-page .hero-h1 { font-size: clamp(42px, 12vw, 64px); letter-spacing: -2px; }
+  .ak-page .hero-stats-row { gap: 20px; }
+  .ak-page .hero-bottom { flex-direction: column; align-items: flex-start; gap: 20px; padding: 20px 0 32px; }
+  .ak-page .h-stat-num { font-size: 22px; }
+  .ak-page .btn-sage { width: 100%; text-align: center; padding: 13px 20px; }
+  .ak-page .svc-head { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .ak-page .svc-sub { text-align: left; max-width: 100%; }
+  .ak-page .svc-scroll { padding: 0 20px; }
+  .ak-page .svc-nav { padding: 20px 20px 0; }
+  .ak-page .bento { padding: 60px 20px; }
+  .ak-page .bento-grid { grid-template-columns: 1fr; }
+  .ak-page .b-main { grid-column: 1; padding: 36px 28px; }
+  .ak-page .b-stat-big { grid-column: 1; min-height: 200px; }
+  .ak-page .process { padding: 60px 20px; }
+  .ak-page .process-inner { gap: 40px; }
+  .ak-page .cta-strip { padding: 60px 20px; }
+  .ak-page .cta-form { max-width: 100%; }
+  .ak-page .contacts { padding: 60px 20px; }
+  .ak-page .contacts-grid { grid-template-columns: 1fr; gap: 40px; }
+  .ak-page footer { padding: 24px 20px; flex-direction: column; text-align: center; gap: 16px; }
+  .ak-page .ft-links { flex-wrap: wrap; justify-content: center; gap: 12px; display: none; }
+}
+</style>
+
+<div class="ak-page">
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-monogram">АК</div>
+    <span class="nav-name">Альянс Кадров</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#ak-services">Услуги</a></li>
+    <li><a href="#ak-about">О нас</a></li>
+    <li><a href="#ak-process">Процесс</a></li>
+    <li><a href="#ak-contacts">Контакты</a></li>
+  </ul>
+  <a class="nav-cta" href="#ak-contacts">Оставить заявку</a>
+  <button class="nav-burger" id="ak-nav-burger" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="ak-nav-mobile">
+  <a href="#ak-services">Услуги</a>
+  <a href="#ak-about">О нас</a>
+  <a href="#ak-process">Процесс</a>
+  <a href="#ak-contacts">Контакты</a>
+  <a href="#ak-contacts" class="nav-mobile-cta">Оставить заявку</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Аутсорсинг промышленного персонала</div>
+  <div class="hero-main">
+    <h1 class="hero-h1">Персонал,<br>который выходит<br>за <span class="h1-num">48 часов</span></h1>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stats-row">
+      <div class="h-stat">
+        <div class="h-stat-num">250<em>+</em></div>
+        <div class="h-stat-lbl">компаний-клиентов</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">15К<em>+</em></div>
+        <div class="h-stat-lbl">кандидатов в базе</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">40<em>+</em></div>
+        <div class="h-stat-lbl">городов присутствия</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">6<em>+</em></div>
+        <div class="h-stat-lbl">лет на рынке</div>
+      </div>
+    </div>
+    <a class="btn-sage" href="#ak-contacts">Подобрать персонал →</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="m-item"><span class="m-dot"></span>Производственный персонал</div>
+    <div class="m-item"><span class="m-dot"></span>Аутсорсинг</div>
+    <div class="m-item"><span class="m-dot"></span>Аутстаффинг</div>
+    <div class="m-item"><span class="m-dot"></span>Вахтовый метод</div>
+    <div class="m-item"><span class="m-dot"></span>Складской персонал</div>
+    <div class="m-item"><span class="m-dot"></span>Строительные рабочие</div>
+    <div class="m-item"><span class="m-dot"></span>Линейный персонал</div>
+    <div class="m-item"><span class="m-dot"></span>Быстрое закрытие вакансий</div>
+    <div class="m-item"><span class="m-dot"></span>Оперативная замена</div>
+    <div class="m-item"><span class="m-dot"></span>HR-аутсорсинг</div>
+    <div class="m-item"><span class="m-dot"></span>Производственный персонал</div>
+    <div class="m-item"><span class="m-dot"></span>Аутсорсинг</div>
+    <div class="m-item"><span class="m-dot"></span>Аутстаффинг</div>
+    <div class="m-item"><span class="m-dot"></span>Вахтовый метод</div>
+    <div class="m-item"><span class="m-dot"></span>Складской персонал</div>
+    <div class="m-item"><span class="m-dot"></span>Строительные рабочие</div>
+    <div class="m-item"><span class="m-dot"></span>Линейный персонал</div>
+    <div class="m-item"><span class="m-dot"></span>Быстрое закрытие вакансий</div>
+    <div class="m-item"><span class="m-dot"></span>Оперативная замена</div>
+    <div class="m-item"><span class="m-dot"></span>HR-аутсорсинг</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="ak-services">
+  <div class="svc-head">
+    <div>
+      <div class="sec-label">Что мы делаем</div>
+      <h2 class="sec-title">Наши услуги</h2>
+    </div>
+    <p class="svc-sub">Полный спектр кадровых решений для предприятий производственного и складского сектора</p>
+  </div>
+  <div class="svc-scroll" id="ak-svc-scroll">
+    <div class="svc-track">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><path d="M23 20v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="svc-name">Аутсорсинг персонала</div>
+        <div class="svc-desc">Передаём вам команду под ключ с полным кадровым сопровождением — вы платите за результат</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="13" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
+        <div class="svc-name">Аутстаффинг</div>
+        <div class="svc-desc">Выводим сотрудников за штат: они работают у вас, кадровое сопровождение — на нас</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M3 18v-1a5 5 0 0 1 5-5h4"/><path d="M16 15l2 2 4-4"/></svg></div>
+        <div class="svc-name">Рабочие специальности</div>
+        <div class="svc-desc">Комплектовщики, операторы, сварщики, стропальщики, грузчики и другие рабочие профессии</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="svc-name">Вахтовый персонал</div>
+        <div class="svc-desc">Организуем вахтовые бригады для удалённых объектов и производств с сезонной нагрузкой</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="16" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg></div>
+        <div class="svc-name">Складской персонал</div>
+        <div class="svc-desc">Кладовщики, операторы WMS, комплектовщики заказов, водители погрузчика и штабелёра</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="9"/><polyline points="10 6 10 10 13 12"/></svg></div>
+        <div class="svc-name">Срочное закрытие</div>
+        <div class="svc-desc">Подбираем и выводим замену за 48 часов при форс-мажорном выбытии сотрудника</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="svc-name">Строительные рабочие</div>
+        <div class="svc-desc">Разнорабочие, подсобники, монтажники для строительных площадок и промышленных объектов</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#5C7F62" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="svc-name">Кадровый консалтинг</div>
+        <div class="svc-desc">Аудит HR-процессов, оптимизация документооборота, разработка KPI для рабочего персонала</div>
+      </div>
+    </div>
+  </div>
+  <div class="svc-nav">
+    <button class="svc-btn" id="ak-svc-prev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="svc-btn" id="ak-svc-next"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</section>
+
+<!-- BENTO -->
+<section class="bento" id="ak-about">
+  <div class="bento-grid">
+    <div class="b-main">
+      <div>
+        <div class="b-main-label">О компании</div>
+        <h2 class="b-main-title">Закрываем вакансии там,<br>где <em>другие говорят «нет»</em></h2>
+      </div>
+      <p class="b-main-text">ООО «Альянс Кадров» — кадровое агентство полного цикла с фокусом на промышленных специальностях. Работаем напрямую с производственными предприятиями, складскими комплексами и строительными компаниями. Собственная база 15&thinsp;000+ верифицированных кандидатов позволяет закрывать вакансии в самых сложных регионах без задержек.</p>
+    </div>
+    <div class="b-stat-big">
+      <div class="b-stat-big-num">15К</div>
+      <div class="b-stat-big-lbl">кандидатов<br>в активной базе</div>
+    </div>
+    <div class="b-num-card">
+      <div class="b-num">40<span style="font-size:0.5em;opacity:.5">+</span></div>
+      <div class="b-num-lbl">городов<br>присутствия</div>
+    </div>
+    <div class="b-num-card">
+      <div class="b-num">98<span style="font-size:0.45em;opacity:.5">%</span></div>
+      <div class="b-num-lbl">клиентов возвращаются<br>с новыми заявками</div>
+    </div>
+    <div class="b-quote">
+      <div class="b-quote-mark">"</div>
+      <p class="b-quote-text">Закрыли 40 вакансий за 3 дня под пиковую нагрузку. Вышли без единого сбоя по сменам.</p>
+      <div class="b-quote-author">Директор по логистике, складской комплекс</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="ak-process">
+  <div class="process-inner">
+    <div>
+      <div class="process-head">
+        <div class="sec-label">Как мы работаем</div>
+        <h2 class="sec-title">5 шагов<br>до вашего сотрудника</h2>
+      </div>
+      <div class="process-list">
+        <div class="proc-item open">
+          <div class="proc-trigger">
+            <span class="proc-num">01</span><span class="proc-name">Заявка и брифинг</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Принимаем заявку — устно, письменно или через форму. Уточняем специальность, объём, режим работы и объект. Фиксируем требования и согласовываем сроки закрытия.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">02</span><span class="proc-name">Подбор кандидатов</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Ищем в собственной базе и через активный источниковый поиск. Проверяем документы, трудовой опыт и готовность к условиям объекта. На одно место — не более 3 нерелевантных кандидатов.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">03</span><span class="proc-name">Согласование</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Представляем кандидатов — краткие профили с фото и характеристиками. Вы утверждаете подходящих. При необходимости организуем собеседование в течение дня.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">04</span><span class="proc-name">Оформление и выход</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Берём на себя весь кадровый документооборот: трудовой договор, инструктажи, медосмотр при необходимости. Сотрудник выходит точно в срок.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">05</span><span class="proc-name">Сопровождение и замена</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Контролируем выходы по сменному графику. При выбытии — оперативная замена из резерва без доплат. Персональный менеджер на постоянной связи.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="process-aside">
+      <div class="process-aside-label">Среднее время закрытия</div>
+      <div class="process-aside-num">48ч</div>
+      <p class="process-aside-text">От получения заявки до первого выхода сотрудника на объект. Собственная база — никаких сторонних джобсайтов.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="cta-box">
+    <div class="cta-left">
+      <div class="cta-over">Готовы начать?</div>
+      <h2 class="cta-title">Скажите, сколько людей нужно —<br><em>мы выведем их на объект</em></h2>
+    </div>
+    <form class="cta-form" id="ak-cta-form" novalidate>
+      <input type="text"  name="name"  placeholder="Ваше имя *"    required class="cta-input"/>
+      <input type="tel"   name="phone" placeholder="Телефон *"      required class="cta-input"/>
+      <input type="email" name="email" placeholder="Email"                   class="cta-input"/>
+      <button type="submit" id="ak-cta-submit" class="btn-white">Оставить заявку →</button>
+      <p class="cta-consent">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+    </form>
+    <div id="ak-cta-success" class="ct-success">
+      <div class="ct-success-icon">✓</div>
+      <div class="ct-success-title">Заявка отправлена!</div>
+      <div class="ct-success-sub">Свяжемся в течение рабочего дня</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="ak-contacts">
+  <div class="contacts-grid">
+    <div>
+      <div class="ct-label">Контакты</div>
+      <h2 class="ct-title">Обсудим<br>вашу задачу</h2>
+      <form id="ak-ct-form" novalidate>
+        <input type="text"  name="name"    placeholder="Имя *"       required class="ct-input"/>
+        <input type="tel"   name="phone"   placeholder="Телефон *"   required class="ct-input"/>
+        <input type="email" name="email"   placeholder="Email"                class="ct-input"/>
+        <textarea           name="comment" placeholder="Комментарий" rows="3" class="ct-input ct-textarea"></textarea>
+        <button type="submit" id="ak-ct-submit" class="btn-sage" style="width:100%;padding:14px;font-size:15px;border-radius:8px;">Отправить заявку →</button>
+        <p class="ct-consent">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+      </form>
+      <div id="ak-ct-success" class="ct-success">
+        <div class="ct-success-icon">✓</div>
+        <div class="ct-success-title">Заявка отправлена!</div>
+        <div class="ct-success-sub">Свяжемся в течение рабочего дня</div>
+      </div>
+    </div>
+    <div class="ct-right">
+      <div class="ct-rows">
+        <div class="ct-row"><span class="ct-key">E-mail</span><span class="ct-val"><a href="mailto:info@alliance-kadrov.ru">info@alliance-kadrov.ru</a></span></div>
+        <div class="ct-row"><span class="ct-key">Режим работы</span><span class="ct-val">Пн–Пт, 9:00–18:00</span></div>
+        <div class="ct-row"><span class="ct-key">Адрес</span><span class="ct-val">107113, г. Москва, ул. Маленковская, д. 32, стр. 2А, помещ. 1/1</span></div>
+      </div>
+      <div class="req-block">
+        <div class="req-hd">Реквизиты компании</div>
+        <div class="req-row"><span class="req-k">Компания</span><span class="req-v">ООО «Альянс Кадров»</span></div>
+        <div class="req-row"><span class="req-k">ИНН</span><span class="req-v">9718282911</span></div>
+        <div class="req-row"><span class="req-k">КПП</span><span class="req-v">771801001</span></div>
+        <div class="req-row"><span class="req-k">ОГРН</span><span class="req-v">1257700297953</span></div>
+        <div class="req-row"><span class="req-k">Адрес регистрации</span><span class="req-v" style="font-size:11px;">107113, г. Москва, ул. Маленковская, д. 32, стр. 2А, помещ. 1/1</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">
+    <div class="ft-mono">АК</div>
+    <span class="ft-name">Альянс Кадров</span>
+  </div>
+  <ul class="ft-links">
+    <li><a href="#ak-services">Услуги</a></li>
+    <li><a href="#ak-about">О компании</a></li>
+    <li><a href="#ak-process">Процесс</a></li>
+    <li><a href="#ak-contacts">Контакты</a></li>
+  </ul>
+  <span class="ft-copy">© 2025 ООО «Альянс Кадров»</span>
+</footer>
+
+</div><!-- /ak-page -->
+
+<script>
+var AK_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgL5kKDfYviyqbif6DmMvJDI0O_nFK7BwGzRr76SjEuiSDPow0NVCyA7w1AFCiZNbR/exec';
+
+/* ── SERVICES CAROUSEL ── */
+(function(){
+  var wrap = document.getElementById('ak-svc-scroll');
+  var prev = document.getElementById('ak-svc-prev');
+  var next = document.getElementById('ak-svc-next');
+  if(!wrap||!prev||!next) return;
+  var STEP = 266;
+  prev.addEventListener('click',function(){ wrap.scrollBy({left:-STEP*3, behavior:'smooth'}); });
+  next.addEventListener('click',function(){ wrap.scrollBy({left:STEP*3, behavior:'smooth'}); });
+  function upd(){
+    prev.disabled = wrap.scrollLeft < 8;
+    next.disabled = wrap.scrollLeft >= wrap.scrollWidth - wrap.offsetWidth - 8;
+  }
+  wrap.addEventListener('scroll', upd);
+  upd();
+})();
+
+/* ── ACCORDION ── */
+(function(){
+  var page = document.querySelector('.ak-page');
+  if(!page) return;
+  page.querySelectorAll('.proc-trigger').forEach(function(trigger){
+    trigger.addEventListener('click', function(){
+      var item = this.closest('.proc-item');
+      var isOpen = item.classList.contains('open');
+      page.querySelectorAll('.proc-item').forEach(function(i){ i.classList.remove('open'); });
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+})();
+
+/* ── MOBILE NAV ── */
+(function(){
+  var burger = document.getElementById('ak-nav-burger');
+  var menu   = document.getElementById('ak-nav-mobile');
+  if(!burger||!menu) return;
+  burger.addEventListener('click', function(){
+    menu.classList.toggle('open');
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ menu.classList.remove('open'); });
+  });
+})();
+
+/* ── FORM SUBMIT ── */
+function akSubmitForm(formEl, submitBtn, successEl, source) {
+  var name  = formEl.querySelector('[name=name]').value.trim();
+  var phone = formEl.querySelector('[name=phone]').value.trim();
+  if(!name||!phone){ alert('Пожалуйста, заполните Имя и Телефон'); return; }
+  submitBtn.textContent = 'Отправляем…';
+  submitBtn.disabled = true;
+  var emailEl   = formEl.querySelector('[name=email]');
+  var commentEl = formEl.querySelector('[name=comment]');
+  var p = new URLSearchParams({
+    site: 'Альянс Кадров (' + source + ')',
+    name: name,
+    phone: phone,
+    email:   emailEl   ? emailEl.value.trim()   : '',
+    comment: commentEl ? commentEl.value.trim() : ''
+  });
+  fetch(AK_SCRIPT_URL+'?'+p.toString(), {method:'GET', mode:'no-cors'})
+    .then(function(){ formEl.style.display='none'; successEl.classList.add('show'); })
+    .catch(function(){ submitBtn.textContent='Ошибка, попробуйте ещё раз'; submitBtn.disabled=false; });
+}
+
+(function(){
+  var form    = document.getElementById('ak-cta-form');
+  var submit  = document.getElementById('ak-cta-submit');
+  var success = document.getElementById('ak-cta-success');
+  if(!form) return;
+  form.addEventListener('submit', function(e){ e.preventDefault(); akSubmitForm(form, submit, success, 'CTA'); });
+})();
+
+(function(){
+  var form    = document.getElementById('ak-ct-form');
+  var submit  = document.getElementById('ak-ct-submit');
+  var success = document.getElementById('ak-ct-success');
+  if(!form) return;
+  form.addEventListener('submit', function(e){ e.preventDefault(); akSubmitForm(form, submit, success, 'Контакты'); });
+})();
+</script>

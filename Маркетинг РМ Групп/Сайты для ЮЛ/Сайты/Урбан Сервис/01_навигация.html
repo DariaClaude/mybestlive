@@ -1,0 +1,92 @@
+<!--
+══════════════════════════════════════════════════════
+  БЛОК 01 — НАВИГАЦИЯ (NAV)
+  Zero Block → вставить CSS в поле CSS, HTML в HTML, JS в JS
+══════════════════════════════════════════════════════
+-->
+
+<!-- ═══ CSS ═══ -->
+<style>
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(245,245,247,0.88); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  padding: 0 48px; height: 54px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); }
+
+.nav-logo {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 15px; font-weight: 700; color: var(--dark);
+  letter-spacing: -0.3px; text-decoration: none;
+}
+.nav-logo-mark svg { display: block; }
+.nav-logo span { color: var(--green); }
+
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  position: relative; padding-bottom: 2px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px;
+  background: var(--green); transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.nav-links a:hover { color: var(--dark); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  padding: 7px 18px; background: var(--dark); color: var(--white);
+  border: none; border-radius: 100px; font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+  position: relative; overflow: hidden;
+}
+.nav-cta:hover { background: var(--dark-lt); transform: scale(1.03); }
+
+@media (max-width: 960px) { nav { padding: 0 24px; } }
+@media (max-width: 680px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+}
+</style>
+
+<!-- ═══ HTML ═══ -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-mark">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#10B981"/>
+            <stop offset="1" stop-color="#34D399"/>
+          </linearGradient>
+        </defs>
+        <circle cx="9" cy="8" r="3.5" fill="url(#lg1)"/>
+        <path d="M4.5 26 C4.5 19 13.5 19 13.5 26" fill="url(#lg1)"/>
+        <circle cx="21" cy="8" r="3.5" fill="url(#lg1)"/>
+        <path d="M16.5 26 C16.5 19 25.5 19 25.5 26" fill="url(#lg1)"/>
+        <rect x="4.5" y="24" width="21" height="3" rx="1.5" fill="url(#lg1)"/>
+      </svg>
+    </span>
+    Урбан<span>Сервис</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#directions">Направления</a></li>
+    <li><a href="#specialties">Специальности</a></li>
+    <li><a href="#steps">Этапы</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a href="#contacts" class="nav-cta">Связаться</a>
+</nav>
+
+<!-- ═══ JS ═══ -->
+<script>
+(function(){
+  var nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+})();
+</script>

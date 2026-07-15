@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Сеть — карта связей</title>
+<meta name="description" content="Карта деловых связей: кто кого знает и через кого выйти на нужного человека.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F7;
+  --panel:#FFFFFF;
+  --ink:#212529;
+  --ink-soft:#565656;
+  --thread:#852A34;
+  --thread-soft:#F5E7E9;
+  --steel:#7C8AA0;
+  --muted:#6C757D;
+  --line:#E4E7EB;
+  --danger:#B23A3A;
+  --ok:#3E7A4E;
+  --radius:14px;
+  --shadow:0 2px 10px rgba(23,35,59,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Montserrat',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  font-size:15px;line-height:1.5;
+  display:flex;flex-direction:column;
+  overscroll-behavior:none;
+}
+h1,h2,h3{font-family:'Montserrat',system-ui,sans-serif;line-height:1.25;letter-spacing:-.01em}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font:inherit;color:var(--ink)}
+
+/* ---------- Шапка ---------- */
+header{
+  background:var(--panel);border-bottom:1px solid var(--line);
+  padding:10px 16px;display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:30;
+}
+.logo{display:flex;align-items:baseline;gap:8px;min-width:0}
+.logo h1{font-size:20px;letter-spacing:.5px}
+.logo .thread-mark{display:inline-block;width:26px;height:3px;background:var(--thread);border-radius:2px;transform:translateY(-4px)}
+.logo small{color:var(--muted);font-size:12px;white-space:nowrap}
+.header-actions{margin-left:auto;display:flex;gap:6px}
+.icon-btn{
+  border:1px solid var(--line);border-radius:10px;padding:7px 11px;
+  background:var(--panel);font-size:13px;font-weight:500;color:var(--ink-soft);
+  transition:background .15s;
+}
+.icon-btn:hover{background:var(--bg)}
+
+/* ---------- Вкладки ---------- */
+nav{
+  display:flex;background:var(--panel);border-bottom:1px solid var(--line);
+  position:sticky;top:53px;z-index:29;
+}
+nav button{
+  flex:1;padding:11px 4px;font-size:13.5px;font-weight:500;color:var(--muted);
+  border-bottom:2.5px solid transparent;transition:color .15s;
+}
+nav button.active{color:var(--ink);border-bottom-color:var(--thread)}
+nav button:focus-visible,.icon-btn:focus-visible,.btn:focus-visible{outline:2px solid var(--steel);outline-offset:2px}
+
+main{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
+.view{display:none;padding:16px;max-width:900px;margin:0 auto;width:100%}
+.view.active{display:block}
+.view-graph{max-width:none;padding:0;height:100%}
+
+/* ---------- Кнопки/формы ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--ink);color:#fff;border-radius:12px;
+  padding:11px 18px;font-weight:600;font-size:14px;
+  transition:opacity .15s;
+}
+.btn:hover{opacity:.88}
+.btn.gold{background:var(--thread);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:7px 12px;font-size:13px;border-radius:10px}
+.btn.danger{background:transparent;color:var(--danger);border:1px solid #E5C9C9}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px}
+.field input,.field select,.field textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--panel);font-size:15px;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--steel);outline-offset:-1px;border-color:var(--steel)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:12.5px;color:var(--muted)}
+.check{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;user-select:none}
+.check input{width:18px;height:18px;accent-color:var(--thread)}
+
+/* ---------- Карточки ---------- */
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow);
+}
+.section-head{display:flex;align-items:center;gap:10px;margin:6px 0 14px}
+.section-head h2{font-size:19px}
+.section-head .count{font-size:13px;color:var(--muted);font-weight:400}
+.section-head .btn{margin-left:auto}
+.person-row{display:flex;align-items:center;gap:12px}
+.avatar{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:600;font-size:14px;color:#fff;background:var(--steel);
+}
+.avatar.ours{background:var(--ink);box-shadow:0 0 0 2px var(--thread)}
+.person-info{min-width:0;flex:1}
+.person-info .name{font-weight:600;font-size:15px}
+.person-info .sub{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{
+  display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;
+  border-radius:20px;background:var(--thread-soft);color:var(--thread);
+}
+.link-row{font-size:14px}
+.link-row .pair{font-weight:600}
+.link-row .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.strength-dots{display:inline-flex;gap:3px;vertical-align:middle;margin-left:6px}
+.strength-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.strength-dots i.on{background:var(--thread)}
+.row-actions{display:flex;gap:6px;flex-shrink:0}
+.row-actions button{color:var(--muted);font-size:13px;padding:6px;border-radius:8px}
+.row-actions button:hover{background:var(--bg);color:var(--ink)}
+
+.empty{
+  text-align:center;padding:40px 20px;color:var(--muted);
+}
+.empty h3{font-size:17px;color:var(--ink-soft);margin-bottom:6px}
+
+/* ---------- Граф ---------- */
+.graph-wrap{position:relative;height:100%;min-height:420px;background:var(--bg);overflow:hidden}
+#graphCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+#graphCanvas.dragging{cursor:grabbing}
+.graph-hint{
+  position:absolute;left:12px;bottom:12px;font-size:12px;color:rgba(33,37,41,.5);
+  pointer-events:none;user-select:none;
+}
+.graph-legend{
+  position:absolute;left:12px;top:12px;font-size:12px;color:rgba(33,37,41,.82);
+  background:rgba(255,255,255,.85);backdrop-filter:blur(4px);
+  border:1px solid var(--line);border-radius:10px;padding:8px 12px;
+  display:flex;flex-direction:column;gap:4px;pointer-events:none;
+}
+.graph-legend span{display:flex;align-items:center;gap:7px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.node-card{
+  position:absolute;right:12px;top:12px;width:min(300px,calc(100% - 24px));
+  background:var(--panel);border-radius:var(--radius);box-shadow:0 8px 28px rgba(23,35,59,.16);border:1px solid var(--line);
+  padding:14px 16px;z-index:5;display:none;
+}
+.node-card.show{display:block}
+.node-card .close{position:absolute;right:8px;top:8px;color:var(--muted);font-size:18px;padding:4px 8px}
+.node-card h3{font-size:16px;margin-bottom:2px;padding-right:24px}
+.node-card .sub{font-size:13px;color:var(--muted);margin-bottom:10px}
+.node-card .links-list{font-size:13px;margin:8px 0;max-height:140px;overflow:auto}
+.node-card .links-list div{padding:3px 0;border-bottom:1px dashed var(--line)}
+.node-card .actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+/* ---------- Поиск пути ---------- */
+.path-result{margin-top:16px}
+.chain{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 16px;color:var(--ink);
+  position:relative;overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow);
+}
+.chain-step{display:flex;align-items:center;gap:12px;position:relative;padding:8px 0}
+.chain-step .avatar{background:var(--steel)}
+.chain-step.ours .avatar{background:var(--ink);color:#fff;box-shadow:0 0 0 2px var(--thread)}
+.chain-step.target .avatar{background:var(--thread);color:#fff}
+.chain-step .who .name{font-weight:600}
+.chain-step .who .sub{font-size:12.5px;color:var(--muted)}
+.chain-hop{
+  margin-left:19px;border-left:2px dashed var(--thread);padding:4px 0 4px 20px;
+  font-size:12.5px;color:var(--thread);
+}
+.chain-score{font-size:12px;color:var(--muted);margin-top:8px}
+.path-empty{padding:14px;border:1px dashed var(--line);border-radius:var(--radius);color:var(--muted);font-size:14px}
+
+/* ---------- Модалка ---------- */
+.modal-back{
+  position:fixed;inset:0;background:rgba(23,35,59,.5);z-index:50;
+  display:none;align-items:flex-end;justify-content:center;
+}
+.modal-back.show{display:flex}
+.modal{
+  background:var(--panel);width:100%;max-width:520px;
+  border-radius:18px 18px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));
+  max-height:88vh;overflow:auto;
+}
+.modal h2{font-size:18px;margin-bottom:14px}
+.modal .modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal .modal-actions .btn{flex:1}
+@media(min-width:640px){
+  .modal-back{align-items:center;padding:20px}
+  .modal{border-radius:18px}
+}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(70px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;
+  font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Мобильная навигация ---------- */
+@media(max-width:700px){
+  header{padding:10px 12px}
+  .logo small{display:none}
+  nav{top:auto;bottom:0;position:fixed;left:0;right:0;border-top:1px solid var(--line);border-bottom:none;padding-bottom:env(safe-area-inset-bottom)}
+  nav button{padding:12px 2px;border-bottom:none;border-top:2.5px solid transparent}
+  nav button.active{border-top-color:var(--thread)}
+  main{padding-bottom:70px}
+  .view-graph{height:calc(100dvh - 53px - 58px)}
+  .field-row{grid-template-columns:1fr}
+}
+@media(min-width:701px){
+  .view-graph{height:calc(100dvh - 53px - 44px)}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Сеть<span class="thread-mark"></span></h1>
+    <small>карта деловых связей</small>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" id="btnExport" title="Скачать данные">Экспорт</button>
+    <button class="icon-btn" id="btnImport" title="Загрузить данные">Импорт</button>
+    <input type="file" id="fileImport" accept=".json" hidden>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button data-view="graph" class="active">Граф</button>
+  <button data-view="path">Найти выход</button>
+  <button data-view="people">Люди</button>
+  <button data-view="links">Связи</button>
+</nav>
+
+<main>
+
+  <!-- ГРАФ -->
+  <section class="view view-graph active" id="view-graph">
+    <div class="graph-wrap">
+      <canvas id="graphCanvas"></canvas>
+      <div class="graph-legend">
+        <span><i class="dot" style="background:#852A34"></i> наша команда</span>
+        <span><i class="dot" style="background:#8A97A8"></i> внешний контакт</span>
+        <span><i class="dot" style="background:repeating-linear-gradient(90deg,#852A34 0 3px,transparent 3px 7px);border-radius:0;height:3px;width:16px"></i> связь внутри команды</span>
+        <span><i class="dot" style="background:repeating-linear-gradient(90deg,#852A34 0 5px,transparent 5px 9px);border-radius:0;height:3px;width:16px"></i> найденный путь</span>
+      </div>
+      <div class="graph-hint">Перетаскивайте узлы · колесо / щипок — масштаб · тап по узлу — карточка</div>
+      <div class="node-card" id="nodeCard">
+        <button class="close" id="nodeCardClose" aria-label="Закрыть">×</button>
+        <h3 id="ncName"></h3>
+        <div class="sub" id="ncSub"></div>
+        <div id="ncTags"></div>
+        <div class="links-list" id="ncLinks"></div>
+        <div class="actions">
+          <button class="btn small gold" id="ncFindPath">Как выйти на него</button>
+          <button class="btn small ghost" id="ncEdit">Изменить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПОИСК ПУТИ -->
+  <section class="view" id="view-path">
+    <div class="section-head"><h2>Найти выход на человека</h2></div>
+    <div class="card">
+      <div class="field">
+        <label for="pathTarget">На кого нужно выйти</label>
+        <select id="pathTarget"></select>
+      </div>
+      <div class="field">
+        <label for="pathFrom">Стартовать от</label>
+        <select id="pathFrom">
+          <option value="">Любого из нашей команды</option>
+        </select>
+      </div>
+      <button class="btn gold" id="btnFindPath" style="width:100%">Построить цепочку</button>
+      <p class="hint" style="margin-top:10px">Система взвешивает силу и свежесть каждой связи и строит самый «тёплый» маршрут — не обязательно самый короткий.</p>
+    </div>
+    <div class="path-result" id="pathResult"></div>
+  </section>
+
+  <!-- ЛЮДИ -->
+  <section class="view" id="view-people">
+    <div class="section-head">
+      <h2>Люди</h2><span class="count" id="peopleCount"></span>
+      <button class="btn small" id="btnAddPerson">+ Добавить</button>
+    </div>
+    <div class="field"><input type="search" id="peopleSearch" placeholder="Поиск по имени, компании, должности…"></div>
+    <div id="peopleList"></div>
+  </section>
+
+  <!-- СВЯЗИ -->
+  <section class="view" id="view-links">
+    <div class="section-head">
+      <h2>Связи</h2><span class="count" id="linksCount"></span>
+      <button class="btn small" id="btnAddLink">+ Добавить</button>
+    </div>
+    <div id="linksList"></div>
+  </section>
+
+</main>
+
+<!-- Модалка: человек -->
+<div class="modal-back" id="personModal">
+  <div class="modal">
+    <h2 id="personModalTitle">Новый человек</h2>
+    <div class="field"><label for="pName">Имя и фамилия *</label><input id="pName" placeholder="Александр Гордунов"></div>
+    <div class="field-row">
+      <div class="field"><label for="pRole">Должность</label><input id="pRole" placeholder="Директор по развитию"></div>
+      <div class="field"><label for="pCompany">Компания</label><input id="pCompany" placeholder="Газпром нефть"></div>
+    </div>
+    <div class="field"><label for="pContact">Контакт</label><input id="pContact" placeholder="Telegram / телефон / почта"></div>
+    <div class="field"><label class="check"><input type="checkbox" id="pOurs"> Наш человек (сотрудник команды)</label></div>
+    <div class="field"><label for="pNotes">Заметки</label><textarea id="pNotes" rows="2" placeholder="Откуда знаем, интересы, контекст…"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close>Отмена</button>
+      <button class="btn" id="btnSavePerson">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Модалка: связь -->
+<div class="modal-back" id="linkModal">
+  <div class="modal">
+    <h2 id="linkModalTitle">Новая связь</h2>
+    <div class="field"><label for="lA">Кто</label><select id="lA"></select></div>
+    <div class="field"><label for="lB">С кем</label><select id="lB"></select></div>
+    <div class="field-row">
+      <div class="field">
+        <label for="lType">Тип связи</label>
+        <select id="lType">
+          <option value="personal">Личное знакомство</option>
+          <option value="team">Коллеги (в команде)</option>
+          <option value="work">Работали вместе</option>
+          <option value="event">Мероприятие / эфир</option>
+          <option value="deal">Сделка (CRM)</option>
+          <option value="media">Публикация / упоминание</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="lStrength">Сила связи</label>
+        <select id="lStrength">
+          <option value="1">1 — шапочное</option>
+          <option value="2">2 — знакомы</option>
+          <option value="3" selected>3 — рабочий контакт</option>
+          <option value="4">4 — доверительная</option>
+          <option value="5">5 — близкая</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label for="lDate">Последний контакт</label><input type="date" id="lDate"></div>
+    <div class="field"><label for="lNote">Комментарий</label><input id="lNote" placeholder="Совместный эфир, март 2026"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close>Отмена</button>
+      <button class="btn" id="btnSaveLink">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* ============================================================
+   Сеть — карта деловых связей
+   Данные хранятся локально в браузере (localStorage).
+   ============================================================ */
+
+const LS_KEY = 'set-db-v3';
+const TEAM_MESH_V = 3;   // версия полноты seed (до-связывание команды + добавление недостающих людей в сохранённых данных)
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const uid = () => Math.random().toString(36).slice(2, 10);
+const TYPE_LABEL = {personal:'личное знакомство', team:'коллеги в команде', work:'работали вместе', event:'мероприятие / эфир', deal:'сделка (CRM)', media:'публикация'};
+
+let db = load();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && d.people && d.links){ upgradeTeam(d); return d; } }
+    // Миграция с прошлой версии: сохраняем данные пользователя, добавляем недостающих людей и связи
+    const old = localStorage.getItem('set-db-v2');
+    if(old){ const d = JSON.parse(old); if(d && d.people && d.links){ upgradeTeam(d); return d; } }
+  }catch(e){}
+  return seed();
+}
+/* До-связывает команду в уже сохранённых данных при повышении версии полноты (однократно). */
+function upgradeTeam(d){
+  if((d._meshV||0) >= TEAM_MESH_V) return;
+  reconcileSeed(d);
+  addTeamLinks(d); d._meshV = TEAM_MESH_V;
+  localStorage.setItem(LS_KEY, JSON.stringify(d));
+}
+/* Идемпотентно добавляет отсутствующих людей и связи из актуального seed (сопоставление по имени). Существующие записи не изменяет. */
+function reconcileSeed(d){
+  const canon = seed();
+  const key = s => (s||'').toLowerCase().replace(/ё/g,'е').replace(/\s+/g,' ').trim();
+  const idByName = {};
+  d.people.forEach(p=> idByName[key(p.name)] = p.id);
+  canon.people.forEach(cp=>{
+    if(!idByName[key(cp.name)]){ const np = {...cp}; d.people.push(np); idByName[key(cp.name)] = np.id; }
+  });
+  const linked = (x,y)=> d.links.some(l=>(l.a===x&&l.b===y)||(l.a===y&&l.b===x));
+  canon.links.forEach(cl=>{
+    const ca = canon.people.find(p=>p.id===cl.a), cb = canon.people.find(p=>p.id===cl.b);
+    if(!ca||!cb) return;
+    const na = idByName[key(ca.name)], nb = idByName[key(cb.name)];
+    if(na && nb && !linked(na,nb)) d.links.push({...cl, id:uid(), a:na, b:nb});
+  });
+}
+function save(){ localStorage.setItem(LS_KEY, JSON.stringify(db)); }
+
+/* Внутренние связи команды: соединяем всех «наших» друг с другом (одна компания — полная сетка).
+   Идемпотентно — дубликаты не создаёт, внешние связи не трогает. */
+function addTeamLinks(d){
+  const team = d.people.filter(p=>p.ours);
+  if(team.length < 2) return;
+  const linked = (x,y)=> d.links.some(l=>(l.a===x&&l.b===y)||(l.a===y&&l.b===x));
+  const date = new Date(Date.now()-20*864e5).toISOString().slice(0,10);
+  for(let i=0;i<team.length;i++){
+    for(let j=i+1;j<team.length;j++){
+      const a=team[i], b=team[j];
+      if(linked(a.id,b.id)) continue;
+      d.links.push({id:uid(), a:a.id, b:b.id, type:'team', strength:4, date, note:'Команда PM Excellence'});
+    }
+  }
+}
+
+function seed(){
+  const p = (name, role, company, ours=false, notes='', contact='') => ({id:uid(), name, role, company, contact, ours, notes});
+  // --- Команда PM Excellence ---
+  const kutuzov   = p('Александр Кутузов','Старший вице-президент','PM Excellence',true,'PME');
+  const cheremisin= p('Роман Черемисин','Директор практики','PM Excellence',true,'РМЕ');
+  const shaturny  = p('Александр Шатурный','Директор практики','PM Excellence',true,'PME, PMP');
+  const pikulev   = p('Евгений Пикулев','Директор практики','PM Excellence',true,'РМР');
+  const kochetov  = p('Александр Кочетов','Директор практики','PM Excellence',true,'PMP, РМЕ');
+  const shtanko   = p('Сергей Штанько','Директор практики','PM Excellence',true,'PME, MBA, НОСТРОЙ');
+  const lavrentev = p('Павел Лаврентьев','Директор практики','PM Excellence',true,'РМЕ');
+  const baranov   = p('Владимир Баранов','Директор практики','PM Excellence',true,'PMP, PME, MCTS');
+  const smirnov   = p('Иван Смирнов','Директор практики','PM Excellence',true,'PMP, РМЕ');
+  // --- Внешние контакты ---
+  const godunov   = p('Дмитрий Годунов','Эксперт по управлению мегапроектами','АНО «АРКИВС»',false,'Гость «Штаб Кутузова» — «Как создать команду, пробивающую стены». Ранее: операционный директор Оргкомитета ЧМ-2018, ст. вице-президент «Сочи-2014»');
+  const daich     = p('Михаил Даич','Зам. гендиректора по строительству и управлению проектами','Русская Платина',false,'Со-спикер отраслевой панели о мегапроектах в горнодобыче. Портфель EPC-проектов >$4 млрд');
+  const leskov    = p('Михаил Лесков','Шеф-редактор журнала «Золото и технологии»','Золото и технологии',false,'Отраслевой эксперт по золотодобыче; со-спикер той же панели; медиа-площадка для публикаций');
+  const dyachenko = p('Сергей Дьяченко','Горный инженер; экс-операционный директор ГМК «Норильский никель»','Норильский никель',false,'Со-спикер панели PM Excellence о мегапроектах в горнодобыче (5 фев 2025). Ранее — гендиректор Kazakhmys, топ-менеджер Rio Tinto, De Beers');
+  const borzenko  = p('Евгений Борзенко','Экс-генеральный директор Кольской ГМК','Кольская ГМК («Норникель»)',false,'Со-спикер той же панели PM Excellence о мегапроектах в горнодобыче (5 фев 2025)');
+  const kolonskih = p('Кирилл Колонских','Зам. исп. директора по ранней проектной проработке Блока газовых проектов','Газпромнефть-Развитие',false,'Центр компетенций «Газпром нефти» по управлению крупными проектами');
+  const pavlov    = p('Сергей Павлов','Уточняется','Газпром добыча Тамбей',false,'Обустройство Тамбейского месторождения (Ямал, ЯНАО). ТРЕБУЕТ УТОЧНЕНИЯ: точную должность/отчество запросить у Кочетова');
+  const people = [kutuzov,cheremisin,shaturny,pikulev,kochetov,shtanko,lavrentev,baranov,smirnov,godunov,daich,leskov,dyachenko,borzenko,kolonskih,pavlov];
+  const l = (a,b,type,strength,date,note='') => ({id:uid(), a:a.id, b:b.id, type, strength, date, note});
+  const links = [
+    l(kutuzov, daich, 'media', 4, '2026-05-29', 'Гость 1-го эфира «Штаб Кутузова: Капитаны крупных проектов»; со-спикер панели по горнодобыче'),
+    l(kutuzov, godunov, 'event', 3, '2026-06-17', '2-й выпуск «Штаб Кутузова»: «Как создать команду, пробивающую стены»'),
+    l(kutuzov, leskov, 'media', 3, '2025-02-05', 'Со-спикер панели PM Excellence по горнодобыче + журнал «Золото и технологии»'),
+    l(kutuzov, dyachenko, 'event', 3, '2025-02-05', 'Со-спикер панели PM Excellence о мегапроектах в горнодобыче (Москва)'),
+    l(kutuzov, borzenko, 'event', 3, '2025-02-05', 'Со-спикер той же панели PM Excellence по горнодобыче'),
+    l(daich, leskov, 'event', 2, '2025-02-05', 'Со-спикеры одной панели о мегапроектах в горнодобыче'),
+    l(dyachenko, borzenko, 'work', 3, '2025-02-05', 'Оба из группы «Норникель»'),
+    l(kochetov, kolonskih, 'work', 4, '2026-06-01', 'Управление крупными проектами «Газпром нефти»'),
+    l(kochetov, pavlov, 'work', 3, '2026-06-01', 'Проект обустройства Тамбея (Ямал) — детали уточняются'),
+  ];
+  const data = {people, links, _meshV: TEAM_MESH_V};
+  addTeamLinks(data);
+  return data;
+}
+
+/* ---------------- Утилиты ---------------- */
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+function personById(id){ return db.people.find(p=>p.id===id); }
+function initials(name){ return name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
+function esc(s){ return (s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function recencyFactor(dateStr){
+  if(!dateStr) return .5;
+  const days = (Date.now() - new Date(dateStr).getTime())/864e5;
+  if(days <= 30) return 1;
+  if(days <= 180) return .8;
+  if(days <= 365) return .6;
+  return .4;
+}
+function linkWarmth(l){ return l.strength * recencyFactor(l.date); } // 0.4 .. 5
+function linkCost(l){ return 1 / Math.max(linkWarmth(l), .2); }
+
+/* ---------------- Вкладки ---------------- */
+$('#tabs').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  $$('#tabs button').forEach(x=>x.classList.toggle('active', x===b));
+  $$('.view').forEach(v=>v.classList.remove('active'));
+  $('#view-'+b.dataset.view).classList.add('active');
+  if(b.dataset.view==='graph'){ graph.resize(); graph.wake(); }
+  if(b.dataset.view==='path') fillPathSelects();
+  if(b.dataset.view==='people') renderPeople();
+  if(b.dataset.view==='links') renderLinks();
+});
+function switchTab(name){ $$('#tabs button').forEach(b=>{ if(b.dataset.view===name) b.click(); }); }
+
+/* ---------------- Люди: список ---------------- */
+function renderPeople(){
+  const q = ($('#peopleSearch').value||'').toLowerCase();
+  const list = db.people
+    .filter(p=>!q || [p.name,p.company,p.role,p.contact].join(' ').toLowerCase().includes(q))
+    .sort((a,b)=> (b.ours?1:0)-(a.ours?1:0) || a.name.localeCompare(b.name,'ru'));
+  $('#peopleCount').textContent = db.people.length ? db.people.length + ' чел.' : '';
+  const box = $('#peopleList');
+  if(!list.length){
+    box.innerHTML = `<div class="empty"><h3>Пока никого нет</h3>Добавьте людей — своих сотрудников и внешние контакты.</div>`;
+    return;
+  }
+  box.innerHTML = list.map(p=>`
+    <div class="card person-row">
+      <div class="avatar ${p.ours?'ours':''}">${initials(p.name)}</div>
+      <div class="person-info">
+        <div class="name">${esc(p.name)} ${p.ours?'<span class="tag">наши</span>':''}</div>
+        <div class="sub">${esc([p.role,p.company].filter(Boolean).join(' · '))||'—'}</div>
+        ${p.contact?`<div class="sub">☎ ${esc(p.contact)}</div>`:''}
+      </div>
+      <div class="row-actions">
+        <button data-act="path" data-id="${p.id}" title="Найти выход">Путь</button>
+        <button data-act="edit" data-id="${p.id}" title="Изменить">Изм.</button>
+        <button data-act="del" data-id="${p.id}" title="Удалить">✕</button>
+      </div>
+    </div>`).join('');
+}
+$('#peopleSearch').addEventListener('input', renderPeople);
+$('#peopleList').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  const id = b.dataset.id;
+  if(b.dataset.act==='edit') openPersonModal(id);
+  if(b.dataset.act==='del'){
+    const p = personById(id);
+    if(confirm(`Удалить «${p.name}» и все его связи?`)){
+      db.people = db.people.filter(x=>x.id!==id);
+      db.links = db.links.filter(l=>l.a!==id && l.b!==id);
+      save(); renderPeople(); graph.rebuild(); toast('Удалено');
+    }
+  }
+  if(b.dataset.act==='path'){ switchTab('path'); $('#pathTarget').value = id; findPath(); }
+});
+
+/* ---------------- Модалка: человек ---------------- */
+let editingPersonId = null;
+function openPersonModal(id=null){
+  editingPersonId = id;
+  const p = id ? personById(id) : null;
+  $('#personModalTitle').textContent = p ? 'Изменить: '+p.name : 'Новый человек';
+  $('#pName').value = p?p.name:'';
+  $('#pRole').value = p?p.role||'':'';
+  $('#pCompany').value = p?p.company||'':'';
+  $('#pContact').value = p?p.contact||'':'';
+  $('#pOurs').checked = p?!!p.ours:false;
+  $('#pNotes').value = p?p.notes||'':'';
+  $('#personModal').classList.add('show');
+  setTimeout(()=>$('#pName').focus(),50);
+}
+$('#btnAddPerson').addEventListener('click', ()=>openPersonModal());
+$('#btnSavePerson').addEventListener('click', ()=>{
+  const name = $('#pName').value.trim();
+  if(!name){ toast('Укажите имя'); return; }
+  const data = {name, role:$('#pRole').value.trim(), company:$('#pCompany').value.trim(), contact:$('#pContact').value.trim(), ours:$('#pOurs').checked, notes:$('#pNotes').value.trim()};
+  if(editingPersonId){ Object.assign(personById(editingPersonId), data); }
+  else db.people.push({id:uid(), ...data});
+  save(); $('#personModal').classList.remove('show');
+  renderPeople(); graph.rebuild(); toast('Сохранено');
+});
+
+/* ---------------- Связи: список ---------------- */
+function renderLinks(){
+  $('#linksCount').textContent = db.links.length ? db.links.length + ' связей' : '';
+  const box = $('#linksList');
+  if(!db.links.length){
+    box.innerHTML = `<div class="empty"><h3>Связей пока нет</h3>Связь — это ребро графа: кто с кем знаком и насколько тепло.</div>`;
+    return;
+  }
+  const sorted = [...db.links].sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+  box.innerHTML = sorted.map(l=>{
+    const a = personById(l.a), b = personById(l.b);
+    if(!a||!b) return '';
+    const dots = [1,2,3,4,5].map(i=>`<i class="${i<=l.strength?'on':''}"></i>`).join('');
+    const internal = a.ours && b.ours;
+    return `<div class="card link-row">
+      <div class="pair">${esc(a.name)} ↔ ${esc(b.name)}${internal?' <span class="tag">в команде</span>':''}<span class="strength-dots">${dots}</span></div>
+      <div class="meta">${TYPE_LABEL[l.type]||l.type}${l.date?' · '+l.date:''}${l.note?' · '+esc(l.note):''}
+        <button style="color:var(--danger);float:right;font-size:12px" data-del="${l.id}">удалить</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+$('#linksList').addEventListener('click', e=>{
+  const b = e.target.closest('[data-del]'); if(!b) return;
+  db.links = db.links.filter(l=>l.id!==b.dataset.del);
+  save(); renderLinks(); graph.rebuild(); toast('Связь удалена');
+});
+
+/* ---------------- Модалка: связь ---------------- */
+function fillLinkSelects(preA){
+  const opts = db.people.slice().sort((a,b)=>a.name.localeCompare(b.name,'ru'))
+    .map(p=>`<option value="${p.id}">${esc(p.name)}${p.company?' — '+esc(p.company):''}</option>`).join('');
+  $('#lA').innerHTML = opts; $('#lB').innerHTML = opts;
+  if(preA) $('#lA').value = preA;
+}
+$('#btnAddLink').addEventListener('click', ()=>{
+  if(db.people.length<2){ toast('Сначала добавьте хотя бы двух людей'); return; }
+  fillLinkSelects();
+  $('#lDate').value = new Date().toISOString().slice(0,10);
+  $('#lNote').value=''; $('#lStrength').value='3';
+  $('#linkModal').classList.add('show');
+});
+$('#btnSaveLink').addEventListener('click', ()=>{
+  const a = $('#lA').value, b = $('#lB').value;
+  if(a===b){ toast('Выберите двух разных людей'); return; }
+  db.links.push({id:uid(), a, b, type:$('#lType').value, strength:+$('#lStrength').value, date:$('#lDate').value, note:$('#lNote').value.trim()});
+  save(); $('#linkModal').classList.remove('show');
+  renderLinks(); graph.rebuild(); toast('Связь добавлена');
+});
+
+/* Закрытие модалок */
+$$('.modal-back').forEach(m=>{
+  m.addEventListener('click', e=>{
+    if(e.target===m || e.target.closest('[data-close]')) m.classList.remove('show');
+  });
+});
+
+/* ---------------- Экспорт / импорт ---------------- */
+$('#btnExport').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(db,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'set-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('Файл данных скачан');
+});
+$('#btnImport').addEventListener('click', ()=>$('#fileImport').click());
+$('#fileImport').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const d = JSON.parse(r.result);
+      if(!d.people || !d.links) throw 0;
+      db = d; save();
+      renderPeople(); renderLinks(); graph.rebuild(); fillPathSelects();
+      toast('Данные загружены');
+    }catch{ toast('Не удалось прочитать файл'); }
+  };
+  r.readAsText(f); e.target.value='';
+});
+
+/* ============================================================
+   ПОИСК ПУТИ (Дейкстра по «теплоте» связи)
+   ============================================================ */
+function fillPathSelects(){
+  const targets = db.people.filter(p=>!p.ours).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
+  const allT = targets.length ? targets : db.people;
+  $('#pathTarget').innerHTML = allT.map(p=>`<option value="${p.id}">${esc(p.name)}${p.company?' — '+esc(p.company):''}</option>`).join('');
+  const ours = db.people.filter(p=>p.ours);
+  $('#pathFrom').innerHTML = '<option value="">Любого из нашей команды</option>' +
+    ours.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+}
+
+function dijkstra(sources, targetId){
+  const adj = {};
+  db.links.forEach(l=>{
+    if(!personById(l.a) || !personById(l.b)) return;
+    (adj[l.a] = adj[l.a]||[]).push({to:l.b, link:l});
+    (adj[l.b] = adj[l.b]||[]).push({to:l.a, link:l});
+  });
+  const dist = {}, prev = {};
+  const pq = [];
+  sources.forEach(s=>{ dist[s]=0; pq.push({id:s, d:0}); });
+  while(pq.length){
+    pq.sort((a,b)=>a.d-b.d);
+    const {id, d} = pq.shift();
+    if(d > (dist[id] ?? Infinity)) continue;
+    if(id === targetId) break;
+    (adj[id]||[]).forEach(({to, link})=>{
+      const nd = d + linkCost(link);
+      if(nd < (dist[to] ?? Infinity)){
+        dist[to] = nd; prev[to] = {from:id, link};
+        pq.push({id:to, d:nd});
+      }
+    });
+  }
+  if(!(targetId in dist)) return null;
+  const steps = [];
+  let cur = targetId;
+  while(prev[cur]){ steps.unshift({from:prev[cur].from, to:cur, link:prev[cur].link}); cur = prev[cur].from; }
+  return {start:cur, steps, cost:dist[targetId]};
+}
+
+function findPath(){
+  const targetId = $('#pathTarget').value;
+  if(!targetId){ toast('Выберите цель'); return; }
+  const fromId = $('#pathFrom').value;
+  const sources = fromId ? [fromId] : db.people.filter(p=>p.ours && p.id!==targetId).map(p=>p.id);
+  const box = $('#pathResult');
+  if(!sources.length){
+    box.innerHTML = `<div class="path-empty">Отметьте хотя бы одного человека как «наш» на вкладке «Люди» — путь строится от вашей команды.</div>`;
+    return;
+  }
+  const res = dijkstra(sources, targetId);
+  if(!res || !res.steps.length){
+    box.innerHTML = `<div class="path-empty">Тёплого пути пока нет: между вашей командой и этим человеком не найдено цепочки связей. Добавьте известные вам связи — даже слабые, вроде общей публикации.</div>`;
+    graph.setPath(null);
+    return;
+  }
+  const target = personById(targetId);
+  const startP = personById(res.start);
+  let html = `<div class="chain">`;
+  html += chainStep(startP, startP.ours?'ours':'');
+  res.steps.forEach(st=>{
+    const l = st.link;
+    html += `<div class="chain-hop">${TYPE_LABEL[l.type]}${l.note?' — '+esc(l.note):''} · сила ${l.strength}/5${l.date?' · '+l.date:''}</div>`;
+    html += chainStep(personById(st.to), st.to===targetId?'target':'');
+  });
+  const warmth = Math.round(100/ (1 + res.cost));
+  html += `<div class="chain-score">Рукопожатий: ${res.steps.length} · оценка теплоты маршрута: ${warmth}/100</div></div>`;
+  html += `<p class="hint">Как читать: начните с первого человека в цепочке — попросите его о представлении следующему, и так до цели.</p>`;
+  box.innerHTML = html;
+  graph.setPath([res.start, ...res.steps.map(s=>s.to)]);
+  switchTabIfMobileStay();
+}
+function chainStep(p, cls){
+  return `<div class="chain-step ${cls}">
+    <div class="avatar ${p.ours?'ours':''}">${initials(p.name)}</div>
+    <div class="who"><div class="name">${esc(p.name)}</div><div class="sub">${esc([p.role,p.company].filter(Boolean).join(' · '))}</div></div>
+  </div>`;
+}
+function switchTabIfMobileStay(){ /* остаёмся на вкладке результата; путь также подсвечен на графе */ }
+$('#btnFindPath').addEventListener('click', findPath);
+
+/* ============================================================
+   ГРАФ: force-directed на canvas
+   ============================================================ */
+const graph = (function(){
+  const canvas = $('#graphCanvas');
+  const ctx = canvas.getContext('2d');
+  let nodes = [], edges = [];
+  let W=0, H=0, dpr=1;
+  let cam = {x:0, y:0, k:1};
+  let pathIds = null;         // подсвеченный маршрут
+  let selected = null;
+  let dragNode = null, panStart = null, pinch = null;
+  let energy = 1, raf = null, dashOffset = 0, autoFit = true;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function rebuild(){
+    const old = Object.fromEntries(nodes.map(n=>[n.id,n]));
+    nodes = db.people.map((p,i)=>{
+      const o = old[p.id];
+      const angle = i/Math.max(db.people.length,1)*Math.PI*2;
+      return {
+        id:p.id, p,
+        x: o?o.x: Math.cos(angle)*300 + (Math.random()-.5)*60,
+        y: o?o.y: Math.sin(angle)*300 + (Math.random()-.5)*60,
+        vx:0, vy:0
+      };
+    });
+    const byId = Object.fromEntries(nodes.map(n=>[n.id,n]));
+    edges = db.links.filter(l=>byId[l.a]&&byId[l.b]).map(l=>({a:byId[l.a], b:byId[l.b], l}));
+    if(pathIds && !pathIds.every(id=>byId[id])) pathIds = null;
+    autoFit = true;
+    wake();
+  }
+
+  function resize(){
+    const rect = canvas.parentElement.getBoundingClientRect();
+    dpr = Math.min(devicePixelRatio||1, 2);
+    W = rect.width; H = rect.height;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    wake();
+  }
+
+  function tick(){
+    // силы
+    const N = nodes.length;
+    for(let i=0;i<N;i++){
+      const a = nodes[i];
+      for(let j=i+1;j<N;j++){
+        const b = nodes[j];
+        let dx = b.x-a.x, dy = b.y-a.y;
+        let d2 = dx*dx+dy*dy || 1;
+        const d = Math.sqrt(d2);
+        const rep = 7000/d2;
+        const fx = dx/d*rep, fy = dy/d*rep;
+        a.vx -= fx; a.vy -= fy; b.vx += fx; b.vy += fy;
+      }
+      // притяжение к центру
+      a.vx -= a.x*0.0025; a.vy -= a.y*0.0025;
+    }
+    edges.forEach(e=>{
+      // внутрикомандные связи длиннее и мягче — директоры не слипаются, между ними появляется воздух
+      const team = e.l.type==='team';
+      const ideal = (team ? 330 : 150) - e.l.strength*6;
+      const k = team ? 0.005 : 0.012;
+      let dx = e.b.x-e.a.x, dy = e.b.y-e.a.y;
+      const d = Math.sqrt(dx*dx+dy*dy)||1;
+      const f = (d-ideal)*k;
+      const fx = dx/d*f, fy = dy/d*f;
+      e.a.vx += fx; e.a.vy += fy; e.b.vx -= fx; e.b.vy -= fy;
+    });
+    let maxV = 0;
+    nodes.forEach(n=>{
+      if(n===dragNode) { n.vx=0;n.vy=0; return; }
+      n.vx*=.82; n.vy*=.82;
+      n.x+=n.vx; n.y+=n.vy;
+      maxV = Math.max(maxV, Math.abs(n.vx)+Math.abs(n.vy));
+    });
+    energy = maxV;
+  }
+
+  function nodeRadius(n){
+    const deg = edges.reduce((s,e)=> s + (e.a===n||e.b===n?1:0), 0);
+    return 10 + Math.min(deg*2.2, 12);
+  }
+
+  function draw(){
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    // фон-полотно
+    const g = ctx.createRadialGradient(W/2,H/2,60, W/2,H/2, Math.max(W,H)*.7);
+    g.addColorStop(0,'#FBFBFC'); g.addColorStop(1,'#EAEDF1');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+    ctx.save();
+    ctx.translate(W/2 + cam.x, H/2 + cam.y);
+    ctx.scale(cam.k, cam.k);
+
+    const onPath = (a,b)=>{
+      if(!pathIds) return false;
+      const ia = pathIds.indexOf(a.id), ib = pathIds.indexOf(b.id);
+      return ia>-1 && ib>-1 && Math.abs(ia-ib)===1;
+    };
+
+    // рёбра
+    edges.forEach(e=>{
+      const hot = onPath(e.a,e.b);
+      const internal = e.a.p.ours && e.b.p.ours;   // связь между членами команды
+      ctx.beginPath();
+      ctx.moveTo(e.a.x,e.a.y); ctx.lineTo(e.b.x,e.b.y);
+      if(hot){
+        ctx.strokeStyle = '#852A34';
+        ctx.lineWidth = 3/cam.k;
+        ctx.setLineDash([8,6]);
+        ctx.lineDashOffset = -dashOffset;
+        ctx.shadowColor = 'rgba(133,42,52,.55)'; ctx.shadowBlur = 10;
+      }else if(internal){
+        // внутренняя связь команды — бордовый короткий пунктир (статичный, без свечения)
+        ctx.strokeStyle = `rgba(133,42,52,${.16 + e.l.strength*.04})`;
+        ctx.lineWidth = (0.6 + e.l.strength*.2)/cam.k;
+        ctx.setLineDash([4,4]);
+        ctx.lineDashOffset = 0;
+        ctx.shadowBlur = 0;
+      }else{
+        ctx.strokeStyle = `rgba(96,110,130,${.22 + e.l.strength*.10})`;
+        ctx.lineWidth = (0.6 + e.l.strength*.35)/cam.k;
+        ctx.setLineDash([]);
+        ctx.shadowBlur = 0;
+      }
+      ctx.stroke();
+      ctx.setLineDash([]); ctx.shadowBlur = 0;
+    });
+
+    // узлы
+    nodes.forEach(n=>{
+      const r = nodeRadius(n);
+      const isSel = selected===n;
+      const inPath = pathIds && pathIds.includes(n.id);
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,r,0,Math.PI*2);
+      if(n.p.ours){ ctx.fillStyle = '#852A34'; }
+      else if(pathIds && pathIds[pathIds.length-1]===n.id){ ctx.fillStyle = '#852A34'; }
+      else { ctx.fillStyle = '#8A97A8'; }
+      ctx.fill();
+      if(n.p.ours || inPath || isSel){
+        ctx.lineWidth = (isSel?3:2)/cam.k;
+        ctx.strokeStyle = inPath||n.p.ours ? '#6B1E27' : '#852A34';
+        ctx.stroke();
+      }
+      // подпись — постоянный экранный размер + белый ореол (читаемость поверх линий)
+      ctx.textAlign = 'center';
+      ctx.lineJoin = 'round';
+      const fs = 12/cam.k;
+      ctx.font = `600 ${fs}px 'Montserrat',sans-serif`;
+      const label = n.p.name.split(' ').slice(0,2).join(' ');
+      const ly = n.y + r + fs*1.15;
+      ctx.strokeStyle = 'rgba(255,255,255,.92)';
+      ctx.lineWidth = 4/cam.k;
+      ctx.strokeText(label, n.x, ly);
+      ctx.fillStyle = 'rgba(23,30,42,.96)';
+      ctx.fillText(label, n.x, ly);
+      if(n.p.company){
+        const fs2 = 10/cam.k;
+        ctx.font = `${fs2}px 'Montserrat',sans-serif`;
+        const cy = ly + fs2*1.3;
+        ctx.lineWidth = 3.5/cam.k;
+        ctx.strokeText(n.p.company, n.x, cy);
+        ctx.fillStyle = 'rgba(88,98,114,.9)';
+        ctx.fillText(n.p.company, n.x, cy);
+      }
+    });
+    ctx.restore();
+  }
+
+  function loop(){
+    raf = null;
+    tick();
+    if(autoFit) fitView();
+    if(pathIds && !reduceMotion) dashOffset += .6;
+    draw();
+    if(energy > .05 || dragNode || (pathIds && !reduceMotion)) raf = requestAnimationFrame(loop);
+  }
+  function fitView(){
+    if(!nodes.length) return;
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    nodes.forEach(n=>{ if(n.x<minX)minX=n.x; if(n.x>maxX)maxX=n.x; if(n.y<minY)minY=n.y; if(n.y>maxY)maxY=n.y; });
+    const pad = 90;
+    const w = (maxX-minX)+pad*2, h = (maxY-minY)+pad*2;
+    const k = Math.min(1.3, Math.max(.35, Math.min(W/w, H/h)));
+    cam.k = k;
+    cam.x = -((minX+maxX)/2)*k;
+    cam.y = -((minY+maxY)/2)*k;
+  }
+  function wake(){ if(!raf) raf = requestAnimationFrame(loop); }
+
+  /* --- координаты --- */
+  function toWorld(px,py){
+    return {x:(px - W/2 - cam.x)/cam.k, y:(py - H/2 - cam.y)/cam.k};
+  }
+  function hit(px,py){
+    const w = toWorld(px,py);
+    for(let i=nodes.length-1;i>=0;i--){
+      const n = nodes[i], r = nodeRadius(n)+6;
+      if((n.x-w.x)**2+(n.y-w.y)**2 <= r*r) return n;
+    }
+    return null;
+  }
+  function evPos(e){
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    return {x:t.clientX-rect.left, y:t.clientY-rect.top};
+  }
+
+  /* --- мышь --- */
+  let moved = false;
+  canvas.addEventListener('pointerdown', e=>{
+    canvas.setPointerCapture(e.pointerId);
+    autoFit = false;
+    const pos = evPos(e);
+    moved = false;
+    const n = hit(pos.x,pos.y);
+    if(n){ dragNode = n; }
+    else panStart = {x:pos.x-cam.x, y:pos.y-cam.y};
+    canvas.classList.add('dragging');
+    wake();
+  });
+  canvas.addEventListener('pointermove', e=>{
+    if(!dragNode && !panStart) return;
+    const pos = evPos(e);
+    moved = true;
+    if(dragNode){
+      const w = toWorld(pos.x,pos.y);
+      dragNode.x = w.x; dragNode.y = w.y;
+    }else if(panStart){
+      cam.x = pos.x - panStart.x; cam.y = pos.y - panStart.y;
+    }
+    wake();
+  });
+  canvas.addEventListener('pointerup', e=>{
+    const pos = evPos(e);
+    if(!moved){
+      const n = hit(pos.x,pos.y);
+      if(n) selectNode(n); else hideCard();
+    }
+    dragNode = null; panStart = null;
+    canvas.classList.remove('dragging');
+  });
+  canvas.addEventListener('wheel', e=>{
+    e.preventDefault();
+    autoFit = false;
+    const factor = e.deltaY < 0 ? 1.12 : .89;
+    cam.k = Math.min(3, Math.max(.35, cam.k*factor));
+    wake();
+  }, {passive:false});
+
+  /* --- пинч --- */
+  canvas.addEventListener('touchstart', e=>{
+    if(e.touches.length===2){
+      autoFit = false;
+      const [a,b]=e.touches;
+      pinch = {d:Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY), k:cam.k};
+      dragNode=null; panStart=null;
+    }
+  }, {passive:true});
+  canvas.addEventListener('touchmove', e=>{
+    if(pinch && e.touches.length===2){
+      e.preventDefault();
+      const [a,b]=e.touches;
+      const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+      cam.k = Math.min(3, Math.max(.35, pinch.k * d/pinch.d));
+      wake();
+    }
+  }, {passive:false});
+  canvas.addEventListener('touchend', ()=>{ pinch=null; });
+
+  /* --- карточка узла --- */
+  function selectNode(n){
+    selected = n;
+    const p = n.p;
+    $('#ncName').textContent = p.name;
+    $('#ncSub').innerHTML = (esc([p.role,p.company].filter(Boolean).join(' · ')) || '—') + (p.contact ? '<br><span class="hint">☎ '+esc(p.contact)+'</span>' : '');
+    $('#ncTags').innerHTML = (p.ours?'<span class="tag">наша команда</span> ':'') + (p.notes?`<span class="hint">${esc(p.notes)}</span>`:'');
+    const rel = db.links.filter(l=>l.a===p.id||l.b===p.id);
+    $('#ncLinks').innerHTML = rel.length
+      ? rel.map(l=>{
+          const other = personById(l.a===p.id?l.b:l.a);
+          const internal = p.ours && other && other.ours;
+          return `<div>${esc(other?other.name:'?')} — ${TYPE_LABEL[l.type]}, сила ${l.strength}/5${internal?' · <span style="color:var(--thread)">в команде</span>':''}</div>`;
+        }).join('')
+      : '<div class="hint">Связей пока не отмечено</div>';
+    $('#ncFindPath').style.display = p.ours ? 'none':'';
+    $('#nodeCard').classList.add('show');
+    $('#nodeCard').dataset.id = p.id;
+    wake();
+  }
+  function hideCard(){ selected=null; $('#nodeCard').classList.remove('show'); wake(); }
+  $('#nodeCardClose').addEventListener('click', hideCard);
+  $('#ncEdit').addEventListener('click', ()=>{ openPersonModal($('#nodeCard').dataset.id); });
+  $('#ncFindPath').addEventListener('click', ()=>{
+    const id = $('#nodeCard').dataset.id;
+    switchTab('path'); fillPathSelects();
+    $('#pathTarget').value = id; findPath();
+  });
+
+  window.addEventListener('resize', resize);
+
+  return {
+    rebuild, resize, wake,
+    setPath(ids){ pathIds = ids; wake(); }
+  };
+})();
+
+/* ---------------- Старт ---------------- */
+fillPathSelects();
+renderPeople();
+renderLinks();
+graph.rebuild();
+graph.resize();
+</script>
+</body>
+</html>

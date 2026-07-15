@@ -1,0 +1,46 @@
+<!--
+══════════════════════════════════════════════════════
+  БЛОК 07 — ФУТЕР
+  Zero Block → CSS / HTML
+══════════════════════════════════════════════════════
+-->
+
+<!-- ═══ CSS ═══ -->
+<style>
+footer {
+  background: var(--dark); padding: 24px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.7); text-decoration: none;
+}
+.footer-logo span { color: #10B981; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+.footer-inn { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+@media (max-width: 960px) { footer { padding: 20px 24px; } }
+</style>
+
+<!-- ═══ HTML ═══ -->
+<footer>
+  <a href="#" class="footer-logo">
+    <svg width="22" height="22" viewBox="0 0 30 30" fill="none">
+      <defs>
+        <linearGradient id="lg2" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#10B981"/>
+          <stop offset="1" stop-color="#34D399"/>
+        </linearGradient>
+      </defs>
+      <circle cx="9" cy="8" r="3.5" fill="url(#lg2)"/>
+      <path d="M4.5 26 C4.5 19 13.5 19 13.5 26" fill="url(#lg2)"/>
+      <circle cx="21" cy="8" r="3.5" fill="url(#lg2)"/>
+      <path d="M16.5 26 C16.5 19 25.5 19 25.5 26" fill="url(#lg2)"/>
+      <rect x="4.5" y="24" width="21" height="3" rx="1.5" fill="url(#lg2)"/>
+    </svg>
+    Урбан<span>Сервис</span>
+  </a>
+  <div class="footer-copy">© 2025 ООО «Урбан Сервис». Все права защищены.</div>
+  <div class="footer-inn">ИНН 9725041650 · КПП 772501001</div>
+</footer>

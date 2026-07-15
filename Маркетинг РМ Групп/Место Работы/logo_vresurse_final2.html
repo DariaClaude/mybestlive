@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вресурсе — 2 финальных концепта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #E8E8E8;
+    padding: 56px 32px;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 56px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 28px;
+    padding: 52px;
+    max-width: 880px;
+    margin: 0 auto 32px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+  }
+
+  .card-header {
+    margin-bottom: 40px;
+  }
+  .card-num {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.8;
+    max-width: 540px;
+  }
+
+  .sizes-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 52px;
+    flex-wrap: wrap;
+  }
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .size-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ddd;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: #F2F2F2;
+    margin-bottom: 36px;
+  }
+
+  .logotype-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 24px;
+  }
+  .logotypes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Compare block */
+  .compare {
+    background: #111;
+    border-radius: 28px;
+    padding: 52px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .compare-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .compare-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .compare-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .compare-col-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #444;
+    text-transform: uppercase;
+  }
+  .compare-icons-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+  }
+  .compare-size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .compare-size span {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Вресурсе Работа · Финальные концепты</p>
+
+
+<!-- ═══════════════════════════════════════════
+     КОНЦЕПТ 1 — ПРИНЯТ
+     Человек + галочка · белый фон
+═══════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <p class="card-num">Концепт 1</p>
+    <h2 class="card-title">Принят</h2>
+    <p class="card-desc">Человек в центре — соискатель. Фиолетовая галочка внизу — одобрено, принят. Один взгляд, один посыл. Белый фон, зелёный и фиолетовый.</p>
+  </div>
+
+  <div class="sizes-row">
+
+    <!-- 200px -->
+    <div class="size-item">
+      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="2"/>
+        <!-- Голова зелёная -->
+        <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+        <!-- Плечи/тело зелёные -->
+        <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+        <!-- Фиолетовая галочка-badge -->
+        <circle cx="150" cy="150" r="32" fill="#6B3FA0"/>
+        <!-- Белая галочка внутри -->
+        <path d="M136 150 L146 161 L165 138" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="size-label">200px</span>
+    </div>
+
+    <!-- 100px -->
+    <div class="size-item">
+      <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="2"/>
+        <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+        <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+        <circle cx="150" cy="150" r="32" fill="#6B3FA0"/>
+        <path d="M136 150 L146 161 L165 138" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="size-label">100px</span>
+    </div>
+
+    <!-- 60px -->
+    <div class="size-item">
+      <svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="3"/>
+        <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+        <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+        <circle cx="150" cy="150" r="32" fill="#6B3FA0"/>
+        <path d="M136 150 L146 161 L165 138" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span class="size-label">60px</span>
+    </div>
+
+    <!-- 36px -->
+    <div class="size-item">
+      <svg width="36" height="36" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="4"/>
+        <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+        <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+        <circle cx="150" cy="150" r="34" fill="#6B3FA0"/>
+      </svg>
+      <span class="size-label">36px</span>
+    </div>
+
+    <!-- 20px -->
+    <div class="size-item">
+      <svg width="20" height="20" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="6"/>
+        <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+        <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+        <circle cx="150" cy="150" r="38" fill="#6B3FA0"/>
+      </svg>
+      <span class="size-label">20px</span>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+  <p class="logotype-label">Логотип</p>
+
+  <div class="logotypes">
+
+    <!-- Светлый вариант -->
+    <svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+      <!-- Иконка -->
+      <rect width="60" height="60" rx="12" fill="#fff" x="0" y="4" stroke="#EBEBEB" stroke-width="1.5"/>
+      <circle cx="30" cy="22" r="11" fill="#78C42A"/>
+      <path d="M10 50 Q10 34 30 34 Q50 34 50 50 L50 56 L10 56 Z" fill="#78C42A"/>
+      <circle cx="48" cy="50" r="13" fill="#6B3FA0"/>
+      <path d="M42 50 L47 55 L56 43" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- Текст -->
+      <text x="76" y="28" font-family="Montserrat, sans-serif" font-weight="900" font-size="23" fill="#78C42A" letter-spacing="-0.5">ВРЕСУРСЕ</text>
+      <text x="76" y="54" font-family="Montserrat, sans-serif" font-weight="700" font-size="19" fill="#6B3FA0" font-style="italic">работа</text>
+    </svg>
+
+    <!-- Тёмный вариант -->
+    <svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="68" rx="14" fill="#111"/>
+      <rect width="60" height="60" rx="12" fill="#1E1E1E" x="0" y="4"/>
+      <circle cx="30" cy="22" r="11" fill="#78C42A"/>
+      <path d="M10 50 Q10 34 30 34 Q50 34 50 50 L50 56 L10 56 Z" fill="#78C42A"/>
+      <circle cx="48" cy="50" r="13" fill="#6B3FA0"/>
+      <path d="M42 50 L47 55 L56 43" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="76" y="28" font-family="Montserrat, sans-serif" font-weight="900" font-size="23" fill="#78C42A" letter-spacing="-0.5">ВРЕСУРСЕ</text>
+      <text x="76" y="54" font-family="Montserrat, sans-serif" font-weight="700" font-size="19" fill="#fff" font-style="italic">работа</text>
+    </svg>
+
+    <!-- Только текст — без иконки (чистый wordmark) -->
+    <svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="22" r="11" fill="#78C42A"/>
+      <path d="M0 50 Q0 34 12 34 Q24 34 24 50 L24 56 L0 56 Z" fill="#78C42A"/>
+      <circle cx="22" cy="50" r="13" fill="#6B3FA0"/>
+      <path d="M16 50 L21 55 L30 43" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="42" y="28" font-family="Montserrat, sans-serif" font-weight="900" font-size="23" fill="#111" letter-spacing="-0.5">ВРЕСУРСЕ</text>
+      <text x="42" y="54" font-family="Montserrat, sans-serif" font-weight="700" font-size="19" fill="#6B3FA0" font-style="italic">работа</text>
+    </svg>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     КОНЦЕПТ 2 — МОЛНИЯ
+     Зелёная молния · фиолетовая окантовка · белый фон
+═══════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-header">
+    <p class="card-num">Концепт 2</p>
+    <h2 class="card-title">В ресурсе</h2>
+    <p class="card-desc">«Быть в ресурсе» = быть в тонусе, готовым к работе. Зелёная молния — энергия. Фиолетовая окантовка — бренд. Белый фон. Читается на любом размере.</p>
+  </div>
+
+  <div class="sizes-row">
+
+    <!-- 200px -->
+    <div class="size-item">
+      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="2"/>
+        <!-- Молния: сначала фиолетовая окантовка (толще), потом зелёная заливка поверх -->
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#6B3FA0" stroke="#6B3FA0" stroke-width="10" stroke-linejoin="round"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#78C42A"/>
+      </svg>
+      <span class="size-label">200px</span>
+    </div>
+
+    <!-- 100px -->
+    <div class="size-item">
+      <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="2"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#6B3FA0" stroke="#6B3FA0" stroke-width="10" stroke-linejoin="round"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#78C42A"/>
+      </svg>
+      <span class="size-label">100px</span>
+    </div>
+
+    <!-- 60px -->
+    <div class="size-item">
+      <svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="3"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#6B3FA0" stroke="#6B3FA0" stroke-width="10" stroke-linejoin="round"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#78C42A"/>
+      </svg>
+      <span class="size-label">60px</span>
+    </div>
+
+    <!-- 36px -->
+    <div class="size-item">
+      <svg width="36" height="36" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="4"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#6B3FA0" stroke="#6B3FA0" stroke-width="12" stroke-linejoin="round"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#78C42A"/>
+      </svg>
+      <span class="size-label">36px</span>
+    </div>
+
+    <!-- 20px -->
+    <div class="size-item">
+      <svg width="20" height="20" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="5"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#6B3FA0" stroke="#6B3FA0" stroke-width="14" stroke-linejoin="round"/>
+        <polygon points="118,18 74,106 102,106 82,182 134,88 106,88"
+                 fill="#78C42A"/>
+      </svg>
+      <span class="size-label">20px</span>
+    </div>
+
+  </div>
+
+  <!-- Вариант 2.1: молния в круге-обводке -->
+  <div style="margin-bottom: 40px;">
+    <p style="font-size:11px; font-weight:800; letter-spacing:3px; color:#ddd; text-transform:uppercase; margin-bottom:16px;">Вариант с кругом</p>
+    <div style="display:flex; gap:24px; align-items:flex-end; flex-wrap:wrap;">
+
+      <div class="size-item">
+        <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="2"/>
+          <!-- Фиолетовый круг-обводка -->
+          <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="10"/>
+          <!-- Молния зелёная -->
+          <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+        </svg>
+        <span class="size-label">200px</span>
+      </div>
+
+      <div class="size-item">
+        <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="2"/>
+          <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="10"/>
+          <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+        </svg>
+        <span class="size-label">100px</span>
+      </div>
+
+      <div class="size-item">
+        <svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="3"/>
+          <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="10"/>
+          <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+        </svg>
+        <span class="size-label">60px</span>
+      </div>
+
+      <div class="size-item">
+        <svg width="36" height="36" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="36" fill="#fff" stroke="#EBEBEB" stroke-width="4"/>
+          <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="12"/>
+          <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+        </svg>
+        <span class="size-label">36px</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="logotype-label">Логотип</p>
+
+  <div class="logotypes">
+
+    <!-- Светлый — молния без круга -->
+    <svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="60" rx="12" fill="#fff" x="0" y="4" stroke="#EBEBEB" stroke-width="1.5"/>
+      <polygon points="36,8 22,36 30,36 26,60 40,30 32,30" fill="#6B3FA0" stroke="#6B3FA0" stroke-width="4" stroke-linejoin="round"/>
+      <polygon points="36,8 22,36 30,36 26,60 40,30 32,30" fill="#78C42A"/>
+      <text x="76" y="28" font-family="Montserrat, sans-serif" font-weight="900" font-size="23" fill="#6B3FA0" letter-spacing="-0.5">ВРЕСУРСЕ</text>
+      <text x="76" y="54" font-family="Montserrat, sans-serif" font-weight="700" font-size="19" fill="#78C42A" font-style="italic">работа</text>
+    </svg>
+
+    <!-- Светлый — молния в круге -->
+    <svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="60" rx="12" fill="#fff" x="0" y="4" stroke="#EBEBEB" stroke-width="1.5"/>
+      <circle cx="30" cy="34" r="24" fill="none" stroke="#6B3FA0" stroke-width="3.5"/>
+      <polygon points="36,12 22,36 30,36 26,56 40,32 32,32" fill="#78C42A"/>
+      <text x="76" y="28" font-family="Montserrat, sans-serif" font-weight="900" font-size="23" fill="#6B3FA0" letter-spacing="-0.5">ВРЕСУРСЕ</text>
+      <text x="76" y="54" font-family="Montserrat, sans-serif" font-weight="700" font-size="19" fill="#78C42A" font-style="italic">работа</text>
+    </svg>
+
+    <!-- Тёмный -->
+    <svg width="360" height="68" viewBox="0 0 360 68" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="68" rx="14" fill="#111"/>
+      <rect width="60" height="60" rx="12" fill="#1E1E1E" x="0" y="4"/>
+      <circle cx="30" cy="34" r="24" fill="none" stroke="#6B3FA0" stroke-width="3.5"/>
+      <polygon points="36,12 22,36 30,36 26,56 40,32 32,32" fill="#78C42A"/>
+      <text x="76" y="28" font-family="Montserrat, sans-serif" font-weight="900" font-size="23" fill="#fff" letter-spacing="-0.5">ВРЕСУРСЕ</text>
+      <text x="76" y="54" font-family="Montserrat, sans-serif" font-weight="700" font-size="19" fill="#78C42A" font-style="italic">работа</text>
+    </svg>
+
+  </div>
+</div>
+
+
+<!-- СРАВНЕНИЕ ДВУХ КОНЦЕПТОВ -->
+<div class="compare">
+  <p class="compare-title">Оба концепта рядом</p>
+  <div class="compare-row">
+
+    <div class="compare-col">
+      <span class="compare-col-title">1 · Принят</span>
+      <div class="compare-icons-row">
+        <div class="compare-size">
+          <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#333" stroke-width="2"/>
+            <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+            <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+            <circle cx="150" cy="150" r="32" fill="#6B3FA0"/>
+            <path d="M136 150 L146 161 L165 138" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <span>80px</span>
+        </div>
+        <div class="compare-size">
+          <svg width="48" height="48" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#333" stroke-width="3"/>
+            <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+            <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+            <circle cx="150" cy="150" r="32" fill="#6B3FA0"/>
+            <path d="M136 150 L146 161 L165 138" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <span>48px</span>
+        </div>
+        <div class="compare-size">
+          <svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#444" stroke-width="5"/>
+            <circle cx="100" cy="66" r="30" fill="#78C42A"/>
+            <path d="M44 148 Q44 108 100 108 Q156 108 156 148 L156 162 L44 162 Z" fill="#78C42A"/>
+            <circle cx="150" cy="150" r="36" fill="#6B3FA0"/>
+          </svg>
+          <span>28px</span>
+        </div>
+      </div>
+      <!-- Mini логотип -->
+      <svg width="220" height="44" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8" cy="14" r="8" fill="#78C42A"/>
+        <path d="M0 34 Q0 22 8 22 Q16 22 16 34 L16 38 L0 38 Z" fill="#78C42A"/>
+        <circle cx="15" cy="34" r="10" fill="#6B3FA0"/>
+        <path d="M9 34 L13.5 38.5 L22 28" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <text x="30" y="18" font-family="Montserrat, sans-serif" font-weight="900" font-size="15" fill="#78C42A" letter-spacing="-0.3">ВРЕСУРСЕ</text>
+        <text x="30" y="37" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" fill="#6B3FA0" font-style="italic">работа</text>
+      </svg>
+    </div>
+
+    <div class="compare-col">
+      <span class="compare-col-title">2а · Молния</span>
+      <div class="compare-icons-row">
+        <div class="compare-size">
+          <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#333" stroke-width="2"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#6B3FA0" stroke="#6B3FA0" stroke-width="10" stroke-linejoin="round"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+          </svg>
+          <span>80px</span>
+        </div>
+        <div class="compare-size">
+          <svg width="48" height="48" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#333" stroke-width="3"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#6B3FA0" stroke="#6B3FA0" stroke-width="10" stroke-linejoin="round"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+          </svg>
+          <span>48px</span>
+        </div>
+        <div class="compare-size">
+          <svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#444" stroke-width="5"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#6B3FA0" stroke="#6B3FA0" stroke-width="14" stroke-linejoin="round"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+          </svg>
+          <span>28px</span>
+        </div>
+      </div>
+      <svg width="220" height="44" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="22,2 14,22 19,22 16,40 26,20 21,20" fill="#6B3FA0" stroke="#6B3FA0" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="22,2 14,22 19,22 16,40 26,20 21,20" fill="#78C42A"/>
+        <text x="34" y="18" font-family="Montserrat, sans-serif" font-weight="900" font-size="15" fill="#6B3FA0" letter-spacing="-0.3">ВРЕСУРСЕ</text>
+        <text x="34" y="37" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" fill="#78C42A" font-style="italic">работа</text>
+      </svg>
+    </div>
+
+    <div class="compare-col">
+      <span class="compare-col-title">2б · Молния в круге</span>
+      <div class="compare-icons-row">
+        <div class="compare-size">
+          <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#333" stroke-width="2"/>
+            <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="10"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+          </svg>
+          <span>80px</span>
+        </div>
+        <div class="compare-size">
+          <svg width="48" height="48" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#333" stroke-width="3"/>
+            <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="10"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+          </svg>
+          <span>48px</span>
+        </div>
+        <div class="compare-size">
+          <svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" rx="36" fill="#fff" stroke="#444" stroke-width="5"/>
+            <circle cx="100" cy="100" r="82" fill="none" stroke="#6B3FA0" stroke-width="14"/>
+            <polygon points="118,18 74,106 102,106 82,182 134,88 106,88" fill="#78C42A"/>
+          </svg>
+          <span>28px</span>
+        </div>
+      </div>
+      <svg width="220" height="44" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="22" r="13" fill="none" stroke="#6B3FA0" stroke-width="2.5"/>
+        <polygon points="18,6 11,22 15.5,22 13,38 21,20 16.5,20" fill="#78C42A"/>
+        <text x="34" y="18" font-family="Montserrat, sans-serif" font-weight="900" font-size="15" fill="#6B3FA0" letter-spacing="-0.3">ВРЕСУРСЕ</text>
+        <text x="34" y="37" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" fill="#78C42A" font-style="italic">работа</text>
+      </svg>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

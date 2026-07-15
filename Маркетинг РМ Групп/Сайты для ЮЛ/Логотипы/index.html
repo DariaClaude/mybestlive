@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бренд-система · РМ Групп</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#0f172a; --muted:#94a3b8; --line:#e9ecf1; --bg:#eef1f5;
+    font-family:'Segoe UI',-apple-system,Roboto,Arial,sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+  /* ---------- HERO ---------- */
+  header{
+    position:relative;overflow:hidden;color:#fff;text-align:center;
+    padding:88px 32px 120px;
+    background:radial-gradient(130% 120% at 50% -30%,#1e293b 0%,#0f172a 55%,#0a0f1c 100%);
+  }
+  header::before{
+    content:"";position:absolute;inset:0;opacity:.5;
+    background:
+      radial-gradient(40% 60% at 12% 20%,rgba(99,102,241,.30),transparent 70%),
+      radial-gradient(40% 60% at 88% 10%,rgba(16,185,129,.22),transparent 70%),
+      radial-gradient(50% 70% at 70% 90%,rgba(255,91,31,.18),transparent 70%);
+  }
+  header > *{position:relative}
+  .kicker{font-size:12px;letter-spacing:6px;text-transform:uppercase;color:#7c8aa5;margin-bottom:18px}
+  header h1{font-size:46px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;margin-bottom:16px}
+  header h1 b{background:linear-gradient(90deg,#a5b4fc,#5eead4);-webkit-background-clip:text;background-clip:text;color:transparent}
+  header p{font-size:16px;color:#cbd5e1;max-width:560px;margin:0 auto}
+  .stat{display:flex;gap:40px;justify-content:center;margin-top:34px}
+  .stat div{text-align:center}
+  .stat .n{font-size:30px;font-weight:800;letter-spacing:-.5px}
+  .stat .l{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#7c8aa5;margin-top:4px}
+
+  /* ---------- GRID ---------- */
+  .wrap{max-width:1280px;margin:-72px auto 80px;padding:0 28px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:26px}
+
+  .card{
+    position:relative;background:#fff;border-radius:24px;border:1px solid var(--line);
+    box-shadow:0 10px 30px -14px rgba(15,23,42,.20);overflow:hidden;
+    transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s ease;
+  }
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 28px 60px -22px rgba(15,23,42,.40)}
+
+  .stage{
+    min-height:240px;display:flex;align-items:center;justify-content:center;padding:30px 30px;
+    background:radial-gradient(120% 110% at 50% 0%,
+      color-mix(in srgb,var(--c) 12%,#fff) 0%,
+      color-mix(in srgb,var(--c) 3%,#fff) 45%, #fff 80%);
+  }
+  .stage img{width:100%;max-width:560px;height:auto;display:block;
+    filter:drop-shadow(0 6px 14px rgba(15,23,42,.08))}
+
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 56px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="kicker">Brand System</div>
+    <h1>Логотипы юридических лиц<br><b>РМ Групп</b></h1>
+    <p>Единая визуальная система для 11 компаний группы. Векторные логотипы в фирменной палитре каждого направления.</p>
+    <div class="stat">
+      <div><div class="n">11</div><div class="l">брендов</div></div>
+      <div><div class="n">SVG</div><div class="l">вектор</div></div>
+      <div><div class="n">∞</div><div class="l">масштаб</div></div>
+    </div>
+  </header>
+
+  <div class="wrap"><div class="grid" id="grid"></div></div>
+  <footer>РМ Групп · бренд-система · 2026</footer>
+
+<script>
+  const logos=[
+    ["tim-pro-logo.svg","Тим Про","#C9A84C"],
+    ["profi-group-logo.svg","Профи Групп","#C9973A"],
+    ["rmgk-logo.svg","РМГК","#FF5B1F"],
+    ["urban-service-logo.svg","Урбан Сервис","#10B981"],
+    ["fin-help-logo.svg","Фин Хэлп","#166534"],
+    ["foreign-people-logo.svg","Фореин Пипл","#6D5FE8"],
+    ["long-life-logo.svg","Лонг Лайф","#0D9488"],
+    ["orion-logo.svg","Орион","#3B9AE8"],
+    ["fabrika-resheniy-logo.svg","Фабрика Решений","#4A82E0"],
+    ["arkada-logo.svg","Аркада","#B07040"],
+    ["alliance-kadrov-logo.svg","Альянс Кадров","#5C7F62"]
+  ];
+  const g=document.getElementById('grid');
+  logos.forEach(([f,n,c])=>{
+    g.insertAdjacentHTML('beforeend',
+      `<div class="card" style="--c:${c}">
+        <div class="stage"><img src="${f}" alt="${n}"></div>
+      </div>`);
+  });
+</script>
+</body>
+</html>

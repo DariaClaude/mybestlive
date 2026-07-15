@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#052E16"/>
+      <stop offset="100%" stop-color="#0A3D20"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <text x="256" y="310" font-family="Georgia, serif" font-size="200" font-weight="700" fill="#22C55E" text-anchor="middle" letter-spacing="-8">ФХ</text>
+  <rect x="96" y="360" width="320" height="4" rx="2" fill="#22C55E" opacity="0.35"/>
+</svg>

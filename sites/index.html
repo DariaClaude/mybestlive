@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#060C1A" />
+  <title>Лендинги РМ Групп — превью</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#060C1A;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased;
+      display:flex;align-items:center;justify-content:center;padding:24px;
+      background-image:radial-gradient(ellipse 70% 55% at 0% 0%,rgba(79,143,255,0.12),transparent 100%),radial-gradient(ellipse 55% 45% at 100% 100%,rgba(167,139,250,0.10),transparent 100%);}
+    .wrap{width:100%;max-width:720px}
+    .eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#7AAEFF;font-weight:700;margin-bottom:10px}
+    h1{font-size:clamp(28px,6vw,44px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:12px}
+    .sub{font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:36px;line-height:1.6}
+    .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:560px){.cards{grid-template-columns:1fr}}
+    a.card{display:block;text-decoration:none;color:#fff;background:rgba(255,255,255,0.035);
+      border:1px solid rgba(255,255,255,0.09);border-radius:18px;padding:28px;
+      transition:border-color .25s,background .25s,transform .25s}
+    a.card:hover{border-color:rgba(79,143,255,0.4);background:rgba(79,143,255,0.06);transform:translateY(-3px)}
+    .card-name{font-size:20px;font-weight:700;letter-spacing:-0.4px;margin-bottom:6px}
+    .card-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.55}
+    .card-go{margin-top:18px;font-size:13px;font-weight:600;color:#7AAEFF}
+    footer{margin-top:36px;font-size:12px;color:rgba(255,255,255,0.28)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">РМ Групп · Превью лендингов</div>
+    <h1>Сайты для юридических лиц</h1>
+    <p class="sub">Адаптивные лендинги, корректно открываются на десктопе, планшете и мобильном.</p>
+    <div class="cards">
+      <a class="card" href="./fabrika-resheniy/">
+        <div class="card-name">Фабрика Решений</div>
+        <div class="card-desc">Аутсорсинг персонала для крупного бизнеса</div>
+        <div class="card-go">Открыть сайт →</div>
+      </a>
+      <a class="card" href="./orion/">
+        <div class="card-name">Орион</div>
+        <div class="card-desc">Технический персонал и промышленный аутсорсинг</div>
+        <div class="card-go">Открыть сайт →</div>
+      </a>
+    </div>
+    <footer>© 2025 РМ Групп</footer>
+  </div>
+</body>
+</html>

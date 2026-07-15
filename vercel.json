@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/war-room" },
+    { "source": "/luis", "destination": "/luis-dashboard" }
+  ]
+}

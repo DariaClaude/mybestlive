@@ -1,0 +1,101 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+.ak-page*,.ak-page*::before,.ak-page*::after{box-sizing:border-box;margin:0;padding:0}
+.ak-page{--slate:#1E293B;--slate2:#0F172A;--slate3:#2D3F55;--sage:#5C7F62;--sage-lt:#7DA884;--sage-dk:#3F5C45;--cream:#F8F4EE;--cream2:#EDE8E0;--white:#FFFFFF;--ts:#E2E8F0;--tm:#94A3B8;--tc:#1E293B;--tmc:#64748B;--ls:rgba(255,255,255,0.08);--lc:rgba(0,0,0,0.08);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.ak-page .process{background:var(--cream2);padding:96px 60px}
+.ak-page .process-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.ak-page .process-head{margin-bottom:52px}
+.ak-page .sec-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-bottom:12px}
+.ak-page .sec-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,3.5vw,46px);color:var(--tc);line-height:1.1;letter-spacing:-1px}
+.ak-page .proc-item{border-bottom:1px solid var(--lc)}
+.ak-page .proc-trigger{display:flex;align-items:center;gap:22px;padding:22px 0;cursor:pointer;user-select:none}
+.ak-page .proc-num{font-family:'DM Serif Display',serif;font-size:18px;color:var(--tmc);min-width:26px;flex-shrink:0}
+.ak-page .proc-name{font-size:16px;font-weight:600;color:var(--tc);flex:1}
+.ak-page .proc-icon{width:28px;height:28px;border-radius:50%;border:1px solid var(--lc);display:flex;align-items:center;justify-content:center;transition:all 0.3s;flex-shrink:0;color:var(--tmc)}
+.ak-page .proc-body{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);padding:0 0 0 48px}
+.ak-page .proc-body-text{font-size:14px;color:var(--tmc);line-height:1.75;padding-bottom:22px}
+.ak-page .proc-item.open .proc-icon{background:var(--sage);border-color:var(--sage);color:var(--white);transform:rotate(45deg)}
+.ak-page .proc-item.open .proc-num{color:var(--sage)}
+.ak-page .proc-item.open .proc-body{max-height:180px}
+.ak-page .process-aside{padding:40px 36px;background:var(--slate3);border-radius:16px}
+.ak-page .process-aside-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--sage-lt);margin-bottom:24px}
+.ak-page .process-aside-num{font-family:'DM Serif Display',serif;font-size:64px;line-height:1;color:var(--white);letter-spacing:-3px;margin-bottom:10px}
+.ak-page .process-aside-text{font-size:14px;color:var(--tm);line-height:1.7}
+
+@media(max-width:1024px){.ak-page .process{padding:80px 32px}.ak-page .process-inner{grid-template-columns:1fr;gap:48px}.ak-page .process-aside{display:none}}
+@media(max-width:640px){.ak-page .process{padding:60px 20px}.ak-page .process-inner{gap:40px}}
+</style>
+
+<div class="ak-page">
+<section class="process" id="ak-process">
+  <div class="process-inner">
+    <div>
+      <div class="process-head">
+        <div class="sec-label">Как мы работаем</div>
+        <h2 class="sec-title">5 шагов<br>до вашего сотрудника</h2>
+      </div>
+      <div class="process-list">
+        <div class="proc-item open">
+          <div class="proc-trigger">
+            <span class="proc-num">01</span><span class="proc-name">Заявка и брифинг</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Принимаем заявку — устно, письменно или через форму. Уточняем специальность, объём, режим работы и объект. Фиксируем требования и согласовываем сроки закрытия.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">02</span><span class="proc-name">Подбор кандидатов</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Ищем в собственной базе и через активный источниковый поиск. Проверяем документы, трудовой опыт и готовность к условиям объекта. На одно место — не более 3 нерелевантных кандидатов.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">03</span><span class="proc-name">Согласование</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Представляем кандидатов — краткие профили с фото и характеристиками. Вы утверждаете подходящих. При необходимости организуем собеседование в течение дня.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">04</span><span class="proc-name">Оформление и выход</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Берём на себя весь кадровый документооборот: трудовой договор, инструктажи, медосмотр при необходимости. Сотрудник выходит точно в срок.</p></div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-trigger">
+            <span class="proc-num">05</span><span class="proc-name">Сопровождение и замена</span>
+            <span class="proc-icon"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          </div>
+          <div class="proc-body"><p class="proc-body-text">Контролируем выходы по сменному графику. При выбытии — оперативная замена из резерва без доплат. Персональный менеджер на постоянной связи.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="process-aside">
+      <div class="process-aside-label">Среднее время закрытия</div>
+      <div class="process-aside-num">48ч</div>
+      <p class="process-aside-text">От получения заявки до первого выхода сотрудника на объект. Собственная база — никаких сторонних джобсайтов.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  function init(){
+    var triggers=document.querySelectorAll('#ak-process .proc-trigger');
+    if(!triggers.length) return;
+    triggers.forEach(function(trigger){
+      trigger.addEventListener('click',function(){
+        var item=this.closest('.proc-item');
+        var isOpen=item.classList.contains('open');
+        document.querySelectorAll('#ak-process .proc-item').forEach(function(i){ i.classList.remove('open'); });
+        if(!isOpen) item.classList.add('open');
+      });
+    });
+  }
+  setTimeout(init, 200);
+})();
+</script>

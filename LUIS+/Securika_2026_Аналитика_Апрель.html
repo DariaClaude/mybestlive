@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Securika 2026 — Аналитика конкурентов</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+  .header { background: #1a1a1a; color: #fff; padding: 36px 48px 0; }
+  .header h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
+  .header p { font-size: 13px; color: #888; margin-top: 6px; padding-bottom: 24px; }
+
+  /* Tabs */
+  .tab-nav { background: #1a1a1a; padding: 0 48px; display: flex; gap: 0; border-top: 1px solid #333; }
+  .tab-btn { padding: 12px 28px; font-size: 13px; font-weight: 500; color: #888; background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; letter-spacing: 0.3px; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #fff; border-bottom-color: #fff; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 32px 48px; }
+
+  /* KPI */
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 40px; }
+  .kpi-card { background: #fff; border-radius: 8px; padding: 20px 24px; border: 1px solid #e8e8e8; }
+  .kpi-card .val { font-size: 32px; font-weight: 700; line-height: 1; }
+  .kpi-card .lbl { font-size: 12px; color: #888; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .kpi-card.accent { background: #1a1a1a; color: #fff; }
+  .kpi-card.accent .lbl { color: #aaa; }
+
+  /* Section */
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #e8e8e8; text-transform: uppercase; letter-spacing: 0.5px; color: #555; }
+
+  /* Main table */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; font-size: 13px; }
+  th { background: #f0f0f0; padding: 11px 14px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: #555; white-space: nowrap; border-bottom: 1px solid #e8e8e8; }
+  td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .badge-yes { background: #e8f5e9; color: #2e7d32; }
+  .badge-no { background: #fce4ec; color: #c62828; }
+  .badge-high { background: #e3f2fd; color: #1565c0; }
+  .badge-medium { background: #fff8e1; color: #e65100; }
+  .badge-low { background: #f3e5f5; color: #6a1b9a; }
+  .badge-none { background: #f5f5f5; color: #999; }
+  .badge-new { background: #e8f5e9; color: #1b5e20; }
+
+  /* Channel icons */
+  .ch { display: inline-flex; align-items: center; gap: 4px; margin-right: 4px; font-size: 11px; background: #f0f0f0; border-radius: 3px; padding: 2px 6px; }
+
+  /* Timeline */
+  .timeline { display: flex; gap: 3px; flex-wrap: nowrap; }
+  .day { width: 22px; height: 22px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; color: #fff; flex-shrink: 0; }
+  .day-active-tg { background: #1976d2; }
+  .day-active-site { background: #7b1fa2; }
+  .day-active-both { background: #1a1a1a; }
+  .day-inactive { background: #e8e8e8; color: #bbb; }
+  .day-na { background: #f5f5f5; color: #ddd; }
+
+  /* Detail table */
+  .detail-table { margin-top: 8px; font-size: 12px; }
+  .detail-table td { padding: 6px 10px; font-size: 12px; }
+  .detail-date { font-weight: 600; color: #1565c0; white-space: nowrap; }
+  .detail-channel { color: #888; font-size: 11px; }
+  .detail-text { color: #444; line-height: 1.5; }
+
+  /* Products list */
+  .products { list-style: none; }
+  .products li { padding: 2px 0; font-size: 12px; color: #333; }
+  .products li::before { content: "·  "; color: #999; }
+
+  /* Summary box */
+  .summary-box { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; padding: 24px 28px; margin-bottom: 40px; }
+  .summary-box h3 { font-size: 14px; margin-bottom: 16px; color: #333; }
+  .insight { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; font-size: 13px; color: #444; line-height: 1.6; }
+  .insight-num { font-size: 18px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; width: 28px; }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px; color: #666; margin-top: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+  .compact-name { font-weight: 600; font-size: 13px; }
+  .compact-sub { font-size: 11px; color: #999; }
+
+  /* May-specific: activity bar */
+  .act-bar { display: flex; gap: 3px; align-items: center; }
+  .act-dot { width: 10px; height: 10px; border-radius: 2px; }
+  .act-dot.filled { background: #1976d2; }
+  .act-dot.empty { background: #e8e8e8; }
+
+  .views-chip { font-size: 11px; color: #888; background: #f5f5f5; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+  .views-chip.hot { background: #e3f2fd; color: #1565c0; }
+
+  @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Securika Moscow 2026 — Аналитика конкурентов</h1>
+  <p>22–24 апреля, Крокус Экспо · Мониторинг 22 конкурентов · Данные: Telegram-каналы + сайты + Google Drive</p>
+</div>
+
+<!-- Tab navigation -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('april')">Апрель 2026</button>
+  <button class="tab-btn" onclick="showTab('may')">Май 2026</button>
+</div>
+
+<!-- ===================== АПРЕЛЬ ===================== -->
+<div id="tab-april" class="tab-content active">
+<div class="container">
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="val">22</div>
+      <div class="lbl">Конкурентов в мониторинге</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">5</div>
+      <div class="lbl">Активных (Securika)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">3</div>
+      <div class="lbl">Подтверждено участие + активность</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">7</div>
+      <div class="lbl">Telegram-каналов мониторилось</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">17+</div>
+      <div class="lbl">Постов о Securika за апрель</div>
+    </div>
+  </div>
+
+  <!-- Ключевые выводы -->
+  <div class="summary-box section">
+    <h3>Ключевые выводы</h3>
+    <div class="insight"><span class="insight-num">1</span>Аргус-Спектр — безусловный лидер коммуникации: самый активный канал (8 из 9 дней мониторинга), полный набор — Telegram + сайт, 5+ продуктовых новинок, собственный AI-ассистент StreletzGPT. Стратегия «контент-машина» перед выставкой.</div>
+    <div class="insight"><span class="insight-num">2</span>Рубеж — второй по активности (5 дней, только Telegram), но качественный: запустили форум PROПРОЕКТ прямо на выставке, серия постов по продуктам (SONAR SFB, GLOBAL RUBEZH 2.0, STRAZH). Генеральный инфопартнёр — используют статус.</div>
+    <div class="insight"><span class="insight-num">3</span>Болид — активен в дни выставки (22–23 апреля), до — только технические страницы сайта без контента. Реальных постов о подготовке практически нет.</div>
+    <div class="insight"><span class="insight-num">4</span>ISS — минимальная активность: 1 пост в день открытия выставки (22.04). При этом заявили 2 продукта на конкурс инноваций — потенциал не реализован в коммуникации.</div>
+    <div class="insight"><span class="insight-num">5</span>17 из 22 конкурентов — полное молчание в апреле. ЭТМ публиковал активно, но исключительно про электрооборудование — без упоминания Securika. ДССЛ/TRASSIR: последние данные 16–17 апреля, оба дня без активности.</div>
+  </div>
+
+  <!-- Основная таблица -->
+  <div class="section">
+    <div class="section-title">Сводная таблица — все 22 конкурента</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Конкурент</th>
+          <th>Участие</th>
+          <th>Стенд</th>
+          <th>Каналы</th>
+          <th>Активность в апреле</th>
+          <th>Дней с публикациями</th>
+          <th>Уровень</th>
+          <th>Фокус контента</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><div class="compact-name">Аргус-Спектр</div></td>
+          <td><span class="badge badge-yes">✓ Подтверждено</span></td>
+          <td>A3063</td>
+          <td><span class="ch">TG</span><span class="ch">Сайт</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-inactive" title="15.04">15</div>
+              <div class="day day-active-site" title="16.04: Сайт">16</div>
+              <div class="day day-active-both" title="17.04: TG + Сайт">17</div>
+              <div class="day day-active-site" title="18.04: Сайт">18</div>
+              <div class="day day-active-site" title="19.04: Сайт">19</div>
+              <div class="day day-active-tg" title="20.04: TG">20</div>
+              <div class="day day-active-site" title="21.04: Сайт">21</div>
+              <div class="day day-active-tg" title="22.04: TG 1 пост">22</div>
+              <div class="day day-active-tg" title="23.04: TG 2 поста">23</div>
+            </div>
+          </td>
+          <td><strong>8 / 9</strong></td>
+          <td><span class="badge badge-high">Высокий</span></td>
+          <td>Deco Line, Стрелец-V-ПРО, StreletzGPT, Аврора-Д-ПРО, репортажи с выставки</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><div class="compact-name">Рубеж (RUBEZH)</div></td>
+          <td><span class="badge badge-yes">✓ Подтверждено</span></td>
+          <td>A3033</td>
+          <td><span class="ch">TG</span><span class="ch">ВК</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-active-tg" title="15.04: TG 14.04">15</div>
+              <div class="day day-active-tg" title="16.04: TG 3 поста">16</div>
+              <div class="day day-inactive" title="17.04">17</div>
+              <div class="day day-inactive" title="18.04">18</div>
+              <div class="day day-inactive" title="19.04">19</div>
+              <div class="day day-active-tg" title="20.04: TG 2 поста">20</div>
+              <div class="day day-active-tg" title="21.04: TG 1 пост">21</div>
+              <div class="day day-active-tg" title="22.04: TG 2 поста">22</div>
+              <div class="day day-inactive" title="23.04">23</div>
+            </div>
+          </td>
+          <td><strong>5 / 9</strong></td>
+          <td><span class="badge badge-high">Высокий</span></td>
+          <td>SONAR SFB, GLOBAL 2.0, STRAZH, форум PROПРОЕКТ на Securika, обучение</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><div class="compact-name">Болид (НВП)</div></td>
+          <td><span class="badge badge-yes">✓ Подтверждено</span></td>
+          <td>A3023</td>
+          <td><span class="ch">TG</span><span class="ch">Сайт</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-inactive" title="15.04">15</div>
+              <div class="day day-active-site" title="16.04: Сайт">16</div>
+              <div class="day day-active-both" title="17.04: TG + Сайт">17</div>
+              <div class="day day-active-site" title="18.04: Сайт">18</div>
+              <div class="day day-active-site" title="19.04: Сайт">19</div>
+              <div class="day day-active-site" title="20.04: Сайт">20</div>
+              <div class="day day-active-site" title="21.04: Сайт">21</div>
+              <div class="day day-active-tg" title="22.04: TG 2 поста">22</div>
+              <div class="day day-active-tg" title="23.04: TG 1 пост">23</div>
+            </div>
+          </td>
+          <td><strong>8 / 9</strong></td>
+          <td><span class="badge badge-medium">Средний</span></td>
+          <td>Страница события на сайте (статичная). В дни выставки — репортажи, новинки Термокабель и Оптокабель</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><div class="compact-name">ДССЛ / TRASSIR</div></td>
+          <td><span class="badge badge-yes">✓ Подтверждено</span></td>
+          <td>Уточняется</td>
+          <td><span class="ch">TG</span><span class="ch">ВК</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-na" title="нет данных">—</div>
+              <div class="day day-inactive" title="16.04">16</div>
+              <div class="day day-inactive" title="17.04">17</div>
+              <div class="day day-na" title="нет данных">—</div>
+              <div class="day day-na" title="нет данных">—</div>
+              <div class="day day-na" title="нет данных">—</div>
+              <div class="day day-na" title="нет данных">—</div>
+              <div class="day day-na" title="нет данных">—</div>
+              <div class="day day-na" title="нет данных">—</div>
+            </div>
+          </td>
+          <td><strong>0 / 2</strong></td>
+          <td><span class="badge badge-low">Низкий</span></td>
+          <td>Мониторинг только 16–17.04, активности не зафиксировано. Анонс TRASSIR PSIM был в марте</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><div class="compact-name">ISS</div></td>
+          <td><span class="badge badge-yes">✓ Подтверждено</span></td>
+          <td>A7013</td>
+          <td><span class="ch">TG</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-active-tg" title="15.04: TG 13.04">15</div>
+              <div class="day day-inactive" title="16.04">16</div>
+              <div class="day day-inactive" title="17.04">17</div>
+              <div class="day day-inactive" title="18.04">18</div>
+              <div class="day day-inactive" title="19.04">19</div>
+              <div class="day day-inactive" title="20.04">20</div>
+              <div class="day day-inactive" title="21.04">21</div>
+              <div class="day day-active-tg" title="22.04: TG 1 пост">22</div>
+              <div class="day day-inactive" title="23.04">23</div>
+            </div>
+          </td>
+          <td><strong>2 / 9</strong></td>
+          <td><span class="badge badge-low">Низкий</span></td>
+          <td>Анонс SecurOS Radius и Access Control (13.04), приглашение на стенд в день открытия (22.04)</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><div class="compact-name">Layta</div></td>
+          <td><span class="badge badge-yes">✓ Подтверждено</span></td>
+          <td>Уточняется</td>
+          <td><span class="ch">Сайт</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div>
+            </div>
+          </td>
+          <td><strong>0 / 9</strong></td>
+          <td><span class="badge badge-none">Нет</span></td>
+          <td>Только конференция e-commerce 12.04 (до периода мониторинга). Соцсети — молчание</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><div class="compact-name">ЭТМ</div><div class="compact-sub">Не участвует</div></td>
+          <td><span class="badge badge-no">✗ Не найдено</span></td>
+          <td>—</td>
+          <td><span class="ch">TG</span></td>
+          <td>
+            <div class="timeline">
+              <div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div>
+              <div class="day day-active-tg" title="18.04: TG 2 поста (не Securika)">18</div>
+              <div class="day day-inactive">19</div>
+              <div class="day day-inactive">20</div>
+              <div class="day day-active-tg" title="21.04: TG 2 поста (не Securika)">21</div>
+              <div class="day day-active-tg" title="22.04: TG 5 постов (не Securika)">22</div>
+              <div class="day day-active-tg" title="23.04: TG 4 поста (не Securika)">23</div>
+            </div>
+          </td>
+          <td><strong>4 / 9</strong> ⚠️</td>
+          <td><span class="badge badge-none">Не по теме</span></td>
+          <td>TG активен, но контент — электрооборудование (стабилизаторы, цинк-спрей, реле). Securika не упоминается</td>
+        </tr>
+        <tr><td>8</td><td><div class="compact-name">МСБ</div></td><td><span class="badge badge-yes">✓ Подтверждено</span></td><td>Уточняется</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Участвуют без публичных анонсов и соцсетей</td></tr>
+        <tr><td>9</td><td><div class="compact-name">Parsec</div></td><td><span class="badge badge-yes">✓ Подтверждено</span></td><td>Уточняется</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Нет соцсетей / активности. Только сайт parsec.ru</td></tr>
+        <tr><td>10</td><td><div class="compact-name">Эридан</div></td><td><span class="badge badge-yes">✓ Подтверждено</span></td><td>А2017</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Взрывозащищённое оборудование, нет соцсетей о выставке</td></tr>
+        <tr><td>11</td><td><div class="compact-name">Русский Свет</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Электротехника, Securika не профильная выставка</td></tr>
+        <tr><td>12</td><td><div class="compact-name">Tinko</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Исторически участвовали. В 2026 — молчание</td></tr>
+        <tr><td>13</td><td><div class="compact-name">САТРО-ПАЛАДИН</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Интернет-магазин, PR выставок не ведётся</td></tr>
+        <tr><td>14</td><td><div class="compact-name">ТК РУТЕК</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Региональный дилер (Казань), PR не ведётся</td></tr>
+        <tr><td>15</td><td><div class="compact-name">ДЕАН</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Сайт недоступен для мониторинга</td></tr>
+        <tr><td>16</td><td><div class="compact-name">ГАРАНТ (ТД)</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Региональный дистрибьютор СПб, PR не ведётся</td></tr>
+        <tr><td>17</td><td><div class="compact-name">Hikvision</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td><span class="ch">TG</span></td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>TG-канал не обновляется с 2022 года. Ушли с рынка РФ</td></tr>
+        <tr><td>18</td><td><div class="compact-name">Macroscop</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Исторически участвовали, в 2026 — нет данных</td></tr>
+        <tr><td>19</td><td><div class="compact-name">Твинпро</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>Уточняется</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Участвовали в 2022–2024, 2026 — нет анонсов</td></tr>
+        <tr><td>20</td><td><div class="compact-name">WAGNER</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Немецкий бренд, в РФ через партнёров. Активности нет</td></tr>
+        <tr><td>21</td><td><div class="compact-name">DKC</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Кабеленесущие системы, Securika — не профиль</td></tr>
+        <tr><td>22</td><td><div class="compact-name">IEK</div><div class="compact-sub">Не участвует</div></td><td><span class="badge badge-no">✗ Не найдено</span></td><td>—</td><td>—</td><td><div class="timeline"><div class="day day-inactive">15</div><div class="day day-inactive">16</div><div class="day day-inactive">17</div><div class="day day-inactive">18</div><div class="day day-inactive">19</div><div class="day day-inactive">20</div><div class="day day-inactive">21</div><div class="day day-inactive">22</div><div class="day day-inactive">23</div></div></td><td><strong>0 / 9</strong></td><td><span class="badge badge-none">Нет</span></td><td>Электротехника, Securika — не профиль</td></tr>
+      </tbody>
+    </table>
+    <div class="legend" style="margin-top:12px;">
+      <div class="legend-item"><div class="legend-dot" style="background:#1976d2"></div>Telegram</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7b1fa2"></div>Сайт</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1a1a1a"></div>Telegram + Сайт</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#e8e8e8"></div>Нет активности</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#f5f5f5; border:1px solid #ddd"></div>Нет данных</div>
+    </div>
+  </div>
+
+  <!-- Детальная хронология активных -->
+  <div class="section">
+    <div class="section-title">Детальная хронология — активные конкуренты</div>
+
+    <!-- Аргус-Спектр -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">1. Аргус-Спектр</strong>
+        <span class="badge badge-yes">Стенд A3063</span>
+        <span class="badge badge-high">Высокий</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @argus_spectr · argus-spectr.ru</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:110px; padding-left:20px;">23.04</td><td class="detail-channel">TG 2 поста</td><td class="detail-text">День второй на Securika: стенд — одна из самых посещаемых площадок. Продолжение работы, приглашение.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">22.04</td><td class="detail-channel">TG 1 пост</td><td class="detail-text">Первый день: стенд А3063. Главные продукты — Стрелец-V-ПРО, Аврора-Д-ПРО, Deco Line.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">21.04</td><td class="detail-channel">Сайт</td><td class="detail-text">Статья: аварийный микрофон, Deco Line, StreletzGPT и другие новинки. Запуск ИИ-ассистента.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">20.04</td><td class="detail-channel">TG 1 пост</td><td class="detail-text">Видео о Стрельце-V-ПРО: оповещение о пожаре и теракте с аварийным микрофоном.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">19.04</td><td class="detail-channel">Сайт</td><td class="detail-text">Повтор статьи о новинках на Securika 2026.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">18.04</td><td class="detail-channel">Сайт</td><td class="detail-text">Повтор статьи о новинках на Securika 2026.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">17.04</td><td class="detail-channel">TG + Сайт</td><td class="detail-text">TG: анонс новинок Securika — Deco Line, StreletzGPT, ужесточение нормативов. Сайт: обновление страницы.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">16.04</td><td class="detail-channel">Сайт</td><td class="detail-text">Статья о новинках опубликована на сайте.</td></tr>
+      </table>
+    </div>
+
+    <!-- Рубеж -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">2. Рубеж (RUBEZH)</strong>
+        <span class="badge badge-yes">Стенд A3033</span>
+        <span class="badge badge-high">Высокий</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @rmc_rubezh · ВК vk.com/vpk.rubezh</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:110px; padding-left:20px;">22.04</td><td class="detail-channel">TG 2 поста</td><td class="detail-text">Форум PROПРОЕКТ 2026 стартовал прямо на Securika в Крокус Экспо + онлайн-эфир. Обсуждение изменений СП 3, СП 6, СП 484.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">21.04</td><td class="detail-channel">TG 1 пост</td><td class="detail-text">Анонс форума PROПРОЕКТ 2026: завтра на Securika. Ключевые изменения в противопожарной защите.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">20.04</td><td class="detail-channel">TG 2 поста</td><td class="detail-text">Проектирование СОУЭ «Антитеррор» на базе SONAR MINI + инженерный обзор компонентов системы.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">16.04</td><td class="detail-channel">TG 3 поста</td><td class="detail-text">Новинка: GLOBAL RUBEZH 2.0 — аспирационная система для КИИ. + Другие посты о продуктах.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">14–15.04</td><td class="detail-channel">TG</td><td class="detail-text">Новые российские громкоговорители SONAR (3 модели, Минпромторг). Анонс форума PROПРОЕКТ 22.04. Статья о SONAR SFB на securika-moscow.ru.</td></tr>
+      </table>
+    </div>
+
+    <!-- Болид -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">3. Болид (НВП)</strong>
+        <span class="badge badge-yes">Стенд A3023</span>
+        <span class="badge badge-medium">Средний</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @bolid_nvp · bolid.ru</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:110px; padding-left:20px;">28.04</td><td class="detail-channel">TG + Сайт</td><td class="detail-text">Итоги Securika: более 2500 гостей посетили стенд за 3 дня. Сайт: официальный отчёт. Маркировка «Честный знак» — вебинар 30.04.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">24.04</td><td class="detail-channel">TG</td><td class="detail-text">Цифровая маркировка СПЗ — обсуждение в ТПП РФ с позицией НВП Болид за доработку правил.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">23.04</td><td class="detail-channel">TG 1 пост</td><td class="detail-text">Новинки в спросе: ИП104-1 «Болид-Термокабель» и С2000-ИПТЛ «Болид-Оптокабель». Активный интерес посетителей на стенде.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">22.04</td><td class="detail-channel">TG 2 поста</td><td class="detail-text">Семинар: «Реализация актуальных норм на отечественном оборудовании». Репортаж с выставки.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">16–21.04</td><td class="detail-channel">Сайт</td><td class="detail-text">Страница события Securika/MIPS 2026 (статичная, повторяющийся заголовок — реального контента нет).</td></tr>
+      </table>
+    </div>
+
+    <!-- ISS -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">5. ISS</strong>
+        <span class="badge badge-yes">Стенд A7013</span>
+        <span class="badge badge-low">Низкий</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @iss_ru</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:110px; padding-left:20px;">30.04</td><td class="detail-channel">TG</td><td class="detail-text">Итоги участия в Securika. Победа в конкурсе инноваций подтверждена — SecurOS UVSS и Soffit.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">23.04</td><td class="detail-channel">TG</td><td class="detail-text">Фотогалерея церемонии награждения. ISS — двукратный победитель конкурса инноваций Securika 2026.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">22.04</td><td class="detail-channel">TG 1 пост</td><td class="detail-text">Приглашение на стенд A7013 в день открытия. Список продуктов для демонстрации.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">13.04</td><td class="detail-channel">TG</td><td class="detail-text">Анонс двух новинок: SecurOS Radius (контроль периметра, AI+радиолокация) и SecurOS Access Control (СКУД с отчётностью).</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Рейтинг продуктовой активности -->
+  <div class="section">
+    <div class="section-title">Продуктовые новинки на Securika 2026 — сводка</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Компания</th>
+          <th>Продукт / новинка</th>
+          <th>Категория</th>
+          <th>Статус</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Аргус-Спектр</td><td>Deco Line — дизайнерская линейка в 4 цветах + дерево/камень</td><td>ОПС беспроводная</td><td><span class="badge badge-yes">Показано на стенде</span></td></tr>
+        <tr><td>Аргус-Спектр</td><td>Стрелец-V-ПРО — гибридное оповещение с аварийным микрофоном</td><td>СОУЭ</td><td><span class="badge badge-yes">Показано на стенде</span></td></tr>
+        <tr><td>Аргус-Спектр</td><td>StreletzGPT — ИИ-ассистент для техподдержки (@StreletzGPT_bot)</td><td>AI / цифровые сервисы</td><td><span class="badge badge-yes">Запущен</span></td></tr>
+        <tr><td>Аргус-Спектр</td><td>Аврора-Д-ПРО исп.М — старт продаж апрель 2026</td><td>ОПС</td><td><span class="badge badge-yes">В продаже</span></td></tr>
+        <tr><td>Рубеж</td><td>SONAR SFB — до 20 панелей без контроллера, масштаб 6000 панелей</td><td>СОУЭ</td><td><span class="badge badge-yes">Показано на стенде</span></td></tr>
+        <tr><td>Рубеж</td><td>GLOBAL RUBEZH 2.0 — аспирационная ОПС для КИИ, 4000 адресов</td><td>ОПС промышленная</td><td><span class="badge badge-yes">Анонс на Securika</span></td></tr>
+        <tr><td>Рубеж</td><td>RUBEZH STRAZH — СКУД для банков с OSDP-шифрованием</td><td>СКУД</td><td><span class="badge badge-yes">Показано на стенде</span></td></tr>
+        <tr><td>Болид</td><td>ИП104-1 «Болид-Термокабель» — линейный ПИ</td><td>ОПС</td><td><span class="badge badge-yes">Показано на стенде</span></td></tr>
+        <tr><td>Болид</td><td>С2000-ИПТЛ «Болид-Оптокабель» — волоконно-оптический ПИ</td><td>ОПС</td><td><span class="badge badge-yes">Показано на стенде</span></td></tr>
+        <tr><td>ISS</td><td>SecurOS UVSS — автодосмотр днищ авто с AI</td><td>Видеоаналитика / транспорт</td><td><span class="badge badge-medium">Победитель конкурса инноваций</span></td></tr>
+        <tr><td>ISS</td><td>SecurOS Radius — контроль периметра, AI + радар</td><td>Периметровая охрана</td><td><span class="badge badge-medium">Анонс</span></td></tr>
+        <tr><td>ДССЛ/TRASSIR</td><td>TRASSIR PSIM — единый центр управления безопасностью</td><td>PSIM / видео</td><td><span class="badge badge-low">Анонс в марте, стенд не подтверждён</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align:center; font-size:11px; color:#bbb; padding: 24px 0 8px;">
+    Securika 2026 · Аналитика конкурентов за апрель · Данные: ежедневный мониторинг Telegram + сайты · 15–23 апреля 2026
+  </div>
+
+</div>
+</div><!-- /tab-april -->
+
+
+<!-- ===================== МАЙ ===================== -->
+<div id="tab-may" class="tab-content">
+<div class="container">
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="val">22</div>
+      <div class="lbl">Конкурентов в мониторинге</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">4</div>
+      <div class="lbl">Активных в мае</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">0</div>
+      <div class="lbl">Постов о Securika (тема закрыта)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">2 320</div>
+      <div class="lbl">Топ просмотров у поста в мае</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">1</div>
+      <div class="lbl">Новая платформа (МАКС)</div>
+    </div>
+  </div>
+
+  <!-- Ключевые выводы -->
+  <div class="summary-box section">
+    <h3>Ключевые выводы — май 2026</h3>
+    <div class="insight"><span class="insight-num">1</span>Securika-тема полностью закрыта — ни одного поста о выставке в мае ни у кого из конкурентов. Все вернулись к штатному продуктовому маркетингу. Типичный post-event спад.</div>
+    <div class="insight"><span class="insight-num">2</span>Рубеж — единственный из профильных конкурентов по направлению LUIS+ запустил канал на новой платформе МАКС (1 780 просм.). Стратегический ход: первыми среди СПЗ-производителей на аудитории нового российского мессенджера.</div>
+    <div class="insight"><span class="insight-num">3</span>DKC и IEK Group — лидеры по активности в мае, но по смежным темам. DKC: клеммы Nuputuk получили сертификаты пожбезопасности (2 060 просм.) — прямое попадание в тему безопасности. IEK Group: DCDE 2026 Forum как альтернативная B2B-площадка (2 320 просм.).</div>
+    <div class="insight"><span class="insight-num">4</span>ISS конвертирует победу в конкурсе инноваций Securika в продуктовый PR: SecurOS 12.1 + включение в реестр Минпромторга РФ. Тихий, но содержательный май. Заявляют о себе без громких акций.</div>
+    <div class="insight"><span class="insight-num">5</span>Аргус-Спектр и Болид — предсказуемый post-event спад после интенсивного апреля. Аргус завершил Securika-цикл итоговым постом на сайте (27.04). Болид закрыл тему итогами 2500 гостей. В мае оба в паузе — возможный старт новой волны активности к июню.</div>
+  </div>
+
+  <!-- Сводная таблица май -->
+  <div class="section">
+    <div class="section-title">Сводная таблица — активность конкурентов в мае 2026</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Конкурент</th>
+          <th>Каналы</th>
+          <th>Постов в мае</th>
+          <th>Уровень</th>
+          <th>Ключевые темы мая</th>
+          <th>Securika в мае</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><div class="compact-name">Аргус-Спектр</div></td>
+          <td><span class="ch">TG</span><span class="ch">Сайт</span></td>
+          <td>1–2 <span class="views-chip">итоги Securika</span></td>
+          <td><span class="badge badge-low">Низкий</span></td>
+          <td>27.04 сайт: «Securika Moscow 2026: спасибо — итоги». Отзывы партнёров (1 010 просм. в TG). В мае — пауза после выставочного марафона.</td>
+          <td><span class="badge badge-none">Закрыта</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><div class="compact-name">Рубеж (RUBEZH)</div></td>
+          <td><span class="ch">TG</span><span class="ch">ВК</span><span class="ch">МАКС</span></td>
+          <td>3+ <span class="views-chip hot">1 780 просм.</span></td>
+          <td><span class="badge badge-medium">Средний</span></td>
+          <td>Запуск канала на платформе МАКС (1 780 просм.) — первый из конкурентов в новом мессенджере. Продолжение вебинарной активности по нормативам (СП 3, СП 6). Продуктовые обновления R-PLATFORMA.</td>
+          <td><span class="badge badge-none">Закрыта</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><div class="compact-name">Болид (НВП)</div></td>
+          <td><span class="ch">TG</span><span class="ch">Сайт</span></td>
+          <td>1–2 <span class="views-chip">итоги апр.</span></td>
+          <td><span class="badge badge-low">Низкий</span></td>
+          <td>Wrap-up Securika завершён к концу апреля. В мае — тишина. Тема цифровой маркировки СПЗ как следующий информационный повод (обсуждение в ТПП РФ).</td>
+          <td><span class="badge badge-none">Закрыта</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><div class="compact-name">ДССЛ / TRASSIR</div></td>
+          <td><span class="ch">Сайт</span></td>
+          <td>—</td>
+          <td><span class="badge badge-none">Нет данных</span></td>
+          <td>Канал TG закрытый — публичного контента нет. Сайт: обновления продуктов в апреле (TRASSIR Pro v3, PoE-коммутаторы L3). Май — нет данных.</td>
+          <td><span class="badge badge-none">Нет данных</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><div class="compact-name">ISS</div></td>
+          <td><span class="ch">TG</span></td>
+          <td>2–3 <span class="views-chip">продукт</span></td>
+          <td><span class="badge badge-low">Низкий</span></td>
+          <td>SecurOS включён в реестр Минпромторга РФ (573 просм.). Новый релиз SecurOS 12.1 (558 просм.). ISS — двукратный победитель конкурса инноваций (27.04, 229 просм.) — конвертируют в PR.</td>
+          <td><span class="badge badge-none">Закрыта</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><div class="compact-name">Layta</div></td>
+          <td><span class="ch">Сайт</span></td>
+          <td>0</td>
+          <td><span class="badge badge-none">Нет</span></td>
+          <td>Публичной активности не выявлено.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><div class="compact-name">ЭТМ</div><div class="compact-sub">Не по теме</div></td>
+          <td><span class="ch">TG</span></td>
+          <td>5+ <span class="views-chip">электротех.</span></td>
+          <td><span class="badge badge-medium">Активен</span></td>
+          <td>Продолжает активный TG без темы безопасности: жёсткие диски WD/Seagate/Toshiba, вебинар Systeme Electric, климатическое оборудование TDM, конкурс профмастерства «Есть контакт». Не релевантен для LUIS+.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>8</td>
+          <td><div class="compact-name">МСБ</div></td>
+          <td>—</td>
+          <td>0</td>
+          <td><span class="badge badge-none">Нет</span></td>
+          <td>Публичной активности не выявлено.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>9</td>
+          <td><div class="compact-name">Parsec</div></td>
+          <td><span class="ch">YouTube</span></td>
+          <td>0</td>
+          <td><span class="badge badge-none">Нет</span></td>
+          <td>Нет данных за май. Последняя активность — видео апрель.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>10</td>
+          <td><div class="compact-name">Эридан</div></td>
+          <td>—</td>
+          <td>0</td>
+          <td><span class="badge badge-none">Нет</span></td>
+          <td>Публичной активности не выявлено.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td><div class="compact-name">Русский Свет</div></td>
+          <td><span class="ch">TG</span></td>
+          <td>2+</td>
+          <td><span class="badge badge-low">Низкий</span></td>
+          <td>Продолжение акций TOKOV ELECTRIC и EKF. Не по теме безопасности.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>12–16</td>
+          <td colspan="6" style="color:#999; font-size:12px;">Tinko, САТРО-ПАЛАДИН, ТК РУТЕК, ДЕАН, ГАРАНТ — публичной активности в мае не выявлено.</td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>17</td>
+          <td><div class="compact-name">Hikvision</div></td>
+          <td><span class="ch">Сайт</span></td>
+          <td>2</td>
+          <td><span class="badge badge-none">Нет данных</span></td>
+          <td>Сайт: кодонаборные панели DS-19A16-BN (25 апр.), HDD для видеонаблюдения (20 апр.). Компания ушла с рынка РФ, активности в социальных сетях нет.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>18–19</td>
+          <td colspan="6" style="color:#999; font-size:12px;">Macroscop, Твинпро — публичной активности в мае не выявлено.</td>
+        </tr>
+        <tr style="background:#f9f9ff;">
+          <td>20</td>
+          <td><div class="compact-name">WAGNER</div></td>
+          <td>—</td>
+          <td>0</td>
+          <td><span class="badge badge-none">Нет</span></td>
+          <td>Немецкий бренд, в РФ только через партнёров. Активности нет.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td><div class="compact-name">DKC</div><div class="compact-sub">Не по теме Securika</div></td>
+          <td><span class="ch">TG</span></td>
+          <td>5+ <span class="views-chip hot">2 060 просм.</span></td>
+          <td><span class="badge badge-high">Высокий</span></td>
+          <td>Клеммы Nuputuk — получены сертификаты пожарной безопасности (2 060 просм.) — смежная тема. Щитки Frame c Петрович — партнёрское видео (1 880 просм.). Активный канал, не по теме LUIS+.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td><div class="compact-name">IEK Group</div><div class="compact-sub">Не по теме Securika</div></td>
+          <td><span class="ch">TG</span><span class="ch">ВК</span><span class="ch">YouTube</span></td>
+          <td>5+ <span class="views-chip hot">2 320 просм.</span></td>
+          <td><span class="badge badge-high">Высокий</span></td>
+          <td>DCDE 2026 Forum — главные итоги (2 320 просм.) — участие в альтернативной B2B-выставке. Серия вебинаров по электрике (1 800 просм.). Активны во всех каналах. Не по теме LUIS+.</td>
+          <td><span class="badge badge-none">Нет</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Детальная хронология май -->
+  <div class="section">
+    <div class="section-title">Детальная активность — ключевые конкуренты в мае 2026</div>
+
+    <!-- Рубеж май -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">2. Рубеж (RUBEZH)</strong>
+        <span class="badge badge-new">⬆ Новая платформа</span>
+        <span class="badge badge-medium">Средний</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @rmc_rubezh · МАКС · ВК</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:130px; padding-left:20px;">Май 2026</td><td class="detail-channel">МАКС <span class="views-chip hot">1 780 просм.</span></td><td class="detail-text">Запуск официального канала на платформе МАКС — первый из профильных конкурентов в пространстве нового российского мессенджера. Стратегический ход на опережение.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">Май 2026</td><td class="detail-channel">TG / Сайт</td><td class="detail-text">Продолжение серии вебинаров по нормативной базе: СП 3.13130.2026, СП 6.13130. Обновления R-PLATFORMA. Регулярный образовательный контент для проектировщиков.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">Конец апр.</td><td class="detail-channel">СМИ</td><td class="detail-text">ru-bezh.ru (23.04): «Рубеж расширяет линейку решений для сложных промышленных объектов» — PR-публикация по итогам Securika.</td></tr>
+      </table>
+    </div>
+
+    <!-- ISS май -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">5. ISS</strong>
+        <span class="badge badge-new">🏆 Победитель инноваций</span>
+        <span class="badge badge-low">Низкий</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @iss_ru · iss.ru</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:130px; padding-left:20px;">Май 2026</td><td class="detail-channel">TG <span class="views-chip">573 просм.</span></td><td class="detail-text">SecurOS включён в реестр Минпромторга РФ — подтверждение российского происхождения ПО. Сильный аргумент для заказчиков КИИ и госсектора.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">Май 2026</td><td class="detail-channel">TG <span class="views-chip">558 просм.</span></td><td class="detail-text">Новый релиз SecurOS 12.1 — обновление платформы с новыми возможностями аналитики и интеграций.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">27.04</td><td class="detail-channel">TG <span class="views-chip">229 просм.</span></td><td class="detail-text">ISS — двукратный победитель конкурса инноваций Securika 2026: SecurOS UVSS (автодосмотр днищ авто) + SecurOS Soffit (предотвращение ДТП). Конвертируют в продуктовый PR.</td></tr>
+      </table>
+    </div>
+
+    <!-- DKC май -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">21. DKC</strong>
+        <span class="badge badge-none">Не по теме LUIS+</span>
+        <span class="badge badge-high">Высокий</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @dkccom · dkc.ru</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:130px; padding-left:20px;">Май 2026</td><td class="detail-channel">TG <span class="views-chip hot">2 060 просм.</span></td><td class="detail-text">Клеммы Nuputuk — получены сертификаты пожарной безопасности. Смежная с темой безопасности позиция продукта, интересно с т.з. коммуникационных приёмов.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">Май 2026</td><td class="detail-channel">TG <span class="views-chip hot">1 880 просм.</span></td><td class="detail-text">Партнёрское видео: щитки Frame совместно с сетью Петрович. Механика коллаборации с B2C-дистрибьютором.</td></tr>
+      </table>
+    </div>
+
+    <!-- IEK Group май -->
+    <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; margin-bottom:16px; overflow:hidden;">
+      <div style="padding:14px 20px; background:#f8f8f8; border-bottom:1px solid #e8e8e8; display:flex; align-items:center; gap:12px;">
+        <strong style="font-size:14px;">22. IEK Group</strong>
+        <span class="badge badge-none">Не по теме LUIS+</span>
+        <span class="badge badge-high">Высокий</span>
+        <span style="font-size:12px; color:#888; margin-left:auto;">Telegram @iek_group_rus · ВК · YouTube</span>
+      </div>
+      <table class="detail-table" style="width:100%;">
+        <tr><td class="detail-date" style="width:130px; padding-left:20px;">Май 2026</td><td class="detail-channel">TG <span class="views-chip hot">2 320 просм.</span></td><td class="detail-text">DCDE 2026 Forum — главные итоги. Участие в крупной деловой выставке как альтернативная точка контакта с B2B-аудиторией.</td></tr>
+        <tr><td class="detail-date" style="padding-left:20px;">Май 2026</td><td class="detail-channel">TG <span class="views-chip hot">1 800 просм.</span></td><td class="detail-text">Серия вебинаров по электрике — образовательный формат для инженерной аудитории. Активны в TG + ВК + YouTube + Dzen.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Топ посты май + апрель сравнение -->
+  <div class="section">
+    <div class="section-title">Топ публикаций по охвату — май 2026</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Компания</th>
+          <th>Платформа</th>
+          <th>Дата</th>
+          <th>Тема публикации</th>
+          <th>Просмотры</th>
+          <th>Тематика</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#f0f7ff;">
+          <td><strong>IEK Group</strong></td>
+          <td>Telegram</td>
+          <td>Май 2026</td>
+          <td>DCDE 2026 Forum — главные итоги</td>
+          <td><span class="views-chip hot">2 320</span></td>
+          <td>Другая выставка</td>
+        </tr>
+        <tr>
+          <td><strong>DKC</strong></td>
+          <td>Telegram</td>
+          <td>Май 2026</td>
+          <td>Клеммы Nuputuk — сертификаты пожбезопасности</td>
+          <td><span class="views-chip hot">2 060</span></td>
+          <td>Продукт / Безопасность</td>
+        </tr>
+        <tr>
+          <td><strong>DKC</strong></td>
+          <td>Telegram</td>
+          <td>Май 2026</td>
+          <td>Щитки Frame с Петрович (видео)</td>
+          <td><span class="views-chip hot">1 880</span></td>
+          <td>Партнёрство</td>
+        </tr>
+        <tr style="background:#f0f7ff;">
+          <td><strong>IEK Group</strong></td>
+          <td>Telegram</td>
+          <td>Май 2026</td>
+          <td>Серия вебинаров по электрике</td>
+          <td><span class="views-chip hot">1 800</span></td>
+          <td>Обучение</td>
+        </tr>
+        <tr style="background:#f0fff4;">
+          <td><strong>Рубеж</strong></td>
+          <td>МАКС</td>
+          <td>Май 2026</td>
+          <td>Запуск канала на платформе МАКС</td>
+          <td><span class="views-chip">1 780</span></td>
+          <td>Новая платформа ★</td>
+        </tr>
+        <tr>
+          <td><strong>ISS</strong></td>
+          <td>Telegram</td>
+          <td>Май 2026</td>
+          <td>SecurOS — включён в реестр Минпромторга РФ</td>
+          <td><span class="views-chip">573</span></td>
+          <td>Продукт / Сертификат</td>
+        </tr>
+        <tr>
+          <td><strong>ISS</strong></td>
+          <td>Telegram</td>
+          <td>Май 2026</td>
+          <td>Новый релиз SecurOS 12.1</td>
+          <td><span class="views-chip">558</span></td>
+          <td>Продукт</td>
+        </tr>
+        <tr>
+          <td>Аргус-Спектр</td>
+          <td>Telegram</td>
+          <td>Конец апр.</td>
+          <td>Выставка завершена — отзывы партнёров</td>
+          <td><span class="views-chip">1 010</span></td>
+          <td>Securika итоги ★</td>
+        </tr>
+        <tr>
+          <td>ISS</td>
+          <td>Telegram</td>
+          <td>27.04</td>
+          <td>ISS — двукратный победитель конкурса инноваций (UVSS + Soffit)</td>
+          <td><span class="views-chip">229</span></td>
+          <td>Достижение</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="legend" style="margin-top:12px;">
+      <div class="legend-item"><span style="font-size:11px; background:#e3f2fd; color:#1565c0; padding:2px 8px; border-radius:4px;">2 000+</span> Высокий охват</div>
+      <div class="legend-item"><span style="font-size:11px; background:#f5f5f5; color:#888; padding:2px 8px; border-radius:4px;">&lt; 1 000</span> Средний охват</div>
+      <div class="legend-item"><span style="font-size:11px;">★</span> Релевантная тема для LUIS+</div>
+    </div>
+  </div>
+
+  <!-- Рейтинг активности май -->
+  <div class="section">
+    <div class="section-title">Рейтинг активности — май 2026</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Место</th>
+          <th>Компания</th>
+          <th>Telegram</th>
+          <th>ВК</th>
+          <th>YouTube</th>
+          <th>Другие</th>
+          <th>Всего</th>
+          <th>Релевантно для LUIS+</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><strong>IEK Group</strong></td><td>5+ постов</td><td>Есть</td><td>Есть</td><td>Dzen</td><td>8+</td><td><span class="badge badge-no">Нет</span></td></tr>
+        <tr><td>2</td><td><strong>DKC</strong></td><td>5+ постов</td><td>—</td><td>—</td><td>—</td><td>5+</td><td><span class="badge badge-medium">Частично (сертификат пожарн.)</span></td></tr>
+        <tr><td>3</td><td><strong>ЭТМ</strong></td><td>5+ постов</td><td>Есть</td><td>—</td><td>Facebook</td><td>5+</td><td><span class="badge badge-no">Нет</span></td></tr>
+        <tr><td>4</td><td><strong>Рубеж</strong></td><td>3+ постов</td><td>Есть</td><td>Есть</td><td>МАКС ★</td><td>4+</td><td><span class="badge badge-yes">Да (СПЗ / СОУЭ)</span></td></tr>
+        <tr><td>5</td><td><strong>ISS</strong></td><td>2–3 постов</td><td>—</td><td>Есть</td><td>—</td><td>3</td><td><span class="badge badge-yes">Да (видеоаналитика, СКУД)</span></td></tr>
+        <tr><td>6</td><td><strong>Аргус-Спектр</strong></td><td>1–2 постов</td><td>—</td><td>Есть</td><td>—</td><td>2</td><td><span class="badge badge-yes">Да (ОПС / СОУЭ)</span></td></tr>
+        <tr><td>7</td><td><strong>Русский Свет</strong></td><td>2+ постов</td><td>—</td><td>—</td><td>Instagram</td><td>2+</td><td><span class="badge badge-no">Нет</span></td></tr>
+        <tr><td>8</td><td><strong>Болид</strong></td><td>1 пост</td><td>—</td><td>—</td><td>—</td><td>1</td><td><span class="badge badge-yes">Да (ОПС)</span></td></tr>
+        <tr><td>9–22</td><td colspan="7" style="color:#999; font-size:12px;">ДССЛ/TRASSIR, Layta, МСБ, Parsec, Эридан, Tinko, САТРО-ПАЛАДИН, ТК РУТЕК, ДЕАН, ГАРАНТ, Hikvision, Macroscop, Твинпро, WAGNER — активности в мае не зафиксировано.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align:center; font-size:11px; color:#bbb; padding: 24px 0 8px;">
+    Securika 2026 · Аналитика конкурентов за май · Пост-выставочный период · Данные: Google Drive + Telegram + сайты · Май 2026
+  </div>
+
+</div>
+</div><!-- /tab-may -->
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

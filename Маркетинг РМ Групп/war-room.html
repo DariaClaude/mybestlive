@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дашборд маркетинга — РМ Групп</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; background: #F0F4F8; color: #1E293B; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 14px 32px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .logo { width: 44px; height: 44px; background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.5px; flex-shrink: 0; }
+  .header-titles { flex: 1; }
+  .header-titles h1 { font-size: 17px; font-weight: 700; color: #0F172A; line-height: 1.2; }
+  .header-titles p { font-size: 12px; color: #64748B; margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .live-badge { background: #EF4444; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+  .live-badge::before { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .clock { font-size: 13px; font-weight: 600; color: #334155; font-variant-numeric: tabular-nums; min-width: 70px; }
+
+  /* TABS */
+  .tabs-bar { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 0 32px; display: flex; gap: 4px; }
+  .tab-btn { padding: 12px 20px; font-size: 13px; font-weight: 600; color: #64748B; border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+  .tab-btn:hover { color: #0EA5E9; }
+  .tab-btn.active { color: #0EA5E9; border-bottom-color: #0EA5E9; }
+
+  /* LAYOUT */
+  .content { padding: 24px 32px; max-width: 1600px; }
+
+  /* PERIOD SECTION */
+  .period-section { display: none; }
+  .period-section.active { display: block; }
+
+  /* KPI BAR */
+  .kpi-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+  .kpi-label { font-size: 11px; color: #64748B; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+  .kpi-value { font-size: 26px; font-weight: 800; color: #0F172A; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: #94A3B8; margin-top: 4px; }
+  .kpi-delta { font-size: 12px; font-weight: 600; margin-top: 4px; }
+  .kpi-delta.up { color: #10B981; }
+  .kpi-delta.down { color: #EF4444; }
+  .kpi-delta.neutral { color: #64748B; }
+  .kpi-accent { color: #0EA5E9; }
+  .kpi-value.kpi-up { color: #059669; }
+  .kpi-value.kpi-down { color: #DC2626; }
+
+  /* CPL COLORS */
+  .cpl-green { color: #10B981; white-space: nowrap; }
+  .cpl-yellow { color: #F59E0B; white-space: nowrap; }
+  .cpl-red { color: #EF4444; white-space: nowrap; }
+
+  /* PLAN % COLORS */
+  .plan-red { color: #EF4444; font-weight: 700; }
+  .plan-orange { color: #F97316; font-weight: 700; }
+  .plan-yellow { color: #EAB308; font-weight: 700; }
+  .plan-green { color: #10B981; font-weight: 700; }
+
+  /* MAIN GRID */
+  .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+  .card-title { font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #F1F5F9; }
+  .card-title .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-blue { background: #0EA5E9; }
+  .dot-green { background: #10B981; }
+  .dot-red { background: #EF4444; }
+  .dot-orange { background: #F97316; }
+  .dot-purple { background: #8B5CF6; }
+
+  /* PROJECT TABLE */
+  .proj-table { width: 100%; border-collapse: collapse; }
+  .proj-table th { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 600; padding: 4px 6px; text-align: left; }
+  .proj-table td { font-size: 12px; padding: 5px 6px; border-top: 1px solid #F8FAFC; color: #334155; }
+  .proj-table tr:hover td { background: #F8FAFC; }
+  .proj-name { font-weight: 600; }
+  .proj-done { background: #ECFDF5; border-radius: 4px; padding: 1px 5px; color: #059669; font-size: 11px; font-weight: 600; }
+  .proj-lag { background: #FFF7ED; border-radius: 4px; padding: 1px 5px; color: #EA580C; font-size: 11px; font-weight: 600; }
+  .badge-system { background: #FEE2E2; color: #DC2626; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin-left: 4px; }
+
+  /* CHANNEL LIST */
+  .channel-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid #F1F5F9; }
+  .channel-item:first-child { border-top: none; }
+  .channel-name { font-size: 13px; font-weight: 500; color: #334155; }
+  .channel-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .channel-leads { font-size: 16px; font-weight: 700; color: #0F172A; }
+  .channel-cpl { font-size: 11px; }
+  .channel-bar-wrap { margin-top: 4px; background: #F1F5F9; border-radius: 4px; height: 4px; width: 100%; }
+  .channel-bar { height: 4px; border-radius: 4px; background: #0EA5E9; }
+
+  /* ALERTS */
+  .alert-item { padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; line-height: 1.5; }
+  .alert-item:last-child { margin-bottom: 0; }
+  .alert-critical { background: #FEF2F2; border-left: 3px solid #EF4444; color: #7F1D1D; }
+  .alert-warning { background: #FFFBEB; border-left: 3px solid #F59E0B; color: #78350F; }
+  .alert-success { background: #F0FDF4; border-left: 3px solid #10B981; color: #14532D; }
+  .alert-title { font-weight: 700; font-size: 11px; margin-bottom: 3px; }
+
+  /* SOCIAL ROW */
+  .social-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .social-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+  .social-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .social-name { font-size: 13px; font-weight: 700; color: #0F172A; }
+  .social-platform { font-size: 11px; color: #64748B; }
+  .social-stat { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid #F8FAFC; }
+  .social-stat:first-of-type { border-top: none; padding-top: 0; }
+  .stat-label { font-size: 11px; color: #94A3B8; }
+  .stat-val { font-size: 12px; font-weight: 600; color: #334155; }
+  .stat-val.stat-up { color: #059669; }
+  .stat-val.stat-down { color: #DC2626; }
+  .stat-badge { display: inline-block; margin-left: 4px; padding: 1px 6px; border-radius: 5px; font-size: 11px; font-weight: 700; }
+  .stat-badge.up { background: #ECFDF5; color: #059669; }
+  .stat-badge.down { background: #FEF2F2; color: #DC2626; }
+
+  /* TASKS */
+  .tasks-section { margin-bottom: 24px; }
+  .tasks-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .task-group { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .task-group-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #F1F5F9; }
+  .task-group-title.high { color: #EF4444; }
+  .task-group-title.med { color: #F59E0B; }
+  .task-group-title.low { color: #64748B; }
+  .task-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; cursor: pointer; }
+  .task-cb { width: 16px; height: 16px; border: 2px solid #CBD5E1; border-radius: 4px; flex-shrink: 0; margin-top: 1px; transition: all .15s; }
+  .task-item.done .task-cb { background: #10B981; border-color: #10B981; }
+  .task-item.done .task-cb::after { content: ''; display: block; width: 8px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px, 0); margin: 2px 0 0 2px; }
+  .task-text { font-size: 12px; color: #334155; line-height: 1.4; }
+  .task-item.done .task-text { text-decoration: line-through; color: #94A3B8; }
+
+  /* SECTION HEADER */
+  .section-head { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { background: #F1F5F9; border-radius: 6px; height: 6px; margin-top: 6px; overflow: hidden; }
+  .progress-bar { height: 6px; border-radius: 6px; transition: width .3s; }
+
+  /* RESPONSIVE — 1200px */
+  @media (max-width: 1200px) {
+    .kpi-bar { grid-template-columns: repeat(3, 1fr); }
+    .main-grid { grid-template-columns: 1fr 1fr; }
+    .social-row { grid-template-columns: repeat(2, 1fr); }
+    .tasks-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* RESPONSIVE — 768px (планшет) */
+  @media (max-width: 768px) {
+    .content { padding: 16px; }
+    .header { padding: 12px 16px; gap: 12px; }
+    .header-titles h1 { font-size: 15px; }
+    .header-titles p { display: none; }
+    #clock { font-size: 18px !important; letter-spacing: 1px !important; }
+    .tabs-bar { padding: 0 12px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 10px 14px; font-size: 12px; }
+    #refresh-btn { padding: 7px 14px !important; font-size: 12px !important; }
+    .kpi-bar { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .main-grid { grid-template-columns: 1fr; }
+    .social-row { grid-template-columns: 1fr 1fr; }
+    .tasks-grid { grid-template-columns: 1fr; }
+    .task-item { min-height: 36px; }
+  }
+
+  /* RESPONSIVE — 480px (мобилка) */
+  @media (max-width: 480px) {
+    .content { padding: 12px; }
+
+    /* Хедер */
+    .header { padding: 10px 14px; gap: 8px; }
+    .logo { width: 36px; height: 36px; font-size: 13px; }
+    .header-titles h1 { font-size: 14px; }
+    .header-right { gap: 6px; }
+    #clock { font-size: 15px !important; letter-spacing: 0 !important; }
+    #date { display: none; }
+    .live-badge { font-size: 9px; padding: 2px 6px; gap: 3px; }
+    .live-badge::before { width: 5px; height: 5px; }
+
+    /* Табы: иконка вместо текста у кнопки обновления */
+    .tabs-bar { padding: 0 8px; }
+    .tab-btn { padding: 9px 10px; font-size: 11px; }
+    #refresh-btn { padding: 7px 10px !important; font-size: 13px !important; min-width: 36px; }
+    #refresh-lbl { display: none; }
+    #refresh-status { display: none; }
+
+    /* KPI */
+    .kpi-bar { gap: 8px; margin-bottom: 14px; }
+    .kpi-card { padding: 12px 12px; }
+    .kpi-label { font-size: 10px; }
+    .kpi-value { font-size: 21px; }
+    .kpi-sub { font-size: 11px; }
+    .kpi-delta { font-size: 11px; }
+
+    /* Карточки */
+    .main-grid { gap: 10px; margin-bottom: 14px; }
+    .card { padding: 14px 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .card-title { font-size: 12px; margin-bottom: 10px; }
+
+    /* Таблицы проектов */
+    .proj-table { min-width: 290px; }
+    .proj-table th { font-size: 9px; padding: 3px 3px; }
+    .proj-table td { font-size: 11px; padding: 4px 3px; }
+    .proj-name { max-width: 85px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Алерты */
+    .alert-item { padding: 9px 10px; font-size: 11px; }
+    .alert-title { font-size: 10px; }
+
+    /* Каналы */
+    .channel-name { font-size: 12px; }
+    .channel-leads { font-size: 14px; }
+
+    /* Соцсети */
+    .social-row { grid-template-columns: 1fr; gap: 10px; }
+    .social-card { padding: 14px 12px; }
+
+    /* Задачи */
+    .tasks-section { margin-bottom: 16px; }
+    .task-group { padding: 14px 12px; }
+    .task-group-title { font-size: 10px; }
+    .task-text { font-size: 12px; }
+    .section-head { font-size: 10px; }
+  }
+
+  /* RESPONSIVE — 360px (очень маленький экран) */
+  @media (max-width: 360px) {
+    .header-titles h1 { font-size: 13px; }
+    #clock { font-size: 13px !important; }
+    .kpi-value { font-size: 18px; }
+    .kpi-card { padding: 10px 10px; }
+    .tab-btn { padding: 9px 8px; font-size: 10px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">RM</div>
+  <div class="header-titles">
+    <h1>РМ Групп &mdash; Дашборд маркетинга</h1>
+    <p>Дашборд &middot; B2C &middot; Лидогенерация персонала</p>
+  </div>
+  <div class="header-right">
+    <div style="text-align:right">
+      <div id="clock" style="font-family:monospace;font-size:22px;font-weight:700;color:#0EA5E9;letter-spacing:2px">00:00:00</div>
+      <div id="date" style="font-size:11px;color:#94A3B8;margin-top:2px;letter-spacing:0.05em">&ndash;</div>
+    </div>
+    <span class="live-badge">&#11044; LIVE</span>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs-bar" id="tabs-bar">
+  <button id="refresh-btn" onclick="fetchData()" style="margin-left:auto;padding:8px 18px;background:#0EA5E9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;display:flex;align-items:center;gap:6px;transition:opacity .2s;box-shadow:0 2px 8px rgba(14,165,233,.3)" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+    <span id="refresh-ico">&#8635;</span> <span id="refresh-lbl">Обновить данные</span>
+  </button>
+  <span id="refresh-status" style="font-size:11px;color:#94A3B8;font-family:monospace;margin-left:8px"></span>
+</div>
+
+<div class="content">
+  <div id="periods"></div>
+
+  <!-- TASKS -->
+  <div class="section-head">Задачи</div>
+  <div class="tasks-section">
+    <div class="tasks-grid">
+      <div class="task-group" id="tasks"></div>
+    </div>
+  </div>
+</div><!-- /content -->
+
+<script src="war-room-data.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════
+// РЕНДЕР ИЗ ДАННЫХ. Статусы проектов, дельты KPI, «Системные тренды»,
+// «Динамика недели» и метки «системная проблема» считаются кодом.
+// Руками правится только war-room-data.js.
+// ════════════════════════════════════════════════════════════════════
+var W = WAR_ROOM_DATA.weeks;
+var currentIdx = W.length - 1;
+
+function fmt(n) {
+  if (n === null || n === undefined) return '\u2014';
+  var neg = n < 0; var s = String(Math.round(Math.abs(n))), r = '';
+  for (var i = 0; i < s.length; i++) { if (i > 0 && (s.length - i) % 3 === 0) r += '\u00a0'; r += s[i]; }
+  return (neg ? '\u2212' : '') + r;
+}
+function esc(s) {
+  return s === null || s === undefined ? '' :
+    String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function sign(n) { return (n > 0 ? '+' : n < 0 ? '\u2212' : '\u00b1') + fmt(Math.abs(n)); }
+function cplClass(c) { return c == null ? '' : c <= 80 ? 'cpl-green' : c <= 130 ? 'cpl-yellow' : 'cpl-red'; }
+function pct(fact, plan) { return plan ? Math.round(fact / plan * 100) : null; }
+
+// ── Единая шкала статусов проекта (считается из план/факт) ──────────
+function projectStatus(p, weekIdx) {
+  if (p.plan == null || p.fact == null) return '\u2014';
+  var v = pct(p.fact, p.plan);
+  var sys = systemicStreak(p.name, weekIdx);
+  var tail = sys >= 3 ? ' <span style="color:#EF4444;font-weight:700">\u2022 системная (' + sys + ' пер.)</span>' : '';
+  if (v >= 200) return '<span class="proj-done">\u2B50 ' + v + '% плана</span>';
+  if (v >= 100) return '<span class="proj-done">\u2714 ' + v + '% плана</span>';
+  if (v >= 70)  return '<span class="plan-yellow">\u26A0 ' + v + '% плана</span>' + tail;
+  if (v >= 40)  return '<span class="plan-orange">\u23F3 ' + v + '% плана</span>' + tail;
+  return '<span class="plan-red">\uD83D\uDED1 ' + v + '% плана</span>' + tail;
+}
+// сколько недель подряд (включая текущую) проект ниже плана
+function systemicStreak(name, weekIdx) {
+  var streak = 0;
+  for (var i = weekIdx; i >= 0; i--) {
+    var pr = null;
+    for (var j = 0; j < W[i].projects.length; j++)
+      if (W[i].projects[j].name === name) { pr = W[i].projects[j]; break; }
+    if (!pr || pr.plan == null || pr.fact == null) break;
+    if (pct(pr.fact, pr.plan) >= 100) break;
+    streak++;
+  }
+  return streak;
+}
+
+// ── Дельты KPI (считаются из данных соседних недель) ────────────────
+function delta(cur, prev, opts) {
+  if (cur == null || prev == null) return '';
+  var diff = cur - prev;
+  var arrow = diff > 0 ? '\u2191' : diff < 0 ? '\u2193' : '\u2192';
+  var cls = diff === 0 ? 'neutral' : ((diff > 0) === !!opts.goodUp ? 'up' : 'down');
+  var p = prev !== 0 ? Math.round(diff / prev * 100) : 0;
+  var text;
+  if (opts.mode === 'series') text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(p) + '%)';
+  else if (opts.mode === 'rub') text = arrow + ' ' + sign(diff) + ' \u20BD (' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' \u20BD)';
+  else if (opts.mode === 'pctOnly') text = arrow + ' ' + sign(p) + '% к прошл. неделе (' + fmt(prev) + ' \u20BD)';
+  else text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(diff) + ' ' + (opts.unit || '') + ')';
+  return '<div class="kpi-delta ' + cls + '">' + text + '</div>';
+}
+
+function renderKPI(w, prev) {
+  var a = w.avito, pa = prev ? prev.avito : null;
+  var planLine = a.plan != null
+    ? '<div class="kpi-delta neutral">план: ' + fmt(a.plan) + (a.planNote ? ' (' + esc(a.planNote) + ')' : '') +
+      (a.leads != null ? ' \u2022 <span style="color:' + (pct(a.leads, a.plan) >= 100 ? '#10B981' : '#F59E0B') + ';font-weight:700;">выполнен ' + pct(a.leads, a.plan) + '%</span>' : '') + '</div>'
+    : '';
+  var vky = (w.vk || 0) + (w.yula || 0);
+  var pvky = prev ? (prev.vk || 0) + (prev.yula || 0) : null;
+  var h = '<div class="kpi-bar">';
+  h += '<div class="kpi-card"><div class="kpi-label">Авито лиды</div>' +
+       '<div class="kpi-value kpi-accent">' + fmt(a.leads) + '</div>' +
+       '<div class="kpi-sub">' + esc(w.label) + '</div>' +
+       delta(a.leads, pa && pa.leads, {goodUp:true, mode:'series'}) + planLine + '</div>';
+  h += '<div class="kpi-card"><div class="kpi-label">CPL Авито</div>' +
+       '<div class="kpi-value ' + cplClass(a.cpl) + '">' + fmt(a.cpl) + ' \u20BD</div>' +
+       '<div class="kpi-sub">стоимость лида</div>' +
+       delta(a.cpl, pa && pa.cpl, {goodUp:false, mode:'rub'}) + '</div>';
+  h += '<div class="kpi-card"><div class="kpi-label">Бюджет Авито</div>' +
+       '<div class="kpi-value">' + fmt(a.budget) + ' \u20BD</div>' +
+       '<div class="kpi-sub">расход за период</div>' +
+       delta(a.budget, pa && pa.budget, {goodUp:false, mode:'pctOnly'}) + '</div>';
+  h += '<div class="kpi-card"><div class="kpi-label">ВК + Юла</div>' +
+       '<div class="kpi-value" style="color:#0EA5E9;">' + fmt(vky || null) + '</div>' +
+       '<div class="kpi-sub">ВК: ' + fmt(w.vk) + ' \u2022 Юла: ' + fmt(w.yula) +
+       (w.vkyulaNote ? ' \u2022 ' + esc(w.vkyulaNote) : '') + '</div>' +
+       delta(vky || null, pvky || null, {goodUp:true, unit:'лид.'}) + '</div>';
+  if (w.extraKpi) {
+    var e = w.extraKpi;
+    var drs = drsTotals(w), pdrs = prev ? drsTotals(prev) : null;
+    // Значение ДРС красим по динамике: больше лидов, чем на прошлой неделе — зелёный.
+    var valCls = 'kpi-accent', valDelta = '';
+    if (drs != null && pdrs != null && pdrs !== 0) {
+      var dd = drs - pdrs, dp = Math.round(dd / pdrs * 100);
+      valCls  = dd > 0 ? 'kpi-up' : dd < 0 ? 'kpi-down' : 'kpi-accent';
+      valDelta = '<div class="kpi-delta ' + (dd > 0 ? 'up' : dd < 0 ? 'down' : 'neutral') + '">' +
+        (dd > 0 ? '↑' : dd < 0 ? '↓' : '→') + ' ' + fmt(pdrs) + ' → ' + fmt(drs) +
+        ' лид. (' + sign(dd) + ', ' + sign(dp) + '%)</div>';
+    }
+    h += '<div class="kpi-card"><div class="kpi-label">' + esc(e.label) + '</div>' +
+         '<div class="kpi-value ' + valCls + '">' + esc(e.value) + '</div>' +
+         '<div class="kpi-sub">' + esc(e.sub) + '</div>' +
+         valDelta +
+         (e.notes || []).map(kpiNote).join('') + '</div>';
+  }
+  return h + '</div>';
+}
+
+// Суммарные лиды ДРС (Урбан + ЧЛБ/КЗН) — для авторасчёта дельты
+function drsTotals(w) {
+  var u = w.urban && w.urban.leads, c = w.chlbkzn && w.chlbkzn.leads;
+  if (u == null && c == null) return null;
+  return (u || 0) + (c || 0);
+}
+
+// Заметка KPI: цвет по направлению И по смыслу метрики.
+// Рост лидов/подписчиков — хорошо (зелёный). Рост CPL/стоимости/расхода — плохо (красный).
+function kpiNote(n) {
+  var s = String(n || '');
+  // Плюс считаем только перед числом — иначе «ЧЛБ+КЗН» читается как рост.
+  var up   = /↑/.test(s) || /\+\s*\d/.test(s);
+  var down = /↓/.test(s) || /[−–]\s*\d/.test(s);
+  var costMetric = /CPL|стоимост|расход|бюджет|затрат/i.test(s);
+  var good = costMetric ? (down && !up) : (up && !down);
+  var bad  = costMetric ? (up && !down) : (down && !up);
+  var cls  = good ? 'up' : bad ? 'down' : 'neutral';
+  return '<div class="kpi-delta ' + cls + '">' + esc(s) + '</div>';
+}
+
+function renderProjects(w, idx) {
+  var rows = '';
+  w.projects.forEach(function(p) {
+    if (p.hidden) return;
+    rows += '<tr><td class="proj-name">' + esc(p.name) + '</td>' +
+      '<td>' + fmt(p.plan) + '</td><td>' + fmt(p.fact) + '</td>' +
+      '<td><span class="' + cplClass(p.cpl) + '">' + fmt(p.cpl) + (p.cpl != null ? ' \u20BD' : '') + '</span></td>' +
+      '<td>' + projectStatus(p, idx) + '</td></tr>';
+  });
+  return '<div class="card"><div class="card-title"><span class="dot dot-blue"></span>Авито \u2014 проекты (' + esc(w.label) + ')</div>' +
+    '<table class="proj-table"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>CPL</th><th>Статус</th></tr></thead>' +
+    '<tbody>' + rows + '</tbody></table></div>';
+}
+
+function drsDelta(cur, prev, key, opts) {
+  if (!prev || cur == null || prev[key] == null) return '';
+  return ' ' + delta(cur, prev[key], opts).replace('class="kpi-delta', 'style="display:inline" class="kpi-delta');
+}
+
+function renderChannels(w, prev, idx) {
+  var a = w.avito;
+  var tgNum = w.tg && w.tg.value ? parseInt(String(w.tg.value).replace(/[^\d]/g, ''), 10) || 0 : 0;
+  var tracked = (a.leads || 0) + (w.vk || 0) + (w.yula || 0) + tgNum +
+    (w.urban && w.urban.leads ? w.urban.leads : 0) + (w.chlbkzn && w.chlbkzn.leads ? w.chlbkzn.leads : 0);
+  var share = tracked ? Math.round((a.leads || 0) / tracked * 100) : 0;
+
+  var h = '<div class="card"><div class="card-title"><span class="dot dot-green"></span>Каналы лидогенерации</div>';
+  h += '<div class="channel-item"><div><div class="channel-name">\uD83D\uDD34 Авито</div><div style="font-size:11px;color:#64748B;">основной канал</div></div>' +
+       '<div class="channel-meta"><span class="channel-leads">' + fmt(a.leads) + '</span><span class="channel-cpl ' + cplClass(a.cpl) + '">CPL: ' + fmt(a.cpl) + ' \u20BD</span></div></div>';
+  h += '<div style="margin-bottom:12px;"><div class="channel-bar-wrap"><div class="channel-bar" style="width:' + share + '%"></div></div>' +
+       '<div style="font-size:10px;color:#94A3B8;margin-top:3px;">Доля среди отслеживаемых каналов: ' + share + '%</div></div>';
+  h += '<div class="channel-item"><div><div class="channel-name">\uD83D\uDC99 ВКонтакте + Юла</div><div style="font-size:11px;color:#64748B;">таргет / площадка</div></div>' +
+       '<div class="channel-meta"><span class="channel-leads" style="color:#0EA5E9;">' + fmt((w.vk || 0) + (w.yula || 0) || null) + '</span>' +
+       '<span class="channel-cpl" style="color:#64748B;">ВК ' + fmt(w.vk) + ' + Юла ' + fmt(w.yula) + '</span></div></div>';
+  h += '<div class="channel-item"><div><div class="channel-name">\uD83D\uDCAC Закуп TG</div><div style="font-size:11px;color:#64748B;">' + esc(w.tg && w.tg.sub || 'пакеты') + '</div></div>' +
+       '<div class="channel-meta"><span class="channel-leads">' + (w.tg && w.tg.value ? esc(w.tg.value) : '\u2014') + '</span></div></div>';
+  if (w.tg && w.tg.details && w.tg.details.length) {
+    h += '<div style="font-size:11px;color:#64748B;padding-left:4px;margin-top:4px;">' +
+      w.tg.details.map(esc).join('<br>') + '</div>';
+  }
+
+  // ── ДРС / Урбан Дикси ──
+  if (w.urban || w.chlbkzn) {
+    h += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">' +
+         '<div style="font-size:11px;color:#94A3B8;margin-bottom:8px;font-weight:600;letter-spacing:0.5px;">Проекты ДРС</div>';
+    var u = w.urban, pu = prev && prev.urban;
+    if (u) {
+      if (u.leads != null) {
+        h += '<div class="channel-item" style="padding-top:0;border-top:none;margin-bottom:4px;">' +
+             '<div><div class="channel-name">\uD83D\uDEE0 Урбан Дикси</div></div>' +
+             '<div class="channel-meta"><span class="channel-leads" style="color:#334155;">' + fmt(u.leads) + ' лидов</span>' +
+             '<span class="channel-cpl ' + cplClass(u.cpl) + '">CPL: ' + fmt(u.cpl) + ' \u20BD</span></div></div>';
+        var line = [];
+        if (pu && pu.leads != null) { var d = u.leads - pu.leads; line.push(fmt(pu.leads) + ' \u2192 ' + fmt(u.leads) + ' лидов (' + sign(pu.leads ? Math.round(d / pu.leads * 100) : 0) + '%)'); }
+        if (pu && pu.cpl != null && u.cpl != null) line.push('CPL ' + fmt(pu.cpl) + ' \u2192 ' + fmt(u.cpl) + ' \u20BD (' + sign(u.cpl - pu.cpl) + ' \u20BD)');
+        if (u.spend != null) line.push('затраты: ' + fmt(u.spend) + ' \u20BD');
+        if (line.length) h += '<div style="font-size:11px;color:#64748B;margin-bottom:4px;padding-left:4px;">' + line.join(' \u2022 ') + '</div>';
+        var cline = [];
+        if (u.conversion != null) {
+          var cmp = pu && pu.conversion != null
+            ? ' <span style="color:#64748B;">' + (u.conversion >= pu.conversion ? '\u2191' : '\u2193') + ' vs ' + String(pu.conversion).replace('.', ',') + '% (пр. период)</span>' : '';
+          cline.push('конверсия: <span style="color:' + (pu && pu.conversion != null && u.conversion < pu.conversion ? '#F59E0B' : '#10B981') + ';font-weight:600;">' + String(u.conversion).replace('.', ',') + '%</span>' + cmp);
+        }
+        if (u.adapted != null) cline.push('адаптированных: <span style="font-weight:600;color:#334155;">' + u.adapted + '</span>');
+        if (cline.length) h += '<div style="font-size:11px;padding-left:4px;margin-bottom:10px;">' + cline.join(' \u2022 ') + '</div>';
+        if (u.note) h += '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:10px;">' + esc(u.note) + '</div>';
+      } else {
+        h += '<div class="channel-item" style="padding-top:0;border-top:none;margin-bottom:4px;">' +
+             '<div><div class="channel-name">\uD83D\uDEE0 Урбан Дикси</div><div style="font-size:11px;color:#64748B;">конверсия в адаптацию</div></div>' +
+             '<div class="channel-meta"><span class="channel-leads kpi-accent" style="color:#0EA5E9;">' + String(u.conversion).replace('.', ',') + '%</span>' +
+             '<span class="channel-cpl" style="color:#64748B;">' + u.adapted + ' адаптировано</span></div></div>' +
+             (u.note ? '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:6px;">' + esc(u.note) + '</div>' : '');
+      }
+    }
+    var c = w.chlbkzn;
+    if (c) {
+      h += '<div class="channel-item" style="padding-top:0;border-top:none;margin-bottom:4px;">' +
+           '<div><div class="channel-name">\uD83D\uDEE0 ЧЛБ ОБ + КЗН ОБ</div></div>' +
+           '<div class="channel-meta"><span class="channel-leads" style="color:#334155;">' + fmt(c.leads) + ' лидов</span>' +
+           '<span class="channel-cpl ' + cplClass(c.cpl) + '">CPL: ' + fmt(c.cpl) + ' \u20BD</span></div></div>';
+      var l2 = [];
+      if (c.spend != null) l2.push('затраты: ' + fmt(c.spend) + ' \u20BD');
+      if (c.adapted != null) l2.push('адаптированных: ' + c.adapted);
+      if (c.conversion != null) l2.push('конверсия: <span style="color:#10B981;font-weight:600;">' + String(c.conversion).replace('.', ',') + '%</span>');
+      if (l2.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l2.join(' \u2022 ') + '</div>';
+      (c.notes || []).forEach(function(n) {
+        h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + esc(n) + '</div>';
+      });
+    }
+    h += '</div>';
+  }
+
+  // ── Соцсети — подписчики (ранние недели) ──
+  if (w.subscribers && w.subscribers.length) {
+    h += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">' +
+         '<div style="font-size:11px;color:#94A3B8;margin-bottom:6px;">Соцсети \u2014 подписчики</div>' +
+         w.subscribers.map(function(s) { return '<div style="font-size:12px;color:#334155;margin-bottom:4px;">' + esc(s) + '</div>'; }).join('') +
+         '</div>';
+  }
+
+  // ── Динамика недели (считается) ──
+  var t = weekTrends(w);
+  if (t) {
+    h += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">' +
+         '<div style="font-size:11px;color:#94A3B8;margin-bottom:6px;">Динамика недели (авторасчёт)</div>' +
+         '<div style="font-size:12px;color:#334155;margin-bottom:4px;">Лучший CPL: <span class="' + cplClass(t.best.cpl) + '">' + t.best.cpl + ' \u20BD (' + esc(t.best.name) + ')</span></div>' +
+         '<div style="font-size:12px;color:#334155;margin-bottom:4px;">Топ объём: <span style="font-weight:600;">' + esc(t.top.name) + ' ' + fmt(t.top.fact) + ' лид.</span></div>' +
+         '<div style="font-size:12px;color:#334155;">Средний CPL: <span class="' + cplClass(t.avg) + '">' + t.avg + ' \u20BD</span></div></div>';
+  }
+  return h + '</div>';
+}
+
+// сводные тренды недели — только из данных
+function weekTrends(w) {
+  var vis = w.projects.filter(function(p) { return !p.hidden && p.cpl != null; });
+  if (!vis.length) return null;
+  var best = vis.reduce(function(a, b) { return b.cpl < a.cpl ? b : a; });
+  var worst = vis.reduce(function(a, b) { return b.cpl > a.cpl ? b : a; });
+  var top = w.projects.filter(function(p) { return !p.hidden && p.fact != null; })
+    .reduce(function(a, b) { return b.fact > a.fact ? b : a; });
+  var avg = w.avito.budget && w.avito.leads ? Math.round(w.avito.budget / w.avito.leads) : null;
+  var withPlan = w.projects.filter(function(p) { return !p.hidden && p.plan != null && p.fact != null; });
+  var above = withPlan.filter(function(p) { return pct(p.fact, p.plan) >= 100; }).length;
+  return { best: best, worst: worst, top: top, avg: avg, above: above, total: withPlan.length };
+}
+
+// Автогенерация алертов из данных периода — для недель без ручного блока alerts.
+// Так «Требует внимания» есть у КАЖДОГО периода, включая прошлые и будущие.
+function autoAlerts(w, prev, idx) {
+  var out = [];
+  var vis = w.projects.filter(function(p) { return !p.hidden && p.plan != null && p.fact != null; });
+
+  // Критично: проекты сильно ниже плана (<60%), с меткой системности
+  vis.filter(function(p) { return pct(p.fact, p.plan) < 60; })
+     .sort(function(a, b) { return pct(a.fact, a.plan) - pct(b.fact, b.plan); })
+     .slice(0, 2)
+     .forEach(function(p) {
+       var v = pct(p.fact, p.plan), sys = systemicStreak(p.name, idx);
+       out.push({ type: 'critical',
+         title: '🛑 ' + p.name + ' — ' + v + '% плана' + (sys >= 3 ? ', системная (' + sys + ' пер.)' : ''),
+         text: (p.cpl != null ? 'CPL ' + p.cpl + ' ₽. ' : '') + p.fact + '/' + p.plan + ' лидов. ' +
+               (p.cpl != null && p.cpl > 130 ? 'Дорого — пересобрать кампанию.' : 'Нарастить объём.') });
+     });
+
+  // Внимание: рост CPL Авито к прошлой неделе > 12%
+  if (prev && prev.avito.cpl && w.avito.cpl) {
+    var dc = Math.round((w.avito.cpl - prev.avito.cpl) / prev.avito.cpl * 100);
+    if (dc >= 12) out.push({ type: 'warning',
+      title: '⚠ CPL Авито вырос ' + prev.avito.cpl + ' → ' + w.avito.cpl + ' ₽ (+' + dc + '%)',
+      text: 'Средняя стоимость лида выросла к прошлой неделе. Проверить перегретые проекты.' });
+  }
+
+  // Внимание: падение ВК+Юла к прошлой неделе
+  if (prev) {
+    var cur = (w.vk || 0) + (w.yula || 0), pv = (prev.vk || 0) + (prev.yula || 0);
+    if (pv > 0 && cur < pv) {
+      var dp = Math.round((cur - pv) / pv * 100);
+      out.push({ type: 'warning', title: '⚠ ВК+Юла ' + cur + ' лидов (' + dp + '%)',
+        text: pv + ' → ' + cur + ' лидов к прошлой неделе. Проверить таргет и площадки.' });
+    }
+  }
+
+  // Успех: сколько проектов выполнили план + лучший CPL
+  var t = weekTrends(w);
+  if (t && t.total) out.push({ type: 'success',
+    title: '✔ ' + t.above + ' из ' + t.total + ' проектов выполнили план',
+    text: (t.best ? 'Лучший CPL: ' + t.best.name + ' (' + t.best.cpl + ' ₽). ' : '') +
+          (t.avg ? 'Средний CPL недели ' + t.avg + ' ₽.' : '') });
+
+  return out;
+}
+
+function renderAlerts(w, prev, idx) {
+  var list = (w.alerts && w.alerts.length) ? w.alerts : autoAlerts(w, prev, idx);
+  if (!list.length) return '';
+  var badge = (w.alerts && w.alerts.length) ? '' :
+    '<span style="font-size:10px;color:#94A3B8;font-weight:500;margin-left:6px;">авторасчёт</span>';
+  var h = '<div class="card"><div class="card-title"><span class="dot dot-red"></span>Требует внимания' + badge + '</div>';
+  list.forEach(function(a) {
+    h += '<div class="alert-item alert-' + a.type + '"><div class="alert-title">' + esc(a.title) + '</div>' + esc(a.text) + '</div>';
+  });
+  return h + '</div>';
+}
+
+// Подсветка дельты в значении: рост → зелёный, падение → красный.
+// Ловит «+46», «(+46)», «−3», «(−12%)», «↑», «↓».
+function statVal(v) {
+  var s = String(v == null ? '' : v);
+  var up   = /[+↑]\s*\d/.test(s) || /↑/.test(s);
+  var down = /[−–-]\s*\d+\s*(%|\)|$)/.test(s) || /↓/.test(s);
+  var cls  = up && !down ? 'stat-up' : down && !up ? 'stat-down' : '';
+  var html = esc(s)
+    .replace(/([(]?[+↑][^)]*?[)]?)$/, '<span class="stat-badge up">$1</span>')
+    .replace(/([(]?[−–-]\s*\d[^)]*?[)]?)$/, '<span class="stat-badge down">$1</span>');
+  return '<span class="stat-val ' + cls + '">' + html + '</span>';
+}
+
+function renderSocial(w) {
+  var h = '<div class="section-head">Соцсети и закуп</div><div class="social-row">';
+  w.social.forEach(function(sc) {
+    h += '<div class="social-card"><div class="social-header"><span class="social-name">' + esc(sc.name) + '</span><span class="social-platform">' + esc(sc.platform) + '</span></div>';
+    sc.stats.forEach(function(st) {
+      h += '<div class="social-stat"><span class="stat-label">' + esc(st.label) + '</span>' + statVal(st.value) + '</div>';
+    });
+    h += '</div>';
+  });
+  var t = weekTrends(w);
+  if (t) {
+    h += '<div class="social-card"><div class="social-header"><span class="social-name">\uD83D\uDCC8 Системные тренды</span><span class="social-platform">' + esc(w.label) + ' \u2022 авторасчёт</span></div>' +
+      '<div class="social-stat"><span class="stat-label">Лучший CPL</span><span class="stat-val ' + cplClass(t.best.cpl) + '">' + t.best.cpl + ' \u20BD (' + esc(t.best.name) + ')</span></div>' +
+      '<div class="social-stat"><span class="stat-label">Худший CPL</span><span class="stat-val ' + cplClass(t.worst.cpl) + '">' + t.worst.cpl + ' \u20BD (' + esc(t.worst.name) + ')</span></div>' +
+      '<div class="social-stat"><span class="stat-label">Средний CPL</span><span class="stat-val ' + cplClass(t.avg) + '">' + fmt(t.avg) + ' \u20BD</span></div>' +
+      '<div class="social-stat"><span class="stat-label">Проектов выше плана</span><span class="stat-val ' + (t.above === t.total ? 'cpl-green' : '') + '">' + t.above + ' из ' + t.total + '</span></div></div>';
+  }
+  return h + '</div>';
+}
+
+function renderPeriod(idx) {
+  var w = W[idx], prev = idx > 0 ? W[idx - 1] : null;
+  return '<div class="period-section' + (idx === currentIdx ? ' active' : '') + '" id="period-' + idx + '">' +
+    renderKPI(w, prev) +
+    '<div class="main-grid">' + renderProjects(w, idx) + renderChannels(w, prev, idx) + renderAlerts(w, prev, idx) + '</div>' +
+    renderSocial(w) + '</div>';
+}
+
+function renderTabs() {
+  var bar = document.getElementById('tabs-bar');
+  bar.querySelectorAll('.tab-btn').forEach(function(b) { b.remove(); });
+  var refBtn = document.getElementById('refresh-btn');
+  W.forEach(function(w, i) {
+    var b = document.createElement('button');
+    b.className = 'tab-btn' + (i === currentIdx ? ' active' : '');
+    b.textContent = w.label;
+    b.onclick = function() { showPeriod(i); };
+    bar.insertBefore(b, refBtn);
+  });
+}
+
+function renderAll() {
+  renderTabs();
+  document.getElementById('periods').innerHTML = W.map(function(_, i) { return renderPeriod(i); }).join('');
+  renderTasks();
+  restoreTasks();
+  validateData();
+}
+
+function showPeriod(idx) {
+  currentIdx = idx;
+  document.querySelectorAll('.period-section').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+  document.querySelectorAll('.tab-btn').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+}
+
+// ── Валидация данных (пункт 2): расхождения — в консоль и статус ────
+function validateData() {
+  var problems = [];
+  W.forEach(function(w, i) {
+    var a = w.avito;
+    if (a.leads != null && a.budget != null && a.cpl != null) {
+      var calc = a.budget / a.leads;
+      if (Math.abs(calc - a.cpl) > 3)
+        problems.push(w.label + ': заявленный CPL ' + a.cpl + ' \u20BD не сходится с бюджет/лиды = ' + Math.round(calc) + ' \u20BD');
+    }
+    if (a.leads == null) problems.push(w.label + ': нет данных по лидам Авито');
+    w.projects.forEach(function(p) {
+      if (p.fact == null && !p.hidden) problems.push(w.label + ' / ' + p.name + ': нет факта');
+    });
+  });
+  if (problems.length) {
+    console.warn('WAR ROOM: найдены расхождения в данных:\n' + problems.join('\n'));
+    document.getElementById('refresh-status').textContent = '\u26A0 ' + problems.length + ' расхожд. в данных (см. консоль)';
+  }
+}
+
+// ── Задачи ───────────────────────────────────────────────────────────
+function renderTasks() {
+  document.getElementById('tasks').innerHTML = WAR_ROOM_DATA.tasks.map(function(t) {
+    return '<div class="task-item" onclick="toggleTask(this)"><div class="task-cb"></div><div class="task-text">' + esc(t) + '</div></div>';
+  }).join('');
+}
+function toggleTask(el) {
+  el.classList.toggle('done');
+  var text = el.querySelector('.task-text').textContent.trim();
+  var done = JSON.parse(localStorage.getItem('doneTasks') || '[]');
+  if (el.classList.contains('done')) { if (done.indexOf(text) < 0) done.push(text); }
+  else done = done.filter(function(t) { return t !== text; });
+  localStorage.setItem('doneTasks', JSON.stringify(done));
+}
+function restoreTasks() {
+  var done = JSON.parse(localStorage.getItem('doneTasks') || '[]');
+  document.querySelectorAll('.task-item').forEach(function(el) {
+    var text = el.querySelector('.task-text').textContent.trim();
+    if (done.indexOf(text) >= 0) el.classList.add('done');
+  });
+}
+
+// ── Часы ─────────────────────────────────────────────────────────────
+(function tick() {
+  var d = new Date(), z = function(n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('clock').textContent = z(d.getHours()) + ':' + z(d.getMinutes()) + ':' + z(d.getSeconds());
+  var dn = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  var mn = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  document.getElementById('date').textContent = dn[d.getDay()] + ', ' + d.getDate() + ' ' + mn[d.getMonth()] + ' ' + d.getFullYear();
+  setTimeout(tick, 1000);
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// АВТООБНОВЛЕНИЕ ИЗ GOOGLE SHEETS (Apps Script)
+// Полученные данные записываются в WAR_ROOM_DATA и всё перерисовывается
+// ════════════════════════════════════════════════════════════════════
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4FukBYIYa5doE3Ce0GBuZatPIOJLYA7mxUFM03fETCqJWcCTY4IvumB7VnCtVYyiC/exec';
+
+function fetchData() {
+  if (!SCRIPT_URL) { showSetupModal(); return; }
+  var btn = document.getElementById('refresh-btn'),
+      ico = document.getElementById('refresh-ico'),
+      lbl = document.getElementById('refresh-lbl'),
+      status = document.getElementById('refresh-status');
+  ico.style.animation = 'spin 1s linear infinite'; ico.style.display = 'inline-block';
+  lbl.textContent = 'Загружаю...'; btn.disabled = true; status.textContent = '';
+
+  fetch(SCRIPT_URL + '?t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      applySheetData(data);
+      ico.style.animation = ''; ico.textContent = '\u2713';
+      lbl.textContent = 'Обновлено'; btn.style.background = '#10B981';
+      status.textContent = 'обновлено ' + (data.updated || 'только что');
+      btn.disabled = false;
+      setTimeout(function() { ico.textContent = '\u21BB'; lbl.textContent = 'Обновить данные'; btn.style.background = '#0EA5E9'; }, 3000);
+    })
+    .catch(function() {
+      ico.style.animation = ''; ico.textContent = '!';
+      lbl.textContent = 'Ошибка'; btn.style.background = '#EF4444';
+      status.textContent = 'Проверь URL скрипта'; btn.disabled = false;
+      setTimeout(function() { ico.textContent = '\u21BB'; lbl.textContent = 'Обновить данные'; btn.style.background = '#0EA5E9'; status.textContent = ''; }, 4000);
+    });
+}
+
+function applySheetData(data) {
+  if (!data.avito || !data.avito.weeks || !data.avito.weeks.length) return;
+  var latest = data.avito.weeks[data.avito.weeks.length - 1];
+  var label = latest.label || latest.week || W[W.length - 1].label;
+
+  var week = null;
+  for (var i = 0; i < W.length; i++)
+    if (W[i].label === label || label.indexOf(W[i].label) >= 0 || W[i].label.indexOf(label) >= 0) { week = W[i]; break; }
+  if (!week) {
+    week = { label: label, avito: {}, vk: null, yula: null, extraKpi: null,
+             projects: [], alerts: [], social: [], tg: null };
+    W.push(week);
+  }
+  if (latest.leads != null) week.avito.leads = latest.leads;
+  if (latest.budget != null) week.avito.budget = Math.round(latest.budget);
+  if (latest.cpl != null) week.avito.cpl = Math.round(latest.cpl);
+  if (latest.plan != null) week.avito.plan = latest.plan;
+
+  var projs = [];
+  (latest.done || []).concat(latest.lag || []).forEach(function(p) {
+    projs.push({ name: p.name, plan: p.plan != null ? p.plan : null,
+                 fact: p.fact != null ? p.fact : null,
+                 cpl: p.cpl != null ? Math.round(p.cpl) : null, hidden: false });
+  });
+  if (projs.length) week.projects = projs;
+
+  if (data.vkyula && data.vkyula.total != null) {
+    if (data.vkyula.vk != null) week.vk = data.vkyula.vk;
+    if (data.vkyula.yula != null) week.yula = data.vkyula.yula;
+    if (week.vk == null && week.yula == null) { week.vk = data.vkyula.total; week.yula = 0; }
+  }
+
+  currentIdx = W.indexOf(week);
+  renderAll();
+  showPeriod(currentIdx);
+}
+
+// анимация спиннера
+var style = document.createElement('style');
+style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+document.head.appendChild(style);
+
+function showSetupModal() {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:32px;max-width:540px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:Inter,sans-serif">'
+    + '<h2 style="font-size:18px;font-weight:700;margin-bottom:8px">Настройка автообновления</h2>'
+    + '<p style="color:#64748B;font-size:13px;line-height:1.6;margin-bottom:20px">Разверни Google Apps Script (файл war_room_api.gs) и вставь URL:</p>'
+    + '<div style="display:flex;gap:10px">'
+    + '<input id="script-url-input" type="text" placeholder="Вставь URL скрипта сюда..." style="flex:1;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:13px;outline:none">'
+    + '<button onclick="saveScriptUrl()" style="padding:10px 18px;background:#0EA5E9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Сохранить</button>'
+    + '</div>'
+    + '<button onclick="this.parentNode.parentNode.remove()" style="margin-top:12px;background:transparent;border:none;color:#94A3B8;font-size:12px;cursor:pointer">Закрыть</button>'
+    + '</div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+}
+function saveScriptUrl() {
+  var val = document.getElementById('script-url-input').value.trim();
+  if (!val) return;
+  SCRIPT_URL = val;
+  localStorage.setItem('warroom_script_url', val);
+  var m = document.querySelector('div[style*="inset:0"]'); if (m) m.remove();
+  fetchData();
+}
+(function() {
+  var saved = localStorage.getItem('warroom_script_url');
+  if (saved) SCRIPT_URL = saved;
+})();
+
+renderAll();
+</script>
+</body>
+</html>

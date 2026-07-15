@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Securika 2026 — Активность конкурентов, апрель</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #050A0F;
+  --card:    #0D1117;
+  --card2:   #111820;
+  --border:  #1E2D3D;
+  --accent:  #22D3EE;
+  --accent2: #0EA5E9;
+  --green:   #10B981;
+  --yellow:  #F59E0B;
+  --red:     #EF4444;
+  --purple:  #A78BFA;
+  --orange:  #F97316;
+  --text:    #E2E8F0;
+  --muted:   #64748B;
+  --mono:    'JetBrains Mono', monospace;
+  --sans:    'Inter', sans-serif;
+}
+
+html { background: var(--bg); }
+body { font-family: var(--sans); color: var(--text); background: var(--bg); font-size: 13px; line-height: 1.5; }
+
+/* ── PRINT LAYOUT ─────────────────────────────────────── */
+@page { size: A4 landscape; margin: 0; }
+
+.slide {
+  width: 297mm;
+  min-height: 210mm;
+  background: var(--bg);
+  padding: 28px 36px;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.slide:last-child { page-break-after: avoid; }
+
+/* noise texture overlay */
+.slide::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 10%, rgba(34,211,238,.04) 0%, transparent 60%),
+              radial-gradient(ellipse at 10% 90%, rgba(14,165,233,.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── SHARED COMPONENTS ───────────────────────────────── */
+.slide-num {
+  position: absolute; top: 20px; right: 28px;
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+}
+.tag {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase;
+}
+.tag-cyan  { background: rgba(34,211,238,.12); color: var(--accent); border: 1px solid rgba(34,211,238,.2); }
+.tag-green { background: rgba(16,185,129,.12); color: var(--green);  border: 1px solid rgba(16,185,129,.2); }
+.tag-yellow{ background: rgba(245,158,11,.12); color: var(--yellow); border: 1px solid rgba(245,158,11,.2); }
+.tag-red   { background: rgba(239,68,68,.12);  color: var(--red);    border: 1px solid rgba(239,68,68,.2); }
+.tag-purple{ background: rgba(167,139,250,.12);color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+.tag-orange{ background: rgba(249,115,22,.12); color: var(--orange); border: 1px solid rgba(249,115,22,.2); }
+.tag-muted { background: rgba(100,116,139,.1); color: var(--muted);  border: 1px solid rgba(100,116,139,.2); }
+
+.section-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px;
+}
+.card2 { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; }
+
+/* ── SLIDE 1: COVER ──────────────────────────────────── */
+.cover { justify-content: center; }
+.cover-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.cover-eyebrow-line { flex: 1; height: 1px; background: var(--border); }
+.cover h1 { font-size: 38px; font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 14px; }
+.cover h1 span { color: var(--accent); }
+.cover .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 36px; font-weight: 400; }
+.cover-meta { display: flex; gap: 32px; }
+.cover-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.cover-meta-item .val { font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+.cover-meta-item .val span { color: var(--accent); }
+.cover-meta-item .lbl { font-size: 11px; color: var(--muted); }
+.cover-footer {
+  position: absolute; bottom: 24px; left: 36px; right: 36px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; color: var(--muted);
+}
+
+/* ── SLIDE 2: KPI ────────────────────────────────────── */
+.kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;
+}
+.kpi-card .kpi-val { font-size: 30px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
+.kpi-card .kpi-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.kpi-card .kpi-sub { font-size: 10px; color: var(--muted); }
+.kpi-card.accent { border-color: rgba(34,211,238,.3); background: rgba(34,211,238,.06); }
+
+.insight-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; flex: 1; }
+.insight-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px;
+}
+.insight-card .i-num { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.insight-card .i-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+.insight-card .i-text { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+/* ── SLIDE 3: TOP POSTS ──────────────────────────────── */
+.top-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.top-item {
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 16px; display: grid; grid-template-columns: 28px 80px 80px 1fr 80px 100px;
+  align-items: center; gap: 12px;
+}
+.top-item.gold   { border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.04); }
+.top-item.silver { border-color: rgba(148,163,184,.3); }
+.top-item.bronze { border-color: rgba(249,115,22,.3); }
+.top-rank { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.top-rank.gold-t  { color: var(--yellow); }
+.top-rank.silver-t{ color: #94A3B8; }
+.top-rank.bronze-t{ color: var(--orange); }
+.top-company { font-size: 11px; font-weight: 600; }
+.top-date { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.top-title { font-size: 11px; color: var(--text); }
+.top-views { font-family: var(--mono); font-size: 16px; font-weight: 700; text-align: right; }
+.views-bar-wrap { height: 4px; background: var(--border); border-radius: 2px; }
+.views-bar { height: 4px; border-radius: 2px; background: var(--accent); }
+
+/* ── SLIDE 4: COMPANY RATING ─────────────────────────── */
+.company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; }
+.co-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 18px; display: flex; flex-direction: column; gap: 10px;
+}
+.co-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.co-name { font-size: 14px; font-weight: 700; }
+.co-handle { font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 2px; }
+.co-stats { display: flex; gap: 16px; }
+.co-stat { display: flex; flex-direction: column; }
+.co-stat-val { font-size: 20px; font-weight: 800; letter-spacing: -1px; }
+.co-stat-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+.co-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; }
+.co-bar { height: 3px; border-radius: 2px; }
+.co-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ── SLIDE 5: БОЛИД ──────────────────────────────────── */
+.company-detail { display: grid; grid-template-columns: 1fr 1.8fr; gap: 20px; flex: 1; }
+.cd-left { display: flex; flex-direction: column; gap: 12px; }
+.cd-right { display: flex; flex-direction: column; gap: 8px; }
+.big-num { font-size: 56px; font-weight: 900; letter-spacing: -3px; line-height: 1; }
+.big-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.stat-row:last-child { border-bottom: none; }
+.stat-row .s-lbl { font-size: 11px; color: var(--muted); }
+.stat-row .s-val { font-size: 11px; font-weight: 600; }
+.post-row {
+  background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 12px; display: grid; grid-template-columns: 1fr 70px 90px;
+  align-items: center; gap: 8px;
+}
+.post-title { font-size: 11px; }
+.post-views { font-family: var(--mono); font-size: 12px; font-weight: 700; text-align: right; }
+.post-tag { text-align: right; }
+
+/* ── SLIDE 6: РУБЕЖ ──────────────────────────────────── */
+
+/* ── SLIDE 7: АРГУС / ISS / ЭТМ ─────────────────────── */
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; flex: 1; }
+.mini-co { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.mini-co-name { font-size: 16px; font-weight: 800; }
+.mini-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mini-stat { display: flex; flex-direction: column; }
+.mini-val { font-size: 22px; font-weight: 800; letter-spacing: -1px; }
+.mini-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; }
+.mini-posts { display: flex; flex-direction: column; gap: 5px; }
+.mini-post { background: var(--card2); border-radius: 5px; padding: 6px 10px; font-size: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.mini-post-title { color: var(--muted); flex: 1; }
+.mini-post-v { font-family: var(--mono); font-weight: 700; font-size: 11px; white-space: nowrap; }
+
+/* ── SLIDE 8: OTHER COMPANIES ────────────────────────── */
+.others-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; flex: 1; }
+.other-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.other-name { font-size: 13px; font-weight: 700; }
+.other-stat { font-size: 10px; color: var(--muted); }
+.other-posts { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+.other-post { font-size: 10px; padding: 4px 8px; background: var(--card2); border-radius: 4px; display: flex; justify-content: space-between; }
+
+/* ── SLIDE 9: INSIGHTS ───────────────────────────────── */
+.insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1; }
+.ins-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 20px; display: flex; gap: 14px;
+}
+.ins-num { font-size: 36px; font-weight: 900; color: var(--accent); letter-spacing: -2px; line-height: 1; flex-shrink: 0; width: 44px; }
+.ins-body {}
+.ins-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.ins-text  { font-size: 11px; color: var(--muted); line-height: 1.7; }
+.ins-text strong { color: var(--text); }
+
+/* ── PAGE HEADER ─────────────────────────────────────── */
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.page-title { font-size: 18px; font-weight: 800; letter-spacing: -.5px; }
+.page-title span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 1 — ОБЛОЖКА
+═══════════════════════════════════════════════ -->
+<div class="slide cover">
+  <div class="slide-num">01 / 09</div>
+
+  <div class="cover-eyebrow">
+    <div class="tag tag-cyan">КОНФИДЕНЦИАЛЬНО</div>
+    <div class="cover-eyebrow-line"></div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">АПРЕЛЬ 2026</div>
+  </div>
+
+  <h1>Активность конкурентов<br><span>Securika Moscow 2026</span></h1>
+  <div class="subtitle">Анализ контента и охватов за апрель 2026 — Telegram, сайты, СМИ</div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="val"><span>103</span></div>
+      <div class="lbl">публикации проанализировано</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val"><span>8</span></div>
+      <div class="lbl">конкурентов с данными</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val"><span>3</span></div>
+      <div class="lbl">источника: TG / Сайт / СМИ</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="val"><span>4 040</span></div>
+      <div class="lbl">макс. просмотров — 1 пост</div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <span>Маркетинг РМ Групп · Дарья Сороченкова</span>
+    <span style="font-family:var(--mono)">Securika_2026_competitors_apr.pdf</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 2 — КЛЮЧЕВЫЕ ПОКАЗАТЕЛИ
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">02 / 09</div>
+  <div class="page-header">
+    <div class="page-title">Ключевые <span>показатели</span></div>
+    <div class="tag tag-cyan">АПРЕЛЬ 2026</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card accent">
+      <div class="kpi-val" style="color:var(--accent)">4 040</div>
+      <div class="kpi-lbl">рекорд просмотров</div>
+      <div class="kpi-sub">Аргус-Спектр / Стрелец-V-ПРО</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:var(--green)">79</div>
+      <div class="kpi-lbl">постов в Telegram</div>
+      <div class="kpi-sub">5 активных каналов</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:var(--yellow)">24</div>
+      <div class="kpi-lbl">публикаций на сайтах</div>
+      <div class="kpi-sub">пресс-центры компаний</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:var(--purple)">~130К</div>
+      <div class="kpi-lbl">суммарный охват TG</div>
+      <div class="kpi-sub">по измеренным постам</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:var(--orange)">1 780</div>
+      <div class="kpi-lbl">средний охват топ-30</div>
+      <div class="kpi-sub">постов с просмотрами</div>
+    </div>
+  </div>
+
+  <div class="insight-row">
+    <div class="insight-card" style="border-color:rgba(16,185,129,.2)">
+      <div class="i-num" style="color:var(--green)">🥇 Болид</div>
+      <div class="i-title">Лидер по объёму и охвату</div>
+      <div class="i-text">17+ постов в апреле, 6 из них набрали <strong>более 2 000 просмотров</strong>. Активно постил до, во время и после Securika. Продуктовые посты и семинары работают лучше выставочного контента.</div>
+    </div>
+    <div class="insight-card" style="border-color:rgba(34,211,238,.2)">
+      <div class="i-num" style="color:var(--accent)">🥈 Рубеж</div>
+      <div class="i-title">Наибольшее количество постов</div>
+      <div class="i-text">40+ постов за апрель, стабильный охват <strong>1 200–2 400 просмотров</strong>. Сильная образовательная экосистема: вебинары, PROПРОЕКТ, студенческая лига. Лучший контент-маркетинг в нише.</div>
+    </div>
+    <div class="insight-card" style="border-color:rgba(245,158,11,.2)">
+      <div class="i-num" style="color:var(--yellow)">🥉 Аргус</div>
+      <div class="i-title">Рекордный охват одного поста</div>
+      <div class="i-text">Не постил <strong>с февраля по 22 апреля</strong> — только выставочный контент. Зато видео «Стрелец-V-ПРО» дало <strong>4 040 просмотров</strong> — абсолютный рекорд апреля. Высокое качество при низкой частоте.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 3 — ТОП-10 ПОСТОВ
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">03 / 09</div>
+  <div class="page-header">
+    <div class="page-title">Топ‑10 постов <span>по охвату</span></div>
+    <div class="tag tag-yellow">TELEGRAM · АПРЕЛЬ 2026</div>
+  </div>
+
+  <div class="top-list">
+
+    <div class="top-item gold">
+      <div class="top-rank gold-t">#1</div>
+      <div class="top-company">Аргус-Спектр</div>
+      <div class="top-date">22 апр</div>
+      <div class="top-title">Видео «Стрелец-V-ПРО» — ключевой хит выставки Securika</div>
+      <div>
+        <div class="top-views" style="color:var(--yellow)">4 040</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:100%;background:var(--yellow)"></div></div>
+      </div>
+      <div class="tag tag-cyan">Продукт</div>
+    </div>
+
+    <div class="top-item silver">
+      <div class="top-rank silver-t">#2</div>
+      <div class="top-company">Болид</div>
+      <div class="top-date">апрель</div>
+      <div class="top-title">Семинары по актуальным нормам СПЗ в Казани и Кирове</div>
+      <div>
+        <div class="top-views" style="color:#94A3B8">2 930</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:72%;background:#94A3B8"></div></div>
+      </div>
+      <div class="tag tag-green">Обучение</div>
+    </div>
+
+    <div class="top-item bronze">
+      <div class="top-rank bronze-t">#3</div>
+      <div class="top-company">Болид</div>
+      <div class="top-date">7 апр</div>
+      <div class="top-title">Анонс семинаров Болид на Securika Moscow 2026</div>
+      <div>
+        <div class="top-views" style="color:var(--orange)">2 570</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:64%;background:var(--orange)"></div></div>
+      </div>
+      <div class="tag tag-orange">Securika</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#4</div>
+      <div class="top-company">Болид</div>
+      <div class="top-date">7 апр</div>
+      <div class="top-title">Приглашение на Securika — стенд A3023</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 550</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:63%"></div></div>
+      </div>
+      <div class="tag tag-orange">Securika</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#5</div>
+      <div class="top-company">Болид</div>
+      <div class="top-date">22 апр</div>
+      <div class="top-title">Видеоклип VK — первый день Securika</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 520</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:62%"></div></div>
+      </div>
+      <div class="tag tag-orange">Securika</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#6</div>
+      <div class="top-company">Болид</div>
+      <div class="top-date">7 апр</div>
+      <div class="top-title">Победа в I Национальном рейтинге производителей 2026</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 450</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:61%"></div></div>
+      </div>
+      <div class="tag tag-yellow">Награда</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#7</div>
+      <div class="top-company">Рубеж</div>
+      <div class="top-date">апрель</div>
+      <div class="top-title">Анонс форума PROПРОЕКТ 2026 в Москве</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 400</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:59%"></div></div>
+      </div>
+      <div class="tag tag-cyan">Событие</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#8</div>
+      <div class="top-company">Аргус-Спектр</div>
+      <div class="top-date">22 апр</div>
+      <div class="top-title">Фильм «Путь Стрельца» и выставка Securika</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 320</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:57%"></div></div>
+      </div>
+      <div class="tag tag-cyan">Контент</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#9</div>
+      <div class="top-company">Болид</div>
+      <div class="top-date">3 апр</div>
+      <div class="top-title">Обновление АРМ «Орион Икс» v1.2.0 — новые функции</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 190</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:54%"></div></div>
+      </div>
+      <div class="tag tag-cyan">Продукт</div>
+    </div>
+
+    <div class="top-item">
+      <div class="top-rank" style="color:var(--muted)">#10</div>
+      <div class="top-company">Рубеж</div>
+      <div class="top-date">апрель</div>
+      <div class="top-title">Вебинар «Новый СП 3.13130» — разбор изменений</div>
+      <div>
+        <div class="top-views" style="color:var(--accent)">2 270</div>
+        <div class="views-bar-wrap" style="margin-top:4px"><div class="views-bar" style="width:56%"></div></div>
+      </div>
+      <div class="tag tag-green">Обучение</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 4 — РЕЙТИНГ КОМПАНИЙ
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">04 / 09</div>
+  <div class="page-header">
+    <div class="page-title">Рейтинг <span>активности</span></div>
+    <div class="tag tag-green">ВСЕ КАНАЛЫ · АПРЕЛЬ 2026</div>
+  </div>
+
+  <div class="company-grid">
+
+    <div class="co-card" style="border-color:rgba(245,158,11,.3)">
+      <div class="co-header">
+        <div>
+          <div class="co-name">🥇 Болид</div>
+          <div class="co-handle">@bolid_nvp · bolid.ru</div>
+        </div>
+        <div class="tag tag-yellow">ЛИДЕР</div>
+      </div>
+      <div class="co-stats">
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--yellow)">17+</div><div class="co-stat-lbl">постов TG</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--green)">2 930</div><div class="co-stat-lbl">макс. просм.</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--accent)">~38К</div><div class="co-stat-lbl">сумм. охват</div></div>
+      </div>
+      <div class="co-bar-wrap"><div class="co-bar" style="width:95%;background:var(--yellow)"></div></div>
+      <div class="co-tags">
+        <div class="tag tag-green">Продукты</div><div class="tag tag-orange">Securika</div><div class="tag tag-cyan">Обучение</div><div class="tag tag-yellow">Награды</div>
+      </div>
+    </div>
+
+    <div class="co-card" style="border-color:rgba(16,185,129,.3)">
+      <div class="co-header">
+        <div>
+          <div class="co-name">🥈 Рубеж</div>
+          <div class="co-handle">@rmc_rubezh · products.rubezh.ru</div>
+        </div>
+        <div class="tag tag-green">КОНТЕНТ</div>
+      </div>
+      <div class="co-stats">
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--green)">40+</div><div class="co-stat-lbl">постов TG</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--green)">2 400</div><div class="co-stat-lbl">макс. просм.</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--accent)">~55К</div><div class="co-stat-lbl">сумм. охват</div></div>
+      </div>
+      <div class="co-bar-wrap"><div class="co-bar" style="width:88%;background:var(--green)"></div></div>
+      <div class="co-tags">
+        <div class="tag tag-green">Обучение</div><div class="tag tag-cyan">Продукты</div><div class="tag tag-purple">Сообщество</div>
+      </div>
+    </div>
+
+    <div class="co-card" style="border-color:rgba(34,211,238,.3)">
+      <div class="co-header">
+        <div>
+          <div class="co-name">🥉 Аргус-Спектр</div>
+          <div class="co-handle">@argus_spectr · argus-spectr.ru</div>
+        </div>
+        <div class="tag tag-cyan">ВИРУСНЫЙ</div>
+      </div>
+      <div class="co-stats">
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--accent)">10+</div><div class="co-stat-lbl">постов TG</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--yellow)">4 040</div><div class="co-stat-lbl">макс. просм.</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--accent)">~20К</div><div class="co-stat-lbl">сумм. охват</div></div>
+      </div>
+      <div class="co-bar-wrap"><div class="co-bar" style="width:72%;background:var(--accent)"></div></div>
+      <div class="co-tags">
+        <div class="tag tag-orange">Securika only</div><div class="tag tag-cyan">Инновации</div>
+      </div>
+    </div>
+
+    <div class="co-card">
+      <div class="co-header">
+        <div>
+          <div class="co-name">4 ЭТМ</div>
+          <div class="co-handle">@etm_company</div>
+        </div>
+        <div class="tag tag-muted">НЕТ НА ВЫСТАВКЕ</div>
+      </div>
+      <div class="co-stats">
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">25+</div><div class="co-stat-lbl">постов TG</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">900</div><div class="co-stat-lbl">макс. просм.</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">~15К</div><div class="co-stat-lbl">сумм. охват</div></div>
+      </div>
+      <div class="co-bar-wrap"><div class="co-bar" style="width:35%;background:var(--muted)"></div></div>
+      <div class="co-tags">
+        <div class="tag tag-muted">Продукты</div><div class="tag tag-muted">Дистрибьюция</div>
+      </div>
+    </div>
+
+    <div class="co-card">
+      <div class="co-header">
+        <div>
+          <div class="co-name">5 ISS</div>
+          <div class="co-handle">@iss_ru</div>
+        </div>
+        <div class="tag tag-yellow">ПОБЕДИТЕЛЬ КОНКУРСА</div>
+      </div>
+      <div class="co-stats">
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">9</div><div class="co-stat-lbl">постов TG</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">573</div><div class="co-stat-lbl">макс. просм.</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">~3К</div><div class="co-stat-lbl">сумм. охват</div></div>
+      </div>
+      <div class="co-bar-wrap"><div class="co-bar" style="width:18%;background:var(--muted)"></div></div>
+      <div class="co-tags">
+        <div class="tag tag-cyan">SecurOS</div><div class="tag tag-yellow">Реестр МПТ</div>
+      </div>
+    </div>
+
+    <div class="co-card">
+      <div class="co-header">
+        <div>
+          <div class="co-name">6–8 TRASSIR / Hikvision / Parsec</div>
+          <div class="co-handle">сайты компаний</div>
+        </div>
+        <div class="tag tag-muted">ТОЛЬКО САЙТ</div>
+      </div>
+      <div class="co-stats">
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">3+2+2</div><div class="co-stat-lbl">публикаций</div></div>
+        <div class="co-stat"><div class="co-stat-val" style="color:var(--muted)">—</div><div class="co-stat-lbl">данных TG нет</div></div>
+      </div>
+      <div class="co-bar-wrap"><div class="co-bar" style="width:10%;background:var(--muted)"></div></div>
+      <div class="co-tags">
+        <div class="tag tag-muted">Новинки продуктов</div><div class="tag tag-muted">PR</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 5 — БОЛИД ДЕТАЛЬНО
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">05 / 09</div>
+  <div class="page-header">
+    <div class="page-title"><span>Болид</span> — детальный анализ</div>
+    <div style="display:flex;gap:8px"><div class="tag tag-yellow">ЛИДЕР АПРЕЛЯ</div><div class="tag tag-green">@bolid_nvp</div></div>
+  </div>
+
+  <div class="company-detail">
+    <div class="cd-left">
+      <div class="card">
+        <div class="big-num" style="color:var(--yellow)">2 250</div>
+        <div class="big-lbl">средний охват поста в апреле</div>
+      </div>
+      <div class="card">
+        <div class="stat-row"><span class="s-lbl">Постов в TG</span><span class="s-val">17+</span></div>
+        <div class="stat-row"><span class="s-lbl">Суммарный охват</span><span class="s-val" style="color:var(--green)">~38 000</span></div>
+        <div class="stat-row"><span class="s-lbl">Постов ≥ 2 000</span><span class="s-val" style="color:var(--yellow)">6 постов</span></div>
+        <div class="stat-row"><span class="s-lbl">Публикаций на сайте</span><span class="s-val">3</span></div>
+        <div class="stat-row"><span class="s-lbl">Новинки апреля</span><span class="s-val">АРМ Орион Икс 1.2.0</span></div>
+        <div class="stat-row"><span class="s-lbl">Активность до выставки</span><span class="s-val" style="color:var(--green)">3–7 апреля</span></div>
+        <div class="stat-row"><span class="s-lbl">Активность на Securika</span><span class="s-val" style="color:var(--yellow)">10+ постов за 22 апр</span></div>
+      </div>
+      <div class="card2" style="font-size:11px;color:var(--muted);line-height:1.7">
+        <strong style="color:var(--text)">Стратегия:</strong> контент-блицкриг на Securika (10+ постов за 1 день), плюс образовательные посты в начале месяца. Семинары и обучение дают стабильно высокий охват — <strong style="color:var(--yellow)">до 2 930</strong> просмотров.
+      </div>
+    </div>
+
+    <div class="cd-right">
+      <div class="section-label">ТОП ПОСТОВ АПРЕЛЯ</div>
+      <div class="post-row" style="border-color:rgba(245,158,11,.3)">
+        <div class="post-title">Семинары по нормам СПЗ в Казани и Кирове</div>
+        <div class="post-views" style="color:var(--yellow)">2 930</div>
+        <div class="post-tag"><div class="tag tag-green" style="font-size:9px">Обучение</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Анонс семинаров на Securika Moscow 2026</div>
+        <div class="post-views" style="color:var(--accent)">2 570</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Securika</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Приглашение на Securika — стенд A3023</div>
+        <div class="post-views" style="color:var(--accent)">2 550</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Securika</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Видеоклип VK — первый день Securika</div>
+        <div class="post-views" style="color:var(--accent)">2 520</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Securika</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Победа в I Национальном рейтинге производителей</div>
+        <div class="post-views" style="color:var(--accent)">2 450</div>
+        <div class="post-tag"><div class="tag tag-yellow" style="font-size:9px">Награда</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Новинки ИП104-1 и С2000-ИПТЛ на Securika</div>
+        <div class="post-views" style="color:var(--accent)">2 350</div>
+        <div class="post-tag"><div class="tag tag-cyan" style="font-size:9px">Продукт</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Видео о продукции — Securika (репортаж)</div>
+        <div class="post-views" style="color:var(--accent)">2 430</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Securika</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Обновление АРМ «Орион Икс» v1.2.0</div>
+        <div class="post-views" style="color:var(--accent)">2 190</div>
+        <div class="post-tag"><div class="tag tag-cyan" style="font-size:9px">Продукт</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Securika 2026: более 2500 гостей посетили стенд</div>
+        <div class="post-views" style="color:var(--accent)">2 040</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Итоги</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Цифровая маркировка СПЗ — обсуждение в ТПП РФ</div>
+        <div class="post-views" style="color:var(--muted)">1 600</div>
+        <div class="post-tag"><div class="tag tag-muted" style="font-size:9px">Отрасль</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 6 — РУБЕЖ ДЕТАЛЬНО
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">06 / 09</div>
+  <div class="page-header">
+    <div class="page-title"><span>Рубеж</span> — детальный анализ</div>
+    <div style="display:flex;gap:8px"><div class="tag tag-green">КОНТЕНТ-МАШИНА</div><div class="tag tag-green">@rmc_rubezh</div></div>
+  </div>
+
+  <div class="company-detail">
+    <div class="cd-left">
+      <div class="card">
+        <div class="big-num" style="color:var(--green)">1 700</div>
+        <div class="big-lbl">средний охват поста в апреле</div>
+      </div>
+      <div class="card">
+        <div class="stat-row"><span class="s-lbl">Постов в TG</span><span class="s-val">40+</span></div>
+        <div class="stat-row"><span class="s-lbl">Суммарный охват</span><span class="s-val" style="color:var(--green)">~55 000</span></div>
+        <div class="stat-row"><span class="s-lbl">Постов ≥ 2 000</span><span class="s-val" style="color:var(--yellow)">8 постов</span></div>
+        <div class="stat-row"><span class="s-lbl">Публикаций на сайте</span><span class="s-val">9</span></div>
+        <div class="stat-row"><span class="s-lbl">Вебинаров в апреле</span><span class="s-val" style="color:var(--green)">4 (СП 3, СП 6, R3, STRAZH)</span></div>
+        <div class="stat-row"><span class="s-lbl">Канал на Rutube</span><span class="s-val">468 видео</span></div>
+        <div class="stat-row"><span class="s-lbl">Генеральный партнёр</span><span class="s-val" style="color:var(--yellow)">СМИ RUБЕЖ</span></div>
+      </div>
+      <div class="card2" style="font-size:11px;color:var(--muted);line-height:1.7">
+        <strong style="color:var(--text)">Стратегия:</strong> ежедневный контент весь месяц. Образовательная воронка: вебинары → записи → обсуждения → форум на Securika. Сильнейшая экспертная позиция в нише. Студенческая лига — долгосрочный сообщественный актив.
+      </div>
+    </div>
+
+    <div class="cd-right">
+      <div class="section-label">ТОП ПОСТОВ АПРЕЛЯ</div>
+      <div class="post-row" style="border-color:rgba(16,185,129,.3)">
+        <div class="post-title">Анонс форума PROПРОЕКТ 2026 в Москве</div>
+        <div class="post-views" style="color:var(--green)">2 400</div>
+        <div class="post-tag"><div class="tag tag-cyan" style="font-size:9px">Событие</div></div>
+      </div>
+      <div class="post-row" style="border-color:rgba(16,185,129,.3)">
+        <div class="post-title">Участие в Securika Moscow 2026 — анонс</div>
+        <div class="post-views" style="color:var(--green)">2 400</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Securika</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Вебинар «Новый СП 3.13130» — разбор изменений</div>
+        <div class="post-views" style="color:var(--accent)">2 270</div>
+        <div class="post-tag"><div class="tag tag-green" style="font-size:9px">Обучение</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Онлайн-сервис подбора шкафов GLOBAL RUBEZH</div>
+        <div class="post-views" style="color:var(--accent)">2 260</div>
+        <div class="post-tag"><div class="tag tag-cyan" style="font-size:9px">Продукт</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Разбор: контроль электроснабжения систем безопасности</div>
+        <div class="post-views" style="color:var(--accent)">2 250</div>
+        <div class="post-tag"><div class="tag tag-muted" style="font-size:9px">Экспертиза</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Просьба поддержки Premium — трансляции в сторис</div>
+        <div class="post-views" style="color:var(--accent)">2 080</div>
+        <div class="post-tag"><div class="tag tag-purple" style="font-size:9px">Сообщество</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">GLOBAL RUBEZH 2.0 на Securika 2026</div>
+        <div class="post-views" style="color:var(--accent)">1 980</div>
+        <div class="post-tag"><div class="tag tag-orange" style="font-size:9px">Продукт</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">R-Logic.Designer — голосование «Лучший инновационный продукт»</div>
+        <div class="post-views" style="color:var(--accent)">1 950</div>
+        <div class="post-tag"><div class="tag tag-yellow" style="font-size:9px">Награда</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Расписание пусконаладочного обучения на апрель</div>
+        <div class="post-views" style="color:var(--accent)">1 920</div>
+        <div class="post-tag"><div class="tag tag-green" style="font-size:9px">Обучение</div></div>
+      </div>
+      <div class="post-row">
+        <div class="post-title">Вебинар — СОУЭ для школ по СП 3.13130.2026</div>
+        <div class="post-views" style="color:var(--muted)">1 580</div>
+        <div class="post-tag"><div class="tag tag-green" style="font-size:9px">Обучение</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 7 — АРГУС / ISS / ЭТМ
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">07 / 09</div>
+  <div class="page-header">
+    <div class="page-title">Аргус-Спектр · ISS · <span>ЭТМ</span></div>
+    <div class="tag tag-cyan">ДЕТАЛЬНО</div>
+  </div>
+
+  <div class="three-col">
+
+    <div class="mini-co" style="border-color:rgba(34,211,238,.25)">
+      <div>
+        <div class="mini-co-name" style="color:var(--accent)">Аргус-Спектр</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">@argus_spectr · argus-spectr.ru</div>
+      </div>
+      <div class="mini-stat-grid">
+        <div class="mini-stat"><div class="mini-val" style="color:var(--yellow)">4 040</div><div class="mini-lbl">рекорд апреля</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--accent)">10+</div><div class="mini-lbl">постов TG</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">0</div><div class="mini-lbl">постов до 22 апр</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--green)">4</div><div class="mini-lbl">новости на сайте</div></div>
+      </div>
+      <div class="tag tag-cyan" style="font-size:9px;align-self:flex-start">Молчали 2 мес → взрыв на Securika</div>
+      <div class="mini-posts">
+        <div class="mini-post"><span class="mini-post-title">Видео «Стрелец-V-ПРО»</span><span class="mini-post-v" style="color:var(--yellow)">4 040</span></div>
+        <div class="mini-post"><span class="mini-post-title">Фильм «Путь Стрельца»</span><span class="mini-post-v" style="color:var(--accent)">2 320</span></div>
+        <div class="mini-post"><span class="mini-post-title">Участие в Securika · Deco Line</span><span class="mini-post-v" style="color:var(--accent)">2 040</span></div>
+        <div class="mini-post"><span class="mini-post-title">Deco Line — новый дизайн</span><span class="mini-post-v" style="color:var(--muted)">1 500</span></div>
+        <div class="mini-post"><span class="mini-post-title">Запуск StreletzGPT</span><span class="mini-post-v" style="color:var(--muted)">1 470</span></div>
+      </div>
+    </div>
+
+    <div class="mini-co">
+      <div>
+        <div class="mini-co-name" style="color:var(--yellow)">ISS</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">@iss_ru</div>
+      </div>
+      <div class="mini-stat-grid">
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">573</div><div class="mini-lbl">макс. просмотры</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">9</div><div class="mini-lbl">постов TG</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--yellow)">2</div><div class="mini-lbl">победы в конкурсе</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">~3К</div><div class="mini-lbl">сумм. охват</div></div>
+      </div>
+      <div class="tag tag-yellow" style="font-size:9px;align-self:flex-start">Двукратный победитель инноваций Securika</div>
+      <div class="mini-posts">
+        <div class="mini-post"><span class="mini-post-title">SecurOS — реестр Минпромторга</span><span class="mini-post-v" style="color:var(--accent)">573</span></div>
+        <div class="mini-post"><span class="mini-post-title">Релиз SecurOS 12.1</span><span class="mini-post-v" style="color:var(--accent)">558</span></div>
+        <div class="mini-post"><span class="mini-post-title">Стенд ISS на Securika 2026</span><span class="mini-post-v" style="color:var(--muted)">378</span></div>
+        <div class="mini-post"><span class="mini-post-title">Конкурс инноваций — UVSS + Soffit</span><span class="mini-post-v" style="color:var(--muted)">340</span></div>
+        <div class="mini-post"><span class="mini-post-title">SecurOS Radius — новый продукт</span><span class="mini-post-v" style="color:var(--muted)">316</span></div>
+      </div>
+    </div>
+
+    <div class="mini-co">
+      <div>
+        <div class="mini-co-name" style="color:var(--purple)">ЭТМ</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">@etm_company</div>
+      </div>
+      <div class="mini-stat-grid">
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">900</div><div class="mini-lbl">макс. просмотры</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">25+</div><div class="mini-lbl">постов TG</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">~600</div><div class="mini-lbl">средний охват</div></div>
+        <div class="mini-stat"><div class="mini-val" style="color:var(--muted)">0</div><div class="mini-lbl">постов о Securika</div></div>
+      </div>
+      <div class="tag tag-muted" style="font-size:9px;align-self:flex-start">Дистрибьютор — не участвовал в выставке</div>
+      <div class="mini-posts">
+        <div class="mini-post"><span class="mini-post-title">HDD WD / Seagate / Toshiba</span><span class="mini-post-v" style="color:var(--muted)">900</span></div>
+        <div class="mini-post"><span class="mini-post-title">Вебинар Systeme Electric</span><span class="mini-post-v" style="color:var(--muted)">782</span></div>
+        <div class="mini-post"><span class="mini-post-title">Климатика TDM для шкафов</span><span class="mini-post-v" style="color:var(--muted)">714</span></div>
+        <div class="mini-post"><span class="mini-post-title">Конкурс «Есть контакт»</span><span class="mini-post-v" style="color:var(--muted)">690</span></div>
+        <div class="mini-post"><span class="mini-post-title">Серия ЭКО TDM ELECTRIC</span><span class="mini-post-v" style="color:var(--muted)">643</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 8 — ОСТАЛЬНЫЕ: TRASSIR / HIKVISION / PARSEC
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">08 / 09</div>
+  <div class="page-header">
+    <div class="page-title">TRASSIR · Hikvision · <span>Parsec</span></div>
+    <div class="tag tag-muted">ТОЛЬКО САЙТЫ · АПРЕЛЬ 2026</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;flex:1">
+
+    <div class="co-card" style="border-color:rgba(239,68,68,.2)">
+      <div>
+        <div class="co-name" style="font-size:18px">TRASSIR / DSSL</div>
+        <div class="co-handle">trassir.ru · dssl.ru</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-label">ПУБЛИКАЦИИ НА САЙТЕ</div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">TRASSIR Pro v3 — камеры 2 и 5 Мп с аналитикой</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">29 апр</div>
+      </div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">Управляемые PoE-коммутаторы L3</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">22 апр</div>
+      </div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">Дисплеи для мониторинга — новинка</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">15 апр</div>
+      </div>
+      <div class="card2" style="font-size:10px;color:var(--muted);line-height:1.6;margin-top:auto">
+        TG-канал @trassir <strong style="color:var(--red)">недоступен</strong>. Активная продуктовая активность через сайт. 3 релиза за апрель, включая обновлённую линейку Pro-камер.
+      </div>
+    </div>
+
+    <div class="co-card" style="border-color:rgba(167,139,250,.2)">
+      <div>
+        <div class="co-name" style="font-size:18px">Hikvision Russia</div>
+        <div class="co-handle">com-hikvision.ru · hikvision24.ru</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-label">ПУБЛИКАЦИИ НА САЙТЕ</div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">DS-19A16-BN — адресная панель охранной сигнализации</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">25 апр</div>
+      </div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">HDD для видеонаблюдения — ограниченное наличие</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">20 апр</div>
+      </div>
+      <div class="card2" style="font-size:10px;color:var(--muted);line-height:1.6;margin-top:auto">
+        TG-канал <strong style="color:var(--red)">не обновлялся с 2022</strong>. Минимальная активность на сайте. Hikvision снизил публичную активность в России после 2022 года.
+      </div>
+    </div>
+
+    <div class="co-card" style="border-color:rgba(16,185,129,.2)">
+      <div>
+        <div class="co-name" style="font-size:18px">Parsec</div>
+        <div class="co-handle">parsec.ru</div>
+      </div>
+      <div class="divider"></div>
+      <div class="section-label">ПУБЛИКАЦИИ НА САЙТЕ</div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">Parsec на Securika Moscow 2026 — стенд A5097</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">25 апр</div>
+      </div>
+      <div class="post-row" style="grid-template-columns:1fr 60px">
+        <div class="post-title">Parsec запустил резервный канал в МАКС</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right">13 апр</div>
+      </div>
+      <div class="card2" style="font-size:10px;color:var(--muted);line-height:1.6;margin-top:auto">
+        Минимальная социальная активность. Участвовал в Securika. Перешёл на платформу МАКС как резервный канал коммуникации.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     СЛАЙД 9 — ВЫВОДЫ И РЕКОМЕНДАЦИИ
+═══════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="slide-num">09 / 09</div>
+  <div class="page-header">
+    <div class="page-title">Выводы и <span>рекомендации</span></div>
+    <div class="tag tag-red">ДЛЯ МАРКЕТИНГА РМ ГРУПП</div>
+  </div>
+
+  <div class="insights-grid">
+
+    <div class="ins-card" style="border-color:rgba(239,68,68,.2)">
+      <div class="ins-num">01</div>
+      <div class="ins-body">
+        <div class="ins-title">Видео — единственный формат с охватом 4К+</div>
+        <div class="ins-text">Аргус-Спектр получил <strong>4 040 просмотров</strong> за счёт одного видеопоста о продукте. Болид активно использовал видеоклипы на Securika. <strong>Вывод: видеоконтент кратно эффективнее текста</strong> в нише безопасности.</div>
+      </div>
+    </div>
+
+    <div class="ins-card" style="border-color:rgba(245,158,11,.2)">
+      <div class="ins-num">02</div>
+      <div class="ins-body">
+        <div class="ins-title">Образование продаёт лучше, чем реклама</div>
+        <div class="ins-text">Лучшие посты Болида и Рубежа — вебинары, семинары, разборы СП. Пост «Семинары в Казани и Кирове» набрал <strong>2 930 просмотров</strong>. Обучающий контент = доверие = конверсия в B2B.</div>
+      </div>
+    </div>
+
+    <div class="ins-card" style="border-color:rgba(34,211,238,.2)">
+      <div class="ins-num">03</div>
+      <div class="ins-body">
+        <div class="ins-title">Выставка без подготовки = упущенный охват</div>
+        <div class="ins-text">Аргус-Спектр не постил <strong>2 месяца до Securika</strong>, ISS и Parsec — минимальная активность. Болид и Рубеж начали прогрев с <strong>1–7 апреля</strong>, что дало дополнительные 15–20К охвата до выставки.</div>
+      </div>
+    </div>
+
+    <div class="ins-card" style="border-color:rgba(16,185,129,.2)">
+      <div class="ins-num">04</div>
+      <div class="ins-body">
+        <div class="ins-title">Рубеж строит экосистему, остальные — точечные посты</div>
+        <div class="ins-text">40+ постов, 4 вебинара, студенческая лига, форум PROПРОЕКТ — Рубеж создаёт <strong>полный контентный цикл</strong>: анонс → обучение → выставка → рефлексия. Это системная работа с аудиторией.</div>
+      </div>
+    </div>
+
+    <div class="ins-card" style="border-color:rgba(167,139,250,.2)">
+      <div class="ins-num">05</div>
+      <div class="ins-body">
+        <div class="ins-title">Награды и рейтинги — триггер для аудитории</div>
+        <div class="ins-text">Болид «Победа в I Нац. рейтинге» <strong>2 450</strong> просмотров, ISS «Победитель конкурса инноваций» — активный отклик несмотря на малую аудиторию. <strong>Любые внешние признания нужно немедленно публиковать.</strong></div>
+      </div>
+    </div>
+
+    <div class="ins-card" style="border-color:rgba(249,115,22,.2)">
+      <div class="ins-num">06</div>
+      <div class="ins-body">
+        <div class="ins-title">VK и YouTube — белые пятна конкурентного анализа</div>
+        <div class="ins-text">VK-сообщества конкурентов <strong>недоступны для автоматического сбора</strong>. YouTube-каналы Болида и Рубежа активны (Bolid НВП, RUBEZH на Rutube). Рекомендуем <strong>ручной мониторинг</strong> раз в месяц через LiveDune/TGStat.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дашборд маркетинга — РМ Групп</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; background: #F0F4F8; color: #1E293B; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 14px 32px; display: flex; align-items: center; gap: 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .logo { width: 44px; height: 44px; background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.5px; flex-shrink: 0; }
+  .header-titles { flex: 1; }
+  .header-titles h1 { font-size: 17px; font-weight: 700; color: #0F172A; line-height: 1.2; }
+  .header-titles p { font-size: 12px; color: #64748B; margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .live-badge { background: #EF4444; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+  .live-badge::before { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .clock { font-size: 13px; font-weight: 600; color: #334155; font-variant-numeric: tabular-nums; min-width: 70px; }
+
+  /* TABS */
+  .tabs-bar { background: #fff; border-bottom: 1px solid #E2E8F0; padding: 0 32px; display: flex; gap: 4px; }
+  .tab-btn { padding: 12px 20px; font-size: 13px; font-weight: 600; color: #64748B; border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+  .tab-btn:hover { color: #0EA5E9; }
+  .tab-btn.active { color: #0EA5E9; border-bottom-color: #0EA5E9; }
+
+  /* LAYOUT */
+  .content { padding: 24px 32px; max-width: 1600px; }
+
+  /* PERIOD SECTION */
+  .period-section { display: none; }
+  .period-section.active { display: block; }
+
+  /* KPI BAR */
+  .kpi-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+  .kpi-label { font-size: 11px; color: #64748B; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+  .kpi-value { font-size: 26px; font-weight: 800; color: #0F172A; line-height: 1; }
+  .kpi-sub { font-size: 12px; color: #94A3B8; margin-top: 4px; }
+  .kpi-delta { font-size: 12px; font-weight: 600; margin-top: 4px; }
+  .kpi-delta.up { color: #10B981; }
+  .kpi-delta.down { color: #EF4444; }
+  .kpi-delta.neutral { color: #64748B; }
+  .kpi-accent { color: #0EA5E9; }
+
+  /* CPL COLORS */
+  .cpl-green { color: #10B981; }
+  .cpl-yellow { color: #F59E0B; }
+  .cpl-red { color: #EF4444; }
+
+  /* PLAN % COLORS */
+  .plan-red { color: #EF4444; font-weight: 700; }
+  .plan-orange { color: #F97316; font-weight: 700; }
+  .plan-yellow { color: #EAB308; font-weight: 700; }
+  .plan-green { color: #10B981; font-weight: 700; }
+
+  /* MAIN GRID */
+  .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+  .card-title { font-size: 13px; font-weight: 700; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #F1F5F9; }
+  .card-title .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-blue { background: #0EA5E9; }
+  .dot-green { background: #10B981; }
+  .dot-red { background: #EF4444; }
+  .dot-orange { background: #F97316; }
+  .dot-purple { background: #8B5CF6; }
+
+  /* PROJECT TABLE */
+  .proj-table { width: 100%; border-collapse: collapse; }
+  .proj-table th { font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.4px; font-weight: 600; padding: 4px 6px; text-align: left; }
+  .proj-table td { font-size: 12px; padding: 5px 6px; border-top: 1px solid #F8FAFC; color: #334155; }
+  .proj-table tr:hover td { background: #F8FAFC; }
+  .proj-name { font-weight: 600; }
+  .proj-done { background: #ECFDF5; border-radius: 4px; padding: 1px 5px; color: #059669; font-size: 11px; font-weight: 600; }
+  .proj-lag { background: #FFF7ED; border-radius: 4px; padding: 1px 5px; color: #EA580C; font-size: 11px; font-weight: 600; }
+  .badge-system { background: #FEE2E2; color: #DC2626; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin-left: 4px; }
+
+  /* CHANNEL LIST */
+  .channel-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid #F1F5F9; }
+  .channel-item:first-child { border-top: none; }
+  .channel-name { font-size: 13px; font-weight: 500; color: #334155; }
+  .channel-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .channel-leads { font-size: 16px; font-weight: 700; color: #0F172A; }
+  .channel-cpl { font-size: 11px; }
+  .channel-bar-wrap { margin-top: 4px; background: #F1F5F9; border-radius: 4px; height: 4px; width: 100%; }
+  .channel-bar { height: 4px; border-radius: 4px; background: #0EA5E9; }
+
+  /* ALERTS */
+  .alert-item { padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; line-height: 1.5; }
+  .alert-item:last-child { margin-bottom: 0; }
+  .alert-critical { background: #FEF2F2; border-left: 3px solid #EF4444; color: #7F1D1D; }
+  .alert-warning { background: #FFFBEB; border-left: 3px solid #F59E0B; color: #78350F; }
+  .alert-success { background: #F0FDF4; border-left: 3px solid #10B981; color: #14532D; }
+  .alert-title { font-weight: 700; font-size: 11px; margin-bottom: 3px; }
+
+  /* SOCIAL ROW */
+  .social-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .social-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+  .social-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .social-name { font-size: 13px; font-weight: 700; color: #0F172A; }
+  .social-platform { font-size: 11px; color: #64748B; }
+  .social-stat { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid #F8FAFC; }
+  .social-stat:first-of-type { border-top: none; padding-top: 0; }
+  .stat-label { font-size: 11px; color: #94A3B8; }
+  .stat-val { font-size: 12px; font-weight: 600; color: #334155; }
+
+  /* TASKS */
+  .tasks-section { margin-bottom: 24px; }
+  .tasks-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .task-group { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .task-group-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #F1F5F9; }
+  .task-group-title.high { color: #EF4444; }
+  .task-group-title.med { color: #F59E0B; }
+  .task-group-title.low { color: #64748B; }
+  .task-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; cursor: pointer; }
+  .task-cb { width: 16px; height: 16px; border: 2px solid #CBD5E1; border-radius: 4px; flex-shrink: 0; margin-top: 1px; transition: all .15s; }
+  .task-item.done .task-cb { background: #10B981; border-color: #10B981; }
+  .task-item.done .task-cb::after { content: ''; display: block; width: 8px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px, 0); margin: 2px 0 0 2px; }
+  .task-text { font-size: 12px; color: #334155; line-height: 1.4; }
+  .task-item.done .task-text { text-decoration: line-through; color: #94A3B8; }
+
+  /* SECTION HEADER */
+  .section-head { font-size: 11px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { background: #F1F5F9; border-radius: 6px; height: 6px; margin-top: 6px; overflow: hidden; }
+  .progress-bar { height: 6px; border-radius: 6px; transition: width .3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1200px) {
+    .kpi-bar { grid-template-columns: repeat(3, 1fr); }
+    .main-grid { grid-template-columns: 1fr 1fr; }
+    .social-row { grid-template-columns: repeat(2, 1fr); }
+    .tasks-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .content { padding: 16px; }
+    .header { padding: 12px 16px; }
+    .tabs-bar { padding: 0 16px; overflow-x: auto; }
+    .kpi-bar { grid-template-columns: repeat(2, 1fr); }
+    .main-grid { grid-template-columns: 1fr; }
+    .social-row { grid-template-columns: 1fr 1fr; }
+    .tasks-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">RM</div>
+  <div class="header-titles">
+    <h1>РМ Групп &mdash; Дашборд маркетинга</h1>
+    <p>Дашборд &middot; B2C &middot; Лидогенерация персонала</p>
+  </div>
+  <div class="header-right">
+    <div style="text-align:right">
+      <div id="clock" style="font-family:monospace;font-size:22px;font-weight:700;color:#0EA5E9;letter-spacing:2px">00:00:00</div>
+      <div id="date" style="font-size:11px;color:#94A3B8;margin-top:2px;letter-spacing:0.05em">–</div>
+      <script>
+        !function tick(){
+          var d=new Date(),z=function(n){return(n<10?"0":"")+n};
+          document.getElementById("clock").textContent=z(d.getHours())+":"+z(d.getMinutes())+":"+z(d.getSeconds());
+          var dn=["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"];
+          var mn=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+          document.getElementById("date").textContent=dn[d.getDay()]+", "+d.getDate()+" "+mn[d.getMonth()]+" "+d.getFullYear();
+          setTimeout(tick,1000);
+        }();
+      </script>
+    </div>
+    <span class="live-badge">&#11044; LIVE</span>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <button class="tab-btn" data-period="0">11&ndash;17 мая</button>
+  <button class="tab-btn" data-period="1">18&ndash;24 мая</button>
+  <button class="tab-btn" data-period="2">25&ndash;31 мая</button>
+  <button class="tab-btn active" data-period="3">1&ndash;7 июня</button>
+
+  <button id="refresh-btn" onclick="fetchData()" style="margin-left:auto;padding:8px 18px;background:#0EA5E9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;display:flex;align-items:center;gap:6px;transition:opacity .2s;box-shadow:0 2px 8px rgba(14,165,233,.3)" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+    <span id="refresh-ico">&#8635;</span> <span id="refresh-lbl">Обновить данные</span>
+  </button>
+  <span id="refresh-status" style="font-size:11px;color:#94A3B8;font-family:monospace;margin-left:8px"></span>
+</div>
+
+<div class="content">
+
+<!-- ==================== PERIOD 0: 11-17 мая ==================== -->
+<div class="period-section" id="period-0">
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar">
+    <div class="kpi-card">
+      <div class="kpi-label">Авито лиды</div>
+      <div class="kpi-value kpi-accent">2 260</div>
+      <div class="kpi-sub">за период</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CPL Авито</div>
+      <div class="kpi-value cpl-green">81 &#8381;</div>
+      <div class="kpi-sub">стоимость лида</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Бюджет Авито</div>
+      <div class="kpi-value">184 000 &#8381;</div>
+      <div class="kpi-sub">расход за период</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ВК + Юла</div>
+      <div class="kpi-value">27</div>
+      <div class="kpi-sub">ВК: 19 &nbsp;&bull;&nbsp; Юла: 8</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Урбан Дикси конверсия</div>
+      <div class="kpi-value kpi-accent">8,2%</div>
+      <div class="kpi-sub">адаптировано: 10</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- Авито проекты -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-blue"></span>Авито — проекты</div>
+      <table class="proj-table">
+        <thead>
+          <tr>
+            <th>Проект</th>
+            <th>Факт</th>
+            <th>%</th>
+            <th>CPL</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="proj-name">МАГНИТ КРД</td>
+            <td>259</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">50 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КРД</td>
+            <td>349</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">48 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ПЯТЕРОЧКА КЗН</td>
+            <td>64</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">70 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ КЗН</td>
+            <td>67</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">68 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА МСК</td>
+            <td>226</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">60 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ ЧЛБ</td>
+            <td>97</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">30 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Лукойл</td>
+            <td>126</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">199 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс ЧЛБ</td>
+            <td>150</td>
+            <td><span class="plan-green">~100%</span></td>
+            <td><span class="cpl-yellow">133 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА СПБ</td>
+            <td>156</td>
+            <td><span class="plan-orange">39%</span></td>
+            <td><span class="cpl-red">161 &#8381;</span></td>
+            <td><span class="proj-lag">отстаёт</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА ЧЛБ</td>
+            <td>279</td>
+            <td><span class="plan-orange">48%</span></td>
+            <td><span class="cpl-green">79 &#8381;</span></td>
+            <td><span class="proj-lag">отстаёт</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс МСК</td>
+            <td>55</td>
+            <td><span class="plan-orange">44%</span></td>
+            <td><span class="cpl-yellow">93 &#8381;</span></td>
+            <td><span class="proj-lag">отстаёт</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ВВ МСК</td>
+            <td>187</td>
+            <td><span class="plan-yellow">94%</span></td>
+            <td><span class="cpl-green">46 &#8381;</span></td>
+            <td><span class="proj-lag">~план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">МАГНИТ КЗН</td>
+            <td>4</td>
+            <td><span class="plan-red">5%</span></td>
+            <td><span class="cpl-red">173 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; критично</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Каналы -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-green"></span>Каналы лидогенерации</div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128308; Авито</div>
+          <div style="font-size:11px;color:#64748B;">основной канал</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">2 260</span>
+          <span class="channel-cpl cpl-green">CPL: 81 &#8381;</span>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div class="channel-bar-wrap"><div class="channel-bar" style="width:72%"></div></div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Доля в общем объёме: ~72%</div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128153; ВКонтакте</div>
+          <div style="font-size:11px;color:#64748B;">таргет</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">19</span>
+          <span class="channel-cpl" style="color:#64748B;">лидов</span>
+        </div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#127981; Юла</div>
+          <div style="font-size:11px;color:#64748B;">площадка</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">8</span>
+          <span class="channel-cpl" style="color:#64748B;">лидов</span>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div class="channel-item" style="padding-top:0;border-top:none;">
+          <div>
+            <div class="channel-name">&#128736; Урбан Дикси</div>
+            <div style="font-size:11px;color:#64748B;">конверсия в адаптацию</div>
+          </div>
+          <div class="channel-meta">
+            <span class="channel-leads cpl-yellow">8,2%</span>
+            <span class="channel-cpl" style="color:#64748B;">10 адаптировано</span>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" style="width:8.2%;background:#F59E0B;"></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div style="font-size:11px;color:#94A3B8;margin-bottom:6px;">Соцсети — подписчики</div>
+        <div style="display:flex;gap:16px;">
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">ВК: 1 080 &rarr; 1 081</div>
+            <div style="font-size:11px;color:#10B981;">+1 &nbsp;|&nbsp; охват 1 000</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">TG: 274 &rarr; 269</div>
+            <div style="font-size:11px;color:#EF4444;">&minus;5 &nbsp;|&nbsp; охват 85</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Требует внимания -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-red"></span>Требует внимания</div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; МАГНИТ КЗН — 5% плана</div>
+        Срочно разобрать причины. CPL 173 &#8381;, только 4 лида из 83 плановых.
+      </div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; ЛЕНТА СПБ — 39% плана</div>
+        CPL 161 &#8381; &mdash; дорого. Докрыть срочно. 156/404 лидов.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; TG: отток &minus;5 подписчиков</div>
+        Контентная активация. Проверить расписание публикаций.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; ЛЕНТА ЧЛБ — 48% плана</div>
+        Отстаёт. Хотя CPL хороший (79 &#8381;) &mdash; увеличить объём.
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; 8 проектов выполнили план</div>
+        CPL улучшился до 81 &#8381;. Лучшие: ТАБЫШ ЧЛБ (30 &#8381;), ЛЕНТА КРД (48 &#8381;).
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+
+  <!-- SOCIAL ROW -->
+  <div class="section-head">Соцсети и закуп</div>
+  <div class="social-row">
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128153; ВКонтакте</span>
+        <span class="social-platform">таргет / сообщество</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">1 080 &rarr; 1 081 <span style="color:#10B981">+1</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val">1 000</span></div>
+      <div class="social-stat"><span class="stat-label">Показы</span><span class="stat-val">1 600</span></div>
+      <div class="social-stat"><span class="stat-label">Вовлечённость</span><span class="stat-val">6</span></div>
+      <div class="social-stat"><span class="stat-label">Лиды ВК</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">19</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#9992; Telegram</span>
+        <span class="social-platform">канал</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">274 &rarr; 269 <span style="color:#EF4444">&minus;5</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val">85</span></div>
+      <div class="social-stat"><span class="stat-label">Статус</span><span class="stat-val" style="color:#EF4444;">&#9888; отток</span></div>
+      <div class="social-stat"><span class="stat-label">Лиды Юла</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">8</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128722; Закуп TG</span>
+        <span class="social-platform">Юла/площадки</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Юла лидов</span><span class="stat-val">8</span></div>
+      <div class="social-stat"><span class="stat-label">ВК+Юла итого</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">27</span></div>
+      <div class="social-stat"><span class="stat-label">Статус</span><span class="stat-val">активен</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128200; Системные тренды</span>
+        <span class="social-platform">недели</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Лучший CPL</span><span class="stat-val cpl-green">30 &#8381; (ТАБЫШ ЧЛБ)</span></div>
+      <div class="social-stat"><span class="stat-label">Худший CPL</span><span class="stat-val cpl-red">199 &#8381; (Лукойл)</span></div>
+      <div class="social-stat"><span class="stat-label">Проектов в плане</span><span class="stat-val cpl-green">8 из 13</span></div>
+      <div class="social-stat"><span class="stat-label">Средний CPL</span><span class="stat-val cpl-green">81 &#8381;</span></div>
+    </div>
+  </div>
+
+</div><!-- /period-0 -->
+
+
+<!-- ==================== PERIOD 1: 18-24 мая ==================== -->
+<div class="period-section" id="period-1">
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar">
+    <div class="kpi-card">
+      <div class="kpi-label">Авито лиды</div>
+      <div class="kpi-value kpi-accent">3 869</div>
+      <div class="kpi-sub">за период</div>
+      <div class="kpi-delta up">&#8593; +71% к прошлой неделе</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CPL Авито</div>
+      <div class="kpi-value cpl-yellow">101 &#8381;</div>
+      <div class="kpi-sub">стоимость лида</div>
+      <div class="kpi-delta down">&#8593; +24% (81 &rarr; 101 &#8381;)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Бюджет Авито</div>
+      <div class="kpi-value">390 740 &#8381;</div>
+      <div class="kpi-sub">расход за период</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ВК + Юла</div>
+      <div class="kpi-value">41</div>
+      <div class="kpi-sub">ВК: 23 &nbsp;&bull;&nbsp; Юла: 18</div>
+      <div class="kpi-delta up">&#8593; +52% к прошлой неделе</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Урбан Дикси конверсия</div>
+      <div class="kpi-value kpi-accent">12,24%</div>
+      <div class="kpi-sub">адаптировано: 24</div>
+      <div class="kpi-delta up">&#8593; +4 п.п.</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- Авито проекты -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-blue"></span>Авито — проекты</div>
+      <table class="proj-table">
+        <thead>
+          <tr>
+            <th>Проект</th>
+            <th>Факт</th>
+            <th>%</th>
+            <th>CPL</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="proj-name">МАГНИТ КРД</td>
+            <td>537</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">65 &#8381;</span></td>
+            <td><span class="proj-done">план &#10006;7</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КРД</td>
+            <td>705</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">76 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ КЗН</td>
+            <td>125</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">69 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КЗН</td>
+            <td>319</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">105 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">МАГНИТ КЗН</td>
+            <td>50</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">121 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА МСК</td>
+            <td>394</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">94 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА ЧЛБ</td>
+            <td>646</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">87 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ ЧЛБ</td>
+            <td>197</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">58 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Лукойл</td>
+            <td>160</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">66 &#8381;</span></td>
+            <td><span class="proj-done">план &minus;3x</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ПЯТЕРОЧКА КЗН</td>
+            <td>63</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-red">131 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Командор</td>
+            <td>12</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-red">187 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА СПБ</td>
+            <td>257</td>
+            <td><span class="plan-orange">64%</span></td>
+            <td><span class="cpl-red">178 &#8381;</span></td>
+            <td><span class="proj-lag">отстаёт</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс МСК</td>
+            <td>54</td>
+            <td><span class="plan-orange">43%</span></td>
+            <td><span class="cpl-yellow">96 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; критично</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ВВ МСК</td>
+            <td>180</td>
+            <td><span class="plan-yellow">90%</span></td>
+            <td><span class="cpl-yellow">84 &#8381;</span></td>
+            <td><span class="proj-lag">~план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс ЧЛБ</td>
+            <td>140</td>
+            <td><span class="plan-yellow">93%</span></td>
+            <td><span class="cpl-red">137 &#8381;</span></td>
+            <td><span class="proj-lag">~план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ОБИ МСК</td>
+            <td>30</td>
+            <td><span class="plan-yellow">86%</span></td>
+            <td><span class="cpl-yellow">121 &#8381;</span></td>
+            <td><span class="proj-lag">~план</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Каналы -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-green"></span>Каналы лидогенерации</div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128308; Авито</div>
+          <div style="font-size:11px;color:#64748B;">основной канал</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">3 869</span>
+          <span class="channel-cpl cpl-yellow">CPL: 101 &#8381;</span>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div class="channel-bar-wrap"><div class="channel-bar" style="width:76%"></div></div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Доля в общем объёме: ~76%</div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128153; ВКонтакте</div>
+          <div style="font-size:11px;color:#64748B;">таргет</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">23</span>
+          <span class="channel-cpl" style="color:#64748B;">лидов</span>
+        </div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#127981; Юла</div>
+          <div style="font-size:11px;color:#64748B;">площадка</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">18</span>
+          <span class="channel-cpl" style="color:#64748B;">лидов</span>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div class="channel-item" style="padding-top:0;border-top:none;">
+          <div>
+            <div class="channel-name">&#128736; Урбан Дикси</div>
+            <div style="font-size:11px;color:#64748B;">конверсия в адаптацию</div>
+          </div>
+          <div class="channel-meta">
+            <span class="channel-leads cpl-green">12,24%</span>
+            <span class="channel-cpl" style="color:#64748B;">24 адаптировано</span>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" style="width:12.24%;background:#10B981;"></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div style="font-size:11px;color:#94A3B8;margin-bottom:6px;">Соцсети — подписчики</div>
+        <div style="display:flex;gap:16px;">
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">ВК: 1 081 &rarr; 1 081</div>
+            <div style="font-size:11px;color:#64748B;">0 &nbsp;|&nbsp; охват 1 200</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">TG: 268 &rarr; 276</div>
+            <div style="font-size:11px;color:#10B981;">+8 &nbsp;|&nbsp; охват 85</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Требует внимания -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-red"></span>Требует внимания</div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; Ростикс МСК — 43% плана</div>
+        CPL 96 &#8381;. Увеличить объём трафика. 54/126 лидов.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; CPL вырос 81 &rarr; 101 &#8381; (+24%)</div>
+        Проверить качество трафика. Возможно, выросли ставки конкурентов.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; ЛЕНТА СПБ — 64% плана</div>
+        CPL 178 &#8381; &mdash; дорого. Усилить трафик. 257/404 лидов.
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; 11 проектов выполнили план</div>
+        Рекорд МАГНИТ КРД x7 перевыполнения! Лукойл CPL 66 &#8381; (снижение в 3 раза).
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; TG вырос +8 подписчиков</div>
+        Положительная динамика. Охват стабилен — 85.
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+
+  <!-- SOCIAL ROW -->
+  <div class="section-head">Соцсети и закуп</div>
+  <div class="social-row">
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128153; ВКонтакте</span>
+        <span class="social-platform">таргет / сообщество</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">1 081 &rarr; 1 081 <span style="color:#64748B">+0</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val">1 200 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +200 (+20%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Показы</span><span class="stat-val">2 300 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +700 (+44%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Вовлечённость</span><span class="stat-val">10 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +4 (+67%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Лиды ВК</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">23 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +4 (+21%)</span></span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#9992; Telegram</span>
+        <span class="social-platform">канал</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">268 &rarr; 276 <span style="color:#10B981">+8</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val">85 <span style="font-size:10px;color:#94A3B8;font-weight:600">= как пред.</span></span></div>
+      <div class="social-stat"><span class="stat-label">Статус</span><span class="stat-val" style="color:#10B981;">&#10003; рост</span></div>
+      <div class="social-stat"><span class="stat-label">Лиды Юла</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">18 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +10 (+125%)</span></span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128722; Закуп TG</span>
+        <span class="social-platform">площадки</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Юла лидов</span><span class="stat-val">18</span></div>
+      <div class="social-stat"><span class="stat-label">ВК+Юла итого</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">41</span></div>
+      <div class="social-stat"><span class="stat-label">Статус</span><span class="stat-val cpl-green">активен &uarr;</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128200; Системные тренды</span>
+        <span class="social-platform">недели</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Лучший CPL</span><span class="stat-val cpl-green">58 &#8381; (ТАБЫШ ЧЛБ)</span></div>
+      <div class="social-stat"><span class="stat-label">Худший CPL</span><span class="stat-val cpl-red">187 &#8381; (Командор)</span></div>
+      <div class="social-stat"><span class="stat-label">Проектов в плане</span><span class="stat-val cpl-green">11 из 16</span></div>
+      <div class="social-stat"><span class="stat-label">Средний CPL</span><span class="stat-val cpl-yellow">101 &#8381;</span></div>
+    </div>
+  </div>
+
+</div><!-- /period-1 -->
+
+
+<!-- ==================== PERIOD 2: 25-31 мая (current) ==================== -->
+<div class="period-section" id="period-2">
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar">
+    <div class="kpi-card">
+      <div class="kpi-label">Авито лиды</div>
+      <div class="kpi-value kpi-accent">3 489</div>
+      <div class="kpi-sub">за период</div>
+      <div class="kpi-delta down">&#8595; &minus;10% к прошлой неделе</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CPL Авито</div>
+      <div class="kpi-value cpl-yellow">104 &#8381;</div>
+      <div class="kpi-sub">стоимость лида</div>
+      <div class="kpi-delta down">&#8593; +3% (101 &rarr; 104 &#8381;)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Бюджет Авито</div>
+      <div class="kpi-value">362 000 &#8381;</div>
+      <div class="kpi-sub">расход за период</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ВК + Юла</div>
+      <div class="kpi-value">26</div>
+      <div class="kpi-sub">ВК: 9 &nbsp;&bull;&nbsp; Юла: 16</div>
+      <div class="kpi-delta down">&#8595; &minus;37% к прошлой неделе</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Урбан Дикси конверсия</div>
+      <div class="kpi-value kpi-accent">10,67%</div>
+      <div class="kpi-sub">адаптировано: 40</div>
+      <div class="kpi-delta up">&#8593; рекорд 40 адапт.</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- Авито проекты -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-blue"></span>Авито — проекты</div>
+      <table class="proj-table">
+        <thead>
+          <tr>
+            <th>Проект</th>
+            <th>Факт</th>
+            <th>%</th>
+            <th>CPL</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="proj-name">МАГНИТ КРД</td>
+            <td>465</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">68 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КРД</td>
+            <td>633</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">74 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ПЯТЕРОЧКА КЗН</td>
+            <td>76</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-red">133 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ КЗН</td>
+            <td>138</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">72 &#8381;</span></td>
+            <td><span class="proj-done">план &#10006;10</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">МАГНИТ КЗН</td>
+            <td>63</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">120 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КЗН</td>
+            <td>333</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">107 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА МСК</td>
+            <td>413</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-yellow">108 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ВВ МСК</td>
+            <td>199</td>
+            <td><span class="plan-green">~100%</span></td>
+            <td><span class="cpl-yellow">85 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс ЧЛБ</td>
+            <td>154</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-red">130 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ ЧЛБ</td>
+            <td>136</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">62 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Лукойл</td>
+            <td>165</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-green">70 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Командор</td>
+            <td>13</td>
+            <td><span class="plan-green">&gt;100%</span></td>
+            <td><span class="cpl-red">185 &#8381;</span></td>
+            <td><span class="proj-done">план</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА СПБ</td>
+            <td>204</td>
+            <td><span class="plan-orange">50%</span></td>
+            <td><span class="cpl-red">165 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; <span class="badge-system">3 периода</span></span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс МСК</td>
+            <td>73</td>
+            <td><span class="plan-orange">58%</span></td>
+            <td><span class="cpl-yellow">98 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; <span class="badge-system">3 периода</span></span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА ЧЛБ</td>
+            <td>424</td>
+            <td><span class="plan-yellow">72%</span></td>
+            <td><span class="cpl-green">80 &#8381;</span></td>
+            <td><span class="proj-lag">отстаёт</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Каналы -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-green"></span>Каналы лидогенерации</div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128308; Авито</div>
+          <div style="font-size:11px;color:#64748B;">основной канал</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">3 489</span>
+          <span class="channel-cpl cpl-yellow">CPL: 104 &#8381;</span>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div class="channel-bar-wrap"><div class="channel-bar" style="width:74%"></div></div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Доля в общем объёме: ~74%</div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128153; ВКонтакте</div>
+          <div style="font-size:11px;color:#64748B;">таргет</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">9</span>
+          <span class="channel-cpl cpl-red">-77% vs прошлой нед.</span>
+        </div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#127981; Юла</div>
+          <div style="font-size:11px;color:#64748B;">площадка</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">16</span>
+          <span class="channel-cpl" style="color:#64748B;">лидов</span>
+        </div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128172; Закуп TG</div>
+          <div style="font-size:11px;color:#64748B;">чаты</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">27</span>
+          <span class="channel-cpl cpl-green">каналы: 3</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;padding:8px 10px;background:#F8FAFC;border-radius:8px;font-size:11px;color:#64748B;">
+        <div style="font-weight:600;color:#334155;margin-bottom:4px;">Детализация закупа:</div>
+        <div>personalhoreca_chat — 9 лидов</div>
+        <div>obshepitrabota — 13 лидов</div>
+        <div>rabota_moskval — 5 лидов</div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div class="channel-item" style="padding-top:0;border-top:none;">
+          <div>
+            <div class="channel-name">&#128736; Урбан Дикси</div>
+            <div style="font-size:11px;color:#64748B;">конверсия в адаптацию</div>
+          </div>
+          <div class="channel-meta">
+            <span class="channel-leads cpl-yellow">10,67%</span>
+            <span class="channel-cpl cpl-green">40 адаптировано &#127942;</span>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" style="width:10.67%;background:#F59E0B;"></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div style="font-size:11px;color:#94A3B8;margin-bottom:6px;">Соцсети — подписчики</div>
+        <div style="display:flex;gap:16px;">
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">ВК: 1 081 &rarr; 1 080</div>
+            <div style="font-size:11px;color:#EF4444;">&minus;1 &nbsp;|&nbsp; охват 4 900</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">TG: 275 &rarr; 277</div>
+            <div style="font-size:11px;color:#10B981;">+2 &nbsp;|&nbsp; охват 87</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Требует внимания -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-red"></span>Требует внимания</div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; ЛЕНТА СПБ — 50% плана, СИСТЕМНАЯ (3 периода)</div>
+        CPL 165 &#8381;. Пересмотреть стратегию. 204/404 лидов. Проблема не разовая.
+      </div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; Ростикс МСК — 58% плана, СИСТЕМНАЯ (3 периода)</div>
+        CPL 98 &#8381;. Добавить бюджет, объём низкий. 73/126 лидов.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; ВК+Юла 26 лидов (&minus;37%)</div>
+        Проверить аккаунты. Возобновить таргет. ВК упал с 23 до 9 лидов.
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; 12 проектов выполнили план</div>
+        ТАБЫШ КЗН x10 перевыполнения! Личный рекорд проекта.
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; ВК охват x4 (Казань-закуп)</div>
+        4 900 показов благодаря закупу в Казани. Урбан Дикси CPL снизился 169 &rarr; 135 &#8381;.
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+
+  <!-- SOCIAL ROW -->
+  <div class="section-head">Соцсети и закуп</div>
+  <div class="social-row">
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128153; ВКонтакте</span>
+        <span class="social-platform">таргет / сообщество</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">1 081 &rarr; 1 080 <span style="color:#EF4444">&minus;1</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val" style="color:#10B981;font-weight:700;">4 900 &#8593;&#8593;</span></div>
+      <div class="social-stat"><span class="stat-label">Показы</span><span class="stat-val">7 600 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +5300 (+230%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Вовлечённость</span><span class="stat-val">25 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +15 (+150%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Лиды ВК</span><span class="stat-val" style="color:#EF4444;font-weight:700;">9 &#8595;</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#9992; Telegram</span>
+        <span class="social-platform">канал</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">275 &rarr; 277 <span style="color:#10B981">+2</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val">87 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">↑ +2 (+2%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Статус</span><span class="stat-val" style="color:#10B981;">&#10003; рост</span></div>
+      <div class="social-stat"><span class="stat-label">Лиды Юла</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">16 <span style="font-size:10px;font-weight:700;color:#EF4444;white-space:nowrap">↓ −2 (−11%)</span></span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128172; Закуп TG-каналов</span>
+        <span class="social-platform">3 канала</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">personalhoreca_chat</span><span class="stat-val">9 лидов</span></div>
+      <div class="social-stat"><span class="stat-label">obshepitrabota</span><span class="stat-val">13 лидов</span></div>
+      <div class="social-stat"><span class="stat-label">rabota_moskval</span><span class="stat-val">5 лидов</span></div>
+      <div class="social-stat"><span class="stat-label">Итого закуп</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">27 лидов</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128200; Системные тренды</span>
+        <span class="social-platform">недели</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Лучший CPL</span><span class="stat-val cpl-green">62 &#8381; (ТАБЫШ ЧЛБ)</span></div>
+      <div class="social-stat"><span class="stat-label">Худший CPL</span><span class="stat-val cpl-red">185 &#8381; (Командор)</span></div>
+      <div class="social-stat"><span class="stat-label">Проектов в плане</span><span class="stat-val cpl-green">12 из 15</span></div>
+      <div class="social-stat"><span class="stat-label">Средний CPL</span><span class="stat-val cpl-yellow">104 &#8381;</span></div>
+    </div>
+  </div>
+
+</div><!-- /period-2 -->
+
+<!-- ==================== PERIOD 3: 1-7 июня (current) ==================== -->
+<div class="period-section active" id="period-3">
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar">
+    <div class="kpi-card">
+      <div class="kpi-label">Авито лиды</div>
+      <div class="kpi-value kpi-accent">1 582</div>
+      <div class="kpi-sub">за период</div>
+      <div class="kpi-delta down">&#8595; &minus;55% к прошлой неделе</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CPL Авито</div>
+      <div class="kpi-value cpl-yellow">102 &#8381;</div>
+      <div class="kpi-sub">стоимость лида</div>
+      <div class="kpi-delta up">&#8595; &minus;2% (104 &rarr; 102 &#8381;)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Бюджет Авито</div>
+      <div class="kpi-value">162 000 &#8381;</div>
+      <div class="kpi-sub">расход за период</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ВК + Юла</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">ВК: 10 &nbsp;&bull;&nbsp; Юла: 8</div>
+      <div class="kpi-delta down">&#8595; &minus;31% к прошлой нед. (15 целевых)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Урбан Дикси (июнь)</div>
+      <div class="kpi-value kpi-accent">207</div>
+      <div class="kpi-sub">лидов, CPL 122 &#8381;</div>
+      <div class="kpi-delta up">&#8595; CPL 135 &rarr; 122 &#8381;</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- Авито проекты -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-blue"></span>Авито &mdash; проекты</div>
+      <table class="proj-table">
+        <thead>
+          <tr>
+            <th>Проект</th>
+            <th>Факт</th>
+            <th>CPL</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="proj-name">МАГНИТ КРД</td>
+            <td>350</td>
+            <td><span class="cpl-green">65 &#8381;</span></td>
+            <td><span class="proj-done">&#11088; CPL лучший</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КЗН</td>
+            <td>275</td>
+            <td><span class="cpl-yellow">103 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА МСК</td>
+            <td>220</td>
+            <td><span class="cpl-yellow">101 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА ЧЛБ</td>
+            <td>247</td>
+            <td><span class="cpl-green">87 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА КРД</td>
+            <td>130</td>
+            <td><span class="cpl-green">70 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Лукойл</td>
+            <td>65</td>
+            <td><span class="cpl-green">72 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ВВ МСК</td>
+            <td>56</td>
+            <td><span class="cpl-green">80 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ КЗН</td>
+            <td>34</td>
+            <td><span class="cpl-green">70 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ТАБЫШ ЧЛБ</td>
+            <td>36</td>
+            <td><span class="cpl-green">63 &#8381;</span></td>
+            <td><span class="proj-done">норма</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ПЯТЕРОЧКА КЗН</td>
+            <td>20</td>
+            <td><span class="cpl-yellow">127 &#8381;</span></td>
+            <td><span class="proj-lag">контроль</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">МАГНИТ КЗН</td>
+            <td>15</td>
+            <td><span class="cpl-yellow">125 &#8381;</span></td>
+            <td><span class="proj-lag">контроль</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">ЛЕНТА СПБ</td>
+            <td>96</td>
+            <td><span class="cpl-red">173 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; <span class="badge-system">CPL!</span></span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс МСК</td>
+            <td>27</td>
+            <td><span class="cpl-yellow">105 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; объём</span></td>
+          </tr>
+          <tr>
+            <td class="proj-name">Ростикс ЧЛБ</td>
+            <td>10</td>
+            <td><span class="cpl-red">132 &#8381;</span></td>
+            <td><span class="proj-lag">&#128721; объём</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Каналы -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-green"></span>Каналы лидогенерации</div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128308; Авито</div>
+          <div style="font-size:11px;color:#64748B;">основной канал</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">1 582</span>
+          <span class="channel-cpl cpl-yellow">CPL: 102 &#8381;</span>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div class="channel-bar-wrap"><div class="channel-bar" style="width:81%"></div></div>
+        <div style="font-size:10px;color:#94A3B8;margin-top:3px;">Доля в общем объёме: ~81%</div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128153; ВКонтакте</div>
+          <div style="font-size:11px;color:#64748B;">таргет</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">10</span>
+          <span class="channel-cpl cpl-green">+11% vs прошлой нед.</span>
+        </div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#127981; Юла</div>
+          <div style="font-size:11px;color:#64748B;">площадка</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">8</span>
+          <span class="channel-cpl" style="color:#64748B;">5 целевых</span>
+        </div>
+      </div>
+      <div class="channel-item">
+        <div>
+          <div class="channel-name">&#128172; Закуп TG</div>
+          <div style="font-size:11px;color:#64748B;">пакеты</div>
+        </div>
+        <div class="channel-meta">
+          <span class="channel-leads">~10</span>
+          <span class="channel-cpl cpl-green">отслеживаемые</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;padding:8px 10px;background:#F8FAFC;border-radius:8px;font-size:11px;color:#64748B;">
+        <div style="font-weight:600;color:#334155;margin-bottom:4px;">Закуп 1&ndash;7 июня:</div>
+        <div>HoReCa TG-пакет (8 каналов) &mdash; ждём результаты</div>
+        <div>TG пакет 3 100 &#8381; &mdash; 5 лидов</div>
+        <div>TG пакет 2 170 &#8381; &mdash; 5 лидов</div>
+        <div>rusvacant &mdash; 06.06 (2 237 &#8381;, 1 310 просм.)</div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div class="channel-item" style="padding-top:0;border-top:none;">
+          <div>
+            <div class="channel-name">&#128736; Урбан Дикси</div>
+            <div style="font-size:11px;color:#64748B;">июнь нарастающим</div>
+          </div>
+          <div class="channel-meta">
+            <span class="channel-leads cpl-green">207 лидов</span>
+            <span class="channel-cpl cpl-green">CPL 122 &#8381; &#8595; улучшение</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">
+        <div style="font-size:11px;color:#94A3B8;margin-bottom:6px;">Соцсети &mdash; подписчики</div>
+        <div style="display:flex;gap:16px;">
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">ВК: 1 080 &rarr; 1 080</div>
+            <div style="font-size:11px;color:#94A3B8;">0 &nbsp;|&nbsp; охват 570</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#334155;font-weight:600;">TG: 273 &rarr; 281</div>
+            <div style="font-size:11px;color:#10B981;">+8 &nbsp;|&nbsp; охват 91 &#11088;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Требует внимания -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-red"></span>Требует внимания</div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; ЛЕНТА СПБ &mdash; CPL 173 &#8381; (красная зона)</div>
+        Объём упал: 204 &rarr; 96 лидов (&minus;53%). CPL выше нормы. Системная проблема 4 периода подряд.
+      </div>
+      <div class="alert-item alert-critical">
+        <div class="alert-title">&#128721; Ростикс ЧЛБ &mdash; 10 лидов (резкое падение)</div>
+        Было 154, стало 10. Снижение в 15x. Требует немедленной диагностики.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; Ростикс МСК &mdash; 27 лидов (объём низкий)</div>
+        CPL 105 &#8381; &mdash; норма. Проблема не в цене, а в объёме трафика. Был 73, стал 27.
+      </div>
+      <div class="alert-item alert-warning">
+        <div class="alert-title">&#9888; ВК охват упал 4 900 &rarr; 570 (в 8x)</div>
+        Нет платных VK-размещений в Казани. Возобновить для восстановления охватов.
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; Telegram +8 подписчиков &mdash; лучшая неделя</div>
+        Лучший прирост за 4 недели (273&rarr;281). Охват 91 &mdash; слабый рост.
+      </div>
+      <div class="alert-item alert-success">
+        <div class="alert-title">&#10004; Урбан Дикси CPL 122 &#8381; &mdash; улучшение</div>
+        CPL снизился: 135 (май) &rarr; 122 (июнь). Динамика положительная.
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+
+  <!-- SOCIAL ROW -->
+  <div class="section-head">Соцсети и закуп</div>
+  <div class="social-row">
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128153; ВКонтакте</span>
+        <span class="social-platform">таргет / сообщество</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">1 080 &rarr; 1 080 <span style="color:#94A3B8">0</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val" style="color:#EF4444;font-weight:700;">570 &#8595;&#8595;</span></div>
+      <div class="social-stat"><span class="stat-label">Показы</span><span class="stat-val">1 000 <span style="font-size:10px;font-weight:700;color:#EF4444;white-space:nowrap">&#8595; &minus;6600 (&minus;87%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Вовлечённость</span><span class="stat-val">8 <span style="font-size:10px;font-weight:700;color:#EF4444;white-space:nowrap">&#8595; &minus;17 (&minus;68%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Лиды ВК</span><span class="stat-val" style="color:#10B981;font-weight:700;">10 &#8593; (+1 vs прошл.)</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#9992; Telegram</span>
+        <span class="social-platform">канал</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Подписчики</span><span class="stat-val">273 &rarr; 281 <span style="color:#10B981">+8 &#11088;</span></span></div>
+      <div class="social-stat"><span class="stat-label">Охват</span><span class="stat-val">91 <span style="font-size:10px;font-weight:700;color:#10B981;white-space:nowrap">&#8593; +4 (+5%)</span></span></div>
+      <div class="social-stat"><span class="stat-label">Статус</span><span class="stat-val" style="color:#10B981;">&#10003; лучший прирост за 4 нед.</span></div>
+      <div class="social-stat"><span class="stat-label">Лиды Юла</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">8 <span style="font-size:10px;font-weight:700;color:#EF4444;white-space:nowrap">&#8595; &minus;8 (&minus;50%)</span></span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128172; Закуп TG-каналов</span>
+        <span class="social-platform">пакеты</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">HoReCa TG-пакет</span><span class="stat-val">8 каналов &mdash; ждём</span></div>
+      <div class="social-stat"><span class="stat-label">TG пакет 3 100 &#8381;</span><span class="stat-val">5 лидов</span></div>
+      <div class="social-stat"><span class="stat-label">TG пакет 2 170 &#8381;</span><span class="stat-val">5 лидов</span></div>
+      <div class="social-stat"><span class="stat-label">Итого закуп</span><span class="stat-val" style="color:#0EA5E9;font-weight:700;">~10 лидов</span></div>
+    </div>
+    <div class="social-card">
+      <div class="social-header">
+        <span class="social-name">&#128200; Системные тренды</span>
+        <span class="social-platform">недели</span>
+      </div>
+      <div class="social-stat"><span class="stat-label">Лучший CPL</span><span class="stat-val cpl-green">63 &#8381; (ТАБЫШ ЧЛБ)</span></div>
+      <div class="social-stat"><span class="stat-label">Худший CPL</span><span class="stat-val cpl-red">173 &#8381; (ЛЕНТА СПБ)</span></div>
+      <div class="social-stat"><span class="stat-label">Средний CPL</span><span class="stat-val cpl-yellow">102 &#8381;</span></div>
+      <div class="social-stat"><span class="stat-label">Урбан Дикси CPL</span><span class="stat-val cpl-green">122 &#8381; (&minus;13 &#8381;)</span></div>
+    </div>
+  </div>
+
+</div><!-- /period-3 -->
+
+
+<!-- TASKS -->
+<div class="section-head">Задачи</div>
+<div class="tasks-section">
+  <div class="tasks-grid">
+    <div class="task-group">
+      <div class="task-group-title high">ВЫСОКИЙ ПРИОРИТЕТ</div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">Перенести 9 сайтов ЮЛ на домены</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">ЛЕНТА СПБ &mdash; разобрать системный недобор (3 периода)</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">Ростикс МСК &mdash; увеличить объём трафика</div>
+      </div>
+    </div>
+    <div class="task-group">
+      <div class="task-group-title med">СРЕДНИЙ ПРИОРИТЕТ</div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">Допилить логотипы для всех сайтов юридических лиц</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">Заполнить лиды в таблице закупа (Казань, Архангельск, Москва)</div>
+      </div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">Оценить HoReCa TG-пакет (01.06)</div>
+      </div>
+    </div>
+    <div class="task-group">
+      <div class="task-group-title low">НИЗКИЙ ПРИОРИТЕТ</div>
+      <div class="task-item" onclick="toggleTask(this)">
+        <div class="task-cb"></div>
+        <div class="task-text">Разобрать спад ВК+Юла: 41 &rarr; 26 лидов</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+function showPeriod(idx) {
+  var i, el, tabs;
+  for (i = 0; i < 4; i++) {
+    el = document.getElementById('period-' + i);
+    if (!el) continue;
+    if (i === idx) { el.classList.add('active'); }
+    else           { el.classList.remove('active'); }
+  }
+  tabs = document.querySelectorAll('[data-period]');
+  for (i = 0; i < tabs.length; i++) {
+    var p = parseInt(tabs[i].getAttribute('data-period'), 10);
+    tabs[i].className = (p === idx) ? 'tab-btn active' : 'tab-btn';
+  }
+}
+
+// Скрипт в конце body — DOM уже готов, вешаем сразу
+(function() {
+  var tabs = document.querySelectorAll('[data-period]');
+  for (var i = 0; i < tabs.length; i++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        showPeriod(parseInt(btn.getAttribute('data-period'), 10));
+      });
+    })(tabs[i]);
+  }
+  showPeriod(3);
+})();
+function toggleTask(el) {
+  el.classList.toggle('done');
+}
+function updateClock() {
+  var d = new Date();
+  var h = d.getHours();
+  var m = d.getMinutes();
+  var s = d.getSeconds();
+  var pad = function(n) { return n < 10 ? '0' + n : String(n); };
+  var el = document.getElementById('clock');
+  if (el) { el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s); }
+  var days = ['вс','пн','вт','ср','чт','пт','сб'];
+  var months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  var wd = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  var de = document.getElementById('date');
+  if (de) { de.textContent = wd[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear(); }
+}
+// Запускаем часы сразу и через onload для надёжности
+updateClock();
+setInterval(updateClock, 1000);
+window.addEventListener('load', function() { updateClock(); });
+// init
+window.addEventListener('load', function() {
+  updateClock();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// АВТО-ОБНОВЛЕНИЕ ИЗ GOOGLE SHEETS
+// После публикации Apps Script вставь сюда URL:
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4FukBYIYa5doE3Ce0GBuZatPIOJLYA7mxUFM03fETCqJWcCTY4IvumB7VnCtVYyiC/exec';
+// Пример: 'https://script.google.com/macros/s/AKfy.../exec'
+// ═══════════════════════════════════════════════════════════════════
+
+function fetchData() {
+  if (!SCRIPT_URL) {
+    showSetupModal();
+    return;
+  }
+  var btn = document.getElementById('refresh-btn');
+  var ico = document.getElementById('refresh-ico');
+  var lbl = document.getElementById('refresh-lbl');
+  var status = document.getElementById('refresh-status');
+
+  // Loading state
+  ico.style.animation = 'spin 1s linear infinite';
+  ico.style.display = 'inline-block';
+  lbl.textContent = 'Загружаю...';
+  btn.disabled = true;
+  status.textContent = '';
+
+  fetch(SCRIPT_URL + '?t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      updateDashboard(data);
+      ico.style.animation = '';
+      ico.textContent = '✓';
+      lbl.textContent = 'Обновлено';
+      btn.style.background = '#10B981';
+      status.textContent = 'обновлено ' + (data.updated || 'только что');
+      btn.disabled = false;
+      setTimeout(function() {
+        ico.textContent = '\u21BB';
+        lbl.textContent = 'Обновить данные';
+        btn.style.background = '#0EA5E9';
+      }, 3000);
+    })
+    .catch(function(err) {
+      ico.style.animation = '';
+      ico.textContent = '!';
+      lbl.textContent = 'Ошибка';
+      btn.style.background = '#EF4444';
+      status.textContent = 'Проверь URL скрипта';
+      btn.disabled = false;
+      setTimeout(function() {
+        ico.textContent = '\u21BB';
+        lbl.textContent = 'Обновить данные';
+        btn.style.background = '#0EA5E9';
+        status.textContent = '';
+      }, 4000);
+    });
+}
+
+function updateDashboard(data) {
+  // Обновляем последний период (период 2 — текущая неделя)
+  if (!data.avito || !data.avito.weeks || !data.avito.weeks.length) return;
+
+  var weeks = data.avito.weeks;
+  var latest = weeks[weeks.length - 1];
+  var prev   = weeks.length > 1 ? weeks[weeks.length - 2] : null;
+
+  // Обновляем KPI карточки периода 2
+  var p2 = document.getElementById('period-2');
+  if (!p2) return;
+
+  // KPI: лиды
+  var leadsEl = p2.querySelector('[data-kpi="leads"]');
+  if (leadsEl) leadsEl.textContent = fmt(latest.leads);
+
+  var cplEl = p2.querySelector('[data-kpi="cpl"]');
+  if (cplEl) cplEl.textContent = latest.cpl + ' р';
+
+  var budEl = p2.querySelector('[data-kpi="budget"]');
+  if (budEl) budEl.textContent = fmt(Math.round(latest.budget / 1000)) + ' K р';
+
+  // ВК+Юла
+  if (data.vkyula) {
+    var vkyEl = p2.querySelector('[data-kpi="vkyula"]');
+    if (vkyEl) vkyEl.textContent = data.vkyula.total + ' лд';
+  }
+
+  // Урбан Дикси
+  if (data.avito.urban_diksi) {
+    var ud = data.avito.urban_diksi;
+    var udConv = p2.querySelector('[data-kpi="ud_conv"]');
+    if (udConv) udConv.textContent = ud.conversion + ' %';
+  }
+
+  // Обновляем таблицу проектов
+  updateProjectTable(p2, latest);
+
+  // Добавляем новую вкладку если неделя новая
+  addNewWeekTab(data);
+}
+
+function fmt(n) {
+  var s = String(Math.round(n)), r = '';
+  for (var i = 0; i < s.length; i++) {
+    if (i > 0 && (s.length - i) % 3 === 0) r += '\u00a0';
+    r += s[i];
+  }
+  return r;
+}
+
+function updateProjectTable(p2, week) {
+  var tbody = p2.querySelector('[data-table="projects"]');
+  if (!tbody || !week) return;
+  var rows = '';
+  // Done projects
+  for (var i = 0; i < week.done.length; i++) {
+    var pr = week.done[i];
+    var cplCls = pr.cpl <= 80 ? 'cpl-green' : pr.cpl <= 130 ? 'cpl-yellow' : 'cpl-red';
+    rows += '<tr><td class="proj-name">' + pr.name + '</td>'
+          + '<td>' + pr.fact + '</td><td>' + pr.plan + '</td>'
+          + '<td><span class="proj-done">100%+</span></td>'
+          + '<td class="' + cplCls + '">' + pr.cpl + ' р</td></tr>';
+  }
+  // Lag projects
+  for (var i = 0; i < week.lag.length; i++) {
+    var pr = week.lag[i];
+    var cplCls = pr.cpl <= 80 ? 'cpl-green' : pr.cpl <= 130 ? 'cpl-yellow' : 'cpl-red';
+    var pctCls = pr.pct < 50 ? 'plan-red' : pr.pct < 75 ? 'plan-orange' : 'plan-yellow';
+    rows += '<tr><td class="proj-name">' + pr.name + '</td>'
+          + '<td>' + pr.fact + '</td><td>' + pr.plan + '</td>'
+          + '<td class="' + pctCls + '">' + pr.pct + '%</td>'
+          + '<td class="' + cplCls + '">' + pr.cpl + ' р</td></tr>';
+  }
+  tbody.innerHTML = rows;
+}
+
+function addNewWeekTab(data) {
+  if (!data.avito || !data.avito.weeks) return;
+  var weeks = data.avito.weeks;
+  var latest = weeks[weeks.length - 1];
+  if (!latest) return;
+
+  // Проверяем нет ли уже такой вкладки
+  var tabsBar = document.querySelector('.tabs-bar');
+  var existingTabs = tabsBar.querySelectorAll('.tab-btn');
+  var label = latest.label;
+  for (var i = 0; i < existingTabs.length; i++) {
+    if (existingTabs[i].textContent.indexOf(label) >= 0) return; // уже есть
+  }
+
+  // Создаём новую вкладку
+  var newIdx = existingTabs.length;
+  var btn = document.createElement('button');
+  btn.className = 'tab-btn';
+  btn.textContent = label;
+  btn.onclick = (function(idx) { return function() { showPeriod(idx, this); }; })(newIdx);
+  tabsBar.insertBefore(btn, document.getElementById('refresh-btn'));
+
+  // Создаём новый период-блок (копируем структуру period-2 и обновляем данные)
+  var p2 = document.getElementById('period-2');
+  if (p2) {
+    var newDiv = p2.cloneNode(true);
+    newDiv.id = 'period-' + newIdx;
+    newDiv.classList.remove('active');
+    p2.parentNode.insertBefore(newDiv, p2.nextSibling);
+    updateProjectTable(newDiv, latest);
+  }
+}
+
+// ── CSS для анимации ─────────────────────────────────────────────────
+var style = document.createElement('style');
+style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+document.head.appendChild(style);
+
+// ── МОДАЛЬНОЕ ОКНО НАСТРОЙКИ ─────────────────────────────────────────
+function showSetupModal() {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:32px;max-width:540px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:Inter,sans-serif">'
+    + '<h2 style="font-size:18px;font-weight:700;margin-bottom:8px">Настройка автообновления</h2>'
+    + '<p style="color:#64748B;font-size:13px;line-height:1.6;margin-bottom:20px">Для автоподтягивания данных нужно один раз развернуть Google Apps Script:</p>'
+    + '<ol style="color:#334155;font-size:13px;line-height:2;padding-left:20px;margin-bottom:20px">'
+    + '<li>Открой любую из таблиц в Google Sheets</li>'
+    + '<li>Меню: <b>Расширения → Apps Script</b></li>'
+    + '<li>Вставь код из файла <b>war_room_api.gs</b></li>'
+    + '<li>Нажми <b>Сохранить</b>, затем <b>Запустить → Развернуть → Новое развёртывание</b></li>'
+    + '<li>Тип: <b>Веб-приложение</b>, доступ: <b>Все</b> → Развернуть</li>'
+    + '<li>Скопируй URL и вставь в war-room.html в переменную <b>SCRIPT_URL</b></li>'
+    + '</ol>'
+    + '<div style="display:flex;gap:10px">'
+    + '<input id="script-url-input" type="text" placeholder="Вставь URL скрипта сюда..." style="flex:1;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:13px;outline:none">'
+    + '<button onclick="saveScriptUrl()" style="padding:10px 18px;background:#0EA5E9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Сохранить</button>'
+    + '</div>'
+    + '<button onclick="this.closest('div[style]').remove()" style="margin-top:12px;background:transparent;border:none;color:#94A3B8;font-size:12px;cursor:pointer">Закрыть</button>'
+    + '</div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+}
+
+function saveScriptUrl() {
+  var val = document.getElementById('script-url-input').value.trim();
+  if (!val) return;
+  SCRIPT_URL = val;
+  localStorage.setItem('warroom_script_url', val);
+  document.querySelector('div[style*="inset:0"]').remove();
+  fetchData();
+}
+
+// Загружаем сохранённый URL при старте
+(function() {
+  var saved = localStorage.getItem('warroom_script_url');
+  if (saved) SCRIPT_URL = saved;
+})();
+
+</script>
+</body>
+</html>

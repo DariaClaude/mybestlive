@@ -1,0 +1,75 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+#ak-nav-fixed,#ak-nav-fixed *,#ak-nav-fixed *::before,#ak-nav-fixed *::after{box-sizing:border-box;margin:0;padding:0}
+#ak-nav-fixed{--sage:#5C7F62;--sage-dk:#3F5C45;--sage-lt:#7DA884;--white:#FFFFFF;--ts:#E2E8F0;--tm:#94A3B8;--ls:rgba(255,255,255,0.08);font-family:'Inter',sans-serif;height:0!important;overflow:visible!important;display:block!important}
+#ak-nav-fixed a{text-decoration:none}
+
+#ak-nav-bar{position:fixed;top:0;left:0;right:0;z-index:99999;background:rgba(15,23,42,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--ls);height:60px;padding:0 60px;display:flex;align-items:center;justify-content:space-between}
+#ak-nav-fixed .nav-logo{display:flex;align-items:center;gap:12px}
+#ak-nav-fixed .nav-monogram{width:34px;height:34px;border-radius:8px;background:var(--sage);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:15px;color:var(--white);flex-shrink:0}
+#ak-nav-fixed .nav-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--ts);letter-spacing:-0.2px}
+#ak-nav-fixed .nav-links{display:flex;gap:32px;list-style:none}
+#ak-nav-fixed .nav-links a{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--tm);transition:color 0.2s}
+#ak-nav-fixed .nav-links a:hover{color:var(--ts)}
+#ak-nav-fixed .nav-cta{padding:9px 22px;background:var(--sage);color:var(--white);border-radius:8px;font-size:13px;font-weight:600;transition:background 0.2s}
+#ak-nav-fixed .nav-cta:hover{background:var(--sage-dk)}
+#ak-nav-fixed .nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+#ak-nav-fixed .nav-burger span{display:block;width:22px;height:2px;background:var(--tm);border-radius:2px;transition:all 0.3s}
+#ak-nav-mobile-panel{display:none;position:fixed;top:60px;left:0;right:0;z-index:99998;background:rgba(15,23,42,0.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:20px;border-bottom:1px solid var(--ls)}
+#ak-nav-mobile-panel.open{display:flex;flex-direction:column;gap:4px}
+#ak-nav-fixed .nav-mobile a{display:block;padding:12px 16px;font-size:13px;font-weight:600;color:var(--tm);border-radius:8px;transition:all 0.2s}
+#ak-nav-fixed .nav-mobile a:hover{color:var(--ts);background:rgba(255,255,255,0.06)}
+#ak-nav-fixed .nav-mobile-cta{margin-top:8px!important;background:var(--sage)!important;color:var(--white)!important;text-align:center}
+
+@media(max-width:1024px){#ak-nav-bar{padding:0 32px}}
+@media(max-width:640px){#ak-nav-bar{padding:0 20px}#ak-nav-fixed .nav-links,#ak-nav-fixed .nav-cta{display:none}#ak-nav-fixed .nav-burger{display:flex}}
+</style>
+
+<div id="ak-nav-fixed">
+  <nav id="ak-nav-bar">
+    <a class="nav-logo" href="#">
+      <div class="nav-monogram">АК</div>
+      <span class="nav-name">Альянс Кадров</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#ak-services">Услуги</a></li>
+      <li><a href="#ak-about">О нас</a></li>
+      <li><a href="#ak-process">Процесс</a></li>
+      <li><a href="#ak-contacts">Контакты</a></li>
+    </ul>
+    <a class="nav-cta" href="#ak-contacts">Оставить заявку</a>
+    <button class="nav-burger" id="ak-burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="nav-mobile" id="ak-nav-mobile-panel">
+    <a href="#ak-services">Услуги</a>
+    <a href="#ak-about">О нас</a>
+    <a href="#ak-process">Процесс</a>
+    <a href="#ak-contacts">Контакты</a>
+    <a href="#ak-contacts" class="nav-mobile-cta">Оставить заявку</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  function init(){
+    var wrap = document.getElementById('ak-nav-fixed');
+    if(!wrap) return;
+
+    // Вырываем nav из контейнера Тильды в document.body
+    // чтобы position:fixed работал корректно несмотря на transform родителей
+    document.body.appendChild(wrap);
+
+    var burger = document.getElementById('ak-burger');
+    var menu = document.getElementById('ak-nav-mobile-panel');
+    if(burger && menu){
+      burger.addEventListener('click', function(){ menu.classList.toggle('open'); });
+      menu.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){ menu.classList.remove('open'); });
+      });
+    }
+  }
+  setTimeout(init, 100);
+})();
+</script>

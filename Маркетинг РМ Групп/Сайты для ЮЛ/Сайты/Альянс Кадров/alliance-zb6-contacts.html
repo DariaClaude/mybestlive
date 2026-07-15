@@ -1,0 +1,123 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+.ak-page*,.ak-page*::before,.ak-page*::after{box-sizing:border-box!important;margin:0;padding:0}
+.ak-page{--slate:#1E293B;--slate2:#0F172A;--slate3:#2D3F55;--sage:#5C7F62;--sage-lt:#7DA884;--sage-dk:#3F5C45;--cream:#F8F4EE;--cream2:#EDE8E0;--white:#FFFFFF;--ts:#E2E8F0;--tm:#94A3B8;--tc:#1E293B;--tmc:#64748B;--ls:rgba(255,255,255,0.08);--lc:rgba(0,0,0,0.08);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.ak-page a{text-decoration:none}
+
+.ak-page .contacts{background:var(--slate2);padding:96px 60px}
+.ak-page .contacts-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;max-width:1200px;margin:0 auto}
+.ak-page .ct-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--sage-lt);margin-bottom:16px}
+.ak-page .ct-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,3vw,40px);color:var(--ts);line-height:1.15;letter-spacing:-0.8px;margin-bottom:32px}
+.ak-page .ct-form{overflow:hidden}
+.ak-page .ct-input{display:block!important;width:100%!important;box-sizing:border-box!important;padding:12px 16px;margin-bottom:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;color:var(--ts);outline:none;transition:border-color 0.2s}
+.ak-page .ct-input::placeholder{color:var(--tm)}
+.ak-page .ct-input:focus{border-color:var(--sage)}
+.ak-page .ct-textarea{resize:none}
+.ak-page .ct-consent{font-size:11px;color:var(--tm);margin-top:10px;line-height:1.5}
+.ak-page .btn-submit-ct{display:block;width:100%;padding:14px;background:var(--sage);color:var(--white);border-radius:8px!important;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;text-align:center;cursor:pointer;transition:background 0.2s;user-select:none;margin-bottom:0}
+.ak-page .btn-submit-ct:hover{background:var(--sage-dk)}
+.ak-page .ct-right{display:flex;flex-direction:column;gap:20px}
+.ak-page .ct-rows{display:flex;flex-direction:column;gap:2px}
+.ak-page .ct-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--ls);border-radius:8px}
+.ak-page .ct-key{font-size:12px;color:var(--tm);white-space:nowrap;flex-shrink:0}
+.ak-page .ct-val{font-size:13px;color:var(--ts);font-weight:500;text-align:right;word-break:break-word}
+.ak-page .ct-val a{color:var(--sage-lt)}
+.ak-page .ct-val a:hover{color:var(--sage)}
+.ak-page .req-block{background:rgba(255,255,255,0.04);border:1px solid var(--ls);border-radius:12px;overflow:hidden}
+.ak-page .req-hd{padding:16px 20px;border-bottom:1px solid var(--ls);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--tm)}
+.ak-page .req-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--ls)}
+.ak-page .req-row:last-child{border-bottom:none}
+.ak-page .req-k{font-size:12px;color:var(--tm);white-space:nowrap}
+.ak-page .req-v{font-size:13px;color:var(--ts);font-weight:600;text-align:right;word-break:break-word}
+.ak-page .ct-success{display:none;padding:28px;background:rgba(92,127,98,0.12);border:1px solid rgba(92,127,98,0.25);border-radius:12px;text-align:center}
+.ak-page .ct-success.show{display:block}
+.ak-page .ct-success-icon{font-size:32px;margin-bottom:12px}
+.ak-page .ct-success-title{font-size:16px;font-weight:700;color:var(--ts);margin-bottom:6px}
+.ak-page .ct-success-sub{font-size:13px;color:var(--tm)}
+
+.ak-page footer{background:var(--slate2);border-top:1px solid var(--ls);padding:28px 60px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.ak-page .ft-logo{display:flex;align-items:center;gap:10px}
+.ak-page .ft-mono{width:28px;height:28px;border-radius:6px;background:var(--sage);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:12px;color:var(--white)}
+.ak-page .ft-name{font-size:13px;font-weight:600;color:var(--tm)}
+.ak-page .ft-links{display:flex;gap:24px;list-style:none}
+.ak-page .ft-links a{font-size:12px;color:var(--tm);transition:color 0.2s}
+.ak-page .ft-links a:hover{color:var(--ts)}
+.ak-page .ft-copy{font-size:12px;color:var(--tm)}
+
+@media(max-width:1024px){.ak-page .contacts{padding:80px 32px}.ak-page .contacts-grid{gap:48px}.ak-page footer{padding:24px 32px}}
+@media(max-width:640px){.ak-page .contacts{padding:60px 20px}.ak-page .contacts-grid{grid-template-columns:1fr;gap:40px}.ak-page footer{padding:24px 20px;flex-direction:column;text-align:center;gap:16px}.ak-page .ft-links{display:none}}
+</style>
+
+<div class="ak-page">
+<section class="contacts" id="ak-contacts">
+  <div class="contacts-grid">
+    <div>
+      <div class="ct-label">Контакты</div>
+      <h2 class="ct-title">Обсудим<br>вашу задачу</h2>
+      <div class="ct-form" id="ak-ct-form">
+        <input type="text"  name="name"    placeholder="Имя *"       class="ct-input"/>
+        <input type="tel"   name="phone"   placeholder="Телефон *"   class="ct-input"/>
+        <input type="email" name="email"   placeholder="Email"       class="ct-input"/>
+        <textarea           name="comment" placeholder="Комментарий" rows="3" class="ct-input ct-textarea"></textarea>
+        <div class="btn-submit-ct" id="ak-ct-submit">Отправить заявку →</div>
+        <p class="ct-consent">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+      </div>
+      <div id="ak-ct-success" class="ct-success">
+        <div class="ct-success-icon">✓</div>
+        <div class="ct-success-title">Заявка отправлена!</div>
+        <div class="ct-success-sub">Свяжемся в течение рабочего дня</div>
+      </div>
+    </div>
+    <div class="ct-right">
+      <div class="ct-rows">
+        <div class="ct-row"><span class="ct-key">E-mail</span><span class="ct-val"><a href="mailto:info@alliance-kadrov.ru">info@alliance-kadrov.ru</a></span></div>
+        <div class="ct-row"><span class="ct-key">Режим работы</span><span class="ct-val">Пн–Пт, 9:00–18:00</span></div>
+        <div class="ct-row"><span class="ct-key">Адрес</span><span class="ct-val">107113, г. Москва, ул. Маленковская, д. 32, стр. 2А, помещ. 1/1</span></div>
+      </div>
+      <div class="req-block">
+        <div class="req-hd">Реквизиты компании</div>
+        <div class="req-row"><span class="req-k">Компания</span><span class="req-v">ООО «Альянс Кадров»</span></div>
+        <div class="req-row"><span class="req-k">ИНН</span><span class="req-v">9718282911</span></div>
+        <div class="req-row"><span class="req-k">КПП</span><span class="req-v">771801001</span></div>
+        <div class="req-row"><span class="req-k">ОГРН</span><span class="req-v">1257700297953</span></div>
+        <div class="req-row"><span class="req-k">Адрес регистрации</span><span class="req-v" style="font-size:11px;">107113, г. Москва, ул. Маленковская, д. 32, стр. 2А, помещ. 1/1</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-logo">
+    <div class="ft-mono">АК</div>
+    <span class="ft-name">Альянс Кадров</span>
+  </div>
+  <ul class="ft-links">
+    <li><a href="#ak-services">Услуги</a></li>
+    <li><a href="#ak-about">О компании</a></li>
+    <li><a href="#ak-process">Процесс</a></li>
+    <li><a href="#ak-contacts">Контакты</a></li>
+  </ul>
+  <span class="ft-copy">© 2025 ООО «Альянс Кадров»</span>
+</footer>
+</div>
+
+<script>
+(function(){
+  var SCRIPT_URL='https://script.google.com/macros/s/AKfycbxgL5kKDfYviyqbif6DmMvJDI0O_nFK7BwGzRr76SjEuiSDPow0NVCyA7w1AFCiZNbR/exec';
+  var form=document.getElementById('ak-ct-form');
+  var submit=document.getElementById('ak-ct-submit');
+  var success=document.getElementById('ak-ct-success');
+  if(!submit) return;
+  submit.addEventListener('click',function(){
+    var name=form.querySelector('[name=name]').value.trim();
+    var phone=form.querySelector('[name=phone]').value.trim();
+    if(!name||!phone){ alert('Пожалуйста, заполните Имя и Телефон'); return; }
+    submit.textContent='Отправляем…'; submit.style.opacity='0.6'; submit.style.pointerEvents='none';
+    var commentEl=form.querySelector('[name=comment]');
+    var p=new URLSearchParams({site:'Альянс Кадров (Контакты)',name:name,phone:phone,email:form.querySelector('[name=email]').value.trim(),comment:commentEl?commentEl.value.trim():''});
+    fetch(SCRIPT_URL+'?'+p.toString(),{method:'GET',mode:'no-cors'})
+      .then(function(){ form.style.display='none'; success.classList.add('show'); })
+      .catch(function(){ submit.textContent='Ошибка, попробуйте ещё раз'; submit.style.opacity='1'; submit.style.pointerEvents=''; });
+  });
+})();
+</script>

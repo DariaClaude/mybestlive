@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="96" fill="#1E3A5F"/>
+  <rect x="1" y="1" width="510" height="510" rx="95" fill="none" stroke="rgba(201,151,58,0.3)" stroke-width="2"/>
+  <!-- П монограмма -->
+  <rect x="128" y="152" width="256" height="36" rx="18" fill="#C9973A"/>
+  <rect x="128" y="152" width="36" height="200" rx="18" fill="#C9973A"/>
+  <rect x="348" y="152" width="36" height="200" rx="18" fill="#C9973A"/>
+  <!-- gold dot -->
+  <circle cx="376" cy="128" r="22" fill="#E8B84B"/>
+</svg>

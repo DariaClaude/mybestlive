@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ball Room at Mia — Premium Event Venue in Hallandale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:     #0D0A07;
+      --dark2:    #16100A;
+      --dark3:    #231A10;
+      --gold:     #C9A84C;
+      --gold-lt:  #E2C47A;
+      --gold-dk:  #9A7A35;
+      --cream:    #F9F4ED;
+      --cream2:   #F0E9DE;
+      --cream3:   #E5DDD0;
+      --white:    #FFFFFF;
+      --ts:       #F8F0E4;
+      --tm:       #A8956E;
+      --tc:       #1A1209;
+      --tmc:      #7A6A52;
+      --ls:       rgba(201,168,76,0.15);
+      --lc:       rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--tc);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,10,7,0.95); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--ls);
+      height: 60px; padding: 0 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-monogram {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--dark);
+      flex-shrink: 0;
+    }
+    .nav-name { font-family: 'DM Serif Display', serif; font-size: 17px; font-weight: 400; color: var(--ts); letter-spacing: -0.2px; }
+    .nav-sub { font-size: 10px; color: var(--tm); letter-spacing: 0.5px; margin-left: 2px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tm); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ts); }
+    .nav-cta {
+      padding: 9px 22px; background: var(--gold); color: var(--dark);
+      border-radius: 8px; font-size: 13px; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-lt); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark2);
+      display: flex; flex-direction: column;
+      padding: 60px 60px 0;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      bottom: -100px; right: -100px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+    .hero::after {
+      content: ''; position: absolute;
+      top: 60px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+    .hero-eyebrow {
+      position: relative; z-index: 1;
+      margin-top: 52px;
+      display: flex; align-items: center; gap: 16px;
+      font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold-lt);
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 28px; height: 1px; background: var(--gold); flex-shrink: 0;
+    }
+    .hero-main {
+      flex: 1; position: relative; z-index: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 36px 0 44px;
+    }
+    .hero-h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(58px, 9vw, 122px);
+      line-height: 0.93; letter-spacing: -3px;
+      color: var(--ts);
+    }
+    .hero-h1 .h1-gold { color: var(--gold-lt); font-style: italic; }
+    .hero-bottom {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--ls);
+      padding: 28px 0 44px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 40px;
+    }
+    .hero-stats-row { display: flex; gap: 44px; align-items: center; flex-wrap: wrap; }
+    .h-stat { display: flex; flex-direction: column; gap: 3px; }
+    .h-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px; line-height: 1; color: var(--ts); letter-spacing: -1px;
+    }
+    .h-stat-num em { font-style: normal; color: var(--gold); }
+    .h-stat-lbl { font-size: 11px; color: var(--tm); letter-spacing: 0.3px; }
+    .btn-gold {
+      padding: 13px 28px; background: var(--gold); color: var(--dark);
+      border-radius: 8px; font-size: 14px; font-weight: 700;
+      border: none; cursor: pointer; transition: background 0.2s;
+      display: inline-block; flex-shrink: 0;
+    }
+    .btn-gold:hover { background: var(--gold-lt); }
+
+    /* ── MARQUEE ── */
+    .marquee-strip {
+      background: var(--dark2);
+      padding: 16px 0; overflow: hidden;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee-run 28s linear infinite;
+    }
+    .m-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 0 28px; white-space: nowrap;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--tm);
+    }
+    .m-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    @keyframes marquee-run {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── EVENTS (Services) ── */
+    .events { background: var(--cream); padding: 96px 0; }
+    .evt-head {
+      padding: 0 60px; margin-bottom: 52px;
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
+    }
+    .sec-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .sec-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(30px, 3.5vw, 46px);
+      color: var(--tc); line-height: 1.1; letter-spacing: -1px;
+    }
+    .evt-sub {
+      font-size: 14px; color: var(--tmc); line-height: 1.65;
+      max-width: 340px; text-align: right; flex-shrink: 0;
+    }
+    .evt-scroll {
+      padding: 0 60px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .evt-scroll::-webkit-scrollbar { display: none; }
+    .evt-track { display: flex; gap: 14px; width: max-content; }
+    .evt-card {
+      width: 268px; padding: 36px 28px;
+      background: var(--white);
+      border: 1px solid var(--lc);
+      border-radius: 12px;
+      scroll-snap-align: start; flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s;
+    }
+    .evt-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+    .evt-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(201,168,76,0.10);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px; font-size: 22px;
+    }
+    .evt-name { font-size: 16px; font-weight: 700; color: var(--tc); margin-bottom: 10px; line-height: 1.3; }
+    .evt-desc { font-size: 13px; color: var(--tmc); line-height: 1.65; }
+    .evt-nav { padding: 24px 60px 0; display: flex; gap: 10px; }
+    .evt-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--white); border: 1px solid var(--lc);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; color: var(--tc);
+    }
+    .evt-btn:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+    .evt-btn:disabled { opacity: 0.3; cursor: default; }
+
+    /* ── BENTO ── */
+    .bento { background: var(--dark3); padding: 96px 60px; }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 1300px; margin: 0 auto;
+    }
+    .b-main {
+      grid-column: 1 / 3;
+      padding: 52px 48px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--ls);
+      border-radius: 16px;
+      min-height: 320px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .b-main-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold-lt); margin-bottom: 20px;
+    }
+    .b-main-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 2.8vw, 40px);
+      color: var(--ts); line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 20px;
+    }
+    .b-main-title em { font-style: italic; color: var(--gold-lt); }
+    .b-main-text { font-size: 14px; color: var(--tm); line-height: 1.80; max-width: 520px; }
+
+    .b-stat-big {
+      grid-column: 3;
+      padding: 40px 32px;
+      background: var(--gold);
+      border-radius: 16px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      min-height: 320px;
+    }
+    .b-stat-big-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(56px, 6vw, 80px);
+      line-height: 1; color: var(--dark); letter-spacing: -3px; margin-bottom: 10px;
+    }
+    .b-stat-big-lbl { font-size: 14px; color: rgba(13,10,7,0.70); line-height: 1.4; }
+
+    .b-num-card {
+      padding: 32px 28px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--ls);
+      border-radius: 16px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      min-height: 170px;
+    }
+    .b-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(40px, 4.5vw, 60px);
+      line-height: 1; color: var(--ts); letter-spacing: -2px; margin-bottom: 8px;
+    }
+    .b-num-lbl { font-size: 13px; color: var(--tm); line-height: 1.4; }
+
+    .b-quote {
+      padding: 32px 28px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.20);
+      border-radius: 16px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 170px;
+    }
+    .b-quote-mark {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px; line-height: 1;
+      color: var(--gold-lt); margin-bottom: 8px;
+    }
+    .b-quote-text { font-size: 13px; color: var(--tm); line-height: 1.75; font-style: italic; flex: 1; margin-bottom: 16px; }
+    .b-quote-author { font-size: 11px; color: var(--gold-lt); font-weight: 600; letter-spacing: 0.5px; }
+
+    /* ── PROCESS ── */
+    .process { background: var(--cream2); padding: 96px 60px; }
+    .process-head { margin-bottom: 52px; }
+    .process-list { max-width: 760px; }
+    .proc-item { border-bottom: 1px solid var(--lc); }
+    .proc-trigger {
+      display: flex; align-items: center; gap: 22px;
+      padding: 22px 0; cursor: pointer; user-select: none;
+    }
+    .proc-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px; color: var(--tmc); min-width: 26px; flex-shrink: 0;
+    }
+    .proc-name { font-size: 16px; font-weight: 600; color: var(--tc); flex: 1; }
+    .proc-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--lc);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; flex-shrink: 0; color: var(--tmc);
+    }
+    .proc-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.4s;
+      padding: 0 0 0 48px;
+    }
+    .proc-body-text { font-size: 14px; color: var(--tmc); line-height: 1.75; padding-bottom: 22px; }
+    .proc-item.open .proc-icon {
+      background: var(--gold); border-color: var(--gold); color: var(--dark);
+      transform: rotate(45deg);
+    }
+    .proc-item.open .proc-num { color: var(--gold-dk); }
+    .proc-item.open .proc-body { max-height: 180px; }
+
+    /* ── CTA ── */
+    .cta-strip {
+      background: var(--gold); padding: 88px 60px;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+    }
+    .cta-left { max-width: 600px; }
+    .cta-over {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(13,10,7,0.55); margin-bottom: 16px;
+    }
+    .cta-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 3vw, 44px);
+      color: var(--dark); line-height: 1.1; letter-spacing: -1px;
+    }
+    .cta-title em { font-style: italic; opacity: 0.75; }
+    .btn-dark {
+      padding: 15px 36px; background: var(--dark); color: var(--gold-lt);
+      border-radius: 8px; font-size: 15px; font-weight: 700;
+      border: none; cursor: pointer; transition: opacity 0.2s; display: inline-block;
+      flex-shrink: 0;
+    }
+    .btn-dark:hover { opacity: 0.85; }
+
+    /* ── CONTACTS ── */
+    .contacts { background: var(--dark2); padding: 96px 60px; }
+    .contacts-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .ct-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold-lt); margin-bottom: 16px;
+    }
+    .ct-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 3vw, 40px);
+      color: var(--ts); line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 40px;
+    }
+    .ct-rows { display: flex; flex-direction: column; gap: 2px; }
+    .ct-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--ls); border-radius: 8px;
+    }
+    .ct-key { font-size: 12px; color: var(--tm); font-weight: 400; }
+    .ct-val { font-size: 13px; color: var(--ts); font-weight: 500; text-align: right; }
+    .ct-val a { color: var(--gold-lt); }
+    .ct-val a:hover { color: var(--gold); }
+
+    .venue-block {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--ls); border-radius: 12px; overflow: hidden;
+    }
+    .venue-hd {
+      padding: 18px 22px; border-bottom: 1px solid var(--ls);
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--tm);
+    }
+    .venue-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 22px; border-bottom: 1px solid var(--ls);
+    }
+    .venue-row:last-child { border-bottom: none; }
+    .venue-k { font-size: 12px; color: var(--tm); }
+    .venue-v { font-size: 13px; color: var(--ts); font-weight: 600; text-align: right; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark2); border-top: 1px solid var(--ls);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .ft-logo { display: flex; align-items: center; gap: 10px; }
+    .ft-mono {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif; font-size: 11px; color: var(--dark);
+    }
+    .ft-name { font-size: 13px; font-weight: 600; color: var(--tm); }
+    .ft-links { display: flex; gap: 24px; list-style: none; }
+    .ft-links a { font-size: 12px; color: var(--tm); transition: color 0.2s; }
+    .ft-links a:hover { color: var(--ts); }
+    .ft-copy { font-size: 12px; color: var(--tm); }
+
+    /* ── REVEAL ── */
+    .rv {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.65s cubic-bezier(0.4,0,0.2,1);
+    }
+    .rv.in { opacity: 1; transform: none; }
+    .rv.d1 { transition-delay: 0.1s; }
+    .rv.d2 { transition-delay: 0.2s; }
+    .rv.d3 { transition-delay: 0.3s; }
+    .rv.d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero { padding: 60px 40px 0; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .bento-grid { grid-template-columns: 1fr 1fr; }
+      .b-main { grid-column: 1 / 3; }
+      .b-stat-big { grid-column: 1; }
+      .cta-strip { flex-direction: column; align-items: flex-start; }
+      .contacts-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 20px 0; }
+      .hero-eyebrow { margin-top: 32px; }
+      .hero-stats-row { gap: 24px; }
+      .evt-head { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .evt-sub { text-align: left; max-width: 100%; }
+      .evt-scroll { padding: 0 20px; }
+      .evt-nav { padding: 20px 20px 0; }
+      .bento { padding: 60px 20px; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .b-main { grid-column: 1; }
+      .b-stat-big { grid-column: 1; min-height: 200px; }
+      .process { padding: 60px 20px; }
+      .cta-strip { padding: 60px 20px; }
+      .contacts { padding: 60px 20px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .ft-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-monogram">BR</div>
+    <div>
+      <span class="nav-name">Ball Room</span>
+      <span class="nav-sub"> at Mia</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#events">Events</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#planning">Planning</a></li>
+    <li><a href="#contacts">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contacts">Book the Hall</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow rv">Premium Event Venue · Hallandale, FL</div>
+  <div class="hero-main">
+    <h1 class="hero-h1 rv d1">Your event<br>deserves a<br><span class="h1-gold">grand stage</span></h1>
+  </div>
+  <div class="hero-bottom rv d2">
+    <div class="hero-stats-row">
+      <div class="h-stat">
+        <div class="h-stat-num">300<em>+</em></div>
+        <div class="h-stat-lbl">guests capacity</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">5<em>+</em></div>
+        <div class="h-stat-lbl">event types</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">Live<em>✦</em></div>
+        <div class="h-stat-lbl">artists & performers</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num">Full<em>✦</em></div>
+        <div class="h-stat-lbl">service & catering</div>
+      </div>
+    </div>
+    <a class="btn-gold" href="#contacts">Plan My Event →</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="m-item"><span class="m-dot"></span>Bar Mitzvah</div>
+    <div class="m-item"><span class="m-dot"></span>Wedding</div>
+    <div class="m-item"><span class="m-dot"></span>Banquet</div>
+    <div class="m-item"><span class="m-dot"></span>Birthday Party</div>
+    <div class="m-item"><span class="m-dot"></span>Conference</div>
+    <div class="m-item"><span class="m-dot"></span>Live Performers</div>
+    <div class="m-item"><span class="m-dot"></span>Up to 300 Guests</div>
+    <div class="m-item"><span class="m-dot"></span>Restaurant Mia · Hallandale</div>
+    <div class="m-item"><span class="m-dot"></span>Premium Catering</div>
+    <div class="m-item"><span class="m-dot"></span>Full Production</div>
+    <div class="m-item"><span class="m-dot"></span>Bar Mitzvah</div>
+    <div class="m-item"><span class="m-dot"></span>Wedding</div>
+    <div class="m-item"><span class="m-dot"></span>Banquet</div>
+    <div class="m-item"><span class="m-dot"></span>Birthday Party</div>
+    <div class="m-item"><span class="m-dot"></span>Conference</div>
+    <div class="m-item"><span class="m-dot"></span>Live Performers</div>
+    <div class="m-item"><span class="m-dot"></span>Up to 300 Guests</div>
+    <div class="m-item"><span class="m-dot"></span>Restaurant Mia · Hallandale</div>
+    <div class="m-item"><span class="m-dot"></span>Premium Catering</div>
+    <div class="m-item"><span class="m-dot"></span>Full Production</div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="evt-head">
+    <div>
+      <div class="sec-label rv">What We Host</div>
+      <h2 class="sec-title rv d1">Events for every<br>milestone</h2>
+    </div>
+    <p class="evt-sub rv">From intimate celebrations to grand-scale productions — Ball Room at Mia handles it all with elegance and precision</p>
+  </div>
+  <div class="evt-scroll" id="evt-scroll">
+    <div class="evt-track">
+
+      <div class="evt-card rv">
+        <div class="evt-icon">✡️</div>
+        <div class="evt-name">Bar & Bat Mitzvah</div>
+        <div class="evt-desc">A sacred milestone celebrated in full splendor. We create a meaningful and festive atmosphere, complete with décor, entertainment, and exceptional dining for the entire family and guests.</div>
+      </div>
+
+      <div class="evt-card rv d1">
+        <div class="evt-icon">💍</div>
+        <div class="evt-name">Wedding</div>
+        <div class="evt-desc">Your dream wedding, brought to life. The Ball Room offers a breathtaking setting for ceremonies and receptions — with live music, gourmet catering, and every detail attended to.</div>
+      </div>
+
+      <div class="evt-card rv d2">
+        <div class="evt-icon">🥂</div>
+        <div class="evt-name">Banquet</div>
+        <div class="evt-desc">Corporate or private banquets hosted at the highest level. Gala dinners, award evenings, charity galas — we deliver flawless service and a sophisticated atmosphere for every occasion.</div>
+      </div>
+
+      <div class="evt-card rv d3">
+        <div class="evt-icon">🎂</div>
+        <div class="evt-name">Birthday Party</div>
+        <div class="evt-desc">Celebrate your special day with style and scale. Whether it's an intimate gathering or a 300-guest extravaganza, we craft birthday experiences that guests will talk about for years.</div>
+      </div>
+
+      <div class="evt-card rv">
+        <div class="evt-icon">🎤</div>
+        <div class="evt-name">Live Performances</div>
+        <div class="evt-desc">Invite world-class artists, singers, and entertainers to your event. Our stage and sound system are built for live performance — from acoustic sets to full concert-scale productions.</div>
+      </div>
+
+      <div class="evt-card rv d1">
+        <div class="evt-icon">📊</div>
+        <div class="evt-name">Conference & Corporate</div>
+        <div class="evt-desc">A prestigious backdrop for business. Product launches, investor forums, corporate summits — equipped with A/V technology, breakout space, and premium hospitality for your delegates.</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="evt-nav">
+    <button class="evt-btn" id="evt-prev">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button class="evt-btn" id="evt-next">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<!-- BENTO -->
+<section class="bento" id="about">
+  <div class="bento-grid">
+
+    <div class="b-main rv">
+      <div>
+        <div class="b-main-label">About the Venue</div>
+        <h2 class="b-main-title">Where every celebration<br>becomes <em>a masterpiece</em></h2>
+      </div>
+      <p class="b-main-text">Ball Room at Mia is Hallandale's premier grand event venue, nestled within the acclaimed Restaurant Mia. With over 300-guest capacity, a state-of-the-art stage for live performers, and a world-class culinary team, we transform every occasion into an unforgettable experience. From the first consultation to the final encore, our team orchestrates every detail so you can be fully present in every moment.</p>
+    </div>
+
+    <div class="b-stat-big rv d1">
+      <div class="b-stat-big-num">300</div>
+      <div class="b-stat-big-lbl">guests maximum<br>capacity</div>
+    </div>
+
+    <div class="b-num-card rv">
+      <div class="b-num">5<span style="font-size:0.5em;opacity:.5">+</span></div>
+      <div class="b-num-lbl">event formats<br>we specialize in</div>
+    </div>
+
+    <div class="b-num-card rv d1">
+      <div class="b-num">1<span style="font-size:0.45em;opacity:.5">★</span></div>
+      <div class="b-num-lbl">premier venue<br>in Hallandale</div>
+    </div>
+
+    <div class="b-quote rv d2">
+      <div class="b-quote-mark">"</div>
+      <p class="b-quote-text">Our daughter's Bat Mitzvah was absolutely magical. The Ball Room exceeded every expectation — the space, the food, the team. Truly remarkable.</p>
+      <div class="b-quote-author">— Sarah & David K., Celebration Guest</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="planning">
+  <div class="process-head">
+    <div class="sec-label rv">How It Works</div>
+    <h2 class="sec-title rv d1">5 steps to your<br>perfect event</h2>
+  </div>
+  <div class="process-list">
+
+    <div class="proc-item open rv">
+      <div class="proc-trigger">
+        <span class="proc-num">01</span>
+        <span class="proc-name">Initial Consultation</span>
+        <span class="proc-icon">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <div class="proc-body">
+        <p class="proc-body-text">We begin with a personal consultation to understand your vision, guest count, preferred date, and the type of event you're planning. This sets the foundation for a fully tailored experience.</p>
+      </div>
+    </div>
+
+    <div class="proc-item rv d1">
+      <div class="proc-trigger">
+        <span class="proc-num">02</span>
+        <span class="proc-name">Venue Tour & Proposal</span>
+        <span class="proc-icon">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <div class="proc-body">
+        <p class="proc-body-text">We walk you through the Ball Room, stage, and dining areas. Our team then prepares a custom proposal — layout, menu options, entertainment setup, and pricing — tailored to your event.</p>
+      </div>
+    </div>
+
+    <div class="proc-item rv d2">
+      <div class="proc-trigger">
+        <span class="proc-num">03</span>
+        <span class="proc-name">Planning & Coordination</span>
+        <span class="proc-icon">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <div class="proc-body">
+        <p class="proc-body-text">Your dedicated event manager coordinates every element — décor, menu tasting, artist bookings, AV setup, and timeline. We handle vendors, logistics, and all communications on your behalf.</p>
+      </div>
+    </div>
+
+    <div class="proc-item rv d3">
+      <div class="proc-trigger">
+        <span class="proc-num">04</span>
+        <span class="proc-name">Event Day Execution</span>
+        <span class="proc-icon">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <div class="proc-body">
+        <p class="proc-body-text">On the day, our full team is on-site — from front-of-house to backstage crew. Setup, sound check, guest reception, service, and production all run seamlessly so you enjoy every moment.</p>
+      </div>
+    </div>
+
+    <div class="proc-item rv">
+      <div class="proc-trigger">
+        <span class="proc-num">05</span>
+        <span class="proc-name">Post-Event Follow-Up</span>
+        <span class="proc-icon">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+            <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+      <div class="proc-body">
+        <p class="proc-body-text">We follow up to ensure every expectation was met and gather your feedback. Many of our clients return year after year — our relationships don't end when the event does.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="cta-left rv">
+    <div class="cta-over">Ready to celebrate?</div>
+    <h2 class="cta-title">Tell us your vision —<br><em>we'll make it unforgettable</em></h2>
+  </div>
+  <a class="btn-dark rv d2" href="#contacts">Book a Consultation</a>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div class="contacts-grid">
+    <div>
+      <div class="rv">
+        <div class="ct-label">Get in Touch</div>
+        <h2 class="ct-title">Let's plan<br>your event</h2>
+      </div>
+      <div class="ct-rows rv d1">
+        <div class="ct-row">
+          <span class="ct-key">Phone</span>
+          <span class="ct-val"><a href="tel:+1">+1 (___) ___-____</a></span>
+        </div>
+        <div class="ct-row">
+          <span class="ct-key">Email</span>
+          <span class="ct-val"><a href="mailto:events@mia-hallandale.com">events@mia-hallandale.com</a></span>
+        </div>
+        <div class="ct-row">
+          <span class="ct-key">Hours</span>
+          <span class="ct-val">Mon–Sun, 10:00 AM – 10:00 PM</span>
+        </div>
+        <div class="ct-row">
+          <span class="ct-key">Location</span>
+          <span class="ct-val">Hallandale Beach, FL</span>
+        </div>
+        <div class="ct-row">
+          <span class="ct-key">Instagram</span>
+          <span class="ct-val"><a href="#">@ballroomatmia</a></span>
+        </div>
+      </div>
+    </div>
+    <div class="venue-block rv d2">
+      <div class="venue-hd">Venue Details</div>
+      <div class="venue-row">
+        <span class="venue-k">Venue</span>
+        <span class="venue-v">Ball Room at Mia</span>
+      </div>
+      <div class="venue-row">
+        <span class="venue-k">Restaurant</span>
+        <span class="venue-v">Mia Restaurant</span>
+      </div>
+      <div class="venue-row">
+        <span class="venue-k">City</span>
+        <span class="venue-v">Hallandale Beach, FL</span>
+      </div>
+      <div class="venue-row">
+        <span class="venue-k">Capacity</span>
+        <span class="venue-v">Up to 300 guests</span>
+      </div>
+      <div class="venue-row">
+        <span class="venue-k">Entertainment</span>
+        <span class="venue-v">Live artists & performers</span>
+      </div>
+      <div class="venue-row">
+        <span class="venue-k">Catering</span>
+        <span class="venue-v">Full in-house culinary team</span>
+      </div>
+      <div class="venue-row">
+        <span class="venue-k">Events</span>
+        <span class="venue-v">Bar Mitzvah · Wedding · Banquet · Birthday · Conference</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">
+    <div class="ft-mono">BR</div>
+    <span class="ft-name">Ball Room at Mia</span>
+  </div>
+  <ul class="ft-links">
+    <li><a href="#events">Events</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#planning">Planning</a></li>
+    <li><a href="#contacts">Contact</a></li>
+  </ul>
+  <span class="ft-copy">© 2025 Ball Room at Mia · Hallandale, FL</span>
+</footer>
+
+<script>
+/* ── EVENTS HORIZONTAL SCROLL ── */
+(function(){
+  var wrap = document.getElementById('evt-scroll');
+  var prev = document.getElementById('evt-prev');
+  var next = document.getElementById('evt-next');
+  if(!wrap||!prev||!next) return;
+  var STEP = 282;
+
+  prev.addEventListener('click',function(){ wrap.scrollBy({left:-STEP*3, behavior:'smooth'}); });
+  next.addEventListener('click',function(){ wrap.scrollBy({left:STEP*3, behavior:'smooth'}); });
+
+  function upd(){
+    prev.disabled = wrap.scrollLeft < 8;
+    next.disabled = wrap.scrollLeft >= wrap.scrollWidth - wrap.offsetWidth - 8;
+  }
+  wrap.addEventListener('scroll', upd);
+  upd();
+})();
+
+/* ── ACCORDION ── */
+(function(){
+  document.querySelectorAll('.proc-trigger').forEach(function(trigger){
+    trigger.addEventListener('click', function(){
+      var item = this.closest('.proc-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.proc-item').forEach(function(i){ i.classList.remove('open'); });
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+})();
+
+/* ── REVEAL ON SCROLL ── */
+(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.rv').forEach(function(el){ obs.observe(el); });
+  setTimeout(function(){
+    document.querySelectorAll('.hero .rv').forEach(function(el){ el.classList.add('in'); });
+  }, 80);
+})();
+</script>
+</body>
+</html>

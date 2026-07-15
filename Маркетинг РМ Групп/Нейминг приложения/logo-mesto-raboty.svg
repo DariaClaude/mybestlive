@@ -1,0 +1,16 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фон: акцентный квадрат -->
+  <rect width="200" height="200" rx="20" fill="#c0cf1f"/>
+
+  <!-- Брифкейс: тёмный, центрирован -->
+  <!-- Ручка -->
+  <path d="M72 96 V86 a14 14 0 0 1 14-14 h28 a14 14 0 0 1 14 14 v10"
+        fill="none" stroke="#241b30" stroke-width="9"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Корпус -->
+  <rect x="58" y="96" width="84" height="62" rx="10" fill="#241b30"/>
+  <!-- Горизонтальная полоса -->
+  <line x1="58" y1="127" x2="142" y2="127" stroke="#c0cf1f" stroke-width="5"/>
+  <!-- Замок-застёжка -->
+  <rect x="84" y="114" width="32" height="26" rx="6" fill="#c0cf1f"/>
+</svg>

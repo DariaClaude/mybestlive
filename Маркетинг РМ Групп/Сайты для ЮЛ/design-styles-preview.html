@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стили дизайна сайтов</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,15,15,0.95); backdrop-filter: blur(10px);
+    padding: 16px 40px; display: flex; gap: 8px; align-items: center;
+    border-bottom: 1px solid #222;
+  }
+  .nav-btn {
+    padding: 8px 18px; border-radius: 6px; border: 1px solid #333;
+    background: transparent; color: #aaa; font-size: 13px; cursor: pointer;
+    font-family: 'Inter', sans-serif; transition: all 0.2s;
+  }
+  .nav-btn:hover, .nav-btn.active { background: #fff; color: #000; border-color: #fff; }
+  .nav-title { color: #555; font-size: 13px; margin-right: 12px; }
+
+  .section { display: none; min-height: 100vh; padding-top: 64px; }
+  .section.active { display: block; }
+
+  /* ===== 1. МИНИМАЛИЗМ ===== */
+  .minimal {
+    background: #fafafa; color: #111;
+    font-family: 'Inter', sans-serif;
+  }
+  .minimal-hero {
+    max-width: 960px; margin: 0 auto;
+    padding: 100px 40px 80px;
+  }
+  .minimal-tag {
+    display: inline-block; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: #999; margin-bottom: 32px;
+  }
+  .minimal-h1 {
+    font-size: clamp(40px, 6vw, 72px); font-weight: 300;
+    line-height: 1.1; color: #111; margin-bottom: 28px;
+    letter-spacing: -2px;
+  }
+  .minimal-h1 em { font-style: italic; font-weight: 300; color: #666; }
+  .minimal-sub {
+    font-size: 17px; color: #666; max-width: 480px;
+    line-height: 1.7; margin-bottom: 48px; font-weight: 300;
+  }
+  .minimal-btns { display: flex; gap: 12px; align-items: center; }
+  .btn-dark {
+    padding: 14px 28px; background: #111; color: #fff;
+    border: none; font-size: 14px; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-weight: 500;
+  }
+  .btn-ghost {
+    padding: 14px 28px; background: transparent; color: #111;
+    border: 1px solid #ddd; font-size: 14px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .minimal-divider {
+    border: none; border-top: 1px solid #e8e8e8;
+    max-width: 960px; margin: 0 auto;
+  }
+  .minimal-stats {
+    max-width: 960px; margin: 0 auto;
+    padding: 60px 40px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  .stat-num { font-size: 48px; font-weight: 700; color: #111; letter-spacing: -2px; }
+  .stat-label { font-size: 13px; color: #999; margin-top: 4px; letter-spacing: 0.5px; }
+  .minimal-cards {
+    max-width: 960px; margin: 0 auto;
+    padding: 0 40px 80px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: #e8e8e8;
+  }
+  .min-card {
+    background: #fafafa; padding: 40px 32px;
+  }
+  .min-card-num { font-size: 11px; color: #bbb; letter-spacing: 1px; margin-bottom: 20px; }
+  .min-card-title { font-size: 18px; font-weight: 500; color: #111; margin-bottom: 12px; }
+  .min-card-text { font-size: 14px; color: #888; line-height: 1.6; font-weight: 300; }
+
+  /* ===== 2. GLASSMORPHISM ===== */
+  .glass {
+    background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a0a2e 100%);
+    min-height: 100vh; position: relative; overflow: hidden;
+  }
+  .glass-orb1 {
+    position: absolute; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%);
+    top: -100px; right: -100px; border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+  }
+  .glass-orb2 {
+    position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(236,72,153,0.3) 0%, transparent 70%);
+    bottom: 100px; left: -100px; border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+  .glass-orb3 {
+    position: absolute; width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(34,211,238,0.25) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-30px); }
+  }
+  .glass-content {
+    position: relative; z-index: 10;
+    max-width: 1100px; margin: 0 auto; padding: 80px 40px;
+  }
+  .glass-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 100px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 32px;
+  }
+  .glass-dot { width: 6px; height: 6px; background: #22d3ee; border-radius: 50%; }
+  .glass-h1 {
+    font-size: clamp(36px, 5vw, 64px); font-weight: 700;
+    line-height: 1.1; margin-bottom: 20px; letter-spacing: -1.5px;
+  }
+  .glass-h1 span {
+    background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .glass-sub {
+    font-size: 17px; color: rgba(255,255,255,0.55);
+    max-width: 500px; line-height: 1.7; margin-bottom: 40px;
+  }
+  .glass-btns { display: flex; gap: 12px; margin-bottom: 70px; flex-wrap: wrap; }
+  .btn-glass-primary {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none; border-radius: 10px; color: #fff;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 0 30px rgba(99,102,241,0.4);
+  }
+  .btn-glass-secondary {
+    padding: 14px 28px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: #fff;
+    font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif;
+    backdrop-filter: blur(10px);
+  }
+  .glass-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .glass-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px; padding: 28px;
+    backdrop-filter: blur(20px);
+  }
+  .glass-card-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 16px;
+  }
+  .glass-card-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .glass-card-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ===== 3. DARK MODE ===== */
+  .dark-style {
+    background: #09090b; color: #fafafa;
+  }
+  .dark-header {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 40px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #18181b;
+  }
+  .dark-logo { font-size: 16px; font-weight: 700; letter-spacing: -0.5px; }
+  .dark-nav-links { display: flex; gap: 28px; }
+  .dark-nav-links a {
+    color: #71717a; font-size: 14px; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .dark-hero {
+    max-width: 800px; margin: 0 auto;
+    padding: 90px 40px 70px; text-align: center;
+  }
+  .dark-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 100px;
+    background: #18181b; border: 1px solid #27272a;
+    font-size: 12px; color: #a1a1aa; margin-bottom: 28px;
+  }
+  .dark-chip-dot { width: 5px; height: 5px; background: #22c55e; border-radius: 50%; }
+  .dark-h1 {
+    font-size: clamp(32px, 5vw, 60px); font-weight: 800;
+    line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
+    color: #fafafa;
+  }
+  .dark-h1 .accent { color: #a78bfa; }
+  .dark-sub {
+    font-size: 16px; color: #71717a; line-height: 1.7;
+    max-width: 480px; margin: 0 auto 40px;
+  }
+  .dark-btns { display: flex; gap: 10px; justify-content: center; }
+  .btn-violet {
+    padding: 12px 24px; background: #7c3aed; border: none;
+    border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .btn-dark-outline {
+    padding: 12px 24px; background: transparent;
+    border: 1px solid #27272a; border-radius: 8px; color: #a1a1aa;
+    font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .dark-features {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 40px 80px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: #18181b; border: 1px solid #18181b; border-radius: 12px;
+    overflow: hidden;
+  }
+  .dark-feat {
+    background: #09090b; padding: 32px;
+  }
+  .dark-feat-icon {
+    font-size: 24px; margin-bottom: 16px;
+  }
+  .dark-feat-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #fafafa; }
+  .dark-feat-text { font-size: 13px; color: #52525b; line-height: 1.6; }
+
+  /* ===== 4. EDITORIAL ===== */
+  .editorial {
+    background: #fff; color: #111;
+    font-family: 'Inter', sans-serif;
+  }
+  .editorial-header {
+    max-width: 1200px; margin: 0 auto;
+    padding: 24px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid #111;
+  }
+  .ed-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900; letter-spacing: -0.5px;
+  }
+  .ed-nav { display: flex; gap: 24px; }
+  .ed-nav a {
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #111; text-decoration: none; font-weight: 500;
+  }
+  .ed-hero {
+    max-width: 1200px; margin: 0 auto;
+    padding: 60px 40px 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: start;
+  }
+  .ed-left {}
+  .ed-kicker {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: #c00; font-weight: 600; margin-bottom: 20px;
+  }
+  .ed-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 5vw, 68px); font-weight: 900;
+    line-height: 1.0; letter-spacing: -1px; margin-bottom: 24px; color: #111;
+  }
+  .ed-intro {
+    font-size: 17px; color: #444; line-height: 1.7;
+    border-left: 3px solid #111; padding-left: 20px;
+    margin-bottom: 32px; font-weight: 300;
+  }
+  .ed-meta { font-size: 12px; color: #999; letter-spacing: 0.5px; }
+  .ed-img {
+    width: 100%; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #f0f0f0 0%, #d8d8d8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: #aaa; font-style: italic;
+    position: relative; overflow: hidden;
+  }
+  .ed-img-text { text-align: center; }
+  .ed-grid {
+    max-width: 1200px; margin: 0 auto;
+    padding: 40px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border-top: 2px solid #111;
+  }
+  .ed-card {
+    padding: 32px 28px 32px 0;
+    border-right: 1px solid #e0e0e0;
+  }
+  .ed-card:last-child { border-right: none; padding-right: 0; padding-left: 28px; }
+  .ed-card:nth-child(2) { padding-left: 28px; }
+  .ed-card-tag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 12px; }
+  .ed-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; line-height: 1.2;
+    color: #111; margin-bottom: 12px;
+  }
+  .ed-card-text { font-size: 13px; color: #666; line-height: 1.6; }
+
+  /* ===== 5. NEOBRUTALISM ===== */
+  .neo {
+    background: #f5f0e8; color: #111;
+  }
+  .neo-header {
+    background: #111; padding: 0 40px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #111;
+  }
+  .neo-logo { color: #f5f0e8; font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+  .neo-nav { display: flex; gap: 4px; }
+  .neo-nav a {
+    color: #f5f0e8; font-size: 13px; font-weight: 700;
+    text-decoration: none; padding: 6px 14px;
+    border: 2px solid transparent;
+  }
+  .neo-nav a:hover { border-color: #f5f0e8; }
+  .neo-hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 60px 40px 50px;
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px;
+    align-items: center;
+  }
+  .neo-h1 {
+    font-size: clamp(42px, 6vw, 80px); font-weight: 900;
+    line-height: 0.95; letter-spacing: -2px; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .neo-h1 .neo-accent {
+    display: inline-block;
+    background: #ffe44d; padding: 0 8px;
+    border: 3px solid #111;
+    transform: rotate(-1deg);
+  }
+  .neo-sub {
+    font-size: 16px; color: #444; line-height: 1.6;
+    margin-bottom: 32px; max-width: 420px;
+  }
+  .neo-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-neo {
+    padding: 14px 28px; background: #ffe44d; color: #111;
+    border: 3px solid #111; font-size: 14px; font-weight: 800;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    box-shadow: 4px 4px 0 #111;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    transition: all 0.1s;
+  }
+  .btn-neo:hover { box-shadow: 2px 2px 0 #111; transform: translate(2px, 2px); }
+  .btn-neo-outline {
+    padding: 14px 28px; background: transparent; color: #111;
+    border: 3px solid #111; font-size: 14px; font-weight: 800;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    box-shadow: 4px 4px 0 #111; text-transform: uppercase;
+    transition: all 0.1s;
+  }
+  .btn-neo-outline:hover { box-shadow: 2px 2px 0 #111; transform: translate(2px, 2px); }
+  .neo-box {
+    background: #fff; border: 3px solid #111;
+    box-shadow: 8px 8px 0 #111; padding: 32px;
+    transform: rotate(1deg);
+  }
+  .neo-box-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: #999; margin-bottom: 12px; }
+  .neo-box-num { font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+  .neo-box-desc { font-size: 14px; color: #666; margin-top: 8px; }
+  .neo-cards {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 40px 60px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .neo-card {
+    background: #fff; border: 3px solid #111;
+    box-shadow: 5px 5px 0 #111; padding: 28px;
+  }
+  .neo-card-emoji { font-size: 28px; margin-bottom: 14px; }
+  .neo-card-title { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .neo-card-text { font-size: 13px; color: #666; line-height: 1.6; }
+
+  /* ===== 6. CORPORATE ===== */
+  .corporate {
+    background: #f8f9fc; color: #1a1a2e;
+  }
+  .corp-header {
+    background: #fff; border-bottom: 1px solid #e5e7eb;
+    padding: 0 40px; height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 100%;
+  }
+  .corp-logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .corp-logo-icon {
+    width: 32px; height: 32px; background: #1d4ed8;
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px; font-weight: 800;
+  }
+  .corp-logo-text { font-size: 16px; font-weight: 700; color: #1a1a2e; }
+  .corp-nav { display: flex; gap: 32px; align-items: center; }
+  .corp-nav a { font-size: 14px; color: #6b7280; text-decoration: none; }
+  .btn-corp {
+    padding: 10px 22px; background: #1d4ed8; color: #fff;
+    border: none; border-radius: 6px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .corp-hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 70px 40px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: center;
+  }
+  .corp-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; background: #eff6ff; border-radius: 100px;
+    font-size: 12px; color: #1d4ed8; font-weight: 500; margin-bottom: 20px;
+  }
+  .corp-h1 {
+    font-size: clamp(28px, 4vw, 48px); font-weight: 700;
+    line-height: 1.2; letter-spacing: -0.5px;
+    color: #1a1a2e; margin-bottom: 16px;
+  }
+  .corp-sub {
+    font-size: 16px; color: #6b7280; line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .corp-btns { display: flex; gap: 12px; align-items: center; }
+  .btn-corp-outline {
+    padding: 10px 22px; background: transparent;
+    border: 1px solid #d1d5db; border-radius: 6px; color: #374151;
+    font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .corp-img {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-radius: 12px; border: 1px solid #bfdbfe;
+    padding: 32px; min-height: 260px;
+    display: flex; flex-direction: column; gap: 12px;
+    justify-content: center;
+  }
+  .corp-img-bar {
+    height: 10px; background: #93c5fd; border-radius: 100px; width: 100%;
+  }
+  .corp-img-bar.w70 { width: 70%; background: #3b82f6; }
+  .corp-img-bar.w45 { width: 45%; background: #60a5fa; }
+  .corp-img-bar.w85 { width: 85%; background: #2563eb; }
+  .corp-metrics {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 40px 60px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .corp-metric {
+    background: #fff; border: 1px solid #e5e7eb;
+    border-radius: 10px; padding: 24px;
+  }
+  .corp-metric-label { font-size: 12px; color: #9ca3af; font-weight: 500; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .corp-metric-num { font-size: 32px; font-weight: 700; color: #1a1a2e; letter-spacing: -1px; }
+  .corp-metric-delta { font-size: 12px; color: #16a34a; font-weight: 500; margin-top: 4px; }
+
+  /* ===== 7. SWISS / GRID ===== */
+  .swiss { background: #fff; color: #111; font-family: 'Inter', sans-serif; }
+  .swiss-header {
+    border-bottom: 3px solid #e00; padding: 0 40px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .swiss-logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; }
+  .swiss-nav { display: flex; }
+  .swiss-nav a {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: #111; text-decoration: none; padding: 8px 16px;
+    border-left: 1px solid #ddd; font-weight: 600;
+  }
+  .swiss-layout {
+    display: grid; grid-template-columns: 60px 1fr 380px;
+    min-height: 460px; border-bottom: 1px solid #ddd;
+  }
+  .swiss-sidebar {
+    border-right: 1px solid #ddd; padding: 40px 0;
+    display: flex; align-items: flex-start; justify-content: center;
+    writing-mode: vertical-rl;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #bbb; font-weight: 700;
+  }
+  .swiss-main { padding: 60px 48px; border-right: 1px solid #ddd; }
+  .swiss-red-bar { width: 40px; height: 4px; background: #e00; margin-bottom: 28px; }
+  .swiss-h1 {
+    font-size: clamp(52px, 8vw, 100px); font-weight: 900;
+    line-height: 0.88; letter-spacing: -3px; text-transform: uppercase; margin-bottom: 36px;
+  }
+  .swiss-h1 .sw-red { color: #e00; }
+  .swiss-body { font-size: 15px; color: #555; line-height: 1.7; max-width: 400px; margin-bottom: 32px; font-weight: 300; }
+  .btn-swiss {
+    padding: 14px 32px; background: #e00; color: #fff; border: none;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .swiss-aside { padding: 48px 40px; display: flex; flex-direction: column; gap: 36px; }
+  .swiss-stat-label {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #bbb;
+    font-weight: 700; border-top: 1px solid #ddd; padding-top: 12px; margin-bottom: 10px;
+  }
+  .swiss-stat-num { font-size: 64px; font-weight: 900; letter-spacing: -3px; line-height: 1; }
+  .swiss-stat-num span { color: #e00; }
+  .swiss-stat-desc { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .swiss-bottom {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    margin-left: 60px; border-top: 1px solid #ddd;
+  }
+  .swiss-cell { padding: 28px 24px; border-right: 1px solid #ddd; }
+  .swiss-cell:last-child { border-right: none; }
+  .swiss-cell-num { font-size: 10px; color: #ccc; font-weight: 700; margin-bottom: 10px; }
+  .swiss-cell-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .swiss-cell-text { font-size: 12px; color: #999; line-height: 1.5; }
+
+  /* ===== 8. ORGANIC / BLOB ===== */
+  .organic { background: #fef9f0; color: #2d2d2d; font-family: 'Inter', sans-serif; overflow: hidden; }
+  .org-header {
+    padding: 24px 48px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .org-logo { font-size: 18px; font-weight: 700; }
+  .org-logo span { color: #e85d04; }
+  .org-nav { display: flex; gap: 32px; align-items: center; }
+  .org-nav a { font-size: 14px; color: #999; text-decoration: none; }
+  .btn-org-sm {
+    padding: 10px 24px; background: #2d2d2d; color: #fef9f0;
+    border: none; border-radius: 100px; font-size: 14px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .org-hero {
+    max-width: 1100px; margin: 0 auto; padding: 40px 48px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: center; position: relative;
+  }
+  .org-blob1 {
+    position: absolute; right: -80px; top: -80px; width: 480px; height: 480px;
+    background: radial-gradient(ellipse, #ffd6a5 0%, transparent 70%);
+    border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+    animation: blobmove 12s ease-in-out infinite; z-index: 0;
+  }
+  .org-blob2 {
+    position: absolute; left: -60px; bottom: -60px; width: 320px; height: 320px;
+    background: radial-gradient(ellipse, #b7e4c7 0%, transparent 70%);
+    border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%;
+    animation: blobmove 15s ease-in-out infinite reverse; z-index: 0;
+  }
+  @keyframes blobmove {
+    0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+    50% { border-radius: 30% 70% 40% 60% / 70% 30% 60% 40%; }
+  }
+  .org-left { position: relative; z-index: 1; }
+  .org-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 18px; background: #fff; border-radius: 100px;
+    font-size: 13px; color: #666; margin-bottom: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .org-pill-dot { width: 8px; height: 8px; background: #52b788; border-radius: 50%; }
+  .org-h1 {
+    font-size: clamp(36px, 5vw, 58px); font-weight: 700;
+    line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 20px;
+  }
+  .org-h1 em { font-style: italic; color: #e85d04; font-weight: 300; }
+  .org-sub { font-size: 16px; color: #999; line-height: 1.8; max-width: 400px; margin-bottom: 36px; font-weight: 300; }
+  .org-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-org-primary {
+    padding: 14px 28px; background: #e85d04; color: #fff;
+    border: none; border-radius: 100px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 20px rgba(232,93,4,0.3);
+  }
+  .btn-org-soft {
+    padding: 14px 28px; background: #fff; color: #2d2d2d;
+    border: 1px solid #e8e0d6; border-radius: 100px; font-size: 14px;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .org-right { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 16px; }
+  .org-card {
+    background: #fff; border-radius: 20px; padding: 24px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .org-card-icon {
+    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .org-card-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .org-card-text { font-size: 13px; color: #bbb; line-height: 1.5; }
+
+  /* ===== 9. CYBERPUNK ===== */
+  .cyber { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
+  .cyber-scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,255,170,0.012) 3px, rgba(0,255,170,0.012) 4px);
+    pointer-events: none; z-index: 1;
+  }
+  .cyber-header {
+    position: relative; z-index: 10; padding: 0 40px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(0,255,170,0.25);
+  }
+  .cyber-logo {
+    font-size: 18px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase;
+    color: #00ffaa; text-shadow: 0 0 20px rgba(0,255,170,0.8);
+  }
+  .cyber-nav { display: flex; gap: 28px; }
+  .cyber-nav a { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,255,170,0.5); text-decoration: none; }
+  .cyber-hero { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; padding: 70px 40px 50px; }
+  .cyber-eyebrow {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(0,255,170,0.5); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cyber-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: rgba(0,255,170,0.4); }
+  .cyber-h1 {
+    font-size: clamp(44px, 7vw, 88px); font-weight: 900;
+    line-height: 0.93; letter-spacing: -2px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .c-neon { color: #00ffaa; text-shadow: 0 0 30px rgba(0,255,170,0.7); }
+  .c-pink { color: #ff006e; text-shadow: 0 0 30px rgba(255,0,110,0.6); }
+  .cyber-sub { font-size: 15px; color: rgba(255,255,255,0.4); max-width: 480px; line-height: 1.7; margin: 28px 0 40px; }
+  .cyber-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 60px; }
+  .btn-cyber {
+    padding: 14px 32px; background: transparent; border: 1px solid #00ffaa; color: #00ffaa;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    box-shadow: 0 0 20px rgba(0,255,170,0.15), inset 0 0 20px rgba(0,255,170,0.05);
+  }
+  .btn-cyber-pink {
+    padding: 14px 32px; background: #ff006e; border: none; color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    box-shadow: 0 0 30px rgba(255,0,110,0.4);
+  }
+  .cyber-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(0,255,170,0.15); border: 1px solid rgba(0,255,170,0.15);
+  }
+  .cyber-stat { background: #000; padding: 28px; position: relative; overflow: hidden; }
+  .cyber-stat::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #00ffaa, transparent);
+  }
+  .cyber-stat-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #00ffaa; margin-bottom: 12px; }
+  .cyber-stat-num { font-size: 52px; font-weight: 900; letter-spacing: -2px; line-height: 1; text-shadow: 0 0 20px rgba(0,255,170,0.3); }
+  .cyber-stat-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+
+  /* ===== 10. RETRO / Y2K ===== */
+  .retro { background: #e8d5ff; color: #1a0040; font-family: 'Inter', sans-serif; }
+  .retro-header {
+    background: #1a0040; padding: 0 32px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #ff00ff;
+  }
+  .retro-logo { font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff; }
+  .retro-logo span { color: #00ffff; text-shadow: 0 0 8px #00ffff; }
+  .retro-nav { display: flex; }
+  .retro-nav a {
+    font-size: 12px; color: #ccc; text-decoration: none;
+    padding: 6px 14px; border: 1px solid rgba(255,255,255,0.15); font-weight: 600;
+  }
+  .retro-hero {
+    padding: 48px 40px; max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+  }
+  .retro-window {
+    background: #1a0040; border: 2px solid #ff00ff;
+    box-shadow: 6px 6px 0 #7700ff;
+  }
+  .retro-titlebar {
+    background: linear-gradient(90deg, #4400aa, #1a0040);
+    padding: 6px 12px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #ff00ff;
+  }
+  .retro-titlebar-title { font-size: 11px; color: #fff; font-weight: 700; letter-spacing: 1px; }
+  .retro-titlebar-btns { display: flex; gap: 4px; }
+  .retro-tb-btn {
+    width: 14px; height: 14px; border: 1px solid rgba(255,255,255,0.3);
+    color: #fff; font-size: 9px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-family: monospace;
+  }
+  .retro-window-body { padding: 20px; }
+  .retro-ascii { font-family: monospace; font-size: 11px; line-height: 1.3; color: #00ffff; text-shadow: 0 0 5px #00ffff; margin-bottom: 14px; }
+  .retro-window-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .retro-right {}
+  .retro-sticker {
+    display: inline-block; background: #ff00ff; color: #fff;
+    font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 12px; margin-bottom: 20px; box-shadow: 3px 3px 0 #7700ff;
+  }
+  .retro-h1 {
+    font-size: clamp(36px, 5vw, 58px); font-weight: 900;
+    line-height: 1.05; letter-spacing: -1px; margin-bottom: 18px;
+  }
+  .r-pink { color: #cc00cc; }
+  .r-blue { color: #0044ff; }
+  .retro-sub { font-size: 15px; color: #5500aa; line-height: 1.7; margin-bottom: 28px; max-width: 400px; }
+  .retro-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .btn-retro {
+    padding: 12px 24px; background: linear-gradient(135deg, #ff00ff, #7700ff);
+    border: none; color: #fff; font-size: 13px; font-weight: 800;
+    cursor: pointer; font-family: 'Inter', sans-serif; box-shadow: 3px 3px 0 #1a0040;
+  }
+  .btn-retro2 {
+    padding: 12px 24px; background: linear-gradient(135deg, #00ccff, #0044ff);
+    border: none; color: #fff; font-size: 13px; font-weight: 800;
+    cursor: pointer; font-family: 'Inter', sans-serif; box-shadow: 3px 3px 0 #1a0040;
+  }
+  .retro-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .retro-tag { padding: 4px 10px; border: 1px solid #7700ff; font-size: 10px; font-weight: 700; color: #7700ff; letter-spacing: 1px; }
+  .retro-cards {
+    max-width: 1100px; margin: 0 auto; padding: 0 40px 60px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .retro-card { background: #fff; border: 2px solid #7700ff; box-shadow: 4px 4px 0 #ff00ff; padding: 24px; }
+  .retro-card-bar {
+    background: linear-gradient(90deg, #4400aa, #cc00ff);
+    margin: -24px -24px 16px; padding: 7px 16px;
+    font-size: 10px; color: #fff; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .retro-card-num { font-size: 40px; font-weight: 900; letter-spacing: -1px; color: #1a0040; }
+  .retro-card-num span { color: #cc00ff; }
+  .retro-card-text { font-size: 13px; color: #7700aa; line-height: 1.5; margin-top: 6px; }
+
+  /* ===== 11. BENTO GRID ===== */
+  .bento { background: #f5f5f7; color: #1d1d1f; font-family: 'Inter', sans-serif; }
+  .bento-header {
+    padding: 0 48px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(245,245,247,0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .bento-logo { font-size: 15px; font-weight: 600; color: #1d1d1f; letter-spacing: -0.3px; }
+  .bento-nav { display: flex; gap: 28px; align-items: center; }
+  .bento-nav a { font-size: 13px; color: #6e6e73; text-decoration: none; }
+  .btn-bento-sm {
+    padding: 7px 18px; background: #1d1d1f; color: #fff;
+    border: none; border-radius: 100px; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .bento-grid {
+    max-width: 1100px; margin: 0 auto; padding: 36px 48px 60px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+  .bento-cell {
+    background: #fff; border-radius: 20px; padding: 32px;
+    overflow: hidden; position: relative;
+  }
+  .bc-1 { grid-column: span 4; background: #1d1d1f; color: #fff; }
+  .bc-2 { grid-column: span 2; background: linear-gradient(135deg, #0071e3, #34aadc); color: #fff; }
+  .bc-3 { grid-column: span 2; background: #f5f5f7; border: 1px solid #e0e0e5; }
+  .bc-4 { grid-column: span 2; background: linear-gradient(135deg, #1d1d1f, #3a3a3c); color: #fff; }
+  .bc-5 { grid-column: span 2; background: linear-gradient(135deg, #34c759, #30d158); color: #fff; }
+  .bc-6 { grid-column: span 3; background: #fff5e6; border: 1px solid #ffe4b5; }
+  .bc-7 { grid-column: span 3; background: #f0f4ff; border: 1px solid #dce4ff; }
+
+  .bento-eyebrow { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; margin-bottom: 12px; font-weight: 600; }
+  .bento-h1 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .bento-sub { font-size: 15px; line-height: 1.6; opacity: 0.6; max-width: 400px; margin-bottom: 28px; font-weight: 300; }
+  .btn-bento {
+    padding: 12px 24px; background: #fff; color: #1d1d1f;
+    border: none; border-radius: 100px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    display: inline-block;
+  }
+  .btn-bento-white {
+    padding: 12px 24px; background: rgba(255,255,255,0.2); color: #fff;
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 100px; font-size: 14px;
+    cursor: pointer; font-family: 'Inter', sans-serif; backdrop-filter: blur(10px);
+  }
+  .bento-big-num { font-size: 64px; font-weight: 800; letter-spacing: -3px; line-height: 1; margin-bottom: 6px; }
+  .bento-big-label { font-size: 13px; opacity: 0.6; }
+  .bento-icon { font-size: 48px; margin-bottom: 12px; }
+  .bento-card-title { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .bento-card-text { font-size: 13px; opacity: 0.6; line-height: 1.5; }
+  .bento-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .bento-bar-row { display: flex; align-items: center; gap: 10px; }
+  .bento-bar-label { font-size: 11px; color: #6e6e73; width: 80px; flex-shrink: 0; }
+  .bento-bar-track { flex: 1; height: 6px; background: #e8e8ed; border-radius: 100px; overflow: hidden; }
+  .bento-bar-fill { height: 100%; border-radius: 100px; }
+  .bento-tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .bento-tag {
+    padding: 5px 12px; background: rgba(0,113,227,0.1); color: #0071e3;
+    border-radius: 100px; font-size: 12px; font-weight: 500;
+  }
+
+  /* ===== 12. BIG4 / CONSULTING ===== */
+  .big4 { background: #fff; color: #1a1a1a; font-family: 'Inter', sans-serif; }
+  .big4-header {
+    padding: 0 56px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .big4-logo { display: flex; align-items: center; gap: 12px; }
+  .big4-logo-mark {
+    width: 36px; height: 36px; background: #003087;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px; font-weight: 900; letter-spacing: -0.5px;
+  }
+  .big4-logo-name { font-size: 15px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.3px; }
+  .big4-logo-divider { width: 1px; height: 20px; background: #ddd; }
+  .big4-logo-sub { font-size: 12px; color: #888; }
+  .big4-nav { display: flex; gap: 0; align-items: center; }
+  .big4-nav a {
+    font-size: 13px; color: #444; text-decoration: none; font-weight: 500;
+    padding: 8px 18px; border-bottom: 2px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .big4-nav a:hover { color: #003087; border-bottom-color: #003087; }
+  .btn-big4 {
+    padding: 10px 24px; background: #003087; color: #fff;
+    border: none; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif; margin-left: 16px;
+  }
+  .big4-hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 460px;
+  }
+  .big4-hero-left {
+    padding: 72px 56px;
+    border-right: 1px solid #e5e5e5;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .big4-kicker {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: #003087; font-weight: 700; margin-bottom: 24px;
+  }
+  .big4-kicker::before { content: ''; width: 24px; height: 2px; background: #003087; }
+  .big4-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4.5vw, 58px); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.5px;
+    color: #1a1a1a; margin-bottom: 28px;
+  }
+  .big4-intro {
+    font-size: 16px; color: #555; line-height: 1.75;
+    max-width: 480px; margin-bottom: 40px; font-weight: 300;
+    border-left: 3px solid #003087; padding-left: 20px;
+  }
+  .big4-btns { display: flex; gap: 12px; }
+  .btn-big4-primary {
+    padding: 14px 32px; background: #003087; color: #fff;
+    border: none; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .btn-big4-link {
+    padding: 14px 0; background: transparent; color: #003087;
+    border: none; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid #003087;
+  }
+  .big4-hero-right {
+    position: relative; overflow: hidden; min-height: 400px;
+    background: #f0f4f8;
+    display: flex; align-items: flex-end;
+  }
+  .big4-img-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, transparent 50%, rgba(0,48,135,0.7) 100%),
+      linear-gradient(135deg, #c8d8f0 0%, #e8f0fb 50%, #d0dff5 100%);
+  }
+  .big4-img-caption {
+    position: relative; z-index: 2;
+    padding: 32px; color: #fff;
+  }
+  .big4-img-caption-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; font-family: 'Playfair Display', serif; }
+  .big4-img-caption-sub { font-size: 13px; color: rgba(255,255,255,0.75); }
+  .big4-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;
+    margin: 0;
+  }
+  .big4-stat {
+    padding: 36px 56px; border-right: 1px solid #e5e5e5;
+  }
+  .big4-stat:last-child { border-right: none; }
+  .big4-stat-num {
+    font-size: 44px; font-weight: 800; letter-spacing: -2px;
+    color: #003087; line-height: 1; margin-bottom: 6px;
+    font-family: 'Playfair Display', serif;
+  }
+  .big4-stat-label { font-size: 13px; color: #888; line-height: 1.4; }
+  .big4-insights {
+    padding: 56px 56px 60px;
+  }
+  .big4-insights-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .big4-insights-title {
+    font-size: 22px; font-weight: 700; color: #1a1a1a;
+    font-family: 'Playfair Display', serif;
+  }
+  .big4-insights-link { font-size: 13px; color: #003087; font-weight: 600; cursor: pointer; }
+  .big4-insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .big4-insight { border-top: 3px solid #e5e5e5; padding-top: 20px; cursor: pointer; }
+  .big4-insight:first-child { border-top-color: #003087; }
+  .big4-insight-tag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #888; font-weight: 600; margin-bottom: 12px; }
+  .big4-insight-title {
+    font-size: 17px; font-weight: 700; color: #1a1a1a; line-height: 1.35;
+    margin-bottom: 12px; font-family: 'Playfair Display', serif;
+  }
+  .big4-insight-text { font-size: 13px; color: #777; line-height: 1.6; }
+  .big4-insight-meta { font-size: 11px; color: #bbb; margin-top: 16px; }
+
+  /* Label */
+  .style-label {
+    position: absolute; top: 70px; right: 20px;
+    background: rgba(0,0,0,0.7); color: #fff;
+    padding: 4px 10px; font-size: 11px; border-radius: 4px;
+    pointer-events: none;
+  }
+  .section { position: relative; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-title">Стиль:</span>
+  <button class="nav-btn active" onclick="show('minimal', this)">Минимализм</button>
+  <button class="nav-btn" onclick="show('glass', this)">Glassmorphism</button>
+  <button class="nav-btn" onclick="show('dark', this)">Dark Mode</button>
+  <button class="nav-btn" onclick="show('editorial', this)">Editorial</button>
+  <button class="nav-btn" onclick="show('neo', this)">Neobrutalism</button>
+  <button class="nav-btn" onclick="show('corporate', this)">Corporate</button>
+  <button class="nav-btn" onclick="show('swiss', this)">Swiss / Grid</button>
+  <button class="nav-btn" onclick="show('organic', this)">Organic</button>
+  <button class="nav-btn" onclick="show('cyber', this)">Cyberpunk</button>
+
+  <button class="nav-btn" onclick="show('bento', this)">Bento Grid</button>
+  <button class="nav-btn" onclick="show('big4', this)">Big4 / Consulting</button>
+</nav>
+
+<!-- 1. MINIMAL -->
+<div id="minimal" class="section minimal active">
+  <div class="minimal-hero">
+    <div class="minimal-tag">Стратегические решения · 2026</div>
+    <h1 class="minimal-h1">Маркетинг,<br>который <em>работает</em><br>без лишнего</h1>
+    <p class="minimal-sub">Системный подход к лидогенерации. Минимум инструментов, максимум результата.</p>
+    <div class="minimal-btns">
+      <button class="btn-dark">Начать работу</button>
+      <button class="btn-ghost">Узнать больше</button>
+    </div>
+  </div>
+  <hr class="minimal-divider">
+  <div class="minimal-stats">
+    <div><div class="stat-num">3.2×</div><div class="stat-label">рост конверсии</div></div>
+    <div><div class="stat-num">840</div><div class="stat-label">лидов в месяц</div></div>
+    <div><div class="stat-num">–34%</div><div class="stat-label">стоимость лида</div></div>
+  </div>
+  <div class="minimal-cards">
+    <div class="min-card">
+      <div class="min-card-num">01</div>
+      <div class="min-card-title">Стратегия</div>
+      <div class="min-card-text">Аудит точек роста, позиционирование, карта каналов для вашего сегмента.</div>
+    </div>
+    <div class="min-card">
+      <div class="min-card-num">02</div>
+      <div class="min-card-title">Автоматизация</div>
+      <div class="min-card-text">Сквозная аналитика, дашборды, интеграция AI в ежедневные процессы.</div>
+    </div>
+    <div class="min-card">
+      <div class="min-card-num">03</div>
+      <div class="min-card-title">Рост</div>
+      <div class="min-card-text">Performance-кампании, A/B-тесты, постоянная оптимизация воронки.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. GLASS -->
+<div id="glass" class="section glass">
+  <div class="glass-orb1"></div>
+  <div class="glass-orb2"></div>
+  <div class="glass-orb3"></div>
+  <div class="glass-content">
+    <div class="glass-badge"><span class="glass-dot"></span>Новое поколение платформ</div>
+    <h1 class="glass-h1">Будущее маркетинга —<br><span>уже сегодня</span></h1>
+    <p class="glass-sub">AI-инструменты, предсказательная аналитика и автоматизация в одной экосистеме.</p>
+    <div class="glass-btns">
+      <button class="btn-glass-primary">Попробовать бесплатно</button>
+      <button class="btn-glass-secondary">Смотреть демо →</button>
+    </div>
+    <div class="glass-cards">
+      <div class="glass-card">
+        <div class="glass-card-icon" style="background: rgba(99,102,241,0.2);">🧠</div>
+        <div class="glass-card-title">AI-аналитика</div>
+        <div class="glass-card-text">Предсказывает тренды до того, как они станут очевидными. GPT-4 внутри.</div>
+      </div>
+      <div class="glass-card">
+        <div class="glass-card-icon" style="background: rgba(236,72,153,0.2);">⚡</div>
+        <div class="glass-card-title">Автоматизация</div>
+        <div class="glass-card-text">Кампании, которые запускаются и оптимизируются сами по заданным KPI.</div>
+      </div>
+      <div class="glass-card">
+        <div class="glass-card-icon" style="background: rgba(34,211,238,0.2);">📊</div>
+        <div class="glass-card-title">Дашборды</div>
+        <div class="glass-card-text">Все метрики в реальном времени. Красиво и без лишнего.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. DARK -->
+<div id="dark" class="section dark-style">
+  <div class="dark-header">
+    <div class="dark-logo">NexaFlow</div>
+    <div class="dark-nav-links">
+      <a href="#">Продукт</a>
+      <a href="#">Цены</a>
+      <a href="#">Docs</a>
+      <a href="#">Блог</a>
+    </div>
+  </div>
+  <div class="dark-hero">
+    <div class="dark-chip"><span class="dark-chip-dot"></span>v2.0 — теперь с AI-движком</div>
+    <h1 class="dark-h1">Инфраструктура для<br><span class="accent">серьёзного</span><br>маркетинга</h1>
+    <p class="dark-sub">Всё, что нужно команде роста: от трекинга до предсказательных моделей.</p>
+    <div class="dark-btns">
+      <button class="btn-violet">Начать — бесплатно</button>
+      <button class="btn-dark-outline">GitHub →</button>
+    </div>
+  </div>
+  <div class="dark-features">
+    <div class="dark-feat">
+      <div class="dark-feat-icon">🔍</div>
+      <div class="dark-feat-title">Трекинг без ограничений</div>
+      <div class="dark-feat-text">Полная воронка от первого касания до сделки. Все каналы в одном месте.</div>
+    </div>
+    <div class="dark-feat">
+      <div class="dark-feat-icon">🤖</div>
+      <div class="dark-feat-title">AI-копирайтинг</div>
+      <div class="dark-feat-text">Генерация текстов для объявлений, писем и лендингов за секунды.</div>
+    </div>
+    <div class="dark-feat">
+      <div class="dark-feat-icon">📈</div>
+      <div class="dark-feat-title">Прогноз ROI</div>
+      <div class="dark-feat-text">Модель предсказывает результаты до запуска кампании с точностью 87%.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. EDITORIAL -->
+<div id="editorial" class="section editorial">
+  <div class="editorial-header">
+    <div class="ed-logo">Forma</div>
+    <div class="ed-nav">
+      <a href="#">Стратегия</a>
+      <a href="#">Кейсы</a>
+      <a href="#">Команда</a>
+      <a href="#">Контакт</a>
+    </div>
+  </div>
+  <div class="ed-hero">
+    <div class="ed-left">
+      <div class="ed-kicker">· Маркетинг · 2026 ·</div>
+      <h1 class="ed-h1">Идеи,<br>которые<br>продают</h1>
+      <p class="ed-intro">Мы не делаем «красивые сайты». Мы строим системы убеждения — от первого экрана до закрытой сделки.</p>
+      <div class="ed-meta">Основано в 2018 · 140+ проектов · Москва</div>
+    </div>
+    <div class="ed-img">
+      <div class="ed-img-text" style="color:#888; font-family:'Playfair Display',serif; font-size:18px; font-style:italic;">
+        Campaign<br>Visual<br>2026
+      </div>
+    </div>
+  </div>
+  <div class="ed-grid">
+    <div class="ed-card">
+      <div class="ed-card-tag">Брендинг</div>
+      <div class="ed-card-title">Голос бренда в эпоху AI</div>
+      <div class="ed-card-text">Как оставаться узнаваемым, когда контент генерируется автоматически.</div>
+    </div>
+    <div class="ed-card">
+      <div class="ed-card-tag">Лидогенерация</div>
+      <div class="ed-card-title">B2B-воронка без лишних шагов</div>
+      <div class="ed-card-text">Структура лендинга, которая сокращает цикл принятия решения вдвое.</div>
+    </div>
+    <div class="ed-card">
+      <div class="ed-card-tag">Аналитика</div>
+      <div class="ed-card-title">Метрики, которые важны</div>
+      <div class="ed-card-text">Перестаньте смотреть на CTR. Вот что на самом деле влияет на выручку.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. NEOBRUTALISM -->
+<div id="neo" class="section neo">
+  <div class="neo-header">
+    <div class="neo-logo">BRUTL</div>
+    <div class="neo-nav">
+      <a href="#">Услуги</a>
+      <a href="#">Работы</a>
+      <a href="#">Цены</a>
+    </div>
+  </div>
+  <div class="neo-hero">
+    <div>
+      <h1 class="neo-h1">Дизайн<br>без<br><span class="neo-accent">правил</span></h1>
+      <p class="neo-sub">Мы делаем сайты, которые невозможно перепутать ни с чьими другими. Смелые, быстрые, запоминающиеся.</p>
+      <div class="neo-btns">
+        <button class="btn-neo">Начать проект</button>
+        <button class="btn-neo-outline">Портфолио</button>
+      </div>
+    </div>
+    <div class="neo-box">
+      <div class="neo-box-label">Проектов сдано</div>
+      <div class="neo-box-num">247</div>
+      <div class="neo-box-desc">без единого провала в дедлайне</div>
+    </div>
+  </div>
+  <div class="neo-cards">
+    <div class="neo-card">
+      <div class="neo-card-emoji">🔥</div>
+      <div class="neo-card-title">Лендинги</div>
+      <div class="neo-card-text">За 7 дней. Без шаблонов. С конверсией выше рынка.</div>
+    </div>
+    <div class="neo-card">
+      <div class="neo-card-emoji">⚡</div>
+      <div class="neo-card-title">Брендинг</div>
+      <div class="neo-card-text">Логотип, стиль, гайдлайн — всё что нужно для запуска.</div>
+    </div>
+    <div class="neo-card">
+      <div class="neo-card-emoji">🎯</div>
+      <div class="neo-card-title">Реклама</div>
+      <div class="neo-card-text">Креативы, которые останавливают скролл. ROI от 300%.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. CORPORATE -->
+<div id="corporate" class="section corporate">
+  <div class="corp-header">
+    <div class="corp-logo-wrap">
+      <div class="corp-logo-icon">R</div>
+      <div class="corp-logo-text">РМ Групп</div>
+    </div>
+    <div class="corp-nav">
+      <a href="#">Услуги</a>
+      <a href="#">О компании</a>
+      <a href="#">Клиентам</a>
+      <a href="#">Контакты</a>
+      <button class="btn-corp">Оставить заявку</button>
+    </div>
+  </div>
+  <div class="corp-hero">
+    <div>
+      <div class="corp-badge">✓ Надёжный партнёр с 2015 года</div>
+      <h1 class="corp-h1">Кадровые решения для<br>вашего бизнеса</h1>
+      <p class="corp-sub">Подбор линейного персонала, аутсорсинг и автоматизация HR-процессов для компаний любого масштаба.</p>
+      <div class="corp-btns">
+        <button class="btn-corp">Получить консультацию</button>
+        <button class="btn-corp-outline">Скачать презентацию</button>
+      </div>
+    </div>
+    <div class="corp-img">
+      <div style="font-size:12px; color:#3b82f6; font-weight:600; margin-bottom:16px;">АКТИВНЫХ ЗАЯВОК</div>
+      <div class="corp-img-bar w85"></div>
+      <div class="corp-img-bar w70"></div>
+      <div class="corp-img-bar w45"></div>
+      <div class="corp-img-bar"></div>
+      <div class="corp-img-bar w70"></div>
+    </div>
+  </div>
+  <div class="corp-metrics">
+    <div class="corp-metric">
+      <div class="corp-metric-label">Закрытых вакансий</div>
+      <div class="corp-metric-num">12 400</div>
+      <div class="corp-metric-delta">↑ +18% к прошлому году</div>
+    </div>
+    <div class="corp-metric">
+      <div class="corp-metric-label">Клиентов</div>
+      <div class="corp-metric-num">340+</div>
+      <div class="corp-metric-delta">↑ +42 за квартал</div>
+    </div>
+    <div class="corp-metric">
+      <div class="corp-metric-label">Срок закрытия</div>
+      <div class="corp-metric-num">4.2 дня</div>
+      <div class="corp-metric-delta">↓ –1.3 дня vs рынок</div>
+    </div>
+    <div class="corp-metric">
+      <div class="corp-metric-label">NPS</div>
+      <div class="corp-metric-num">87</div>
+      <div class="corp-metric-delta">↑ Топ-5% отрасли</div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. SWISS -->
+<div id="swiss" class="section swiss">
+  <div class="swiss-header">
+    <div class="swiss-logo">Forma</div>
+    <div class="swiss-nav">
+      <a href="#">Услуги</a>
+      <a href="#">Кейсы</a>
+      <a href="#">Команда</a>
+      <a href="#">Контакт</a>
+    </div>
+  </div>
+  <div class="swiss-layout">
+    <div class="swiss-sidebar">01 — Hero</div>
+    <div class="swiss-main">
+      <div class="swiss-red-bar"></div>
+      <h1 class="swiss-h1">Система<br>которая<br><span class="sw-red">работает</span></h1>
+      <p class="swiss-body">Строгая структура, точная типографика, ноль лишнего. Маркетинг как инженерная дисциплина.</p>
+      <button class="btn-swiss">Начать проект</button>
+    </div>
+    <div class="swiss-aside">
+      <div>
+        <div class="swiss-stat-label">Реализовано проектов</div>
+        <div class="swiss-stat-num">4<span>80</span></div>
+        <div class="swiss-stat-desc">с 2015 года</div>
+      </div>
+      <div>
+        <div class="swiss-stat-label">Средний рост конверсии</div>
+        <div class="swiss-stat-num"><span>+</span>2.8×</div>
+        <div class="swiss-stat-desc">после редизайна</div>
+      </div>
+    </div>
+  </div>
+  <div class="swiss-bottom">
+    <div class="swiss-cell">
+      <div class="swiss-cell-num">01</div>
+      <div class="swiss-cell-title">Стратегия</div>
+      <div class="swiss-cell-text">Позиционирование и карта каналов под ваш сегмент.</div>
+    </div>
+    <div class="swiss-cell">
+      <div class="swiss-cell-num">02</div>
+      <div class="swiss-cell-title">Дизайн</div>
+      <div class="swiss-cell-text">Типографика, сетка, система компонентов.</div>
+    </div>
+    <div class="swiss-cell">
+      <div class="swiss-cell-num">03</div>
+      <div class="swiss-cell-title">Разработка</div>
+      <div class="swiss-cell-text">Чистый код, без зависимостей, быстрая загрузка.</div>
+    </div>
+    <div class="swiss-cell">
+      <div class="swiss-cell-num">04</div>
+      <div class="swiss-cell-title">Рост</div>
+      <div class="swiss-cell-text">A/B-тесты, аналитика, постоянная оптимизация.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. ORGANIC -->
+<div id="organic" class="section organic">
+  <div class="org-header">
+    <div class="org-logo">bloom<span>.</span></div>
+    <div class="org-nav">
+      <a href="#">О нас</a>
+      <a href="#">Услуги</a>
+      <a href="#">Кейсы</a>
+      <button class="btn-org-sm">Связаться</button>
+    </div>
+  </div>
+  <div class="org-hero">
+    <div class="org-blob1"></div>
+    <div class="org-blob2"></div>
+    <div class="org-left">
+      <div class="org-pill"><span class="org-pill-dot"></span>Экологично и эффективно</div>
+      <h1 class="org-h1">Маркетинг,<br>который <em>живёт</em><br>и растёт</h1>
+      <p class="org-sub">Мягкий подход, честные данные, долгосрочные отношения с аудиторией. Без агрессии.</p>
+      <div class="org-btns">
+        <button class="btn-org-primary">Начать путь →</button>
+        <button class="btn-org-soft">Смотреть кейсы</button>
+      </div>
+    </div>
+    <div class="org-right">
+      <div class="org-card">
+        <div class="org-card-icon" style="background:#fff7ed;">🌱</div>
+        <div>
+          <div class="org-card-title">Органический рост</div>
+          <div class="org-card-text">SEO, контент и доверие вместо навязчивой рекламы</div>
+        </div>
+      </div>
+      <div class="org-card">
+        <div class="org-card-icon" style="background:#f0fdf4;">💚</div>
+        <div>
+          <div class="org-card-title">Честная аналитика</div>
+          <div class="org-card-text">Только метрики, которые реально влияют на бизнес</div>
+        </div>
+      </div>
+      <div class="org-card">
+        <div class="org-card-icon" style="background:#fef3c7;">✨</div>
+        <div>
+          <div class="org-card-title">Живой бренд</div>
+          <div class="org-card-text">Голос, стиль и характер, которые узнают с первого слова</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. CYBERPUNK -->
+<div id="cyber" class="section cyber">
+  <div class="cyber-scanlines"></div>
+  <div class="cyber-header">
+    <div class="cyber-logo">NEXUS</div>
+    <div class="cyber-nav">
+      <a href="#">Система</a>
+      <a href="#">Протокол</a>
+      <a href="#">Данные</a>
+      <a href="#">Связь</a>
+    </div>
+  </div>
+  <div class="cyber-hero">
+    <div class="cyber-eyebrow">Протокол v4.0 активен</div>
+    <h1 class="cyber-h1">
+      <span class="c-neon">ВЗЛОМАЙ</span><br>
+      СИСТЕМУ<br>
+      <span class="c-pink">РОСТА</span>
+    </h1>
+    <p class="cyber-sub">Предсказательные алгоритмы, AI-автоматизация и данные в реальном времени. Маркетинг следующего уровня.</p>
+    <div class="cyber-btns">
+      <button class="btn-cyber">Войти в систему</button>
+      <button class="btn-cyber-pink">Запросить доступ</button>
+    </div>
+    <div class="cyber-stats">
+      <div class="cyber-stat">
+        <div class="cyber-stat-tag">Конверсия</div>
+        <div class="cyber-stat-num">4.7×</div>
+        <div class="cyber-stat-label">рост vs контроль</div>
+      </div>
+      <div class="cyber-stat">
+        <div class="cyber-stat-tag">Обработка данных</div>
+        <div class="cyber-stat-num">2.4M</div>
+        <div class="cyber-stat-label">событий в сутки</div>
+      </div>
+      <div class="cyber-stat">
+        <div class="cyber-stat-tag">Точность модели</div>
+        <div class="cyber-stat-num">91%</div>
+        <div class="cyber-stat-label">прогноз конверсии</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 10. AURORA -->
+<div id="aurora" class="section aurora">
+  <div class="aurora-bg"></div>
+  <div class="aurora-content">
+    <div class="aurora-header">
+      <div class="aurora-logo"><span>aurora</span></div>
+      <div class="aurora-nav">
+        <a href="#">Продукт</a>
+        <a href="#">Кейсы</a>
+        <a href="#">Цены</a>
+        <button class="btn-aurora">Попробовать</button>
+      </div>
+    </div>
+    <div class="aurora-hero">
+      <div class="aurora-chip"><span class="aurora-chip-glow"></span>AI-платформа нового поколения</div>
+      <h1 class="aurora-h1">Маркетинг,<br>который <span class="a-grad">светится</span></h1>
+      <p class="aurora-sub">Предсказательная аналитика, автоматизация кампаний и AI-инсайты в одном красивом интерфейсе.</p>
+      <div class="aurora-btns">
+        <button class="btn-aurora-main">Начать бесплатно</button>
+        <button class="btn-aurora-ghost">Смотреть демо →</button>
+      </div>
+    </div>
+    <div class="aurora-cards">
+      <div class="aurora-card" style="--glow: rgba(56,189,248,0.8);">
+        <div class="aurora-card-icon">🔮</div>
+        <div class="aurora-card-title">Предсказательный AI</div>
+        <div class="aurora-card-text">Модель предсказывает поведение лида ещё до того, как он заполнил форму.</div>
+      </div>
+      <div class="aurora-card" style="--glow: rgba(167,139,250,0.8);">
+        <div class="aurora-card-icon">⚡</div>
+        <div class="aurora-card-title">Автокампании</div>
+        <div class="aurora-card-text">Кампании запускаются, оптимизируются и масштабируются сами по KPI.</div>
+      </div>
+      <div class="aurora-card" style="--glow: rgba(52,211,153,0.8);">
+        <div class="aurora-card-icon">📊</div>
+        <div class="aurora-card-title">Живые дашборды</div>
+        <div class="aurora-card-text">Все метрики в реальном времени. Красиво, быстро, без лишнего.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 11. BENTO GRID -->
+<div id="bento" class="section bento">
+  <div class="bento-header">
+    <div class="bento-logo">РМ Групп</div>
+    <div class="bento-nav">
+      <a href="#">Услуги</a>
+      <a href="#">О нас</a>
+      <a href="#">Контакт</a>
+      <button class="btn-bento-sm">Оставить заявку</button>
+    </div>
+  </div>
+  <div class="bento-grid">
+
+    <div class="bento-cell bc-1">
+      <div class="bento-eyebrow">Кадровый партнёр</div>
+      <h1 class="bento-h1">Персонал<br>для вашего<br>бизнеса</h1>
+      <p class="bento-sub">Подбор линейного персонала, аутсорсинг и автоматизация HR-процессов.</p>
+      <button class="btn-bento">Начать →</button>
+    </div>
+
+    <div class="bento-cell bc-2">
+      <div class="bento-eyebrow" style="color:rgba(255,255,255,0.6)">Закрытых вакансий</div>
+      <div class="bento-big-num">12K+</div>
+      <div class="bento-big-label">с 2015 года</div>
+    </div>
+
+    <div class="bento-cell bc-3">
+      <div class="bento-icon">🎯</div>
+      <div class="bento-card-title">Точный подбор</div>
+      <div class="bento-card-text">Закрываем вакансии за 4.2 дня — в 2× быстрее рынка</div>
+    </div>
+
+    <div class="bento-cell bc-4">
+      <div class="bento-eyebrow" style="color:rgba(255,255,255,0.5)">NPS клиентов</div>
+      <div class="bento-big-num" style="font-size:56px">87</div>
+      <div class="bento-big-label" style="color:rgba(255,255,255,0.5)">Топ-5% отрасли</div>
+    </div>
+
+    <div class="bento-cell bc-5">
+      <div class="bento-icon">📈</div>
+      <div class="bento-card-title" style="color:#fff">Рост клиентов</div>
+      <div class="bento-card-text" style="color:rgba(255,255,255,0.7)">+42 новых за квартал</div>
+    </div>
+
+    <div class="bento-cell bc-6">
+      <div class="bento-eyebrow" style="color:#92400e">Направления</div>
+      <div class="bento-card-title">Что мы закрываем</div>
+      <div class="bento-bars">
+        <div class="bento-bar-row">
+          <div class="bento-bar-label">Склад / логистика</div>
+          <div class="bento-bar-track"><div class="bento-bar-fill" style="width:88%; background:#f97316;"></div></div>
+        </div>
+        <div class="bento-bar-row">
+          <div class="bento-bar-label">Производство</div>
+          <div class="bento-bar-track"><div class="bento-bar-fill" style="width:74%; background:#f97316;"></div></div>
+        </div>
+        <div class="bento-bar-row">
+          <div class="bento-bar-label">Ритейл</div>
+          <div class="bento-bar-track"><div class="bento-bar-fill" style="width:62%; background:#f97316;"></div></div>
+        </div>
+        <div class="bento-bar-row">
+          <div class="bento-bar-label">Офис / admin</div>
+          <div class="bento-bar-track"><div class="bento-bar-fill" style="width:45%; background:#f97316;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bento-cell bc-7">
+      <div class="bento-eyebrow" style="color:#3730a3">Преимущества</div>
+      <div class="bento-card-title">Почему выбирают нас</div>
+      <div class="bento-tag-list">
+        <div class="bento-tag">Гарантия замены</div>
+        <div class="bento-tag">Договор за 1 день</div>
+        <div class="bento-tag">340+ клиентов</div>
+        <div class="bento-tag">Аутстаф / аутсорс</div>
+        <div class="bento-tag">Юридическая чистота</div>
+        <div class="bento-tag">Онлайн-кабинет</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 12. BIG4 / CONSULTING -->
+<div id="big4" class="section big4">
+  <div class="big4-header">
+    <div class="big4-logo">
+      <div class="big4-logo-mark">РМ</div>
+      <div class="big4-logo-divider"></div>
+      <div>
+        <div class="big4-logo-name">РМ Групп</div>
+        <div class="big4-logo-sub">Кадровые решения</div>
+      </div>
+    </div>
+    <div class="big4-nav">
+      <a href="#">Услуги</a>
+      <a href="#">Отрасли</a>
+      <a href="#">Insights</a>
+      <a href="#">О компании</a>
+      <button class="btn-big4">Связаться</button>
+    </div>
+  </div>
+
+  <div class="big4-hero">
+    <div class="big4-hero-left">
+      <div>
+        <div class="big4-kicker">Кадровый партнёр</div>
+        <h1 class="big4-h1">Люди, которые<br>двигают ваш<br>бизнес вперёд</h1>
+        <p class="big4-intro">Стратегический подбор персонала, аутсорсинг HR-функций и автоматизация кадровых процессов для компаний от 50 до 50 000 сотрудников.</p>
+        <div class="big4-btns">
+          <button class="btn-big4-primary">Получить консультацию</button>
+          <button class="btn-big4-link">Наши кейсы →</button>
+        </div>
+      </div>
+    </div>
+    <div class="big4-hero-right">
+      <div class="big4-img-bg"></div>
+      <div class="big4-img-caption">
+        <div class="big4-img-caption-title">Команды, которые работают</div>
+        <div class="big4-img-caption-sub">340 компаний доверяют нам подбор персонала</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="big4-stats">
+    <div class="big4-stat">
+      <div class="big4-stat-num">12K+</div>
+      <div class="big4-stat-label">закрытых вакансий с 2015 года</div>
+    </div>
+    <div class="big4-stat">
+      <div class="big4-stat-num">4.2</div>
+      <div class="big4-stat-label">дня — среднее время закрытия</div>
+    </div>
+    <div class="big4-stat">
+      <div class="big4-stat-num">340+</div>
+      <div class="big4-stat-label">активных клиентов по России</div>
+    </div>
+    <div class="big4-stat">
+      <div class="big4-stat-num">87</div>
+      <div class="big4-stat-label">NPS — топ-5% отрасли</div>
+    </div>
+  </div>
+
+  <div class="big4-insights">
+    <div class="big4-insights-header">
+      <div class="big4-insights-title">Последние материалы</div>
+      <div class="big4-insights-link">Все публикации →</div>
+    </div>
+    <div class="big4-insight-grid">
+      <div class="big4-insight">
+        <div class="big4-insight-tag">Тренды · HR</div>
+        <div class="big4-insight-title">Рынок труда в России: что изменилось в 2026 году</div>
+        <div class="big4-insight-text">Дефицит линейного персонала достиг исторического максимума. Как компании адаптируются и что это означает для стратегии найма.</div>
+        <div class="big4-insight-meta">Май 2026 · 8 мин</div>
+      </div>
+      <div class="big4-insight">
+        <div class="big4-insight-tag">Аутсорсинг · Стратегия</div>
+        <div class="big4-insight-title">Когда аутстаф выгоднее штата: полный расчёт</div>
+        <div class="big4-insight-text">Сравниваем TCO штатного сотрудника и аутсорсингового работника с учётом налогов, замен и административных издержек.</div>
+        <div class="big4-insight-meta">Апрель 2026 · 12 мин</div>
+      </div>
+      <div class="big4-insight">
+        <div class="big4-insight-tag">Автоматизация · HR Tech</div>
+        <div class="big4-insight-title">AI в подборе: реальная экономия или хайп</div>
+        <div class="big4-insight-text">Тестировали 6 AI-инструментов для скрининга резюме. Рассказываем, где технология реально сокращает время найма.</div>
+        <div class="big4-insight-meta">Март 2026 · 6 мин</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

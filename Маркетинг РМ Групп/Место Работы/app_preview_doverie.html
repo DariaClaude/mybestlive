@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Место работы — App Preview / Доверие</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:    #2563EB;
+      --blue2:   #60A0FA;
+      --bluebg:  #DBEAFE;
+      --amber:   #F59E0B;
+      --dark:    #1C1C2E;
+      --gray:    #F4F6FB;
+      --border:  #E8EDF5;
+      --mid:     #7B8794;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0F1623;
+      padding: 60px 48px 80px;
+      min-height: 100vh;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 56px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .brand-icon {
+      width: 44px; height: 44px;
+      background: var(--blue);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-name { font-size: 20px; font-weight: 900; color: white; }
+    .brand-slogan { font-size: 11px; color: rgba(255,255,255,.4); font-weight: 500; margin-top: 2px; letter-spacing: .06em; }
+    .palette-pills { display: flex; gap: 8px; }
+    .pill {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.07);
+      border-radius: 20px; padding: 6px 14px;
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,.6);
+    }
+    .pill-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 20px;
+    }
+
+    /* ── Phones row ── */
+    .phones-row {
+      display: flex; gap: 24px;
+      align-items: flex-start;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .phone-wrap { flex-shrink: 0; text-align: center; }
+    .phone-label {
+      font-size: 12px; font-weight: 600;
+      color: rgba(255,255,255,.35);
+      letter-spacing: .06em;
+      margin-bottom: 14px;
+    }
+
+    /* Phone shell */
+    .phone {
+      width: 260px;
+      background: #1A2236;
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.06),
+        0 40px 80px rgba(0,0,0,.6),
+        0 8px 20px rgba(37,99,235,.15);
+    }
+    .screen {
+      width: 232px;
+      border-radius: 32px;
+      overflow: hidden;
+      background: var(--gray);
+      position: relative;
+    }
+
+    /* Status bar */
+    .status-bar {
+      height: 36px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px;
+      font-size: 11px; font-weight: 700;
+    }
+    .status-time { }
+    .status-icons { display: flex; gap: 4px; align-items: center; }
+    .status-icon { width: 14px; height: 8px; border-radius: 2px; opacity: .7; }
+
+    /* ── SCREEN 1: Онбординг ── */
+    .s1 { background: var(--blue); }
+    .s1 .status-bar { color: rgba(255,255,255,.6); }
+    .s1-hero {
+      padding: 24px 24px 0;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .s1-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.15);
+      border-radius: 20px; padding: 5px 12px;
+      font-size: 11px; font-weight: 600; color: white;
+      width: fit-content;
+    }
+    .s1-title {
+      font-size: 34px; font-weight: 900; color: white;
+      line-height: 1.05; letter-spacing: -.02em;
+    }
+    .s1-sub {
+      font-size: 14px; color: rgba(255,255,255,.65);
+      line-height: 1.55;
+    }
+    .s1-stats {
+      display: flex; gap: 8px;
+      padding: 20px 24px;
+    }
+    .s1-stat {
+      flex: 1; background: rgba(255,255,255,.12);
+      border-radius: 14px; padding: 12px;
+      text-align: center;
+    }
+    .s1-stat-num { font-size: 18px; font-weight: 900; color: white; }
+    .s1-stat-label { font-size: 10px; color: rgba(255,255,255,.55); margin-top: 2px; }
+    .s1-bottom {
+      padding: 0 24px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .btn-primary {
+      height: 52px; border-radius: 16px;
+      background: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; color: var(--dark);
+    }
+    .btn-ghost {
+      height: 44px; border-radius: 16px;
+      background: rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600; color: rgba(255,255,255,.7);
+    }
+
+    /* ── SCREEN 2: Лента вакансий ── */
+    .s2 { background: var(--gray); }
+    .s2 .status-bar { color: var(--dark); }
+    .s2-header {
+      padding: 4px 20px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .s2-greeting { font-size: 13px; color: var(--mid); }
+    .s2-title-row { display: flex; align-items: center; justify-content: space-between; }
+    .s2-title { font-size: 22px; font-weight: 900; color: var(--dark); }
+    .notif-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: white; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .search-bar {
+      margin: 0 20px 14px;
+      height: 44px; border-radius: 14px;
+      background: white; border: 1.5px solid var(--border);
+      display: flex; align-items: center; gap: 10px; padding: 0 14px;
+      font-size: 13px; color: var(--mid);
+    }
+    .search-icon { font-size: 15px; opacity: .5; }
+    .chips {
+      display: flex; gap: 8px; padding: 0 20px 16px;
+      overflow: hidden;
+    }
+    .chip {
+      flex-shrink: 0; height: 30px; border-radius: 10px;
+      padding: 0 12px; font-size: 12px; font-weight: 600;
+      display: flex; align-items: center;
+    }
+    .chip.active { background: var(--blue); color: white; }
+    .chip.inactive { background: white; color: var(--mid); border: 1px solid var(--border); }
+
+    .job-card {
+      margin: 0 16px 10px;
+      background: white; border-radius: 18px;
+      padding: 16px; border: 1px solid var(--border);
+    }
+    .job-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+    .job-card-company-row { display: flex; align-items: center; gap: 8px; }
+    .company-logo {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900;
+    }
+    .job-card-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+    .job-card-company { font-size: 11px; color: var(--mid); }
+    .bookmark { font-size: 16px; opacity: .3; }
+    .job-card-salary { font-size: 16px; font-weight: 900; color: var(--blue); margin-bottom: 10px; }
+    .job-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .job-tag {
+      height: 22px; border-radius: 6px; padding: 0 8px;
+      font-size: 10px; font-weight: 600;
+      display: flex; align-items: center;
+    }
+    .job-tag.blue { background: var(--bluebg); color: var(--blue); }
+    .job-tag.gray { background: var(--gray); color: var(--mid); border: 1px solid var(--border); }
+    .job-tag.amber { background: #FEF3C7; color: #92400E; }
+
+    .bottom-nav {
+      margin: 10px 16px 0;
+      height: 56px; border-radius: 18px;
+      background: white; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-around;
+      padding: 0 8px;
+    }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .nav-icon { font-size: 18px; }
+    .nav-label { font-size: 9px; font-weight: 600; }
+    .nav-item.active .nav-label { color: var(--blue); }
+    .nav-item.inactive .nav-label { color: var(--mid); }
+    .nav-item.inactive .nav-icon { opacity: .35; }
+
+    /* ── SCREEN 3: Карточка вакансии ── */
+    .s3 { background: white; }
+    .s3 .status-bar { color: var(--dark); }
+    .s3-back {
+      padding: 4px 20px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .back-btn {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: var(--gray); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .s3-back-title { font-size: 15px; font-weight: 700; color: var(--dark); }
+    .s3-hero {
+      background: var(--blue);
+      margin: 0 16px; border-radius: 20px;
+      padding: 20px; margin-bottom: 16px;
+    }
+    .s3-hero-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,.2);
+      border-radius: 8px; padding: 4px 10px;
+      font-size: 11px; font-weight: 600; color: white;
+      margin-bottom: 10px;
+    }
+    .s3-hero-title { font-size: 22px; font-weight: 900; color: white; margin-bottom: 4px; }
+    .s3-hero-company { font-size: 12px; color: rgba(255,255,255,.65); margin-bottom: 14px; }
+    .s3-salary { font-size: 22px; font-weight: 900; color: var(--amber); }
+    .s3-section { padding: 0 20px 14px; }
+    .s3-section-title { font-size: 12px; font-weight: 700; color: var(--mid); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+    .s3-condition {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px; color: var(--dark);
+    }
+    .s3-condition:last-child { border-bottom: none; }
+    .cond-icon { font-size: 15px; width: 20px; }
+    .s3-btn {
+      margin: 0 16px 16px;
+      height: 52px; border-radius: 16px;
+      background: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; color: var(--dark);
+      gap: 8px;
+    }
+
+    /* ── SCREEN 4: Профиль ── */
+    .s4 { background: var(--gray); }
+    .s4 .status-bar { color: var(--dark); }
+    .s4-header { padding: 4px 20px 20px; }
+    .s4-title { font-size: 22px; font-weight: 900; color: var(--dark); margin-bottom: 16px; }
+    .s4-avatar-row {
+      background: var(--blue);
+      border-radius: 20px; padding: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .avatar {
+      width: 52px; height: 52px; border-radius: 16px;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 900; color: white;
+    }
+    .avatar-info-name { font-size: 16px; font-weight: 700; color: white; }
+    .avatar-info-sub { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 2px; }
+    .edit-btn {
+      margin-left: auto; height: 32px; border-radius: 10px;
+      background: rgba(255,255,255,.2);
+      padding: 0 12px; font-size: 12px; font-weight: 600; color: white;
+      display: flex; align-items: center;
+    }
+    .s4-menu { padding: 14px 20px 0; display: flex; flex-direction: column; gap: 8px; }
+    .menu-item {
+      background: white; border-radius: 14px;
+      padding: 14px 16px; border: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .menu-item-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .menu-item-text { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .menu-item-sub { font-size: 11px; color: var(--mid); margin-top: 1px; }
+    .menu-arrow { margin-left: auto; color: var(--mid); font-size: 14px; opacity: .4; }
+
+    /* ── SCREEN 5: Поиск + фильтры ── */
+    .s5 { background: white; }
+    .s5 .status-bar { color: var(--dark); }
+    .s5-header { padding: 4px 20px 14px; }
+    .s5-title { font-size: 22px; font-weight: 900; color: var(--dark); margin-bottom: 14px; }
+    .s5-search {
+      height: 46px; border-radius: 14px;
+      background: var(--gray); border: 2px solid var(--blue);
+      display: flex; align-items: center; gap: 10px; padding: 0 14px;
+      font-size: 13px; color: var(--dark); font-weight: 600;
+    }
+    .s5-filters { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+    .s5-filter-title { font-size: 11px; font-weight: 700; color: var(--mid); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .filter-chip {
+      height: 30px; border-radius: 10px; padding: 0 12px;
+      font-size: 12px; font-weight: 600;
+      display: flex; align-items: center;
+    }
+    .filter-chip.sel { background: var(--blue); color: white; }
+    .filter-chip.unsel { background: var(--gray); color: var(--mid); border: 1px solid var(--border); }
+    .salary-slider {
+      margin: 14px 20px;
+    }
+    .slider-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--mid); margin-bottom: 8px; }
+    .slider-track { height: 4px; background: var(--border); border-radius: 2px; position: relative; }
+    .slider-fill { height: 4px; background: var(--blue); border-radius: 2px; width: 65%; }
+    .slider-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--blue); border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(37,99,235,.4);
+      position: absolute; top: -7px; left: calc(65% - 9px);
+    }
+    .s5-apply {
+      margin: 14px 16px 0;
+      height: 48px; border-radius: 14px;
+      background: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--dark);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page header -->
+<div class="page-header">
+  <div class="brand">
+    <div class="brand-icon">
+      <svg width="24" height="28" viewBox="0 0 24 28" fill="none">
+        <path d="M12 0C6.48 0 2 4.48 2 10C2 17 12 28 12 28C12 28 22 17 22 10C22 4.48 17.52 0 12 0Z" fill="white"/>
+        <text x="12" y="13" text-anchor="middle" dominant-baseline="middle" font-family="Inter" font-weight="900" font-size="10" fill="#2563EB">М</text>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Место работы</div>
+      <div class="brand-slogan">Найдём работу рядом · Палитра «Доверие»</div>
+    </div>
+  </div>
+  <div class="palette-pills">
+    <div class="pill"><div class="pill-dot" style="background:#2563EB"></div>#2563EB</div>
+    <div class="pill"><div class="pill-dot" style="background:#F59E0B"></div>#F59E0B</div>
+    <div class="pill"><div class="pill-dot" style="background:#DBEAFE"></div>#DBEAFE</div>
+    <div class="pill"><div class="pill-dot" style="background:#1C1C2E"></div>#1C1C2E</div>
+  </div>
+</div>
+
+<!-- Phones -->
+<div class="section-label">Ключевые экраны приложения</div>
+<div class="phones-row">
+
+  <!-- ══ SCREEN 1: Онбординг ══ -->
+  <div class="phone-wrap">
+    <div class="phone-label">Онбординг</div>
+    <div class="phone">
+      <div class="screen s1" style="height:520px">
+        <div class="status-bar">
+          <span>9:41</span>
+          <div class="status-icons">
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><rect x="0" y="3" width="3" height="7" rx="1" fill="white" opacity=".4"/><rect x="4" y="2" width="3" height="8" rx="1" fill="white" opacity=".6"/><rect x="8" y="0" width="3" height="10" rx="1" fill="white"/><rect x="13" y="1" width="4" height="8" rx="1" fill="white" opacity=".3"/><rect x="13.5" y="1.5" width="3" height="7" rx=".5" fill="white"/></svg>
+          </div>
+        </div>
+        <div class="s1-hero">
+          <div class="s1-badge">📍 Москва · 1 243 вакансии</div>
+          <div class="s1-title">Найдём работу рядом</div>
+          <div class="s1-sub">Вакансии для курьеров, поваров, кассиров и всех, кто работает руками</div>
+        </div>
+        <div class="s1-stats">
+          <div class="s1-stat">
+            <div class="s1-stat-num">48к+</div>
+            <div class="s1-stat-label">вакансий</div>
+          </div>
+          <div class="s1-stat">
+            <div class="s1-stat-num">12к+</div>
+            <div class="s1-stat-label">компаний</div>
+          </div>
+          <div class="s1-stat">
+            <div class="s1-stat-num">1 день</div>
+            <div class="s1-stat-label">до оффера</div>
+          </div>
+        </div>
+        <div class="s1-bottom">
+          <div class="btn-primary">Найти работу</div>
+          <div class="btn-ghost">Я работодатель</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: Лента вакансий ══ -->
+  <div class="phone-wrap">
+    <div class="phone-label">Лента вакансий</div>
+    <div class="phone">
+      <div class="screen s2" style="height:520px">
+        <div class="status-bar" style="background:white">
+          <span style="color:var(--dark)">9:41</span>
+          <div class="status-icons">
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><rect x="0" y="3" width="3" height="7" rx="1" fill="#1C1C2E" opacity=".4"/><rect x="4" y="2" width="3" height="8" rx="1" fill="#1C1C2E" opacity=".6"/><rect x="8" y="0" width="3" height="10" rx="1" fill="#1C1C2E"/></svg>
+          </div>
+        </div>
+        <div class="s2-header" style="background:white">
+          <div>
+            <div class="s2-greeting">Добрый день 👋</div>
+            <div class="s2-title-row">
+              <div class="s2-title">Вакансии</div>
+              <div class="notif-btn">🔔</div>
+            </div>
+          </div>
+        </div>
+        <div class="search-bar" style="background:white">
+          <span class="search-icon">🔍</span>
+          <span>Поиск по вакансиям...</span>
+        </div>
+        <div class="chips">
+          <div class="chip active">Все</div>
+          <div class="chip inactive">Курьеры</div>
+          <div class="chip inactive">Повара</div>
+          <div class="chip inactive">Склад</div>
+        </div>
+        <!-- Card 1 -->
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-card-company-row">
+              <div class="company-logo" style="background:#FEF3C7;font-size:16px;">🚗</div>
+              <div>
+                <div class="job-card-title">Курьер на авто</div>
+                <div class="job-card-company">Яндекс Доставка</div>
+              </div>
+            </div>
+            <div class="bookmark">🔖</div>
+          </div>
+          <div class="job-card-salary">от 90 000 ₽/мес</div>
+          <div class="job-tags">
+            <div class="job-tag amber">Срочно</div>
+            <div class="job-tag blue">Полная</div>
+            <div class="job-tag gray">Москва</div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="job-card">
+          <div class="job-card-top">
+            <div class="job-card-company-row">
+              <div class="company-logo" style="background:#DBEAFE;font-size:16px;">🍽️</div>
+              <div>
+                <div class="job-card-title">Повар горячего цеха</div>
+                <div class="job-card-company">Буфет · Сеть ресторанов</div>
+              </div>
+            </div>
+            <div class="bookmark">🔖</div>
+          </div>
+          <div class="job-card-salary">от 65 000 ₽/мес</div>
+          <div class="job-tags">
+            <div class="job-tag blue">График 2/2</div>
+            <div class="job-tag gray">Питание</div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item active"><span class="nav-icon">⚡</span><span class="nav-label" style="color:var(--blue)">Вакансии</span></div>
+          <div class="nav-item inactive"><span class="nav-icon">🔖</span><span class="nav-label">Избранное</span></div>
+          <div class="nav-item inactive"><span class="nav-icon">✉️</span><span class="nav-label">Отклики</span></div>
+          <div class="nav-item inactive"><span class="nav-icon">👤</span><span class="nav-label">Профиль</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: Карточка вакансии ══ -->
+  <div class="phone-wrap">
+    <div class="phone-label">Карточка вакансии</div>
+    <div class="phone">
+      <div class="screen s3" style="height:520px">
+        <div class="status-bar">
+          <span style="color:var(--dark)">9:41</span>
+        </div>
+        <div class="s3-back">
+          <div class="back-btn">←</div>
+          <div class="s3-back-title">Вакансия</div>
+        </div>
+        <div class="s3-hero">
+          <div class="s3-hero-tag">📍 Москва · м. Нагатинская</div>
+          <div class="s3-hero-title">Курьер на автомобиле</div>
+          <div class="s3-hero-company">Яндекс Доставка · Москва</div>
+          <div class="s3-salary">от 90 000 ₽/мес</div>
+        </div>
+        <div class="s3-section">
+          <div class="s3-section-title">Условия</div>
+          <div class="s3-condition"><span class="cond-icon">📅</span>График: 5/2 или 2/2</div>
+          <div class="s3-condition"><span class="cond-icon">📋</span>Оформление по ТК РФ</div>
+          <div class="s3-condition"><span class="cond-icon">💳</span>Выплаты каждую неделю</div>
+          <div class="s3-condition"><span class="cond-icon">🚗</span>Свой автомобиль</div>
+        </div>
+        <div class="s3-btn">
+          <span>Откликнуться</span> <span>→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 4: Профиль ══ -->
+  <div class="phone-wrap">
+    <div class="phone-label">Профиль</div>
+    <div class="phone">
+      <div class="screen s4" style="height:520px">
+        <div class="status-bar" style="background:var(--gray)">
+          <span style="color:var(--dark)">9:41</span>
+        </div>
+        <div class="s4-header">
+          <div class="s4-title">Профиль</div>
+          <div class="s4-avatar-row">
+            <div class="avatar">АК</div>
+            <div>
+              <div class="avatar-info-name">Алексей Козлов</div>
+              <div class="avatar-info-sub">Курьер · Москва</div>
+            </div>
+            <div class="edit-btn">Изменить</div>
+          </div>
+        </div>
+        <div class="s4-menu">
+          <div class="menu-item">
+            <div class="menu-item-icon" style="background:#DBEAFE;">📄</div>
+            <div>
+              <div class="menu-item-text">Моё резюме</div>
+              <div class="menu-item-sub">Обновлено 2 дня назад</div>
+            </div>
+            <div class="menu-arrow">›</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon" style="background:#FEF3C7;">📨</div>
+            <div>
+              <div class="menu-item-text">Мои отклики</div>
+              <div class="menu-item-sub">3 активных</div>
+            </div>
+            <div class="menu-arrow">›</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon" style="background:#DCFCE7;">🔖</div>
+            <div>
+              <div class="menu-item-text">Избранное</div>
+              <div class="menu-item-sub">12 вакансий</div>
+            </div>
+            <div class="menu-arrow">›</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-icon" style="background:var(--gray);">⚙️</div>
+            <div>
+              <div class="menu-item-text">Настройки</div>
+            </div>
+            <div class="menu-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 5: Фильтры ══ -->
+  <div class="phone-wrap">
+    <div class="phone-label">Поиск и фильтры</div>
+    <div class="phone">
+      <div class="screen s5" style="height:520px">
+        <div class="status-bar">
+          <span style="color:var(--dark)">9:41</span>
+        </div>
+        <div class="s5-header">
+          <div class="s5-title">Поиск</div>
+          <div class="s5-search">
+            <span style="opacity:.5">🔍</span>
+            <span style="color:var(--dark)">Курьер</span>
+          </div>
+        </div>
+        <div class="s5-filters">
+          <div class="s5-filter-title">Категория</div>
+          <div class="filter-chips">
+            <div class="filter-chip sel">Курьеры</div>
+            <div class="filter-chip unsel">Повара</div>
+            <div class="filter-chip unsel">Кассиры</div>
+            <div class="filter-chip unsel">Склад</div>
+            <div class="filter-chip unsel">Охрана</div>
+          </div>
+        </div>
+        <div class="s5-filters">
+          <div class="s5-filter-title">График</div>
+          <div class="filter-chips">
+            <div class="filter-chip sel">2/2</div>
+            <div class="filter-chip sel">5/2</div>
+            <div class="filter-chip unsel">Подработка</div>
+          </div>
+        </div>
+        <div class="salary-slider">
+          <div class="slider-label">
+            <span style="font-size:11px;font-weight:700;color:var(--dark)">Зарплата</span>
+            <span style="font-size:11px;font-weight:700;color:var(--blue)">от 60 000 ₽</span>
+          </div>
+          <div class="slider-track">
+            <div class="slider-fill"></div>
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+        <div class="s5-filters" style="border:none">
+          <div class="s5-filter-title">Оформление</div>
+          <div class="filter-chips">
+            <div class="filter-chip sel">По ТК</div>
+            <div class="filter-chip unsel">Самозанятость</div>
+          </div>
+        </div>
+        <div class="s5-apply">Показать 248 вакансий</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

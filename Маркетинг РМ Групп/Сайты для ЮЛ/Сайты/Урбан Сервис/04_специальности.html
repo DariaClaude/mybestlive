@@ -1,0 +1,137 @@
+<!--
+══════════════════════════════════════════════════════
+  БЛОК 04 — СПЕЦИАЛЬНОСТИ (SPECIALTIES)
+  Zero Block → CSS / HTML / JS
+══════════════════════════════════════════════════════
+-->
+
+<!-- ═══ CSS ═══ -->
+<style>
+.specialties { max-width: 1140px; margin: 0 auto; padding: 0 48px 40px; }
+
+.spec-bento {
+  background: var(--white); border-radius: 20px; padding: 40px;
+  display: grid; grid-template-columns: 260px 1fr 200px; gap: 40px; align-items: start;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.spec-left .section-label { color: var(--muted); }
+.spec-left .section-title { color: var(--dark); margin-bottom: 12px; }
+.spec-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.spec-count {
+  margin-top: 24px; display: inline-block;
+  background: var(--green); color: var(--white);
+  padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 600;
+}
+
+/* Теги */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+.tag {
+  background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25);
+  color: var(--green-dk); font-size: 13px; font-weight: 500;
+  padding: 7px 14px; border-radius: 100px;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+  opacity: 0;
+  animation: tagAppear 0.4s ease forwards;
+}
+.tag:hover { background: rgba(16,185,129,0.18); border-color: var(--green); transform: scale(1.05); }
+
+/* Фото-полоса */
+.spec-photo-strip { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+.spec-photo-item {
+  flex: 1; border-radius: 12px; overflow: hidden;
+  background-size: cover; background-position: center;
+  min-height: 90px; position: relative;
+}
+.spec-photo-item::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(29,29,31,0.3), transparent);
+}
+
+@media (max-width: 960px) {
+  .specialties { padding-left: 24px; padding-right: 24px; }
+  .spec-bento { grid-template-columns: 1fr; gap: 24px; }
+  .spec-photo-strip { flex-direction: row; height: 160px; }
+}
+</style>
+
+<!-- ═══ HTML ═══ -->
+<section class="specialties" id="specialties">
+  <div class="spec-bento reveal">
+
+    <div class="spec-left">
+      <div class="section-label">Специальности</div>
+      <div class="section-title">Исполнители любого профиля</div>
+      <p class="spec-sub">Предоставляем персонал более чем 35 специальностей — закрываем любую потребность вашего объекта.</p>
+      <div class="spec-count">35+ специальностей</div>
+    </div>
+
+    <div class="tags" id="tags-container">
+      <span class="tag">Велокурьер</span>
+      <span class="tag">Водитель погрузчика</span>
+      <span class="tag">Грузчик</span>
+      <span class="tag">Кассир</span>
+      <span class="tag">Кладовщик</span>
+      <span class="tag">Комплектовщик</span>
+      <span class="tag">Кондитер</span>
+      <span class="tag">Курьер</span>
+      <span class="tag">Маркировщик</span>
+      <span class="tag">Официант</span>
+      <span class="tag">Оператор конвейерной линии</span>
+      <span class="tag">Оператор штабелера</span>
+      <span class="tag">Повар</span>
+      <span class="tag">Подсобный рабочий</span>
+      <span class="tag">Помощник повара</span>
+      <span class="tag">Посудомойщик</span>
+      <span class="tag">Приёмщик товара</span>
+      <span class="tag">Продавец</span>
+      <span class="tag">Продавец-консультант</span>
+      <span class="tag">Работник торгового зала</span>
+      <span class="tag">Разнорабочий</span>
+      <span class="tag">Сборщик заказов</span>
+      <span class="tag">Сортировщик</span>
+      <span class="tag">Уборщик</span>
+      <span class="tag">Упаковщик</span>
+      <span class="tag">Фасовщик</span>
+    </div>
+
+    <div class="spec-photo-strip">
+      <div class="spec-photo-item" style="background-image:url('https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=400&q=80&fit=crop'); background-position: center center;"></div>
+      <div class="spec-photo-item" style="background-image:url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=400&q=80&fit=crop'); background-position: center center;"></div>
+      <div class="spec-photo-item" style="background-image:url('https://images.unsplash.com/photo-1589792923962-537704632910?w=400&q=80&fit=crop'); background-position: center center;"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ JS ═══ -->
+<script>
+(function(){
+  /* Scroll reveal */
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+  /* Теги — появление с задержкой */
+  var tagsObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var tags = entry.target.querySelectorAll('.tag');
+        tags.forEach(function(tag, i) {
+          tag.style.animationDelay = (i * 0.06) + 's';
+          tag.style.animationFillMode = 'forwards';
+        });
+        tagsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  var tagsContainer = document.getElementById('tags-container');
+  if (tagsContainer) tagsObserver.observe(tagsContainer);
+})();
+</script>

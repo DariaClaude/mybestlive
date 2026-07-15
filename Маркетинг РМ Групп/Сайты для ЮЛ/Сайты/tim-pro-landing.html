@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тим Про — Аутсорсинг персонала</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:    #0B2545;
+      --navy-lt: #0f3461;
+      --gold:    #C9A84C;
+      --gold-lt: #E8C570;
+      --white:   #ffffff;
+      --gray:    #f4f4f4;
+      --text:    #1a1a1a;
+      --muted:   #6b7280;
+      --line:    #e5e5e5;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px; height: 72px;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--navy); }
+    .nav-logo-divider { width: 1px; height: 20px; background: var(--line); }
+    .nav-logo-sub { font-size: 12px; color: var(--muted); }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-size: 13px; color: #444; text-decoration: none; font-weight: 500;
+      padding: 8px 18px; border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .nav-cta {
+      padding: 10px 24px; background: var(--navy); color: var(--white);
+      border: none; font-size: 13px; font-weight: 600;
+      cursor: pointer; text-decoration: none; margin-left: 16px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--navy-lt); }
+
+    /* HERO */
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 540px; margin-top: 72px;
+    }
+    .hero-left {
+      padding: 72px 56px;
+      border-right: 1px solid var(--line);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .hero-kicker {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 24px;
+    }
+    .hero-kicker::before { content: ''; width: 24px; height: 2px; background: var(--gold); }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 4.5vw, 56px); font-weight: 700;
+      line-height: 1.1; color: var(--navy); margin-bottom: 28px;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero-intro {
+      font-size: 16px; color: var(--muted); line-height: 1.75;
+      max-width: 480px; margin-bottom: 40px; font-weight: 300;
+      border-left: 3px solid var(--gold); padding-left: 20px;
+    }
+    .hero-btns { display: flex; gap: 12px; align-items: center; }
+    .btn-navy {
+      padding: 14px 32px; background: var(--navy); color: var(--white);
+      border: none; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
+    }
+    .btn-navy:hover { background: var(--navy-lt); }
+    .btn-text {
+      font-size: 14px; font-weight: 600; color: var(--navy);
+      text-decoration: none; border-bottom: 1px solid var(--navy);
+      padding-bottom: 1px; transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-text:hover { color: var(--gold); border-color: var(--gold); }
+    .hero-right {
+      position: relative; overflow: hidden; min-height: 440px;
+      display: flex; align-items: flex-end;
+    }
+    .hero-img-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(11,37,69,0.1) 30%, rgba(11,37,69,0.82) 100%),
+        url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80') center/cover;
+    }
+    .hero-img-caption {
+      position: relative; z-index: 2; padding: 32px;
+    }
+    .hero-img-caption-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 6px;
+    }
+    .hero-img-caption-sub { font-size: 13px; color: rgba(255,255,255,0.7); }
+
+    /* STATS */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    }
+    .stat { padding: 36px 48px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; font-weight: 800; letter-spacing: -2px;
+      color: var(--navy); line-height: 1; margin-bottom: 8px;
+    }
+    .stat-num .accent { color: var(--gold); }
+    .stat-label { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* ABOUT */
+    .about { padding: 56px 56px 60px; }
+    .section-kicker {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 10px;
+    }
+    .section-kicker::before { content: ''; width: 24px; height: 2px; background: var(--gold); }
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 32px;
+    }
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .about-card { border-top: 3px solid var(--line); padding-top: 20px; cursor: default; }
+    .about-card:first-child { border-top-color: var(--gold); }
+    .about-card-tag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
+    .about-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700; color: var(--navy); line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .about-card-text { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* SERVICES */
+    .services { background: var(--gray); padding: 56px 56px; }
+    .services-list { margin-top: 32px; }
+    .svc-item {
+      display: grid; grid-template-columns: 56px 1fr 32px;
+      align-items: center; gap: 24px;
+      padding: 28px 0; border-bottom: 1px solid var(--line);
+      cursor: default;
+    }
+    .svc-item:first-child { border-top: 1px solid var(--line); }
+    .svc-item:hover .svc-title { color: var(--gold); }
+    .svc-item:hover .svc-num { color: var(--gold); }
+    .svc-item:hover .svc-arrow { color: var(--gold); transform: translateX(4px); }
+    .svc-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 400; color: #ccc;
+      transition: color 0.2s;
+    }
+    .svc-title { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 5px; transition: color 0.2s; }
+    .svc-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .svc-arrow { font-size: 16px; color: #ccc; transition: color 0.2s, transform 0.2s; }
+
+    /* PROCESS — editorial table */
+    .process { padding: 56px 56px; }
+    .process-table { margin-top: 32px; border-top: 2px solid var(--navy); }
+    .process-row-item {
+      display: grid; grid-template-columns: 80px 200px 1fr;
+      align-items: baseline; gap: 0;
+      padding: 26px 0; border-bottom: 1px solid var(--line);
+      cursor: default; transition: background 0.25s;
+    }
+    .process-row-item:hover { background: rgba(201,168,76,0.03); }
+    .process-row-item:hover .p-num { color: var(--gold); }
+    .p-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px; font-weight: 400; color: rgba(11,37,69,0.15);
+      line-height: 1; transition: color 0.3s;
+    }
+    .p-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 700; color: var(--navy);
+      padding-right: 28px; padding-top: 3px;
+    }
+    .p-desc {
+      font-size: 13px; color: var(--muted); line-height: 1.7;
+      border-left: 1px solid var(--line); padding-left: 28px;
+    }
+
+    /* CONTACTS — centered */
+    .contacts { background: var(--navy); padding: 72px 56px; }
+    .contacts .section-kicker { color: var(--gold-lt); justify-content: center; }
+    .contacts .section-kicker::before { background: var(--gold-lt); }
+    .contacts-inner { max-width: 840px; margin: 0 auto; text-align: center; }
+    .contacts-inner .section-heading { color: var(--white); text-align: center; margin-bottom: 8px; }
+    .contacts-subline {
+      font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 44px;
+      font-weight: 300;
+    }
+    .c-details-row {
+      display: flex; justify-content: center; gap: 0;
+      margin-bottom: 40px; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .c-detail {
+      flex: 1; padding: 28px 24px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .c-detail:last-child { border-right: none; }
+    .c-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    .c-value { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.5; }
+    .c-value a { color: rgba(255,255,255,0.82); text-decoration: none; transition: color 0.2s; }
+    .c-value a:hover { color: var(--gold); }
+    .c-cta-center {
+      display: inline-block; background: var(--gold); color: var(--navy);
+      padding: 14px 44px; font-size: 13px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.2s; margin-bottom: 52px;
+    }
+    .c-cta-center:hover { background: var(--gold-lt); }
+    .req-centered {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 36px;
+    }
+    .req-centered-title {
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 20px;
+    }
+    .req-table { width: 100%; border-collapse: collapse; max-width: 560px; margin: 0 auto; }
+    .req-table tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .req-table tr:last-child { border-bottom: none; }
+    .req-table td { padding: 10px 16px; font-size: 13px; vertical-align: top; text-align: left; }
+    .req-table td:first-child { color: rgba(255,255,255,0.4); width: 48%; }
+    .req-table td:last-child { color: rgba(255,255,255,0.82); font-weight: 600; }
+
+    /* FOOTER */
+    footer {
+      background: #060f1e;
+      padding: 28px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-mark {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .footer-name { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.28); }
+    .footer-inn { font-size: 12px; color: rgba(255,255,255,0.28); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 320px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat { padding: 24px; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid var(--line); }
+      .about, .services, .process, .contacts { padding: 40px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+      .process-row-item { grid-template-columns: 60px 1fr; gap: 0 16px; }
+      .p-desc { grid-column: 2; border-left: none; padding-left: 0; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 6px; }
+      .p-num { font-size: 28px; }
+      .c-details-row { flex-direction: column; }
+      .c-detail { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .c-detail:last-child { border-bottom: none; }
+      footer { padding: 24px; }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .hero-left { padding: 56px 20px; }
+      .svc-item { grid-template-columns: 48px 1fr; }
+      .svc-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left team member -->
+        <circle cx="8"  cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.6"/>
+        <!-- Center — Pro (larger, slightly elevated) -->
+        <circle cx="18" cy="11" r="7" fill="rgba(201,168,76,0.1)" stroke="#C9A84C" stroke-width="1.9"/>
+        <!-- Right team member -->
+        <circle cx="28" cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.6"/>
+        <!-- Horizontal connector -->
+        <line x1="8" y1="20.5" x2="28" y2="20.5" stroke="#C9A84C" stroke-width="1.3" stroke-opacity="0.35" stroke-linecap="round"/>
+        <!-- Vertical stem (forms the T) -->
+        <line x1="18" y1="20.5" x2="18" y2="31" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="nav-logo-name">Тим Про</div>
+    <div class="nav-logo-divider"></div>
+    <div class="nav-logo-sub">Аутсорсинг персонала</div>
+  </a>
+  <div class="nav-links">
+    <a href="#about">О компании</a>
+    <a href="#services">Услуги</a>
+    <a href="#process">Как работаем</a>
+    <a href="#contacts">Контакты</a>
+  </div>
+  <a href="#contacts" class="nav-cta">Оставить заявку</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-kicker">Аутсорсинг персонала</div>
+      <h1>Ваша команда —<br>наша <em>ответственность</em></h1>
+      <p class="hero-intro">Предоставляем квалифицированных исполнителей под ключ. Подбор, оформление, управление и отчётность — всё на нас.</p>
+      <div class="hero-btns">
+        <a href="#contacts" class="btn-navy">Оставить заявку</a>
+        <a href="#services" class="btn-text">Наши услуги →</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-bg"></div>
+    <div class="hero-img-caption">
+      <div class="hero-img-caption-title">Профессиональные кадры</div>
+      <div class="hero-img-caption-sub">Полный цикл управления персоналом</div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">500<span class="accent">+</span></div>
+    <div class="stat-label">Закрытых вакансий</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num"><span class="accent">3</span> дня</div>
+    <div class="stat-label">Среднее время закрытия</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100<span class="accent">%</span></div>
+    <div class="stat-label">Работа в рамках закона</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">24<span class="accent">/7</span></div>
+    <div class="stat-label">Поддержка клиентов</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-kicker">О компании</div>
+  <div class="section-heading">Профессиональное кадровое решение для бизнеса</div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-card-tag">Экспертиза</div>
+      <div class="about-card-title">Опыт и знание рынка</div>
+      <div class="about-card-text">Знаем специфику разных отраслей и регионов. Работаем строго в рамках российского законодательства. ООО «Тим Про» берёт на себя весь цикл работы с персоналом.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-tag">Скорость</div>
+      <div class="about-card-title">Закрываем вакансии быстро</div>
+      <div class="about-card-text">Обширная база соискателей и отлаженные процессы позволяют закрывать потребности клиента в сжатые сроки — без потери качества.</div>
+    </div>
+    <div class="about-card">
+      <div class="about-card-tag">Подход</div>
+      <div class="about-card-title">Индивидуальные решения</div>
+      <div class="about-card-text">Учитываем специфику вашего бизнеса и подбираем исполнителей, которые подходят именно вам. Гибкие форматы сотрудничества.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-kicker">Услуги</div>
+  <div class="section-heading">Что мы делаем для вашего бизнеса</div>
+  <div class="services-list">
+    <div class="svc-item">
+      <div class="svc-num">01</div>
+      <div>
+        <div class="svc-title">Аутсорсинг персонала</div>
+        <div class="svc-text">Полный перевод непрофильных функций на нас: подбор, оплата труда, налогообложение и вся отчётность. Вы управляете результатом — мы управляем людьми.</div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">02</div>
+      <div>
+        <div class="svc-title">Временный персонал под проект</div>
+        <div class="svc-text">Сезонные исполнители, персонал для запуска нового направления или выполнения разового задания. Гибко, быстро, в рамках закона.</div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+    <div class="svc-item">
+      <div class="svc-num">03</div>
+      <div>
+        <div class="svc-title">Подбор и оформление персонала</div>
+        <div class="svc-text">Мы находим и нанимаем исполнителей, а вы их трудоустраиваете. Экономим время и ресурсы вашего HR-отдела.</div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-kicker">Как мы работаем</div>
+  <div class="section-heading">Два шага до готовой команды</div>
+  <div class="process-table">
+    <div class="process-row-item">
+      <div class="p-num">01</div>
+      <div class="p-label">Обсуждение</div>
+      <div class="p-desc">Оставляете заявку — отвечаем в течение рабочего дня, уточняем объём, требования и сроки, готовим предложение.</div>
+    </div>
+    <div class="process-row-item">
+      <div class="p-num">02</div>
+      <div class="p-label">Запуск</div>
+      <div class="p-desc">Заключаем договор, подбираем и предоставляем персонал. Ведём документацию и остаёмся на связи на всём сроке работы.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div class="section-kicker">Контакты</div>
+  <div class="contacts-inner">
+    <div class="section-heading">Готовы начать сотрудничество?</div>
+    <p class="contacts-subline">Ответим в течение рабочего дня и подготовим предложение под вашу задачу</p>
+    <div class="c-details-row">
+      <div class="c-detail">
+        <span class="c-label">Адрес</span>
+        <span class="c-value">г. Москва, ул. Новая Басманная,<br>д. 10, стр. 1, помещ. 1/34</span>
+      </div>
+      <div class="c-detail">
+        <span class="c-label">E-mail</span>
+        <span class="c-value"><a href="mailto:info@timpro.ru">info@timpro.ru</a></span>
+      </div>
+    </div>
+    <a href="mailto:info@timpro.ru" class="c-cta-center">Написать нам</a>
+    <div class="req-centered">
+      <div class="req-centered-title">Реквизиты</div>
+      <table class="req-table">
+        <tr><td>Полное наименование</td><td>ООО «Тим Про»</td></tr>
+        <tr><td>ИНН / КПП</td><td>9701311843 / 770101001</td></tr>
+        <tr><td>ОГРН</td><td>1257700211020</td></tr>
+        <tr><td>Расчётный счёт</td><td>40702810102590008130</td></tr>
+        <tr><td>Банк</td><td>АО «Альфа-Банк»</td></tr>
+        <tr><td>Юридический адрес</td><td>г. Москва, ул. Новая Басманная, д. 10, стр. 1, помещ. 1/34</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-mark">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8"  cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.4"/>
+        <circle cx="18" cy="11" r="7" stroke="#C9A84C" stroke-width="1.9" stroke-opacity="0.55"/>
+        <circle cx="28" cy="15" r="5.5" stroke="#C9A84C" stroke-width="1.7" stroke-opacity="0.4"/>
+        <line x1="8" y1="20.5" x2="28" y2="20.5" stroke="#C9A84C" stroke-width="1.3" stroke-opacity="0.25" stroke-linecap="round"/>
+        <line x1="18" y1="20.5" x2="18" y2="31" stroke="#C9A84C" stroke-width="2" stroke-opacity="0.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="footer-name">Тим Про</div>
+  </div>
+  <div class="footer-copy">© 2025 ООО «Тим Про». Все права защищены.</div>
+  <div class="footer-inn">ИНН 9701311843 · ОГРН 1257700211020</div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     LEAD FORM MODAL — Google Sheets integration
+     ═══════════════════════════════════════════════ -->
+<div id="lm-overlay" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px;">
+  <div id="lm-box" style="background:#fff;border-radius:24px;padding:40px 36px 32px;max-width:460px;width:100%;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.22);animation:lmIn .35s cubic-bezier(.16,1,.3,1);">
+    <button id="lm-close" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;line-height:1;padding:4px 8px;">✕</button>
+
+    <!-- Form view -->
+    <div id="lm-form-wrap">
+      <p id="lm-site-label" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#888;margin-bottom:6px;"></p>
+      <h2 style="font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px;color:#1d1d1f;">Оставить заявку</h2>
+      <p style="font-size:13px;color:#888;margin-bottom:22px;">Ответим в течение рабочего дня</p>
+      <form id="lm-form" novalidate>
+        <input type="text"  name="name"    placeholder="Имя *"      required style="display:block;width:100%;margin-bottom:10px;padding:11px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e5e5'"/>
+        <input type="tel"   name="phone"   placeholder="Телефон *"  required style="display:block;width:100%;margin-bottom:10px;padding:11px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e5e5'"/>
+        <input type="email" name="email"   placeholder="Email"               style="display:block;width:100%;margin-bottom:10px;padding:11px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e5e5'"/>
+        <textarea           name="comment" placeholder="Комментарий" rows="3"  style="display:block;width:100%;margin-bottom:18px;padding:11px 14px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:14px;font-family:inherit;outline:none;resize:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e5e5'"></textarea>
+        <button type="submit" id="lm-submit" style="width:100%;padding:13px;background:#1d1d1f;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;">Отправить заявку</button>
+        <p style="font-size:11px;color:#bbb;margin-top:10px;text-align:center;">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+      </form>
+    </div>
+
+    <!-- Success view -->
+    <div id="lm-success" style="display:none;text-align:center;padding:24px 0;">
+      <div style="width:64px;height:64px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:28px;">✓</div>
+      <h3 style="font-size:22px;font-weight:800;margin-bottom:8px;color:#1d1d1f;">Заявка отправлена!</h3>
+      <p style="color:#888;font-size:14px;line-height:1.6;">Мы свяжемся с вами<br>в течение рабочего дня</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes lmIn {
+  from { opacity:0; transform:translateY(20px) scale(.97); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+#lm-overlay { display:none; }
+#lm-overlay.lm-open { display:flex !important; }
+</style>
+
+<script>
+(function(){
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgL5kKDfYviyqbif6DmMvJDI0O_nFK7BwGzRr76SjEuiSDPow0NVCyA7w1AFCiZNbR/exec';
+  var siteName   = (document.title.split('—')[0] || document.title.split('–')[0] || document.title).trim();
+
+  var overlay  = document.getElementById('lm-overlay');
+  var closeBtn = document.getElementById('lm-close');
+  var form     = document.getElementById('lm-form');
+  var submitBtn= document.getElementById('lm-submit');
+  var successDiv=document.getElementById('lm-success');
+  var formWrap = document.getElementById('lm-form-wrap');
+  var siteLabel= document.getElementById('lm-site-label');
+
+  siteLabel.textContent = siteName;
+
+  function openModal(){ overlay.classList.add('lm-open'); document.body.style.overflow='hidden'; }
+  function closeModal(){ overlay.classList.remove('lm-open'); document.body.style.overflow=''; }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  /* Intercept ALL CTA buttons and mailto links */
+  var CTA_SEL = [
+    'a[href="#contacts"]','a[href^="mailto:"]',
+    '.nav-cta','.btn-fill','.btn-filled','.btn-gold','.btn-copper',
+    '.btn-bento','.btn-primary','.btn-sage','.btn-navy','.btn-cta',
+    '.btn-cta-big','.btn-contact-main','.btn-white','.btn-ghost',
+    '.c-cta-btn','.c-cta-center','.cn-cta','.precta-overlay-btn'
+  ].join(',');
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest(CTA_SEL);
+    if(el){ e.preventDefault(); openModal(); }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name    = form.querySelector('[name=name]').value.trim();
+    var phone   = form.querySelector('[name=phone]').value.trim();
+    if(!name || !phone){ alert('Пожалуйста, заполните Имя и Телефон'); return; }
+
+    submitBtn.textContent = 'Отправляем…';
+    submitBtn.disabled = true;
+
+    var params = new URLSearchParams({
+      site:    siteName,
+      name:    name,
+      phone:   phone,
+      email:   form.querySelector('[name=email]').value.trim(),
+      comment: form.querySelector('[name=comment]').value.trim()
+    });
+
+    fetch(SCRIPT_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
+      .then(function(){
+        formWrap.style.display='none';
+        successDiv.style.display='block';
+        setTimeout(function(){ closeModal(); setTimeout(function(){ formWrap.style.display=''; successDiv.style.display='none'; submitBtn.textContent='Отправить заявку'; submitBtn.disabled=false; form.reset(); },400); }, 3000);
+      })
+      .catch(function(){
+        submitBtn.textContent='Ошибка, попробуйте ещё раз';
+        submitBtn.disabled=false;
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="96" fill="#1E293B"/>
+  <text x="256" y="310" font-family="Georgia, serif" font-size="200" font-weight="700" fill="#5C7F62" text-anchor="middle" letter-spacing="-8">АК</text>
+  <rect x="96" y="360" width="320" height="4" rx="2" fill="#5C7F62" opacity="0.4"/>
+</svg>

@@ -1,0 +1,146 @@
+<!--
+══════════════════════════════════════════════════════
+  БЛОК 05 — ЭТАПЫ СОТРУДНИЧЕСТВА (STEPS TIMELINE)
+  Zero Block → CSS / HTML / JS
+══════════════════════════════════════════════════════
+-->
+
+<!-- ═══ CSS ═══ -->
+<style>
+.steps { max-width: 1140px; margin: 0 auto; padding: 0 48px 40px; }
+
+.timeline { display: flex; position: relative; padding: 8px 0 4px; }
+.timeline-line {
+  position: absolute; top: 30px; left: 10%; right: 10%; height: 2px;
+  background: rgba(0,0,0,0.08); z-index: 0;
+}
+.timeline-line-fill {
+  height: 100%; width: 0; background: linear-gradient(90deg, #10B981, #34D399);
+  transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+}
+.timeline-line-fill.active { width: 100%; }
+
+.t-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+.t-dot {
+  width: 60px; height: 60px; background: var(--white);
+  border: 2.5px solid var(--green); border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin-bottom: 20px; position: relative;
+  transition: transform 0.25s, box-shadow 0.25s;
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+.t-step:nth-child(2) .t-dot { animation-delay: 0.5s; }
+.t-step:nth-child(3) .t-dot { animation-delay: 1s; }
+.t-step:nth-child(4) .t-dot { animation-delay: 1.5s; }
+.t-step:nth-child(5) .t-dot { animation-delay: 2s; }
+.t-step:hover .t-dot { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(16,185,129,0.1); }
+.t-step:first-child .t-dot { background: var(--green); }
+
+.t-dot-num { font-size: 11px; font-weight: 800; color: var(--green); letter-spacing: 0.5px; line-height: 1; }
+.t-step:first-child .t-dot-num { color: var(--white); }
+.t-dot-icon { line-height: 1; display: flex; align-items: center; justify-content: center; }
+.t-dot-icon svg { width: 16px; height: 16px; }
+.t-step:first-child .t-dot-icon svg { stroke: white; }
+
+.t-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; text-align: center; }
+.t-text { font-size: 12px; color: var(--muted); line-height: 1.55; text-align: center; max-width: 150px; }
+
+@media (max-width: 960px) {
+  .steps { padding-left: 24px; padding-right: 24px; }
+  .timeline { flex-wrap: wrap; gap: 24px; }
+  .timeline-line { display: none; }
+  .t-step { flex: 0 0 calc(50% - 12px); }
+}
+@media (max-width: 680px) {
+  .timeline { flex-direction: column; align-items: flex-start; }
+  .t-step { flex-direction: row; align-items: flex-start; gap: 16px; width: 100%; padding-bottom: 24px; }
+  .t-step:last-child { padding-bottom: 0; }
+  .t-dot { margin-bottom: 0; flex-shrink: 0; }
+  .t-title, .t-text { text-align: left; }
+}
+</style>
+
+<!-- ═══ HTML ═══ -->
+<section class="steps" id="steps">
+  <div class="section-label reveal">Этапы сотрудничества</div>
+  <div class="section-title reveal">Сотрудничество с нами — это просто</div>
+
+  <div class="timeline reveal" id="timeline">
+    <div class="timeline-line"><div class="timeline-line-fill" id="timeline-fill"></div></div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">01</div>
+        <div class="t-dot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></div>
+      </div>
+      <div class="t-title">Заявка</div>
+      <div class="t-text">Оставляете заявку или звоните нам</div>
+    </div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">02</div>
+        <div class="t-dot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      </div>
+      <div class="t-title">Анализ</div>
+      <div class="t-text">Детально изучаем ваши потребности и задачи</div>
+    </div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">03</div>
+        <div class="t-dot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      </div>
+      <div class="t-title">Договор</div>
+      <div class="t-text">Заключаем официальный договор со всеми условиями</div>
+    </div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">04</div>
+        <div class="t-dot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      </div>
+      <div class="t-title">Подбор</div>
+      <div class="t-text">Находим, проверяем и предоставляем исполнителей</div>
+    </div>
+
+    <div class="t-step">
+      <div class="t-dot">
+        <div class="t-dot-num">05</div>
+        <div class="t-dot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      </div>
+      <div class="t-title">Работа</div>
+      <div class="t-text">Исполнители работают, мы ведём всю документацию</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ JS ═══ -->
+<script>
+(function(){
+  /* Scroll reveal */
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+  /* Анимация линии таймлайна */
+  var timelineObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var fill = document.getElementById('timeline-fill');
+        if (fill) fill.classList.add('active');
+        timelineObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  var timeline = document.getElementById('timeline');
+  if (timeline) timelineObserver.observe(timeline);
+})();
+</script>

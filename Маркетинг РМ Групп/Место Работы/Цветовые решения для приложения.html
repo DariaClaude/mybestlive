@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Место работы — Цветовые палитры</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F5F5F5;
+      padding: 48px 32px;
+      color: #1A1A1A;
+    }
+    h1 {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 48px;
+    }
+
+    .variant {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 32px;
+    }
+
+    .variant-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .variant-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+    .variant-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+    }
+    .variant-desc {
+      font-size: 14px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    /* Swatches row */
+    .swatches {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .swatch {
+      flex: 1;
+      border-radius: 14px;
+      height: 100px;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px 14px;
+    }
+    .swatch span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      opacity: 0.75;
+    }
+    .swatch.light span { color: #000; }
+    .swatch.dark span { color: #fff; }
+
+    /* Mock UI preview */
+    .preview {
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+    }
+
+    .phone-mock {
+      background: #F0F0F0;
+      border-radius: 14px;
+      padding: 16px;
+      width: 200px;
+      flex-shrink: 0;
+    }
+    .phone-screen {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+    }
+    .phone-header {
+      padding: 14px 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .phone-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #111;
+    }
+    .phone-subtitle {
+      font-size: 8px;
+      color: #aaa;
+    }
+    .phone-search {
+      margin: 0 16px 12px;
+      height: 26px;
+      border-radius: 8px;
+      background: #F5F5F5;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+    }
+    .phone-search span {
+      font-size: 8px;
+      color: #bbb;
+    }
+    .job-card {
+      margin: 0 12px 8px;
+      border-radius: 10px;
+      border: 1.5px solid #F0F0F0;
+      padding: 10px 12px;
+    }
+    .job-card-title {
+      font-size: 9px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 3px;
+    }
+    .job-card-company {
+      font-size: 7.5px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .job-card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .job-card-salary {
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .job-card-tag {
+      font-size: 7px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 20px;
+      color: #fff;
+    }
+    .phone-btn {
+      margin: 8px 12px 0;
+      height: 30px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .phone-nav {
+      margin-top: auto;
+      height: 36px;
+      border-top: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 8px;
+    }
+    .nav-dot {
+      width: 20px;
+      height: 4px;
+      border-radius: 2px;
+    }
+    .nav-dot.active {
+      opacity: 1;
+    }
+    .nav-dot.inactive {
+      background: #E0E0E0 !important;
+    }
+
+    /* Logo mock */
+    .logo-mock {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      padding: 24px 32px;
+      flex: 1;
+    }
+    .logo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .logo-text-block {}
+    .logo-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .logo-tagline {
+      font-size: 9px;
+      color: #aaa;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .logo-item.dark-bg {
+      background: #1C1C2E;
+      padding: 14px 18px;
+      border-radius: 12px;
+    }
+    .logo-item.dark-bg .logo-name { color: #fff; }
+
+    /* ========================
+       VARIANT A — Энергия
+    ======================== */
+    .var-a .swatch-1 { background: #FF5B1F; }
+    .var-a .swatch-2 { background: #FF8C5A; }
+    .var-a .swatch-3 { background: #FFE0D4; }
+    .var-a .swatch-4 { background: #1C1C2E; }
+    .var-a .swatch-5 { background: #F5F5F5; }
+
+    /* ========================
+       VARIANT B — Доверие
+    ======================== */
+    .var-b .swatch-1 { background: #2563EB; }
+    .var-b .swatch-2 { background: #60A0FA; }
+    .var-b .swatch-3 { background: #DBEAFE; }
+    .var-b .swatch-4 { background: #F59E0B; }
+    .var-b .swatch-5 { background: #F8FAFC; }
+
+    /* ========================
+       VARIANT C — Свежесть
+    ======================== */
+    .var-c .swatch-1 { background: #10B981; }
+    .var-c .swatch-2 { background: #34D399; }
+    .var-c .swatch-3 { background: #D1FAE5; }
+    .var-c .swatch-4 { background: #111827; }
+    .var-c .swatch-5 { background: #FCD34D; }
+
+    .conversion-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+    .conv-high { background: #DCFCE7; color: #15803D; }
+    .conv-mid { background: #FEF3C7; color: #B45309; }
+
+    .badge-recommended {
+      display: inline-block;
+      background: #FF5B1F;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Место работы — Цветовые палитры</h1>
+
+  <!-- ===== VARIANT A ===== -->
+  <div class="variant var-a">
+    <div class="variant-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="variant-label">Вариант A</span>
+          <span class="variant-name">Энергия</span>
+          <span class="badge-recommended">Рекомендую</span>
+        </div>
+        <div class="variant-desc">Оранжевый + тёмный графит — активность, действие, "иди работать"</div>
+        <span class="conversion-tag conv-high">↑ Высокая конверсия CTA</span>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch swatch-1 dark"><span>Основной</span></div>
+      <div class="swatch swatch-2 dark"><span>Светлее</span></div>
+      <div class="swatch swatch-3 light"><span>Фон акцента</span></div>
+      <div class="swatch swatch-4 dark"><span>Тёмный</span></div>
+      <div class="swatch swatch-5 light" style="background:#F5F5F5;border:1.5px solid #E8E8E8;"><span>Нейтральный</span></div>
+    </div>
+
+    <div style="display:flex;gap:24px;">
+      <div class="phone-mock">
+        <div class="phone-screen">
+          <div class="phone-header">
+            <div class="phone-title">Место работы</div>
+            <div class="phone-subtitle">843 вакансии рядом с вами</div>
+          </div>
+          <div class="phone-search"><span>Поиск вакансий...</span></div>
+          <div class="job-card">
+            <div class="job-card-title">Курьер</div>
+            <div class="job-card-company">Яндекс Доставка</div>
+            <div class="job-card-row">
+              <span class="job-card-salary" style="color:#FF5B1F;">от 80 000 ₽</span>
+              <span class="job-card-tag" style="background:#FF5B1F;">Срочно</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-card-title">Повар горячего цеха</div>
+            <div class="job-card-company">Сеть ресторанов Буфет</div>
+            <div class="job-card-row">
+              <span class="job-card-salary" style="color:#FF5B1F;">от 65 000 ₽</span>
+              <span class="job-card-tag" style="background:#1C1C2E;">Полная</span>
+            </div>
+          </div>
+          <div class="phone-btn" style="background:#FF5B1F;">Откликнуться</div>
+          <div class="phone-nav">
+            <div class="nav-dot active" style="background:#FF5B1F;"></div>
+            <div class="nav-dot inactive"></div>
+            <div class="nav-dot inactive"></div>
+            <div class="nav-dot inactive"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-mock">
+        <div class="logo-item">
+          <div class="logo-icon" style="background:#FF5B1F;">📍</div>
+          <div class="logo-text-block">
+            <div class="logo-name" style="color:#FF5B1F;">Место работы</div>
+            <div class="logo-tagline">НАЙДИ РАБОТУ РЯДОМ</div>
+          </div>
+        </div>
+        <div class="logo-item dark-bg">
+          <div class="logo-icon" style="background:#FF5B1F;">📍</div>
+          <div class="logo-text-block">
+            <div class="logo-name">Место работы</div>
+            <div class="logo-tagline">НАЙДИ РАБОТУ РЯДОМ</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">
+          Оранжевый выделяется на полке приложений.<br>
+          Хорошо читается на солнце — важно для курьеров.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VARIANT B ===== -->
+  <div class="variant var-b">
+    <div class="variant-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="variant-label">Вариант B</span>
+          <span class="variant-name">Доверие</span>
+        </div>
+        <div class="variant-desc">Синий + янтарный акцент — надёжность, официальность, тепло</div>
+        <span class="conversion-tag conv-mid">→ Средняя конверсия CTA</span>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch swatch-1 dark"><span>Основной</span></div>
+      <div class="swatch swatch-2 dark"><span>Светлее</span></div>
+      <div class="swatch swatch-3 light"><span>Фон акцента</span></div>
+      <div class="swatch swatch-4 dark" style="background:#F59E0B;"><span>CTA / Акцент</span></div>
+      <div class="swatch swatch-5 light" style="background:#F8FAFC;border:1.5px solid #E8E8E8;"><span>Нейтральный</span></div>
+    </div>
+
+    <div style="display:flex;gap:24px;">
+      <div class="phone-mock">
+        <div class="phone-screen">
+          <div class="phone-header">
+            <div class="phone-title">Место работы</div>
+            <div class="phone-subtitle">843 вакансии рядом с вами</div>
+          </div>
+          <div class="phone-search"><span>Поиск вакансий...</span></div>
+          <div class="job-card">
+            <div class="job-card-title">Курьер</div>
+            <div class="job-card-company">Яндекс Доставка</div>
+            <div class="job-card-row">
+              <span class="job-card-salary" style="color:#2563EB;">от 80 000 ₽</span>
+              <span class="job-card-tag" style="background:#F59E0B;">Срочно</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-card-title">Повар горячего цеха</div>
+            <div class="job-card-company">Сеть ресторанов Буфет</div>
+            <div class="job-card-row">
+              <span class="job-card-salary" style="color:#2563EB;">от 65 000 ₽</span>
+              <span class="job-card-tag" style="background:#2563EB;">Полная</span>
+            </div>
+          </div>
+          <div class="phone-btn" style="background:#F59E0B;">Откликнуться</div>
+          <div class="phone-nav">
+            <div class="nav-dot active" style="background:#2563EB;"></div>
+            <div class="nav-dot inactive"></div>
+            <div class="nav-dot inactive"></div>
+            <div class="nav-dot inactive"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-mock">
+        <div class="logo-item">
+          <div class="logo-icon" style="background:#2563EB;">📍</div>
+          <div class="logo-text-block">
+            <div class="logo-name" style="color:#2563EB;">Место работы</div>
+            <div class="logo-tagline">НАЙДИ РАБОТУ РЯДОМ</div>
+          </div>
+        </div>
+        <div class="logo-item" style="background:#2563EB;padding:14px 18px;border-radius:12px;">
+          <div class="logo-icon" style="background:rgba(255,255,255,0.2);">📍</div>
+          <div class="logo-text-block">
+            <div class="logo-name" style="color:#fff;">Место работы</div>
+            <div class="logo-tagline" style="color:rgba(255,255,255,0.6);">НАЙДИ РАБОТУ РЯДОМ</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">
+          Синий — цвет доверия, близок к банкам и гос.сервисам.<br>
+          Конкуренты: SuperJob (синий). Риск — быть похожим.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VARIANT C ===== -->
+  <div class="variant var-c">
+    <div class="variant-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="variant-label">Вариант C</span>
+          <span class="variant-name">Свежесть</span>
+        </div>
+        <div class="variant-desc">Изумрудный + жёлтый — рост, новые возможности, оптимизм</div>
+        <span class="conversion-tag conv-high">↑ Высокая конверсия на мобайле</span>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="swatch swatch-1 dark"><span>Основной</span></div>
+      <div class="swatch swatch-2 dark"><span>Светлее</span></div>
+      <div class="swatch swatch-3 light"><span>Фон акцента</span></div>
+      <div class="swatch swatch-4 dark"><span>Тёмный</span></div>
+      <div class="swatch swatch-5 light" style="background:#FCD34D;border:1.5px solid #E8E8E8;"><span>CTA</span></div>
+    </div>
+
+    <div style="display:flex;gap:24px;">
+      <div class="phone-mock">
+        <div class="phone-screen">
+          <div class="phone-header">
+            <div class="phone-title">Место работы</div>
+            <div class="phone-subtitle">843 вакансии рядом с вами</div>
+          </div>
+          <div class="phone-search"><span>Поиск вакансий...</span></div>
+          <div class="job-card">
+            <div class="job-card-title">Курьер</div>
+            <div class="job-card-company">Яндекс Доставка</div>
+            <div class="job-card-row">
+              <span class="job-card-salary" style="color:#10B981;">от 80 000 ₽</span>
+              <span class="job-card-tag" style="background:#10B981;">Срочно</span>
+            </div>
+          </div>
+          <div class="job-card">
+            <div class="job-card-title">Повар горячего цеха</div>
+            <div class="job-card-company">Сеть ресторанов Буфет</div>
+            <div class="job-card-row">
+              <span class="job-card-salary" style="color:#10B981;">от 65 000 ₽</span>
+              <span class="job-card-tag" style="background:#111827;">Полная</span>
+            </div>
+          </div>
+          <div class="phone-btn" style="background:#FCD34D;color:#111827;">Откликнуться</div>
+          <div class="phone-nav">
+            <div class="nav-dot active" style="background:#10B981;"></div>
+            <div class="nav-dot inactive"></div>
+            <div class="nav-dot inactive"></div>
+            <div class="nav-dot inactive"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-mock">
+        <div class="logo-item">
+          <div class="logo-icon" style="background:#10B981;">📍</div>
+          <div class="logo-text-block">
+            <div class="logo-name" style="color:#10B981;">Место работы</div>
+            <div class="logo-tagline">НАЙДИ РАБОТУ РЯДОМ</div>
+          </div>
+        </div>
+        <div class="logo-item" style="background:#111827;padding:14px 18px;border-radius:12px;">
+          <div class="logo-icon" style="background:#10B981;">📍</div>
+          <div class="logo-text-block">
+            <div class="logo-name" style="color:#fff;">Место работы</div>
+            <div class="logo-tagline" style="color:rgba(255,255,255,0.5);">НАЙДИ РАБОТУ РЯДОМ</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#888;line-height:1.6;">
+          Изумрудный уникален для рынка джоб-платформ в РФ.<br>
+          Авито — ближайший (зелёный), но другой оттенок.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

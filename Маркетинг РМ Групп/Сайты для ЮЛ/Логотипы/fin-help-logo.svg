@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="460" height="120">
+  <defs>
+    <linearGradient id="fh-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#166534"/>
+    </linearGradient>
+  </defs>
+  <path d="M60 90 V52" stroke="#92400E" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M60 64 C44 64 36 50 38 38 C54 38 64 50 60 64 Z" fill="url(#fh-g)"/>
+  <path d="M60 56 C76 56 84 42 82 32 C68 32 58 44 60 56 Z" fill="#22C55E"/>
+  <text x="120" y="72" font-family="'Segoe UI',Arial,sans-serif" font-size="36" font-weight="700" fill="#166534" letter-spacing="-1">Фин Хэлп</text>
+</svg>

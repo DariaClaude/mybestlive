@@ -1,0 +1,73 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+.ak-page*,.ak-page*::before,.ak-page*::after{box-sizing:border-box!important;margin:0;padding:0}
+.ak-page{--slate:#1E293B;--slate2:#0F172A;--slate3:#2D3F55;--sage:#5C7F62;--sage-lt:#7DA884;--sage-dk:#3F5C45;--cream:#F8F4EE;--cream2:#EDE8E0;--white:#FFFFFF;--ts:#E2E8F0;--tm:#94A3B8;--tc:#1E293B;--tmc:#64748B;--ls:rgba(255,255,255,0.08);--lc:rgba(0,0,0,0.08);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+.ak-page .cta-strip{background:var(--sage);padding:88px 60px}
+.ak-page .cta-box{max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:60px}
+.ak-page .cta-left{max-width:540px}
+.ak-page .cta-over{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:16px}
+.ak-page .cta-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3vw,44px);color:var(--white);line-height:1.1;letter-spacing:-1px;margin-bottom:0}
+.ak-page .cta-title em{font-style:italic;opacity:0.8}
+.ak-page .cta-right{flex:1;max-width:400px;min-width:280px;overflow:hidden}
+.ak-page .cta-form{width:100%;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.ak-page .cta-input{display:block!important;width:100%!important;box-sizing:border-box!important;padding:13px 16px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;color:var(--white);outline:none;transition:border-color 0.2s}
+.ak-page .cta-input::placeholder{color:rgba(255,255,255,0.55)}
+.ak-page .cta-input:focus{border-color:rgba(255,255,255,0.6)}
+.ak-page .btn-submit{display:block;width:100%;padding:14px 32px;background:var(--white);color:var(--sage-dk);border-radius:8px!important;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;text-align:center;cursor:pointer;transition:opacity 0.2s;user-select:none}
+.ak-page .btn-submit:hover{opacity:0.9}
+.ak-page .cta-consent{font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5}
+.ak-page .ct-success{display:none;padding:28px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:12px;text-align:center}
+.ak-page .ct-success.show{display:block}
+.ak-page .ct-success-icon{font-size:32px;margin-bottom:12px}
+.ak-page .ct-success-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px}
+.ak-page .ct-success-sub{font-size:13px;color:rgba(255,255,255,0.75)}
+
+@media(max-width:1024px){.ak-page .cta-strip{padding:72px 32px}.ak-page .cta-box{flex-direction:column;gap:40px}.ak-page .cta-left{max-width:100%}.ak-page .cta-right{max-width:480px;width:100%}}
+@media(max-width:640px){.ak-page .cta-strip{padding:60px 20px}.ak-page .cta-right{max-width:100%;min-width:0}}
+</style>
+
+<div class="ak-page">
+<section class="cta-strip">
+  <div class="cta-box">
+    <div class="cta-left">
+      <div class="cta-over">Готовы начать?</div>
+      <h2 class="cta-title">Скажите, сколько людей нужно —<br><em>мы выведем их на объект</em></h2>
+    </div>
+    <div class="cta-right">
+      <div class="cta-form" id="ak-cta-form">
+        <input type="text"  name="name"  placeholder="Ваше имя *"  class="cta-input"/>
+        <input type="tel"   name="phone" placeholder="Телефон *"    class="cta-input"/>
+        <input type="email" name="email" placeholder="Email"        class="cta-input"/>
+        <div class="btn-submit" id="ak-cta-submit">Оставить заявку →</div>
+        <p class="cta-consent">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+      </div>
+      <div id="ak-cta-success" class="ct-success">
+        <div class="ct-success-icon">✓</div>
+        <div class="ct-success-title">Заявка отправлена!</div>
+        <div class="ct-success-sub">Свяжемся в течение рабочего дня</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  var SCRIPT_URL='https://script.google.com/macros/s/AKfycbxgL5kKDfYviyqbif6DmMvJDI0O_nFK7BwGzRr76SjEuiSDPow0NVCyA7w1AFCiZNbR/exec';
+  var form=document.getElementById('ak-cta-form');
+  var submit=document.getElementById('ak-cta-submit');
+  var success=document.getElementById('ak-cta-success');
+  if(!submit) return;
+  submit.addEventListener('click',function(){
+    var name=form.querySelector('[name=name]').value.trim();
+    var phone=form.querySelector('[name=phone]').value.trim();
+    if(!name||!phone){ alert('Пожалуйста, заполните Имя и Телефон'); return; }
+    submit.textContent='Отправляем…'; submit.style.opacity='0.6'; submit.style.pointerEvents='none';
+    var p=new URLSearchParams({site:'Альянс Кадров (CTA)',name:name,phone:phone,email:form.querySelector('[name=email]').value.trim(),comment:''});
+    fetch(SCRIPT_URL+'?'+p.toString(),{method:'GET',mode:'no-cors'})
+      .then(function(){ form.style.display='none'; success.classList.add('show'); })
+      .catch(function(){ submit.textContent='Ошибка, попробуйте ещё раз'; submit.style.opacity='1'; submit.style.pointerEvents=''; });
+  });
+})();
+</script>
