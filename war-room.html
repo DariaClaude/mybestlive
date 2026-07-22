@@ -342,7 +342,8 @@ function renderKPI(w, prev) {
       (a.leads != null ? ' \u2022 <span style="color:' + (pct(a.leads, a.plan) >= 100 ? '#10B981' : '#F59E0B') + ';font-weight:700;">выполнен ' + pct(a.leads, a.plan) + '%</span>' : '') + '</div>'
     : '';
   var vky = (w.vk || 0) + (w.yula || 0);
-  var pvky = prev ? (prev.vk || 0) + (prev.yula || 0) : null;
+  // vkyulaPrev — ручное переопределение базы сравнения (если диапазон лидов шире недели)
+  var pvky = w.vkyulaPrev != null ? w.vkyulaPrev : (prev ? (prev.vk || 0) + (prev.yula || 0) : null);
   var h = '<div class="kpi-bar">';
   h += '<div class="kpi-card"><div class="kpi-label">Авито лиды</div>' +
        '<div class="kpi-value kpi-accent">' + fmt(a.leads) + '</div>' +

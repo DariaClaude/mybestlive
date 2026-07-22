@@ -1834,6 +1834,7 @@ const WAR_ROOM_DATA = {
       "vk": 34,
       "yula": 10,
       "vkyulaNote": "лиды 13.07–22.07",
+      "vkyulaPrev": 31,
       "extraKpi": {
         "label": "Проекты ДРС",
         "value": "1 159",
