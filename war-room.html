@@ -383,8 +383,14 @@ function renderKPI(w, prev) {
   return h + '</div>';
 }
 
-// Суммарные лиды ДРС (Урбан + ЧЛБ/КЗН) — для авторасчёта дельты
+// Суммарные лиды ДРС — для авторасчёта дельты и цвета карточки.
+// Если в extraKpi задан итог ДРС — берём его (включает ВСЕ блоки, в т.ч. МСК ДРС,
+// который хранится текстом в примечании). Иначе — сумма Урбан + ЧЛБ/КЗН.
 function drsTotals(w) {
+  if (w.extraKpi && /ДРС/.test(w.extraKpi.label || '') && w.extraKpi.value != null) {
+    var n = parseInt(String(w.extraKpi.value).replace(/[^\d]/g, ''), 10);
+    if (!isNaN(n)) return n;
+  }
   var u = w.urban && w.urban.leads, c = w.chlbkzn && w.chlbkzn.leads;
   if (u == null && c == null) return null;
   return (u || 0) + (c || 0);
