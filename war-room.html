@@ -653,13 +653,17 @@ function renderTabs() {
   var bar = document.getElementById('tabs-bar');
   bar.querySelectorAll('.tab-btn').forEach(function(b) { b.remove(); });
   var refBtn = document.getElementById('refresh-btn');
-  W.forEach(function(w, i) {
-    var b = document.createElement('button');
-    b.className = 'tab-btn' + (i === currentIdx ? ' active' : '');
-    b.textContent = w.label;
-    b.onclick = function() { showPeriod(i); };
-    bar.insertBefore(b, refBtn);
-  });
+  // Свежие периоды — слева: перебираем массив от последнего к первому.
+  for (var i = W.length - 1; i >= 0; i--) {
+    (function(idx) {
+      var b = document.createElement('button');
+      b.className = 'tab-btn' + (idx === currentIdx ? ' active' : '');
+      b.textContent = W[idx].label;
+      b.dataset.idx = idx;
+      b.onclick = function() { showPeriod(idx); };
+      bar.insertBefore(b, refBtn);
+    })(i);
+  }
 }
 
 function renderAll() {
@@ -673,7 +677,8 @@ function renderAll() {
 function showPeriod(idx) {
   currentIdx = idx;
   document.querySelectorAll('.period-section').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
-  document.querySelectorAll('.tab-btn').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+  // Порядок вкладок обратный порядку данных — сверяем по data-idx, не по позиции.
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.toggle('active', +el.dataset.idx === idx); });
 }
 
 // ── Валидация данных (пункт 2): расхождения — в консоль и статус ────
