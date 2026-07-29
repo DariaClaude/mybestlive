@@ -1831,8 +1831,8 @@ const WAR_ROOM_DATA = {
         "cpl": 87,
         "budget": 330798
       },
-      "vk": 26,
-      "yula": 10,
+      "vk": 25,
+      "yula": 9,
       "extraKpi": {
         "label": "Проекты ДРС",
         "value": "1 159",
@@ -1872,7 +1872,7 @@ const WAR_ROOM_DATA = {
         {
           "type": "success",
           "title": "ВК+Юла — рост в разы",
-          "text": "36 лидов (ВК 26 + Юла 10) против 16 неделей ранее (+125%). Лучший результат по соцканалам за последние недели."
+          "text": "34 лида (ВК 25 + Юла 9) против 16 неделей ранее (+113%). Лучший результат по соцканалам за последние недели."
         }
       ],
       "projects": [
@@ -1930,15 +1930,15 @@ const WAR_ROOM_DATA = {
         "leads": 273,
         "cpl": 84,
         "spend": 23028,
-        "adapted": null,
-        "conversion": null
+        "adapted": 8,
+        "conversion": 2.93
       },
       "chlbkzn": {
         "leads": 720,
         "cpl": 74,
         "spend": 55947,
-        "adapted": null,
-        "conversion": null,
+        "adapted": 336,
+        "conversion": 46.67,
         "notes": [
           "+ МСК ДРС: 166 лидов · CPL 77 ₽ · затраты 12 830 ₽"
         ]
@@ -1958,7 +1958,7 @@ const WAR_ROOM_DATA = {
             },
             {
               "label": "Лиды ВК / Юла",
-              "value": "36 (ВК 26 + Юла 10)"
+              "value": "34 (ВК 25 + Юла 9)"
             }
           ]
         },
