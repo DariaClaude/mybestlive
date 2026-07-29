@@ -484,12 +484,16 @@ function renderChannels(w, prev, idx) {
              (u.note ? '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:6px;">' + esc(u.note) + '</div>' : '');
       }
     }
-    var c = w.chlbkzn;
+    var c = w.chlbkzn, pc = prev && prev.chlbkzn;
     if (c) {
       h += '<div class="channel-item" style="padding-top:0;border-top:none;margin-bottom:4px;">' +
            '<div><div class="channel-name">\uD83D\uDEE0 ЧЛБ ОБ + КЗН ОБ</div></div>' +
            '<div class="channel-meta"><span class="channel-leads" style="color:#334155;">' + fmt(c.leads) + ' лидов</span>' +
            '<span class="channel-cpl ' + cplClass(c.cpl) + '">CPL: ' + fmt(c.cpl) + ' \u20BD</span></div></div>';
+      var lc = [];
+      if (pc && pc.leads != null) { var dcc = c.leads - pc.leads; lc.push(fmt(pc.leads) + ' → ' + fmt(c.leads) + ' лидов (' + sign(pc.leads ? Math.round(dcc / pc.leads * 100) : 0) + '%)'); }
+      if (pc && pc.cpl != null && c.cpl != null) lc.push('CPL ' + fmt(pc.cpl) + ' → ' + fmt(c.cpl) + ' ₽ (' + sign(c.cpl - pc.cpl) + ' ₽)');
+      if (lc.length) h += '<div style="font-size:11px;color:#64748B;margin-bottom:4px;padding-left:4px;">' + lc.join(' • ') + '</div>';
       var l2 = [];
       if (c.spend != null) l2.push('затраты: ' + fmt(c.spend) + ' \u20BD');
       if (c.adapted != null) l2.push('адаптированных: ' + c.adapted);
