@@ -1938,10 +1938,14 @@ const WAR_ROOM_DATA = {
         "cpl": 74,
         "spend": 55947,
         "adapted": 336,
-        "conversion": 46.67,
-        "notes": [
-          "+ МСК ДРС: 166 лидов · CPL 77 ₽ · затраты 12 830 ₽"
-        ]
+        "conversion": 46.67
+      },
+      "msk": {
+        "leads": 166,
+        "cpl": 77,
+        "spend": 12830,
+        "adapted": null,
+        "conversion": null
       },
       "social": [
         {
@@ -2112,10 +2116,14 @@ const WAR_ROOM_DATA = {
         "cpl": 74,
         "spend": 53729,
         "adapted": 259,
-        "conversion": 39.91,
-        "notes": [
-          "+ МСК ДРС: 571 лид · CPL 63 ₽ · затраты 36 256 ₽"
-        ]
+        "conversion": 39.91
+      },
+      "msk": {
+        "leads": 571,
+        "cpl": 63,
+        "spend": 36256,
+        "adapted": null,
+        "conversion": null
       },
       "social": [
         {
