@@ -2008,9 +2008,8 @@ const WAR_ROOM_DATA = {
         "cpl": 82,
         "budget": 287053
       },
-      "vk": 32,
-      "yula": 6,
-      "vkyulaNote": "лиды 20.07–29.07",
+      "vk": 24,
+      "yula": 2,
       "extraKpi": {
         "label": "Проекты ДРС",
         "value": "1 440",
@@ -2138,8 +2137,8 @@ const WAR_ROOM_DATA = {
               "value": "—"
             },
             {
-              "label": "Лиды ВК / Юла (20.07–29.07)",
-              "value": "38 (ВК 32 + Юла 6)"
+              "label": "Лиды ВК / Юла",
+              "value": "26 (ВК 24 + Юла 2)"
             }
           ]
         },
