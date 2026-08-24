@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Маркетинг РМ Групп — отчёт по клиентам (тест)</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;background:#F0F4F8;color:#1E293B;min-height:100vh}
+  .header{background:#fff;border-bottom:1px solid #E2E8F0;padding:14px 32px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .logo{width:44px;height:44px;background:linear-gradient(135deg,#0EA5E9,#0284C7);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+  .header-titles h1{font-size:17px;font-weight:700;color:#0F172A;line-height:1.2}
+  .header-titles p{font-size:12px;color:#64748B;margin-top:2px}
+  .header-titles{flex:1}
+  .test-badge{background:#8B5CF6;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.5px}
+  .tabs-bar{background:#fff;border-bottom:1px solid #E2E8F0;padding:0 32px;display:flex;gap:4px}
+  .tab-btn{padding:12px 20px;font-size:13px;font-weight:600;color:#64748B;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+  .tab-btn:hover{color:#0EA5E9}
+  .tab-btn.active{color:#0EA5E9;border-bottom-color:#0EA5E9}
+  .content{padding:24px 32px;max-width:1500px}
+  .kpi-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+  .kpi-card{background:#fff;border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .kpi-card.empty{background:#FAFBFC;border:1px dashed #CBD5E1;box-shadow:none}
+  .kpi-label{font-size:11px;color:#64748B;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+  .kpi-value{font-size:26px;font-weight:800;color:#0F172A;line-height:1}
+  .kpi-value.muted{font-size:18px;color:#94A3B8;font-weight:700}
+  .kpi-sub{font-size:12px;color:#94A3B8;margin-top:4px}
+  .kpi-delta{font-size:12px;font-weight:600;margin-top:5px}
+  .up{color:#10B981}.down{color:#EF4444}.neutral{color:#64748B}
+  .accent{color:#0EA5E9}
+  .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:16px}
+  .card-title{font-size:13px;font-weight:700;color:#0F172A;margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid #F1F5F9}
+  .dot{width:8px;height:8px;border-radius:50%}
+  .dot-blue{background:#0EA5E9}.dot-green{background:#10B981}.dot-orange{background:#F97316}.dot-purple{background:#8B5CF6}
+  .hint{font-size:11px;color:#94A3B8;font-weight:400;margin-left:auto}
+  .mx{width:100%;border-collapse:collapse}
+  .mx th{font-size:10px;color:#94A3B8;text-transform:uppercase;letter-spacing:.4px;font-weight:600;padding:8px 10px;text-align:center;border-bottom:1px solid #E2E8F0}
+  .mx th:first-child{text-align:left}
+  .mx td{padding:12px 10px;text-align:center;border-bottom:1px solid #F1F5F9;font-size:13px;color:#334155}
+  .mx td:first-child{text-align:left}
+  .mx tr:last-child td{border-bottom:none}
+  .mx tr.total td{background:#F8FAFC;font-weight:700;border-top:2px solid #E2E8F0}
+  .cl-name{font-weight:700;font-size:14px;color:#0F172A}
+  .cl-scope{font-size:11px;color:#94A3B8;margin-top:2px}
+  .cell-l{font-weight:700;font-size:15px;color:#0F172A;display:block}
+  .cell-s{font-size:11px;color:#94A3B8;display:block;margin-top:2px}
+  .cell-none{color:#CBD5E1;font-size:13px}
+  .col-tot{background:#F8FAFC}
+  .conv{font-weight:700}
+  .conv-hi{color:#10B981}.conv-mid{color:#F59E0B}.conv-lo{color:#EF4444}
+  .bars{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .bar-item{padding:14px;border-radius:10px;background:#F8FAFC}
+  .bar-item.dim{background:#FAFBFC;border:1px dashed #E2E8F0}
+  .bar-name{font-size:11px;color:#64748B;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+  .bar-val{font-size:22px;font-weight:800;color:#0F172A;margin-top:6px;line-height:1}
+  .bar-sub{font-size:11px;color:#94A3B8;margin-top:4px}
+  .bar-track{height:4px;background:#E2E8F0;border-radius:2px;margin-top:8px;overflow:hidden}
+  .bar-fill{height:100%;background:#0EA5E9;border-radius:2px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .pt{width:100%;border-collapse:collapse}
+  .pt th{font-size:10px;color:#94A3B8;text-transform:uppercase;letter-spacing:.4px;font-weight:600;padding:5px 6px;text-align:right}
+  .pt th:first-child{text-align:left}
+  .pt td{font-size:12px;padding:6px;border-top:1px solid #F8FAFC;color:#334155;text-align:right}
+  .pt td:first-child{text-align:left;font-weight:600}
+  .pt tr.sum td{border-top:2px solid #E2E8F0;font-weight:700;background:#F8FAFC}
+  .pill{font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px}
+  .pill-ok{background:#ECFDF5;color:#059669}.pill-no{background:#FFF7ED;color:#EA580C}
+  .gap{display:flex;gap:10px;flex-wrap:wrap}
+  .gap-item{flex:1;min-width:220px;border:1px dashed #CBD5E1;border-radius:10px;padding:12px 14px;background:#FAFBFC}
+  .gap-t{font-size:12px;font-weight:700;color:#475569}
+  .gap-d{font-size:11px;color:#94A3B8;margin-top:4px;line-height:1.5}
+  .note{font-size:12px;color:#64748B;line-height:1.6;margin-top:10px;padding:12px 14px;background:#FFFBEB;border-left:3px solid #F59E0B;border-radius:0 8px 8px 0}
+  @media(max-width:1200px){.kpi-bar,.bars{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.content{padding:16px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">РМ</div>
+  <div class="header-titles"><h1>Маркетинг — отчёт по клиентам</h1><p>Клиенты · Инструменты · Показатели</p></div>
+  <div class="test-badge">ТЕСТОВЫЙ МАКЕТ</div>
+</div>
+<div class="tabs-bar" id="tabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+var DATA = {
+  weeks: [
+    {
+      label: "3–9 августа",
+      enps: null,
+      clients: [
+        { name:"Даня", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:17,
+          tools:{ avito:{leads:1995,spend:191366}, direct:null, social:{leads:6,spend:2958}, yula:{leads:8,spend:2472}, site:null },
+          projects:[
+            {n:"МАГНИТ КРД",plan:160,fact:167,spend:10223,ad:0},
+            {n:"ЛЕНТА КРД",plan:200,fact:194,spend:20181,ad:0},
+            {n:"ЛЕНТА КЗН",plan:60,fact:65,spend:7205,ad:1},
+            {n:"ЛЕНТА МСК",plan:250,fact:269,spend:24639,ad:0},
+            {n:"ЛЕНТА ЧЛБ",plan:30,fact:37,spend:4604,ad:4},
+            {n:"Курьеры",plan:300,fact:298,spend:41710,ad:4},
+            {n:"Инвентаризация",plan:600,fact:943,spend:75588,ad:8},
+            {n:"Гравис",plan:20,fact:22,spend:7216,ad:0}
+          ] },
+        { name:"Диана", scope:"ДРС — Авито, Юла (оперблок)", plan:1135, adapted:258,
+          tools:{ avito:{leads:1365,spend:118889}, direct:null, social:null, yula:{leads:3,spend:927}, site:null },
+          projects:[
+            {n:"МСК Урбан Дикси",plan:500,fact:624,spend:58112,ad:37},
+            {n:"ЧЛБ Табыш",plan:70,fact:78,spend:7304,ad:46},
+            {n:"Лента ЧЛБ",plan:50,fact:62,spend:9328,ad:14},
+            {n:"ЧЛБ Пятёрочка",plan:15,fact:20,spend:4568,ad:6},
+            {n:"ЧЛБ Монетка",plan:160,fact:213,spend:10613,ad:122},
+            {n:"КЗН Табыш",plan:40,fact:47,spend:8140,ad:14},
+            {n:"МСК ВкусВилл",plan:300,fact:321,spend:20824,ad:19}
+          ] }
+      ]
+    },
+    {
+      label: "10–16 августа",
+      enps: null,
+      clients: [
+        { name:"Даня", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:21,
+          tools:{ avito:{leads:2612,spend:285865}, direct:null, social:{leads:21,spend:8379}, yula:{leads:2,spend:508}, site:null },
+          projects:[
+            {n:"МАГНИТ КРД",plan:160,fact:579,spend:42890,ad:1},
+            {n:"ЛЕНТА КРД",plan:200,fact:351,spend:24092,ad:1},
+            {n:"ЛЕНТА КЗН",plan:60,fact:120,spend:7263,ad:7},
+            {n:"ЛЕНТА МСК",plan:250,fact:470,spend:39289,ad:4},
+            {n:"ЛЕНТА ЧЛБ",plan:30,fact:36,spend:5839,ad:0},
+            {n:"Курьеры",plan:300,fact:308,spend:64927,ad:1},
+            {n:"Инвентаризация",plan:600,fact:673,spend:88054,ad:7},
+            {n:"Гравис",plan:20,fact:75,spend:13511,ad:0}
+          ] },
+        { name:"Диана", scope:"ДРС — Авито, Юла (оперблок)", plan:735, adapted:257,
+          tools:{ avito:{leads:814,spend:86968}, direct:null, social:null, yula:{leads:9,spend:2286}, site:null },
+          projects:[
+            {n:"МСК Урбан Дикси",plan:200,fact:208,spend:31315,ad:21},
+            {n:"ЧЛБ Табыш",plan:70,fact:83,spend:6339,ad:38},
+            {n:"Лента ЧЛБ",plan:50,fact:71,spend:5271,ad:44},
+            {n:"ЧЛБ Пятёрочка",plan:15,fact:30,spend:5844,ad:20},
+            {n:"ЧЛБ Монетка",plan:160,fact:182,spend:17205,ad:100},
+            {n:"КЗН Табыш",plan:40,fact:44,spend:7567,ad:32},
+            {n:"МСК ВкусВилл",plan:200,fact:196,spend:13427,ad:2}
+          ] }
+      ]
+    }
+  ]
+};
+
+var TOOLS = [
+  {k:"avito",  n:"Авито"},
+  {k:"direct", n:"Я.Директ"},
+  {k:"social", n:"Соцсети"},
+  {k:"yula",   n:"Юла"},
+  {k:"site",   n:"Сайт"}
+];
+
+function fmt(n){ return n==null?"—":Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g," "); }
+function sign(n){ return (n>0?"+":"")+fmt(n); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function clientTotals(c){
+  var l=0,s=0;
+  TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v){ l+=v.leads; s+=v.spend; } });
+  return { leads:l, spend:s, cpl:l?Math.round(s/l):null, conv:l?c.adapted/l*100:null };
+}
+function weekTotals(w){
+  var l=0,s=0,a=0,p=0;
+  w.clients.forEach(function(c){ var t=clientTotals(c); l+=t.leads; s+=t.spend; a+=c.adapted; p+=c.plan; });
+  return { leads:l, spend:s, adapted:a, plan:p, cpl:l?Math.round(s/l):null, conv:l?a/l*100:null };
+}
+function convClass(v){ return v==null?"":(v>=25?"conv-hi":v>=5?"conv-mid":"conv-lo"); }
+
+function delta(cur,prev,goodUp,unit){
+  if(cur==null||prev==null||prev===0) return "";
+  var d=cur-prev, p=Math.round(d/prev*100);
+  var cls = d===0?"neutral":((d>0)===goodUp?"up":"down");
+  var arr = d>0?"↑":d<0?"↓":"→";
+  return '<div class="kpi-delta '+cls+'">'+arr+' '+fmt(prev)+' → '+fmt(cur)+' '+(unit||"")+' ('+sign(p)+'%)</div>';
+}
+
+function renderKPI(w,prev){
+  var t=weekTotals(w), pt=prev?weekTotals(prev):null;
+  var h='<div class="kpi-bar">';
+  h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value accent">'+fmt(t.leads)+'</div>'+
+     '<div class="kpi-sub">план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?"#10B981":"#F59E0B")+'">'+Math.round(t.leads/t.plan*100)+'%</b></div>'+
+     delta(t.leads,pt&&pt.leads,true,"")+'</div>';
+  h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
+     '<div class="kpi-sub">расход за период</div>'+delta(t.spend,pt&&pt.spend,false,"₽")+'</div>';
+  h+='<div class="kpi-card"><div class="kpi-label">CPL</div><div class="kpi-value">'+fmt(t.cpl)+' ₽</div>'+
+     '<div class="kpi-sub">сводный по всем каналам</div>'+delta(t.cpl,pt&&pt.cpl,false,"₽")+'</div>';
+  h+='<div class="kpi-card"><div class="kpi-label">Конверсия</div><div class="kpi-value '+convClass(t.conv)+'" style="color:inherit">'+t.conv.toFixed(1).replace(".",",")+'%</div>'+
+     '<div class="kpi-sub">'+fmt(t.adapted)+' адаптированных из '+fmt(t.leads)+'</div>'+
+     (pt?delta(Math.round(t.conv*10)/10,Math.round(pt.conv*10)/10,true,"%"):"")+'</div>';
+  h+='<div class="kpi-card empty"><div class="kpi-label">eNPS</div><div class="kpi-value muted">нет замеров</div>'+
+     '<div class="kpi-sub">нужен опрос сотрудников</div><div class="kpi-delta neutral">замеряется раз в квартал</div></div>';
+  return h+'</div>';
+}
+
+function renderMatrix(w,prev){
+  var h='<div class="card"><div class="card-title"><span class="dot dot-blue"></span>Клиенты × инструменты'+
+        '<span class="hint">в ячейке: лиды · CPL</span></div><table class="mx"><thead><tr><th>Клиент</th>';
+  TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
+  h+='<th class="col-tot">Итого лидов</th><th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
+  w.clients.forEach(function(c,i){
+    var pc = prev && prev.clients[i];
+    var t=clientTotals(c), ptt=pc?clientTotals(pc):null;
+    h+='<tr><td><div class="cl-name">'+esc(c.name)+'</div><div class="cl-scope">'+esc(c.scope)+'</div></td>';
+    TOOLS.forEach(function(tool){
+      var v=c.tools[tool.k];
+      if(!v){ h+='<td><span class="cell-none">нет источника</span></td>'; return; }
+      h+='<td><span class="cell-l">'+fmt(v.leads)+'</span><span class="cell-s">'+fmt(Math.round(v.spend/v.leads))+' ₽</span></td>';
+    });
+    var dl = ptt ? '<span class="cell-s '+(t.leads>=ptt.leads?"up":"down")+'">'+(t.leads>=ptt.leads?"↑":"↓")+' '+sign(t.leads-ptt.leads)+'</span>' : '';
+    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+dl+'</td>';
+    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span><span class="cell-s">план '+fmt(c.plan)+' лид.</span></td>';
+    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.cpl)+' ₽</span>'+(ptt?'<span class="cell-s '+(t.cpl<=ptt.cpl?"up":"down")+'">'+(t.cpl<=ptt.cpl?"↓":"↑")+' '+sign(t.cpl-ptt.cpl)+' ₽</span>':'')+'</td>';
+    h+='<td class="col-tot"><span class="cell-l conv '+convClass(t.conv)+'">'+t.conv.toFixed(1).replace(".",",")+'%</span><span class="cell-s">'+fmt(c.adapted)+' адапт.</span></td></tr>';
+  });
+  var tt=weekTotals(w);
+  h+='<tr class="total"><td>Итого</td>';
+  TOOLS.forEach(function(tool){
+    var l=0,s=0,any=false;
+    w.clients.forEach(function(c){ var v=c.tools[tool.k]; if(v){ l+=v.leads; s+=v.spend; any=true; } });
+    h+='<td>'+(any?fmt(l):'<span class="cell-none">—</span>')+'</td>';
+  });
+  h+='<td class="col-tot">'+fmt(tt.leads)+'</td><td class="col-tot">'+fmt(tt.spend)+' ₽</td><td class="col-tot">'+fmt(tt.cpl)+' ₽</td>'+
+     '<td class="col-tot conv '+convClass(tt.conv)+'">'+tt.conv.toFixed(1).replace(".",",")+'%</td></tr>';
+  return h+'</tbody></table></div>';
+}
+
+function renderTools(w){
+  var tt=weekTotals(w);
+  var h='<div class="card"><div class="card-title"><span class="dot dot-green"></span>По инструментам<span class="hint">доля в лидах периода</span></div><div class="bars">';
+  TOOLS.forEach(function(tool){
+    var l=0,s=0,any=false;
+    w.clients.forEach(function(c){ var v=c.tools[tool.k]; if(v){ l+=v.leads; s+=v.spend; any=true; } });
+    if(!any){ h+='<div class="bar-item dim"><div class="bar-name">'+tool.n+'</div><div class="bar-val" style="color:#CBD5E1;font-size:16px">нет данных</div><div class="bar-sub">источник не подключён</div></div>'; return; }
+    var share=Math.round(l/tt.leads*100);
+    h+='<div class="bar-item"><div class="bar-name">'+tool.n+'</div><div class="bar-val">'+fmt(l)+'</div>'+
+       '<div class="bar-sub">'+share+'% лидов · CPL '+fmt(Math.round(s/l))+' ₽</div>'+
+       '<div class="bar-track"><div class="bar-fill" style="width:'+Math.max(share,2)+'%"></div></div></div>';
+  });
+  return h+'</div></div>';
+}
+
+function renderProjects(w){
+  var h='<div class="split">';
+  w.clients.forEach(function(c){
+    h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==="Даня"?"blue":"orange")+'"></span>'+esc(c.name)+' — детализация'+
+       '<span class="hint">'+esc(c.scope.split(" — ")[0])+'</span></div>'+
+       '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Адапт.</th></tr></thead><tbody>';
+    var sp=0,sf=0,ss=0,sa=0;
+    c.projects.forEach(function(p){
+      var pc=Math.round(p.fact/p.plan*100);
+      sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=p.ad;
+      h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
+         '<td><span class="pill '+(pc>=100?"pill-ok":"pill-no")+'">'+pc+'%</span></td>'+
+         '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+fmt(p.ad)+'</td></tr>';
+    });
+    h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
+       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td></tr></tbody></table></div>';
+  });
+  return h+'</div>';
+}
+
+function renderGaps(){
+  return '<div class="card"><div class="card-title"><span class="dot dot-purple"></span>Не подключено — задачи на источники данных</div><div class="gap">'+
+    '<div class="gap-item"><div class="gap-t">Яндекс Директ</div><div class="gap-d">Доступ к API есть. Нужно решить, что считаем лидом — заявка или звонок, и подключить выгрузку расхода.</div></div>'+
+    '<div class="gap-item"><div class="gap-t">Сайт</div><div class="gap-d">Нужен счётчик Метрики и список целей, которые считаем лидом.</div></div>'+
+    '<div class="gap-item"><div class="gap-t">eNPS</div><div class="gap-d">Опрос сотрудников раз в квартал. Владелец — HR. Первый замер даст точку отсчёта.</div></div>'+
+    '</div></div>';
+}
+
+function renderWeek(i){
+  var w=DATA.weeks[i], prev=i>0?DATA.weeks[i-1]:null;
+  document.getElementById("content").innerHTML =
+    renderKPI(w,prev) + renderMatrix(w,prev) + renderTools(w) + renderProjects(w) + renderGaps();
+  Array.prototype.forEach.call(document.querySelectorAll(".tab-btn"),function(b,j){ b.className="tab-btn"+(j===i?" active":""); });
+}
+
+(function(){
+  var t=document.getElementById("tabs");
+  DATA.weeks.forEach(function(w,i){
+    var b=document.createElement("button");
+    b.className="tab-btn"; b.textContent=w.label;
+    b.onclick=function(){ renderWeek(i); };
+    t.appendChild(b);
+  });
+  renderWeek(DATA.weeks.length-1);
+})();
+</script>
+</body>
+</html>
