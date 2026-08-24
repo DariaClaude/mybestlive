@@ -188,10 +188,13 @@ function renderKPI(w,prev){
      '<div class="kpi-sub">расход за период</div>'+delta(t.spend,pt&&pt.spend,false,"₽")+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">CPL</div><div class="kpi-value">'+fmt(t.cpl)+' ₽</div>'+
      '<div class="kpi-sub">сводный по всем каналам</div>'+delta(t.cpl,pt&&pt.cpl,false,"₽")+'</div>';
-  h+='<div class="kpi-card"><div class="kpi-label">Конверсия</div><div class="kpi-value '+convClass(t.conv)+'" style="color:inherit">'+t.conv.toFixed(1).replace(".",",")+'%</div>'+
-     '<div class="kpi-sub">'+fmt(t.adapted)+' адаптированных из '+fmt(t.leads)+'</div>'+
-     (pt?delta(Math.round(t.conv*10)/10,Math.round(pt.conv*10)/10,true,"%"):"")+'</div>';
-  h+='<div class="kpi-card empty"><div class="kpi-label">eNPS</div><div class="kpi-value muted">нет замеров</div>'+
+  var dc = pt ? (t.conv-pt.conv) : null;
+  var convDelta = dc==null ? "" :
+    '<div class="kpi-delta '+(dc>0.05?"up":dc<-0.05?"down":"neutral")+'">'+(dc>0.05?"↑":dc<-0.05?"↓":"→")+' '+
+    pt.conv.toFixed(1).replace(".",",")+'% → '+t.conv.toFixed(1).replace(".",",")+'% ('+(dc>0?"+":"")+dc.toFixed(1).replace(".",",")+' п.п.)</div>';
+  h+='<div class="kpi-card"><div class="kpi-label">Конверсия</div><div class="kpi-value">'+t.conv.toFixed(1).replace(".",",")+'%</div>'+
+     '<div class="kpi-sub">'+fmt(t.adapted)+' адаптированных из '+fmt(t.leads)+'</div>'+convDelta+'</div>';
+  h+='<div class="kpi-card empty"><div class="kpi-label" style="text-transform:none;font-size:12px">eNPS</div><div class="kpi-value muted">нет замеров</div>'+
      '<div class="kpi-sub">нужен опрос сотрудников</div><div class="kpi-delta neutral">замеряется раз в квартал</div></div>';
   return h+'</div>';
 }
@@ -236,8 +239,9 @@ function renderTools(w){
     w.clients.forEach(function(c){ var v=c.tools[tool.k]; if(v){ l+=v.leads; s+=v.spend; any=true; } });
     if(!any){ h+='<div class="bar-item dim"><div class="bar-name">'+tool.n+'</div><div class="bar-val" style="color:#CBD5E1;font-size:16px">нет данных</div><div class="bar-sub">источник не подключён</div></div>'; return; }
     var share=Math.round(l/tt.leads*100);
+    var shareTxt = share<1 ? "&lt;1" : share;
     h+='<div class="bar-item"><div class="bar-name">'+tool.n+'</div><div class="bar-val">'+fmt(l)+'</div>'+
-       '<div class="bar-sub">'+share+'% лидов · CPL '+fmt(Math.round(s/l))+' ₽</div>'+
+       '<div class="bar-sub">'+shareTxt+'% лидов · CPL '+fmt(Math.round(s/l))+' ₽</div>'+
        '<div class="bar-track"><div class="bar-fill" style="width:'+Math.max(share,2)+'%"></div></div></div>';
   });
   return h+'</div></div>';
@@ -258,7 +262,8 @@ function renderProjects(w){
          '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+fmt(p.ad)+'</td></tr>';
     });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
-       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td></tr></tbody></table></div>';
+       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td></tr></tbody></table>'+
+       '<div class="note">CPL здесь = расход / лиды. В таблице Авито колонка «Стоимость лида» показывает другие цифры — расхождение до 40%. Нужно уточнить, что входит в «Расход».</div></div>';
   });
   return h+'</div>';
 }
