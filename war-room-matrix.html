@@ -319,6 +319,23 @@
 // Руками правится только war-room-data.js.
 // ════════════════════════════════════════════════════════════════════
 var W = WAR_ROOM_DATA.weeks;
+
+// Неделя 17–23 августа: в таблице Авито факт ещё не заполнен, поэтому в боевых
+// данных её нет. На тестовой странице показываем то, что уже есть — ВК и Юлу.
+if (!W.some(function(w){ return w.label === '17–23 августа'; })) {
+  W.push({
+    label: '17–23 августа',
+    avito: { leads:null, plan:null, planNote:null, cpl:null, budget:null },
+    vk: 12, yula: 6, projects: [],
+    alerts: [
+      { type:'warning', title:'Авито за 17–23 августа не заполнен',
+        text:'В таблице пустой весь блок ОПИ и почти весь ДРС — есть только Урбан Дикси (201 лид, 36 687 ₽). Итоги периода посчитаны без Авито.' },
+      { type:'warning', title:'ВК Дианы: расход без лидов',
+        text:'5 354 ₽ за неделю и ни одного зафиксированного лида. Вторая неделя подряд — за 10–16 августа было 5 186 ₽ и тоже ноль.' }
+    ],
+    social: [], tg: { value:null, sub:'пакеты', details:[] }
+  });
+}
 var currentIdx = W.length - 1;
 
 function fmt(n) {
@@ -716,9 +733,17 @@ var CLIENTS = {
         {n:"МСК ВкусВилл",plan:300,fact:321,spend:20824,ad:19}
       ] }
   ],
+  "17–23 августа": [
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:12,spend:15190}, yula:{leads:1,spend:428}, site:null },
+      projects:[] },
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:0,spend:5354}, yula:{leads:5,spend:2137}, site:null },
+      projects:[] }
+  ],
   "10–16 августа": [
     { name:"Даниил", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:21,
-      tools:{ avito:{leads:2612,spend:285865}, direct:null, social:{leads:15,spend:8379}, yula:{leads:2,spend:508}, site:null },
+      tools:{ avito:{leads:2612,spend:285865}, direct:null, social:{leads:15,spend:17916}, yula:{leads:2,spend:508}, site:null },
       projects:[
         {n:"МАГНИТ КРД",plan:160,fact:579,spend:42890,ad:1},
         {n:"ЛЕНТА КРД",plan:200,fact:351,spend:24092,ad:1},
@@ -730,7 +755,7 @@ var CLIENTS = {
         {n:"Гравис",plan:20,fact:75,spend:13511,ad:0}
       ] },
     { name:"Диана", scope:"ДРС — Авито, Юла (оперблок)", plan:735, adapted:257,
-      tools:{ avito:{leads:814,spend:86968}, direct:null, social:null, yula:{leads:9,spend:2286}, site:null },
+      tools:{ avito:{leads:814,spend:86968}, direct:null, social:{leads:0,spend:5186}, yula:{leads:9,spend:2286}, site:null },
       projects:[
         {n:"МСК Урбан Дикси",plan:200,fact:208,spend:31315,ad:21},
         {n:"ЧЛБ Табыш",plan:70,fact:83,spend:6339,ad:38},
@@ -747,8 +772,10 @@ var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, 
 
 function cliTotals(c) {
   var l=0,s=0;
-  NEW_TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v){ l+=v.leads; s+=v.spend; } });
-  return { leads:l, spend:s, cpl:l?Math.round(s/l):null, conv:l?c.adapted/l*100:null };
+  // pending — канал есть, но данные ещё не внесены в таблицу: в итоги не берём.
+  NEW_TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v && !v.pending){ l+=v.leads; s+=v.spend; } });
+  return { leads:l, spend:s, cpl:l?Math.round(s/l):null,
+           conv:(l && c.adapted!=null)?c.adapted/l*100:null };
 }
 function cliWeekTotals(cw) {
   var l=0,s=0,a=0,p=0;
@@ -756,9 +783,9 @@ function cliWeekTotals(cw) {
   return { leads:l, spend:s, adapted:a, plan:p, cpl:l?Math.round(s/l):null, conv:l?a/l*100:null };
 }
 function cliToolTotal(cw,k) {
-  var l=0,s=0,any=false;
-  cw.forEach(function(c){ var v=c.tools[k]; if(v){ l+=v.leads; s+=v.spend; any=true; } });
-  return { leads:l, spend:s, any:any, cpl:l?Math.round(s/l):null };
+  var l=0,s=0,any=false,pending=false;
+  cw.forEach(function(c){ var v=c.tools[k]; if(!v) return; if(v.pending){ pending=true; return; } l+=v.leads; s+=v.spend; any=true; });
+  return { leads:l, spend:s, any:any, pending:pending, cpl:l?Math.round(s/l):null };
 }
 // Низкая конверсия — оранжевым, а не красным: цифра по ОПИ пока под вопросом
 // (адаптация по Авито почти не заполняется), красный читался бы как провал.
@@ -770,7 +797,8 @@ function renderCliKPI(cw, pcw) {
   var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula');
   var h='<div class="kpi-bar">';
   h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value kpi-accent">'+fmt(t.leads)+'</div>'+
-     '<div class="kpi-sub">план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?'#10B981':'#F59E0B')+'">'+Math.round(t.leads/t.plan*100)+'%</b></div>'+
+     '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?'#10B981':'#F59E0B')+'">'+Math.round(t.leads/t.plan*100)+'%</b>'
+        : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
      delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'})+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
      '<div class="kpi-sub" style="line-height:1.7">Авито <b style="color:#475569">'+fmt(bAv.spend)+' ₽</b><br>'+
@@ -784,12 +812,12 @@ function renderCliKPI(cw, pcw) {
   var convRows = '';
   cw.forEach(function(c,i){
     var ct=cliTotals(c), pc = pcw && pcw[i] ? cliTotals(pcw[i]) : null;
-    var d = pc ? ct.conv-pc.conv : null;
+    var d = (pc && ct.conv!=null && pc.conv!=null) ? ct.conv-pc.conv : null;
     convRows += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:'+(i?8:2)+'px">'+
       '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
-      '<span style="font-size:20px;font-weight:800" class="'+convClass(ct.conv)+'">'+dec1(ct.conv)+'%</span></div>'+
+      '<span style="font-size:20px;font-weight:800" class="'+convClass(ct.conv)+'">'+(ct.conv==null?'—':dec1(ct.conv)+'%')+'</span></div>'+
       '<div style="display:flex;justify-content:space-between;gap:8px">'+
-      '<span style="font-size:10px;color:#CBD5E1">'+fmt(c.adapted)+' адапт.</span>'+
+      '<span style="font-size:10px;color:#CBD5E1">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span>'+
       (d==null?'':'<span class="kpi-delta '+(d>0.05?'up':d<-0.05?'down':'neutral')+'" style="margin-top:0;font-size:11px">'+
         (d>0.05?'↑':d<-0.05?'↓':'→')+' '+dec1(pc.conv)+'% → '+dec1(ct.conv)+'% ('+(d>0?'+':'')+dec1(d)+' п.п.)</span>')+'</div>';
   });
@@ -814,7 +842,9 @@ function renderCliMatrix(cw, pcw) {
     NEW_TOOLS.forEach(function(tool){
       var v=c.tools[tool.k];
       if(!v){ h+='<td><span class="cell-none">нет источника</span></td>'; return; }
-      h+='<td><span class="cell-l">'+fmt(v.leads)+'</span><span class="cell-s">CPL '+fmt(Math.round(v.spend/v.leads))+' ₽</span>'+
+      if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">не внесено<br>в таблицу</span></td>'; return; }
+      h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
+         '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
          '<span class="cell-b">'+fmt(v.spend)+' ₽</span></td>';
     });
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+
@@ -822,13 +852,16 @@ function renderCliMatrix(cw, pcw) {
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span><span class="cell-s">план '+fmt(c.plan)+' лид.</span></td>';
     h+='<td class="col-tot"><span class="cell-l '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</span>'+
        (ptt?'<span class="cell-s" style="color:'+(t.cpl<=ptt.cpl?'#10B981':'#EF4444')+'">'+(t.cpl<=ptt.cpl?'↓':'↑')+' '+sign(t.cpl-ptt.cpl)+' ₽</span>':'')+'</td>';
-    h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+dec1(t.conv)+'%</span><span class="cell-s">'+fmt(c.adapted)+' адапт.</span></td></tr>';
+    h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+(t.conv==null?'—':dec1(t.conv)+'%')+'</span>'+
+       '<span class="cell-s">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span></td></tr>';
   });
   var tt=cliWeekTotals(cw);
   h+='<tr class="total"><td>Итого</td>';
   NEW_TOOLS.forEach(function(tool){
     var tv=cliToolTotal(cw,tool.k);
-    h+='<td>'+(tv.any? fmt(tv.leads)+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>' : '<span class="cell-none">—</span>')+'</td>';
+    h+='<td>'+(tv.any? fmt(tv.leads)+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>'
+             : tv.pending ? '<span class="cell-none" style="color:#F59E0B">не внесено</span>'
+             : '<span class="cell-none">—</span>')+'</td>';
   });
   // Общей конверсии по строке «Итого» нет намеренно: у ОПИ и ДРС разные
   // воронки, среднее по ним не имеет смысла — смотрим по каждому клиенту.
@@ -854,8 +887,10 @@ function renderCliTools(cw) {
 }
 
 function renderCliDetails(cw) {
+  if (!cw.some(function(c){ return c.projects && c.projects.length; })) return '';
   var h='<div class="split2">';
   cw.forEach(function(c){
+    if (!c.projects || !c.projects.length) return;
     h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — детализация'+
        '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+'</span></div>'+
        '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Адапт.</th></tr></thead><tbody>';
