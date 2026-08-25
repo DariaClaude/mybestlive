@@ -912,8 +912,7 @@ function renderCliDetails(cw) {
          '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+fmt(p.ad)+'</td></tr>';
     });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
-       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td></tr></tbody></table>'+
-       '<div class="newnote">CPL здесь = расход / лиды. В таблице Авито колонка «Стоимость лида» показывает другие цифры — расхождение до 40%. Нужно уточнить, что входит в «Расход».</div></div>';
+       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td></tr></tbody></table></div>';
   });
   return h+'</div>';
 }
