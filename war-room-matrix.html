@@ -794,19 +794,24 @@ function dec1(v) { return v.toFixed(1).replace('.',','); }
 
 function renderCliKPI(cw, pcw) {
   var t=cliWeekTotals(cw), pt=pcw?cliWeekTotals(pcw):null;
+  // Пока Авито не внесён — период неполный. Сравнивать его с полной неделей нельзя:
+  // получится «−99% лидов» и «CPL 1 284 ₽», хотя это просто отсутствие данных.
+  var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
+  if (partial) pt = null;
+  var waitNote = '<div class="kpi-delta neutral">сравнение — после внесения Авито</div>';
   var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula');
   var h='<div class="kpi-bar">';
   h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value kpi-accent">'+fmt(t.leads)+'</div>'+
      '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?'#10B981':'#F59E0B')+'">'+Math.round(t.leads/t.plan*100)+'%</b>'
         : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
-     delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'})+'</div>';
+     (partial ? waitNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
-     '<div class="kpi-sub" style="line-height:1.7">Авито <b style="color:#475569">'+fmt(bAv.spend)+' ₽</b><br>'+
+     '<div class="kpi-sub" style="line-height:1.7">Авито '+(bAv.pending?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>')+'<br>'+
      'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b></div>'+
-     delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'})+'</div>';
+     (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">CPL</div><div class="kpi-value '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</div>'+
-     '<div class="kpi-sub">сводный по всем каналам</div>'+
-     delta(t.cpl, pt&&pt.cpl, {goodUp:false, mode:'rub'})+'</div>';
+     '<div class="kpi-sub">'+(partial?'только ВК и Юла':'сводный по всем каналам')+'</div>'+
+     (partial ? waitNote : delta(t.cpl, pt&&pt.cpl, {goodUp:false, mode:'rub'}))+'</div>';
   // Конверсия — отдельной строкой по каждому клиенту, общей цифры не показываем:
   // у ОПИ и ДРС разные бизнес-процессы, среднее по ним смысла не имеет.
   var convRows = '';
@@ -836,8 +841,9 @@ function renderCliMatrix(cw, pcw) {
         '<table class="mx"><thead><tr><th>Клиент</th>';
   NEW_TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
   h+='<th class="col-tot">Итого лидов</th><th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
+  var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
   cw.forEach(function(c,i){
-    var pc = pcw && pcw[i], t=cliTotals(c), ptt=pc?cliTotals(pc):null;
+    var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
     h+='<tr><td><div class="cl-name">'+esc(c.name)+'</div><div class="cl-scope">'+esc(c.scope)+'</div></td>';
     NEW_TOOLS.forEach(function(tool){
       var v=c.tools[tool.k];
@@ -849,7 +855,8 @@ function renderCliMatrix(cw, pcw) {
     });
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+
        (ptt?'<span class="cell-s '+(t.leads>=ptt.leads?'stat-up':'stat-down')+'" style="color:'+(t.leads>=ptt.leads?'#10B981':'#EF4444')+'">'+(t.leads>=ptt.leads?'↑':'↓')+' '+sign(t.leads-ptt.leads)+'</span>':'')+'</td>';
-    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span><span class="cell-s">план '+fmt(c.plan)+' лид.</span></td>';
+    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span>'+
+       (c.plan?'<span class="cell-s">план '+fmt(c.plan)+' лид.</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</span>'+
        (ptt?'<span class="cell-s" style="color:'+(t.cpl<=ptt.cpl?'#10B981':'#EF4444')+'">'+(t.cpl<=ptt.cpl?'↓':'↑')+' '+sign(t.cpl-ptt.cpl)+' ₽</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+(t.conv==null?'—':dec1(t.conv)+'%')+'</span>'+
