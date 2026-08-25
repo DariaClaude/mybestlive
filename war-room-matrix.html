@@ -760,7 +760,9 @@ function cliToolTotal(cw,k) {
   cw.forEach(function(c){ var v=c.tools[k]; if(v){ l+=v.leads; s+=v.spend; any=true; } });
   return { leads:l, spend:s, any:any, cpl:l?Math.round(s/l):null };
 }
-function convClass(v) { return v==null?'':(v>=25?'conv-hi':v>=5?'conv-mid':'conv-lo'); }
+// Низкая конверсия — оранжевым, а не красным: цифра по ОПИ пока под вопросом
+// (адаптация по Авито почти не заполняется), красный читался бы как провал.
+function convClass(v) { return v==null?'':(v>=25?'conv-hi':'conv-mid'); }
 function dec1(v) { return v.toFixed(1).replace('.',','); }
 
 function renderCliKPI(cw, pcw) {
