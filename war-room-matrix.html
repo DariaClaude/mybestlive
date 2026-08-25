@@ -828,8 +828,11 @@ function renderCliMatrix(cw, pcw) {
     var tv=cliToolTotal(cw,tool.k);
     h+='<td>'+(tv.any? fmt(tv.leads)+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>' : '<span class="cell-none">—</span>')+'</td>';
   });
+  // Общей конверсии по строке «Итого» нет намеренно: у ОПИ и ДРС разные
+  // воронки, среднее по ним не имеет смысла — смотрим по каждому клиенту.
   h+='<td class="col-tot">'+fmt(tt.leads)+'</td><td class="col-tot">'+fmt(tt.spend)+' ₽</td>'+
-     '<td class="col-tot">'+fmt(tt.cpl)+' ₽</td><td class="col-tot '+convClass(tt.conv)+'">'+dec1(tt.conv)+'%</td></tr>';
+     '<td class="col-tot">'+fmt(tt.cpl)+' ₽</td>'+
+     '<td class="col-tot"><span class="cell-none">по клиентам</span></td></tr>';
   return h+'</tbody></table></div>';
 }
 
