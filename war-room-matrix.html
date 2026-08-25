@@ -163,6 +163,11 @@ function clientTotals(c){
   TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v){ l+=v.leads; s+=v.spend; } });
   return { leads:l, spend:s, cpl:l?Math.round(s/l):null, conv:l?c.adapted/l*100:null };
 }
+function toolTotal(w,k){
+  var l=0,sp=0,any=false;
+  w.clients.forEach(function(c){ var v=c.tools[k]; if(v){ l+=v.leads; sp+=v.spend; any=true; } });
+  return { leads:l, spend:sp, any:any, cpl:l?Math.round(sp/l):null };
+}
 function weekTotals(w){
   var l=0,s=0,a=0,p=0;
   w.clients.forEach(function(c){ var t=clientTotals(c); l+=t.leads; s+=t.spend; a+=c.adapted; p+=c.plan; });
@@ -184,8 +189,11 @@ function renderKPI(w,prev){
   h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value accent">'+fmt(t.leads)+'</div>'+
      '<div class="kpi-sub">план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?"#10B981":"#F59E0B")+'">'+Math.round(t.leads/t.plan*100)+'%</b></div>'+
      delta(t.leads,pt&&pt.leads,true,"")+'</div>';
+  var bAv=toolTotal(w,"avito"), bVk=toolTotal(w,"social"), bYu=toolTotal(w,"yula");
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
-     '<div class="kpi-sub">расход за период</div>'+delta(t.spend,pt&&pt.spend,false,"₽")+'</div>';
+     '<div class="kpi-sub" style="line-height:1.7">Авито <b style="color:#475569">'+fmt(bAv.spend)+' ₽</b><br>'+
+     'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b></div>'+
+     delta(t.spend,pt&&pt.spend,false,"₽")+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">CPL</div><div class="kpi-value">'+fmt(t.cpl)+' ₽</div>'+
      '<div class="kpi-sub">сводный по всем каналам</div>'+delta(t.cpl,pt&&pt.cpl,false,"₽")+'</div>';
   var dc = pt ? (t.conv-pt.conv) : null;
@@ -201,7 +209,7 @@ function renderKPI(w,prev){
 
 function renderMatrix(w,prev){
   var h='<div class="card"><div class="card-title"><span class="dot dot-blue"></span>Клиенты × инструменты'+
-        '<span class="hint">в ячейке: лиды · CPL</span></div><table class="mx"><thead><tr><th>Клиент</th>';
+        '<span class="hint">в ячейке: лиды · CPL · бюджет</span></div><table class="mx"><thead><tr><th>Клиент</th>';
   TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
   h+='<th class="col-tot">Итого лидов</th><th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
   w.clients.forEach(function(c,i){
@@ -211,7 +219,9 @@ function renderMatrix(w,prev){
     TOOLS.forEach(function(tool){
       var v=c.tools[tool.k];
       if(!v){ h+='<td><span class="cell-none">нет источника</span></td>'; return; }
-      h+='<td><span class="cell-l">'+fmt(v.leads)+'</span><span class="cell-s">'+fmt(Math.round(v.spend/v.leads))+' ₽</span></td>';
+      h+='<td><span class="cell-l">'+fmt(v.leads)+'</span>'+
+         '<span class="cell-s">CPL '+fmt(Math.round(v.spend/v.leads))+' ₽</span>'+
+         '<span class="cell-s" style="color:#64748B;font-weight:600">'+fmt(v.spend)+' ₽</span></td>';
     });
     var dl = ptt ? '<span class="cell-s '+(t.leads>=ptt.leads?"up":"down")+'">'+(t.leads>=ptt.leads?"↑":"↓")+' '+sign(t.leads-ptt.leads)+'</span>' : '';
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+dl+'</td>';
@@ -222,9 +232,9 @@ function renderMatrix(w,prev){
   var tt=weekTotals(w);
   h+='<tr class="total"><td>Итого</td>';
   TOOLS.forEach(function(tool){
-    var l=0,s=0,any=false;
-    w.clients.forEach(function(c){ var v=c.tools[tool.k]; if(v){ l+=v.leads; s+=v.spend; any=true; } });
-    h+='<td>'+(any?fmt(l):'<span class="cell-none">—</span>')+'</td>';
+    var tv=toolTotal(w,tool.k);
+    h+='<td>'+(tv.any ? fmt(tv.leads)+'<span class="cell-s" style="font-weight:600">'+fmt(tv.spend)+' ₽</span>'
+                      : '<span class="cell-none">—</span>')+'</td>';
   });
   h+='<td class="col-tot">'+fmt(tt.leads)+'</td><td class="col-tot">'+fmt(tt.spend)+' ₽</td><td class="col-tot">'+fmt(tt.cpl)+' ₽</td>'+
      '<td class="col-tot conv '+convClass(tt.conv)+'">'+tt.conv.toFixed(1).replace(".",",")+'%</td></tr>';
@@ -242,6 +252,7 @@ function renderTools(w){
     var shareTxt = share<1 ? "&lt;1" : share;
     h+='<div class="bar-item"><div class="bar-name">'+tool.n+'</div><div class="bar-val">'+fmt(l)+'</div>'+
        '<div class="bar-sub">'+shareTxt+'% лидов · CPL '+fmt(Math.round(s/l))+' ₽</div>'+
+       '<div class="bar-sub" style="color:#475569;font-weight:600">бюджет '+fmt(s)+' ₽</div>'+
        '<div class="bar-track"><div class="bar-fill" style="width:'+Math.max(share,2)+'%"></div></div></div>';
   });
   return h+'</div></div>';
