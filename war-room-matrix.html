@@ -89,7 +89,7 @@ var DATA = {
       label: "3–9 августа",
       enps: null,
       clients: [
-        { name:"Даня", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:17,
+        { name:"Даниил", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:17,
           tools:{ avito:{leads:1995,spend:191366}, direct:null, social:{leads:6,spend:2958}, yula:{leads:8,spend:2472}, site:null },
           projects:[
             {n:"МАГНИТ КРД",plan:160,fact:167,spend:10223,ad:0},
@@ -118,7 +118,7 @@ var DATA = {
       label: "10–16 августа",
       enps: null,
       clients: [
-        { name:"Даня", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:21,
+        { name:"Даниил", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:21,
           tools:{ avito:{leads:2612,spend:285865}, direct:null, social:{leads:21,spend:8379}, yula:{leads:2,spend:508}, site:null },
           projects:[
             {n:"МАГНИТ КРД",plan:160,fact:579,spend:42890,ad:1},
@@ -250,7 +250,7 @@ function renderTools(w){
 function renderProjects(w){
   var h='<div class="split">';
   w.clients.forEach(function(c){
-    h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==="Даня"?"blue":"orange")+'"></span>'+esc(c.name)+' — детализация'+
+    h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==="Даниил"?"blue":"orange")+'"></span>'+esc(c.name)+' — детализация'+
        '<span class="hint">'+esc(c.scope.split(" — ")[0])+'</span></div>'+
        '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Адапт.</th></tr></thead><tbody>';
     var sp=0,sf=0,ss=0,sa=0;
