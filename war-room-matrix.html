@@ -320,22 +320,7 @@
 // ════════════════════════════════════════════════════════════════════
 var W = WAR_ROOM_DATA.weeks;
 
-// Неделя 17–23 августа: в таблице Авито факт ещё не заполнен, поэтому в боевых
-// данных её нет. На тестовой странице показываем то, что уже есть — ВК и Юлу.
-if (!W.some(function(w){ return w.label === '17–23 августа'; })) {
-  W.push({
-    label: '17–23 августа',
-    avito: { leads:null, plan:null, planNote:null, cpl:null, budget:null },
-    vk: 12, yula: 6, projects: [],
-    alerts: [
-      { type:'warning', title:'Авито за 17–23 августа не заполнен',
-        text:'В таблице пустой весь блок ОПИ и почти весь ДРС — есть только Урбан Дикси (201 лид, 36 687 ₽). Итоги периода посчитаны без Авито.' },
-      { type:'warning', title:'ВК Дианы: расход без лидов',
-        text:'5 354 ₽ за неделю и ни одного зафиксированного лида. Вторая неделя подряд — за 10–16 августа было 5 186 ₽ и тоже ноль.' }
-    ],
-    social: [], tg: { value:null, sub:'пакеты', details:[] }
-  });
-}
+
 var currentIdx = W.length - 1;
 
 function fmt(n) {
@@ -734,12 +719,30 @@ var CLIENTS = {
       ] }
   ],
   "17–23 августа": [
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
-      tools:{ avito:{pending:true}, direct:null, social:{leads:12,spend:15190}, yula:{leads:1,spend:2207}, site:null },
-      projects:[] },
-    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
-      tools:{ avito:{pending:true}, direct:null, social:{leads:0,spend:5354}, yula:{leads:5,spend:2568}, site:null },
-      projects:[] }
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:1620, adapted:27,
+      tools:{ avito:{leads:3293,spend:309879}, direct:null, social:{leads:12,spend:15190}, yula:{leads:1,spend:2207}, site:null },
+      projects:[
+        {n:"МАГНИТ КРД",plan:160,fact:245,spend:15842,ad:0},
+        {n:"ЛЕНТА КРД",plan:200,fact:171,spend:7350,ad:2},
+        {n:"ЛЕНТА КЗН",plan:60,fact:114,spend:9483,ad:0},
+        {n:"ЛЕНТА МСК",plan:250,fact:297,spend:30858,ad:2},
+        {n:"ЛЕНТА ЧЛБ",plan:30,fact:46,spend:6523,ad:0},
+        {n:"Курьеры",plan:300,fact:226,spend:21878,ad:8},
+        {n:"Инвентаризация",plan:600,fact:2158,spend:209861,ad:15},
+        {n:"Гравис",plan:20,fact:36,spend:8084,ad:0}
+      ] },
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:850, adapted:244,
+      tools:{ avito:{leads:914,spend:123010}, direct:null, social:{leads:0,spend:5354}, yula:{leads:5,spend:2568}, site:null },
+      projects:[
+        {n:"МСК Урбан Дикси",plan:200,fact:201,spend:36687,ad:16},
+        {n:"ЧЛБ Табыш",plan:70,fact:86,spend:15603,ad:46},
+        {n:"Лента ЧЛБ",plan:50,fact:49,spend:4032,ad:36},
+        {n:"ЧЛБ Пятёрочка",plan:15,fact:45,spend:3254,ad:28},
+        {n:"ЧЛБ Монетка",plan:160,fact:221,spend:24277,ad:78},
+        {n:"КЗН Табыш",plan:40,fact:57,spend:8311,ad:34},
+        {n:"Лента КЗН",plan:15,fact:13,spend:2627,ad:0},
+        {n:"МСК ВкусВилл",plan:300,fact:242,spend:28219,ad:6}
+      ] }
   ],
   "10–16 августа": [
     { name:"Даниил", scope:"ОПИ — Авито, соцсети, Юла", plan:1620, adapted:21,
