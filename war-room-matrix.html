@@ -244,7 +244,7 @@
   .cell-b { font-size:11px; color:#64748B; font-weight:600; display:block; margin-top:1px; }
   .cell-none { color:#CBD5E1; font-size:12px; }
   .col-tot { background:#F8FAFC; }
-  .conv-hi { color:#10B981; } .conv-mid { color:#F59E0B; } .conv-lo { color:#EF4444; }
+  .conv-hi { color:#10B981; } .conv-mid { color:#F59E0B; } .conv-lo { color:#EF4444; } .conv-zero { color:#CBD5E1; }
   .bars { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
   .bar-item { padding:14px; border-radius:10px; background:#F8FAFC; }
   .bar-item.dim { background:#FAFBFC; border:1px dashed #E2E8F0; }
@@ -516,14 +516,14 @@ function renderChannels(w, prev, idx) {
             ? ' <span style="color:#64748B;">' + (u.conversion >= pu.conversion ? '\u2191' : '\u2193') + ' vs ' + String(pu.conversion).replace('.', ',') + '% (пр. период)</span>' : '';
           cline.push('конверсия: <span style="color:' + (pu && pu.conversion != null && u.conversion < pu.conversion ? '#F59E0B' : '#10B981') + ';font-weight:600;">' + String(u.conversion).replace('.', ',') + '%</span>' + cmp);
         }
-        if (u.adapted != null) cline.push('адаптированных: <span style="font-weight:600;color:#334155;">' + u.adapted + '</span>');
+        if (u.adapted != null) cline.push('вышедших: <span style="font-weight:600;color:#334155;">' + u.adapted + '</span>');
         if (cline.length) h += '<div style="font-size:11px;padding-left:4px;margin-bottom:10px;">' + cline.join(' \u2022 ') + '</div>';
         if (u.note) h += '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:10px;">' + esc(u.note) + '</div>';
       } else {
         h += '<div class="channel-item" style="padding-top:0;border-top:none;margin-bottom:4px;">' +
-             '<div><div class="channel-name">\uD83D\uDEE0 Урбан Дикси</div><div style="font-size:11px;color:#64748B;">конверсия в адаптацию</div></div>' +
+             '<div><div class="channel-name">\uD83D\uDEE0 Урбан Дикси</div><div style="font-size:11px;color:#64748B;">конверсия в вышедших</div></div>' +
              '<div class="channel-meta"><span class="channel-leads kpi-accent" style="color:#0EA5E9;">' + String(u.conversion).replace('.', ',') + '%</span>' +
-             '<span class="channel-cpl" style="color:#64748B;">' + u.adapted + ' адаптировано</span></div></div>' +
+             '<span class="channel-cpl" style="color:#64748B;">' + u.adapted + ' вышедших</span></div></div>' +
              (u.note ? '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:6px;">' + esc(u.note) + '</div>' : '');
       }
     }
@@ -539,7 +539,7 @@ function renderChannels(w, prev, idx) {
       if (lc.length) h += '<div style="font-size:11px;color:#64748B;margin-bottom:4px;padding-left:4px;">' + lc.join(' • ') + '</div>';
       var l2 = [];
       if (c.spend != null) l2.push('затраты: ' + fmt(c.spend) + ' \u20BD');
-      if (c.adapted != null) l2.push('адаптированных: ' + c.adapted);
+      if (c.adapted != null) l2.push('вышедших: ' + c.adapted);
       if (c.conversion != null) l2.push('конверсия: <span style="color:#10B981;font-weight:600;">' + String(c.conversion).replace('.', ',') + '%</span>');
       if (l2.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l2.join(' \u2022 ') + '</div>';
       (c.notes || []).forEach(function(n) {
@@ -556,7 +556,7 @@ function renderChannels(w, prev, idx) {
       if (pm && pm.leads != null) { var dm = m.leads - pm.leads; l3.push(fmt(pm.leads) + ' → ' + fmt(m.leads) + ' лидов (' + sign(pm.leads ? Math.round(dm / pm.leads * 100) : 0) + '%)'); }
       if (pm && pm.cpl != null && m.cpl != null) l3.push('CPL ' + fmt(pm.cpl) + ' → ' + fmt(m.cpl) + ' ₽ (' + sign(m.cpl - pm.cpl) + ' ₽)');
       if (m.spend != null) l3.push('затраты: ' + fmt(m.spend) + ' ₽');
-      if (m.adapted != null) l3.push('адаптированных: ' + m.adapted);
+      if (m.adapted != null) l3.push('вышедших: ' + m.adapted);
       if (m.conversion != null) l3.push('конверсия: <span style="color:#10B981;font-weight:600;">' + String(m.conversion).replace('.', ',') + '%</span>');
       if (l3.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l3.join(' • ') + '</div>';
     }
@@ -791,8 +791,16 @@ function cliToolTotal(cw,k) {
   return { leads:l, spend:s, any:any, pending:pending, cpl:l?Math.round(s/l):null };
 }
 // Низкая конверсия — оранжевым, а не красным: цифра по ОПИ пока под вопросом
-// (адаптация по Авито почти не заполняется), красный читался бы как провал.
+// (колонка «Вышедшие» по Авито почти не заполняется), красный читался бы как провал.
 function convClass(v) { return v==null?'':(v>=25?'conv-hi':'conv-mid'); }
+// Конверсия по проекту: 0 вышедших — серым (это «не заполнено / не выходили»),
+// оранжевый на нуле читался бы как проблема самого проекта.
+function projConv(ad, fact) {
+  if (!fact) return '<span class="conv-zero">—</span>';
+  var v = ad / fact * 100;
+  var cls = !ad ? 'conv-zero' : v >= 25 ? 'conv-hi' : v >= 5 ? 'conv-mid' : 'conv-lo';
+  return '<span class="' + cls + '" style="font-weight:700">' + dec1(v) + '%</span>';
+}
 function dec1(v) { return v.toFixed(1).replace('.',','); }
 
 function renderCliKPI(cw, pcw) {
@@ -829,7 +837,7 @@ function renderCliKPI(cw, pcw) {
       (d==null?'':'<span class="kpi-delta '+(d>0.05?'up':d<-0.05?'down':'neutral')+'" style="margin-top:0;font-size:11px">'+
         (d>0.05?'↑':d<-0.05?'↓':'→')+' '+dec1(pc.conv)+'% → '+dec1(ct.conv)+'% ('+(d>0?'+':'')+dec1(d)+' п.п.)</span>')+'</div>';
   });
-  h+='<div class="kpi-card"><div class="kpi-label">Конверсия в адаптацию</div>'+convRows+'</div>';
+  h+='<div class="kpi-card"><div class="kpi-label">Конверсия в вышедших</div>'+convRows+'</div>';
   h+='<div class="kpi-card" style="background:#FAFBFC;border:1px dashed #CBD5E1;box-shadow:none">'+
      '<div class="kpi-label" style="text-transform:none;font-size:12px">eNPS</div>'+
      '<div class="kpi-value" style="font-size:18px;color:#94A3B8">нет замеров</div>'+
@@ -902,17 +910,19 @@ function renderCliDetails(cw) {
   cw.forEach(function(c){
     if (!c.projects || !c.projects.length) return;
     h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — детализация'+
-       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+'</span></div>'+
-       '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Адапт.</th></tr></thead><tbody>';
+       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито</span></div>'+
+       '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th></tr></thead><tbody>';
     var sp=0,sf=0,ss=0,sa=0;
     c.projects.forEach(function(p){
       var pc=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=p.ad;
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
          '<td><span class="pill '+(pc>=100?'pill-ok':'pill-no')+'">'+pc+'%</span></td>'+
-         '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+fmt(p.ad)+'</td></tr>';
+         '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+fmt(p.ad)+'</td>'+
+         '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
     });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
-       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td></tr></tbody></table></div>';
+       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td>'+
+       '<td>'+projConv(sa, sf)+'</td></tr></tbody></table></div>';
   });
   return h+'</div>';
 }

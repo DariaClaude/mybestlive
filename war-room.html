@@ -473,14 +473,14 @@ function renderChannels(w, prev, idx) {
             ? ' <span style="color:#64748B;">' + (u.conversion >= pu.conversion ? '\u2191' : '\u2193') + ' vs ' + String(pu.conversion).replace('.', ',') + '% (пр. период)</span>' : '';
           cline.push('конверсия: <span style="color:' + (pu && pu.conversion != null && u.conversion < pu.conversion ? '#F59E0B' : '#10B981') + ';font-weight:600;">' + String(u.conversion).replace('.', ',') + '%</span>' + cmp);
         }
-        if (u.adapted != null) cline.push('адаптированных: <span style="font-weight:600;color:#334155;">' + u.adapted + '</span>');
+        if (u.adapted != null) cline.push('вышедших: <span style="font-weight:600;color:#334155;">' + u.adapted + '</span>');
         if (cline.length) h += '<div style="font-size:11px;padding-left:4px;margin-bottom:10px;">' + cline.join(' \u2022 ') + '</div>';
         if (u.note) h += '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:10px;">' + esc(u.note) + '</div>';
       } else {
         h += '<div class="channel-item" style="padding-top:0;border-top:none;margin-bottom:4px;">' +
-             '<div><div class="channel-name">\uD83D\uDEE0 Урбан Дикси</div><div style="font-size:11px;color:#64748B;">конверсия в адаптацию</div></div>' +
+             '<div><div class="channel-name">\uD83D\uDEE0 Урбан Дикси</div><div style="font-size:11px;color:#64748B;">конверсия в вышедших</div></div>' +
              '<div class="channel-meta"><span class="channel-leads kpi-accent" style="color:#0EA5E9;">' + String(u.conversion).replace('.', ',') + '%</span>' +
-             '<span class="channel-cpl" style="color:#64748B;">' + u.adapted + ' адаптировано</span></div></div>' +
+             '<span class="channel-cpl" style="color:#64748B;">' + u.adapted + ' вышедших</span></div></div>' +
              (u.note ? '<div style="font-size:11px;color:#94A3B8;padding-left:4px;margin-bottom:6px;">' + esc(u.note) + '</div>' : '');
       }
     }
@@ -496,7 +496,7 @@ function renderChannels(w, prev, idx) {
       if (lc.length) h += '<div style="font-size:11px;color:#64748B;margin-bottom:4px;padding-left:4px;">' + lc.join(' • ') + '</div>';
       var l2 = [];
       if (c.spend != null) l2.push('затраты: ' + fmt(c.spend) + ' \u20BD');
-      if (c.adapted != null) l2.push('адаптированных: ' + c.adapted);
+      if (c.adapted != null) l2.push('вышедших: ' + c.adapted);
       if (c.conversion != null) l2.push('конверсия: <span style="color:#10B981;font-weight:600;">' + String(c.conversion).replace('.', ',') + '%</span>');
       if (l2.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l2.join(' \u2022 ') + '</div>';
       (c.notes || []).forEach(function(n) {
@@ -513,7 +513,7 @@ function renderChannels(w, prev, idx) {
       if (pm && pm.leads != null) { var dm = m.leads - pm.leads; l3.push(fmt(pm.leads) + ' → ' + fmt(m.leads) + ' лидов (' + sign(pm.leads ? Math.round(dm / pm.leads * 100) : 0) + '%)'); }
       if (pm && pm.cpl != null && m.cpl != null) l3.push('CPL ' + fmt(pm.cpl) + ' → ' + fmt(m.cpl) + ' ₽ (' + sign(m.cpl - pm.cpl) + ' ₽)');
       if (m.spend != null) l3.push('затраты: ' + fmt(m.spend) + ' ₽');
-      if (m.adapted != null) l3.push('адаптированных: ' + m.adapted);
+      if (m.adapted != null) l3.push('вышедших: ' + m.adapted);
       if (m.conversion != null) l3.push('конверсия: <span style="color:#10B981;font-weight:600;">' + String(m.conversion).replace('.', ',') + '%</span>');
       if (l3.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l3.join(' • ') + '</div>';
     }
