@@ -929,9 +929,10 @@ function renderPeriod(idx) {
   var body;
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
+    // Соцсети идут сразу после детализации по клиентам — «Требует внимания» замыкает период.
     body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliTools(cw) + renderCliDetails(cw) +
-           '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>' +
-           renderSocial(w);
+           renderSocial(w) +
+           '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>';
   } else {
     body = renderKPI(w, prev) +
            '<div class="main-grid">' + renderProjects(w, idx) + renderChannels(w, prev, idx) + renderAlerts(w, prev, idx) + '</div>' +
