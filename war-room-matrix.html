@@ -854,7 +854,7 @@ function renderCliMatrix(cw, pcw) {
     h+='<tr><td><div class="cl-name">'+esc(c.name)+'</div><div class="cl-scope">'+esc(c.scope)+'</div></td>';
     NEW_TOOLS.forEach(function(tool){
       var v=c.tools[tool.k];
-      if(!v){ h+='<td><span class="cell-none">нет источника</span></td>'; return; }
+      if(!v){ h+='<td><span class="cell-none">в разработке</span></td>'; return; }
       if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">не внесено<br>в таблицу</span></td>'; return; }
       h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
          '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
@@ -890,7 +890,7 @@ function renderCliTools(cw) {
   var h='<div class="card" style="margin-bottom:16px"><div class="card-title"><span class="dot dot-green"></span>По инструментам<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">доля в лидах</span></div><div class="bars">';
   NEW_TOOLS.forEach(function(tool){
     var tv=cliToolTotal(cw,tool.k);
-    if(!tv.any){ h+='<div class="bar-item dim"><div class="bar-name">'+tool.n+'</div><div class="bar-val" style="color:#CBD5E1;font-size:16px">нет данных</div><div class="bar-sub">источник не подключён</div></div>'; return; }
+    if(!tv.any){ h+='<div class="bar-item dim"><div class="bar-name">'+tool.n+'</div><div class="bar-val" style="color:#CBD5E1;font-size:16px">в разработке</div><div class="bar-sub">подключаем источник</div></div>'; return; }
     var share=Math.round(tv.leads/tt.leads*100), st=share<1?'&lt;1':share;
     h+='<div class="bar-item"><div class="bar-name">'+tool.n+'</div><div class="bar-val">'+fmt(tv.leads)+'</div>'+
        '<div class="bar-sub">'+st+'% лидов · CPL '+fmt(tv.cpl)+' ₽</div>'+
@@ -930,7 +930,7 @@ function renderPeriod(idx) {
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
     // Соцсети идут сразу после детализации по клиентам — «Требует внимания» замыкает период.
-    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliTools(cw) + renderCliDetails(cw) +
+    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliDetails(cw) + renderCliTools(cw) +
            renderSocial(w) +
            '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>';
   } else {
