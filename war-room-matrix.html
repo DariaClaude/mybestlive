@@ -262,10 +262,6 @@
   .pt tr.sum td { border-top:2px solid #E2E8F0; font-weight:700; background:#F8FAFC; }
   .pill { font-size:11px; font-weight:700; padding:1px 6px; border-radius:4px; }
   .pill-ok { background:#ECFDF5; color:#059669; } .pill-no { background:#FFF7ED; color:#EA580C; }
-  .gapgrid { display:flex; gap:10px; flex-wrap:wrap; }
-  .gap-item { flex:1; min-width:220px; border:1px dashed #CBD5E1; border-radius:10px; padding:12px 14px; background:#FAFBFC; }
-  .gap-t { font-size:12px; font-weight:700; color:#475569; }
-  .gap-d { font-size:11px; color:#94A3B8; margin-top:4px; line-height:1.5; }
   .newnote { font-size:12px; color:#64748B; line-height:1.6; margin-top:10px; padding:12px 14px; background:#FFFBEB; border-left:3px solid #F59E0B; border-radius:0 8px 8px 0; }
   .fmt-badge { background:#8B5CF6; color:#fff; font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; letter-spacing:.4px; margin-left:auto; }
   @media(max-width:1200px){ .bars{grid-template-columns:repeat(2,1fr)} .split2{grid-template-columns:1fr} }
@@ -927,21 +923,13 @@ function renderCliDetails(cw) {
   return h+'</div>';
 }
 
-function renderCliGaps() {
-  return '<div class="card" style="margin-bottom:20px"><div class="card-title"><span class="dot dot-purple"></span>Не подключено — задачи на источники данных</div><div class="gapgrid">'+
-    '<div class="gap-item"><div class="gap-t">Яндекс Директ</div><div class="gap-d">Доступ к API есть. Нужно решить, что считаем лидом — заявка или звонок, и подключить выгрузку расхода.</div></div>'+
-    '<div class="gap-item"><div class="gap-t">Сайт</div><div class="gap-d">Нужен счётчик Метрики и список целей, которые считаем лидом.</div></div>'+
-    '<div class="gap-item"><div class="gap-t">eNPS</div><div class="gap-d">Опрос сотрудников раз в квартал. Владелец — HR. Первый замер даст точку отсчёта.</div></div>'+
-    '</div></div>';
-}
-
 function renderPeriod(idx) {
   var w = W[idx], prev = idx > 0 ? W[idx - 1] : null;
   var cw = CLIENTS[w.label], pcw = prev ? CLIENTS[prev.label] : null;
   var body;
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
-    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliTools(cw) + renderCliDetails(cw) + renderCliGaps() +
+    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliTools(cw) + renderCliDetails(cw) +
            '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>' +
            renderSocial(w);
   } else {
