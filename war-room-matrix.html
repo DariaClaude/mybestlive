@@ -885,21 +885,6 @@ function renderCliMatrix(cw, pcw) {
   return h+'</tbody></table></div>';
 }
 
-function renderCliTools(cw) {
-  var tt=cliWeekTotals(cw);
-  var h='<div class="card" style="margin-bottom:16px"><div class="card-title"><span class="dot dot-green"></span>По инструментам<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">доля в лидах</span></div><div class="bars">';
-  NEW_TOOLS.forEach(function(tool){
-    var tv=cliToolTotal(cw,tool.k);
-    if(!tv.any){ h+='<div class="bar-item dim"><div class="bar-name">'+tool.n+'</div><div class="bar-val" style="color:#CBD5E1;font-size:16px">в разработке</div><div class="bar-sub">подключаем источник</div></div>'; return; }
-    var share=Math.round(tv.leads/tt.leads*100), st=share<1?'&lt;1':share;
-    h+='<div class="bar-item"><div class="bar-name">'+tool.n+'</div><div class="bar-val">'+fmt(tv.leads)+'</div>'+
-       '<div class="bar-sub">'+st+'% лидов · CPL '+fmt(tv.cpl)+' ₽</div>'+
-       '<div class="bar-sub" style="color:#475569;font-weight:600">бюджет '+fmt(tv.spend)+' ₽</div>'+
-       '<div class="bar-track"><div class="bar-fill" style="width:'+Math.max(share,2)+'%"></div></div></div>';
-  });
-  return h+'</div></div>';
-}
-
 function renderCliDetails(cw) {
   if (!cw.some(function(c){ return c.projects && c.projects.length; })) return '';
   var h='<div class="split2">';
@@ -930,7 +915,7 @@ function renderPeriod(idx) {
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
     // Соцсети идут сразу после детализации по клиентам — «Требует внимания» замыкает период.
-    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliDetails(cw) + renderCliTools(cw) +
+    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliDetails(cw) +
            renderSocial(w) +
            '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>';
   } else {
