@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Хаваю — шаурма в Туле</title>
+<meta name="description" content="Меню, цены и контакты «Хаваю» в Туле. Демо-концепт на открытых данных Яндекс Карт.">
+<style>
+*{box-sizing:border-box}
+:root{--ink:#111;--mut:#6b6b6b;--line:#e4e4e4;--bg:#fff;--acc:#c8102e;--soft:#edece7}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:400 17px/1.55 "Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.w{max-width:1240px;margin:0 auto;padding:0 32px}
+a{color:inherit}
+
+.ribbon{background:var(--ink);color:#fff;font-size:12.5px;letter-spacing:.03em;padding:8px 0;text-align:center}
+.ribbon b{font-weight:600}
+
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
+ backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 0}
+.logo{font-size:22px;font-weight:700;letter-spacing:.16em;text-decoration:none}
+.mnav{display:flex;gap:26px}
+.mnav a{text-decoration:none;font-size:15px;font-weight:500;padding:4px 0;border-bottom:2px solid transparent}
+.mnav a:hover{border-bottom-color:var(--ink)}
+.tel{text-decoration:none;font-weight:600;font-size:15px;border:1.5px solid var(--ink);
+ padding:9px 18px;border-radius:2px;white-space:nowrap}
+.tel:hover{background:var(--ink);color:#fff}
+
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:72px 0 64px}
+.hero h1{margin:0;font-size:clamp(40px,6.2vw,78px);line-height:.98;letter-spacing:-.035em;font-weight:700}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.lead{margin:24px 0 0;font-size:19px;line-height:1.5;color:var(--mut);max-width:44ch}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:16px;padding:15px 28px;border-radius:2px}
+.btn.p{background:var(--acc);color:#fff}
+.btn.p:hover{background:#a00d25}
+.btn.s{border:1.5px solid var(--ink)}
+.btn.s:hover{background:var(--ink);color:#fff}
+.heroimg{background:var(--soft);aspect-ratio:1/1;overflow:hidden}
+.heroimg img{width:100%;height:100%;object-fit:cover;display:block}
+
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.fact{padding:26px 0}
+.fact+.fact{border-left:1px solid var(--line);padding-left:26px}
+.fact b{display:block;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.fact span{display:block;margin-top:5px;font-size:13.5px;color:var(--mut)}
+
+.catnav{position:sticky;top:69px;z-index:15;background:#fff;border-bottom:1px solid var(--line)}
+.catnav .w{display:flex;gap:28px;overflow-x:auto;padding-top:14px;padding-bottom:14px}
+.catnav a{text-decoration:none;font-size:14px;font-weight:600;text-transform:uppercase;
+ letter-spacing:.09em;white-space:nowrap;color:var(--mut);border-bottom:2px solid transparent;padding-bottom:3px}
+.catnav a:hover{color:var(--ink);border-bottom-color:var(--acc)}
+
+.cat{padding:64px 0 8px}
+.cathd{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--ink);padding-bottom:14px;margin-bottom:36px}
+.num{font-size:13px;font-weight:600;color:var(--acc);letter-spacing:.08em}
+.cathd h2{margin:0;font-size:30px;font-weight:700;letter-spacing:-.02em}
+.cnt{margin-left:auto;font-size:13.5px;color:var(--mut)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:48px 28px}
+.item,.hd h3{min-width:0}
+.hd h3{overflow-wrap:anywhere}
+.item{display:flex;flex-direction:column}
+.ph{background:var(--soft);aspect-ratio:1/1;overflow:hidden;margin-bottom:14px}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
+.item:hover .ph img{transform:scale(1.045)}
+.noimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+ color:#b3b3ad;font-size:13.5px;letter-spacing:.02em}
+.hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.hd h3{margin:0;font-size:17.5px;font-weight:600;line-height:1.25}
+.pr{font-size:17.5px;font-weight:700;white-space:nowrap}
+.vol{margin:3px 0 0;font-size:13.5px;color:var(--mut)}
+.d{margin:9px 0 0;font-size:14px;line-height:1.5;color:var(--mut)}
+
+.revs{background:var(--ink);color:#fff;margin-top:80px;padding:72px 0}
+.revs h2{margin:0 0 40px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:#8f8f8f}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+blockquote{margin:0}
+blockquote p{margin:0;font-size:19px;line-height:1.45;letter-spacing:-.01em}
+cite{display:block;margin-top:16px;font-style:normal;font-size:13.5px;color:#8f8f8f}
+
+.info{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:80px 0}
+.info h2{margin:0 0 22px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--mut)}
+.dl{margin:0;font-size:16px}
+.dl div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line)}
+.dl dt{color:var(--mut)}
+.dl dd{margin:0;font-weight:600;text-align:right}
+.big{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin:0 0 20px}
+.big a{text-decoration:none;border-bottom:3px solid var(--acc)}
+
+footer{border-top:1px solid var(--ink);padding:32px 0 72px;font-size:13.5px;color:var(--mut)}
+.frow{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+footer a{color:var(--ink)}
+
+@media(max-width:900px){
+ .hero{grid-template-columns:1fr;gap:36px;padding:48px 0}
+ .facts{grid-template-columns:repeat(2,1fr)}
+ .fact:nth-child(3){border-left:none;padding-left:0}
+ .fact:nth-child(3),.fact:nth-child(4){border-top:1px solid var(--line)}
+ .rgrid,.info{grid-template-columns:1fr;gap:32px}
+ .mnav{display:none}
+}
+@media(max-width:600px){
+ .w{padding:0 18px} body{font-size:16px}
+ .items{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px}
+ .d{display:none} .cat{padding:44px 0 0}
+ .revs{padding:52px 0;margin-top:56px} blockquote p{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon">Демо-концепт на открытых данных Яндекс Карт. <b>Не официальный сайт заведения.</b></div>
+
+<header>
+  <div class="w bar">
+    <a class="logo" href="#top">ХАВАЮ</a>
+    <nav class="mnav"><a href="#shawarma">Шаурма</a><a href="#hotdogs">Хот-доги</a><a href="#snacks">Снеки</a><a href="#drinks">Напитки</a><a href="#contacts">Контакты</a></nav>
+    <a class="tel" href="tel:+79539670809">+7 953 967-08-09</a>
+  </div>
+</header>
+
+<main id="top">
+<div class="w">
+  <section class="hero">
+    <div>
+      <h1>Шаурма,<br>за которой<br><em>едут через<br>весь город</em></h1>
+      <p class="lead">Тула. Готовим с 10 утра до 10 вечера, возим своим курьером.
+      34 позиции в меню, средний чек 200–250 ₽.</p>
+      <div class="cta">
+        <a class="btn p" href="#shawarma">Смотреть меню</a>
+        <a class="btn s" href="tel:+79539670809">Заказать по телефону</a>
+      </div>
+    </div>
+    <div class="heroimg"><img src="../havayu-menu/img/shaurma--turetskaya.jpg" alt="Шаурма Турецкая" width="941" height="941"></div>
+  </section>
+</div>
+
+<div class="w">
+  <div class="facts">
+    <div class="fact"><b>4,6</b><span>рейтинг на Яндекс Картах</span></div>
+    <div class="fact"><b>260</b><span>оценок, 159 отзывов</span></div>
+    <div class="fact"><b>10–22</b><span>ежедневно, без выходных</span></div>
+    <div class="fact"><b>200–250 ₽</b><span>средний счёт</span></div>
+  </div>
+</div>
+
+<nav class="catnav"><div class="w"><a href="#shawarma">Шаурма</a><a href="#hotdogs">Хот-доги</a><a href="#snacks">Снеки</a><a href="#drinks">Напитки</a></div></nav>
+
+<div class="w">
+  <section class="cat" id="shawarma">
+    <div class="cathd"><span class="num">01</span><h2>Шаурма</h2><span class="cnt">18 позиций</span></div>
+    <div class="items"><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--bavarskaya.jpg" alt="Баварская" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Баварская</h3><span class="pr">320 ₽</span></div>
+        <p class="vol">400 г</p><p class="d">Немецкий характер в каждом укусе! Вместо привычной курицы мы добавили сочную сосиску (80 г) и порцию золотистого картофеля фри. Внутри - хрустящая пекинская капуста, свежие томаты, огурчики и лук. Завершает вкус сочетание классического томатного и не</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--barbekyu.jpg" alt="Барбекю" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Барбекю</h3><span class="pr">370 ₽</span></div>
+        <p class="vol">410 г</p><p class="d">Для любителей насыщенного вкуса С дымком. В основе - сочное куриное филе (100 г), дополненное золотистым хрустящим луком фри, который придает блюду особую текстуру и пикантность. Внутри также свежие томаты, огурчики, пекинская капуста и лук под сочет</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--brusnika.jpg" alt="Брусника" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Брусника</h3><span class="pr">425 ₽</span></div>
+        <p class="vol">360 г</p><p class="d">Гастрономический хит для тех, кто ищет новые вкусовые сочетания. В основе - сочное обжаренное куриное филе (100 г) и микс из свежих овощей в хрустящем лаваше. Главная изюминка - сочетание нежного чесночного соуса и ароматного брусничного соуса с прия</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--diablo.jpg" alt="Диабло" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Диабло</h3><span class="pr">365 ₽</span></div>
+        <p class="vol">390 г</p><p class="d">Внимание: экстремально остро! Наш самый горячий рецепт для тех, кто не боится огня. За основу взята острая шаурма с халапеньо, в которую мы добавили двойную порцию легендарного соуса Шрирача. Сочное мясо, свежие овощи и взрывной вкус чили в каждом ук</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--klassika.jpg" alt="Классика" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Классика</h3><span class="pr">310 ₽</span></div>
+        <p class="vol">350 г</p><p class="d">Тот самый вкус, с которого всё начиналось. Сочное куриное филе в сочетании со свежими томатами, хрустящими огурчиками и капелькой лука. Мы заправляем её идеальным дуэтом чесночного и томатного соусов и плотно заворачиваем в пшеничный лаваш. Ничего ли</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--moreprodukty.jpg" alt="Морепродукты" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Морепродукты</h3><span class="pr">440 ₽</span></div>
+        <p class="vol">390 г</p><p class="d">Изысканная альтернатива мясной шаурме. Внутри - порция крупных королевских креветок в хрустящей панировке (120 г), микс свежих овощей и нежная пекинская капуста. Мы добавили сразу два соуса: наш фирменный чесночный и насыщенный сырный, чтобы подчеркн</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--ovoschnaya.jpg" alt="Овощная" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Овощная</h3><span class="pr">250 ₽</span></div>
+        <p class="vol">320 г</p><p class="d">Легкий и хрустящий вариант для тех, кто предпочитает овощи. Внутри - сочный микс из пекинской капусты, томатов, огурчиков и лука, дополненный небольшой порцией золотистого картофеля фри (20 г). Мы заправили её классическим дуэтом чесночного и томатно</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--ostraya.jpg" alt="Острая" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Острая</h3><span class="pr">320 ₽</span></div>
+        <p class="vol">370 г</p><p class="d">Классический вкус с характером. Внутри - сочное куриное филе (100 г), свежие томаты, огурцы и лук, заправленные чесночным и томатным соусами в хрустящем лаваше. Главная особенность - порция пикантного перца халапеньо (20 г), который добавляет блюду п</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--pesto.jpg" alt="Песто" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Песто</h3><span class="pr">360 ₽</span></div>
+        <p class="vol">350 г</p><p class="d">Изысканный вкус Средиземноморья в удобном формате. Внутри - сочное куриное филе (100 г), дополненное миксом свежих овощей: хрустящими огурчиками, томатами и луком. Главный секрет вкуса - сочетание классического чесночного соуса и ароматного итальянск</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--turetskaya.jpg" alt="Турецкая" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Турецкая</h3><span class="pr">320 ₽</span></div>
+        <p class="vol">400 г</p><p class="d">Наша визитная карточка! Сочное куриное филе, обжаренное до золотистой корочки, в сочетании с хрустящим картофелем фри и свежими овощами (томаты, огурцы, лучок). Мы добавили сразу два соуса - фирменный чесночный и классический томатный, чтобы каждый к</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--tsezar.jpg" alt="Цезарь" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Цезарь</h3><span class="pr">340 ₽</span></div>
+        <p class="vol">430 г</p><p class="d">Настоящий тяжеловес в нашем меню (430 г)! Нестандартное прочтение классики: внутри вместо обычного мяса - порция хрустящих золотистых наггетсов и ломтик нежного сыра Чеддер. Свежесть обеспечивают пекинская капуста, томаты и огурчики. Всё это заправле</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--chetyre-syra.jpg" alt="Четыре Сыра" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Четыре Сыра</h3><span class="pr">370 ₽</span></div>
+        <p class="vol">430 г</p><p class="d">Мечта сырного гурмана весом 430 грамм! Мы объединили сочное куриное филе и свежие овощи с невероятным миксом сыров: нежной моцареллой, пикантным чеддером и густым сырным соусом. Завершает композицию наш фирменный чесночный соус. Тягучая, ароматная и</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--barbekyu-l.jpg" alt="Барбекю L" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Барбекю L</h3><span class="pr">425 ₽</span></div>
+        <p class="vol">480 г</p><p class="d">Мясной гигант для ценителей дымного аромата в большом формате. Мы увеличили порцию обжаренного куриного филе (130 г) и добавили щедрую порцию хрустящего лука фри для еще более яркого вкуса. Внутри - обилие свежих овощей, соус Барбекю и экстра-порция</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--diablo-l.jpg" alt="Диабло L" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Диабло L</h3><span class="pr">430 ₽</span></div>
+        <p class="vol">480 г</p><p class="d">Ультимативный выбор для фанатов острого. Большая порция мяса (130 г) с пикантным халапеньо, усиленная мощной порцией жгучего соуса Шрирача (30 г). Только для тех, кто готов к настоящему огню</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--klassika-l.jpg" alt="Классика L" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Классика L</h3><span class="pr">360 ₽</span></div>
+        <p class="vol">420 г</p><p class="d">Увеличенная версия нашей классики для тех, кто хочет больше мяса. Внутри - 420 грамм сочного куриного филе (130 г), свежие овощи и пекинская капуста в хрустящем лаваше. Мы добавили экстра-порцию чесночного соуса, чтобы большая шаурма оставалась макси</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--ostraya-l.jpg" alt="Острая L" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Острая L</h3><span class="pr">370 ₽</span></div>
+        <p class="vol">720 г</p><p class="d">Двойной огонь для тех, кто серьезно проголодался! Наш формат L (450 г) - это максимум начинки: еще больше сочного куриного филе, экстра-порция чесночного соуса и внушительная порция пикантного перца халапеньо (30 г). Жгучая, сочная и невероятно сытна</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--turetskaya-l.jpg" alt="Турецкая L" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Турецкая L</h3><span class="pr">370 ₽</span></div>
+        <p class="vol">520 г</p><p class="d">Наш ответ самому серьезному голоду! Это увеличенная версия классической Турецкой шаурмы: еще больше сочной жареной курицы, экстра-порция золотистого картофеля фри и дополнительный фирменный чесночный соус. Внутри - 520 граммов чистого удовольствия в</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/shaurma--chetyre-syra-l.jpg" alt="Четыре Сыра L" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Четыре Сыра L</h3><span class="pr">425 ₽</span></div>
+        <p class="vol">510 г</p><p class="d">Увеличенная версия нашего сырного бестселлера весом 510 грамм. Мы добавили еще больше сочного куриного филе (суммарно 130 г), экстра-порцию тягучей моцареллы и нашего фирменного чесночного соуса. Внутри - богатый микс из чеддера, моцареллы и двух вид</p>
+      </article></div>
+  </section>
+  <section class="cat" id="hotdogs">
+    <div class="cathd"><span class="num">02</span><h2>Хот-доги</h2><span class="cnt">4 позиций</span></div>
+    <div class="items"><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/hot-dog--doner.jpg" alt="Донер" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Донер</h3><span class="pr">320 ₽</span></div>
+        <p class="vol">261 г</p><p class="d">Сочное обжаренное куриное филе в сочетании со свежими томатами, хрустящим огурцом и капелькой лука. Мы добавили немного картофеля фри для сытости и два вида соусов: фирменный чесночный для пикантности и томатный для сочности. Все это в мягкой, слегка</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/hot-dog--pita.jpg" alt="Пита" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Пита</h3><span class="pr">320 ₽</span></div>
+        <p class="vol">264 г</p><p class="d">Настоящий праздник вкуса! Большая порция (290 г) с сочной сосиской, дополненная миксом свежих овощей: пекинской капустой, томатами, огурцами и луком. За сочность отвечают сразу два соуса - чесночный и томатный. Сытный и яркий хот-дог для тех, кто про</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/hot-dog--hot-dog-datskiy.jpg" alt="Хот-дог датский" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Хот-дог датский</h3><span class="pr">320 ₽</span></div>
+        <p class="vol">290 г</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/hot-dog--hot-dog-frantsuzskiy.jpg" alt="Хот-дог французский" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Хот-дог французский</h3><span class="pr">250 ₽</span></div>
+        <p class="vol">170 г</p><p class="d">Классический багет с сосиской (80 г) и маринованными огурцами. Минимум лишнего, максимум удобства - идеален для перекуса на бегу</p>
+      </article></div>
+  </section>
+  <section class="cat" id="snacks">
+    <div class="cathd"><span class="num">03</span><h2>Снеки</h2><span class="cnt">6 позиций</span></div>
+    <div class="items"><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/sneki--kartofel-po-derevenski.jpg" alt="Картофель по-деревенски" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Картофель по-деревенски</h3><span class="pr">195 ₽</span></div>
+        <p class="vol">150 г</p><p class="d">Крупные дольки отборного картофеля, обжаренные во фритюре до золотистой корочки. Снаружи - аппетитный хруст, внутри - нежная мякоть. Приправлен ароматным миксом пряных трав и специй. Идеальная компания к любому блюду</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/sneki--kartofel-fri.jpg" alt="Картофель фри" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Картофель фри</h3><span class="pr">195 ₽</span></div>
+        <p class="vol">150 г</p><p class="d">Легендарная классика: тонкие и длинные ломтики золотистого картофеля с идеальным хрустом. Мы обжариваем их до готовности и слегка присаливаем. Снаружи - аппетитная корочка, внутри - нежная текстура. Идеальный гарнир, который сочетается абсолютно со в</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/sneki--krevetki.jpg" alt="Креветки" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Креветки</h3><span class="pr">425 ₽</span></div>
+        <p class="vol">120 г</p><p class="d">Отборные королевские креветки в воздушной и суперхрустящей панировке. Мы готовим их во фритюре до золотистого цвета, чтобы сохранить сочность и нежный вкус морепродуктов. Идеальная закуска для тех, кто хочет чего-то особенного</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/sneki--naggetsy.jpg" alt="Наггетсы" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Наггетсы</h3><span class="pr">170 ₽</span></div>
+        <p class="vol">110 г</p><p class="d">Пять кусочков нежного куриного филе в хрустящей золотистой панировке. Мы обжариваем их до идеального хруста, сохраняя сочность внутри. Отличный вариант для быстрого перекуса или дополнения к обеду</p>
+      </article><article class="item">
+        <div class="ph"><div class="noimg" aria-hidden="true">Фото готовится</div></div>
+        <div class="hd"><h3>Порционный соус</h3><span class="pr">60 ₽</span></div>
+        <p class="vol">25 г</p><p class="d">Насыщенный соус на майонезной основе с добавлением ароматного чеснока и зелени</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/sneki--syrnye-palochki.jpg" alt="Сырные палочки" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Сырные палочки</h3><span class="pr">250 ₽</span></div>
+        <p class="vol">120 г</p><p class="d">Горячая закуска для тех, кто любит Тот самый тянущийся сыр. В порции - 4 палочки из нежной моцареллы в хрустящей золотистой панировке. Мы обжариваем их во фритюре до идеального состояния, чтобы снаружи был аппетитный хруст, а внутри - много расплавле</p>
+      </article></div>
+  </section>
+  <section class="cat" id="drinks">
+    <div class="cathd"><span class="num">04</span><h2>Напитки</h2><span class="cnt">6 позиций</span></div>
+    <div class="items"><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/napitki-holodnye--bon-aqua-500ml.jpg" alt="Bon aqua 500ml" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Bon aqua 500ml</h3><span class="pr">108 ₽</span></div>
+        <p class="vol">500 мл</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/napitki-holodnye--pulpy-apelsin.jpg" alt="Pulpy апельсин" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Pulpy апельсин</h3><span class="pr">175 ₽</span></div>
+        <p class="vol">500 мл</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/napitki-holodnye--rich-tea-chernyy-s-limonom.jpg" alt="Rich tea черный с лимоном" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Rich tea черный с лимоном</h3><span class="pr">175 ₽</span></div>
+        <p class="vol">500 мл</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/napitki-holodnye--rich-sok.jpg" alt="Rich сок" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Rich сок</h3><span class="pr">175 ₽</span></div>
+        <p class="vol">300 мл</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/napitki-holodnye--dobryy-kola-0-5.jpg" alt="Добрый кола 0.5" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Добрый кола 0.5</h3><span class="pr">165 ₽</span></div>
+        <p class="vol">500 мл</p>
+      </article><article class="item">
+        <div class="ph"><img src="../havayu-menu/img/napitki-holodnye--dobryy-kola-330ml.jpg" alt="Добрый кола 330ml" loading="lazy" width="941" height="941"></div>
+        <div class="hd"><h3>Добрый кола 330ml</h3><span class="pr">150 ₽</span></div>
+        <p class="vol">330 мл</p>
+      </article></div>
+  </section></div>
+
+<section class="revs">
+  <div class="w">
+    <h2>Что говорят гости</h2>
+    <div class="rgrid"><blockquote><p>Заведения 10 000 из 100. Повару отдельный респект и уважение — отличный подход. Поднял настроение не только своим шедевром, но и просто словесно.</p><cite>Гость Яндекс Карт</cite></blockquote><blockquote><p>Отличное заведение! Вкусная качественная шаурма. Гуляя в компании, если захотим есть, из любой точки города едем только туда.</p><cite>Гость Яндекс Карт</cite></blockquote><blockquote><p>Огромная парковка. Зашли подождать — два стола, большой холодильник с водой. Всё быстро и вкусно.</p><cite>Гость Яндекс Карт</cite></blockquote></div>
+  </div>
+</section>
+
+<div class="w">
+  <section class="info" id="contacts">
+    <div>
+      <h2>Контакты</h2>
+      <p class="big">Тула · <a href="tel:+79539670809">+7 953 967-08-09</a></p>
+      <p class="lead" style="font-size:16px;margin:0">Телефон для предзаказа. Точный адрес и схему проезда
+      смотрите в <a href="https://yandex.ru/maps/org/khavayu/143588846544/" target="_blank" rel="noopener">карточке на Яндекс Картах</a>.</p>
+    </div>
+    <div>
+      <h2>Условия</h2>
+      <dl class="dl">
+        <div><dt>Часы работы</dt><dd>Ежедневно 10:00–22:00</dd></div>
+        <div><dt>Доставка</dt><dd>Своя курьерская служба</dd></div>
+        <div><dt>Навынос</dt><dd>Есть</dd></div>
+        <div><dt>Кофе с собой</dt><dd>Есть</dd></div>
+        <div><dt>Оплата</dt><dd>Наличные, карта</dd></div>
+        <div><dt>Кухня</dt><dd>Ближневосточная, американская</dd></div>
+      </dl>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="w frow">
+    <span>Демо-концепт. Меню, цены и контакты — открытая карточка «Хаваю» на Яндекс Картах, обновлено 25.08.2026.</span>
+    <span><a href="../havayu-menu/">Исходная галерея фото</a> · <a href="https://yandex.ru/maps/org/khavayu/143588846544/" target="_blank" rel="noopener">Карточка на Картах</a></span>
+  </div>
+</footer>
+</main>
+</body>
+</html>
