@@ -173,7 +173,6 @@
   .srctag { font-size: 9.5px; font-weight: 800; letter-spacing: .3px; border-radius: 5px; padding: 2px 6px;
             margin-left: 6px; white-space: nowrap; color: #7C6BFF;
             background: rgba(124,107,255,0.12); border: 1px solid rgba(124,107,255,0.3); }
-  .srctag.auto { color: #FFB020; background: rgba(255,176,32,0.10); border-color: rgba(255,176,32,0.32); }
   .srctag.live { color: #3DFFC5; background: rgba(61,255,197,0.10); border-color: rgba(61,255,197,0.32); }
   .ritrow { display: flex; align-items: flex-start; gap: 10px; padding: 11px 2px;
             border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -772,7 +771,6 @@ function badgeHTML(t) {
 }
 function srcTagHTML(src) {
   if (src === "ritual") return '<span class="srctag">↻ ритуал</span>';
-  if (src === "auto") return '<span class="srctag auto">⚡ от реактора</span>';
   return '';
 }
 function diagHTML() {
@@ -957,8 +955,6 @@ function render() {
   h += '<div class="qbar">'+[0,1,2].map(function(i){return '<div class="qseg'+(i<quest?' on':'')+'"></div>';}).join('')+'</div></div>';
   h += '<span class="qstat'+(quest===3?' done':'')+'">'+(quest===3?'✓ ГОТОВО':quest+'/3')+'</span></div>';
 
-  h += '<div class="panel" style="margin-top:12px">' + diagBlock + '</div>';
-
   h += '<div class="panel" style="margin-top:12px">';
   h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">';
   h += '<h2>ЗАДАЧИ</h2><span style="font-size:12px;color:#5E6B8C">'+state.tasks.length+' в плане</span></div>';
@@ -1020,6 +1016,8 @@ function render() {
     }).join('');
     h += '</div></div>';
   }
+
+  h += '<div class="panel" style="margin-top:12px">' + diagBlock + '</div>';
 
   h += '<div class="panel" style="margin-top:12px">';
   h += '<div style="display:flex;justify-content:space-between;align-items:baseline">';
