@@ -785,9 +785,6 @@ footer{background:#070707;color:#fff;padding:42px 0} .footer-grid{display:grid;g
 .hero-v13:after,.hero-v13:before{display:none!important}
 
 header .same-logo-as-footer{background:transparent!important;padding:0!important;border-radius:0!important;filter:invert(1)!important}
-
-.quick .wrap a.quick-link{color:inherit;text-decoration:none;cursor:pointer;padding:2px 0;border-bottom:2px solid transparent;transition:border-color .15s}
-.quick .wrap a.quick-link:hover,.quick .wrap a.quick-link:focus-visible{border-bottom-color:#171512}
 </style>
 </head>
 <body>
@@ -814,7 +811,7 @@ header .same-logo-as-footer{background:transparent!important;padding:0!important
 
 </div>
 </section>
-<div class="quick"><div class="wrap"><a class="quick-link" href="#menu" data-jump="shawarma">ШАУРМА</a><a class="quick-link" href="#menu" data-jump="hotdog">ПИТА, ХОТ-ДОГИ</a><a class="quick-link" href="#menu" data-jump="snacks">ГАРНИРЫ</a><a class="quick-link" href="#menu" data-jump="drinks">НАПИТКИ</a></div></div>
+<div class="quick"><div class="wrap"><span>ШАУРМА</span><span>ПИТА, ХОТ-ДОГИ</span><span>ГАРНИРЫ</span><span>НАПИТКИ</span></div></div>
 <section class="exact-menu-section" data-menu-source="https://yandex.ru/maps/org/khavayu/143588846544/menu/" id="menu">
 <div class="wrap">
 <div class="section-head exact-menu-head">
@@ -1023,18 +1020,4 @@ document.querySelectorAll('.catalog-tab').forEach(btn=>{
     initExactMenu();
   }
 })();
-</script><script>
-(function(){
-  function jump(){
-    document.querySelectorAll('.quick-link').forEach(function(a){
-      a.addEventListener('click',function(){
-        var f=a.getAttribute('data-jump');
-        var tab=document.querySelector('#menu .catalog-tab[data-filter="'+f+'"]');
-        if(tab) tab.click();
-      });
-    });
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',jump); else jump();
-})();
-</script>
-</body></html>
+</script></body></html>
