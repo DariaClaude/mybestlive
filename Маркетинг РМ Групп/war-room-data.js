@@ -2899,6 +2899,7 @@ const WAR_ROOM_DATA = {
       "urban":   { "leads": 199, "cpl": 303, "spend": 60343, "adapted": 23,  "conversion": 11.56 },
       "chlbkzn": { "leads": 457, "cpl": 115, "spend": 52726, "adapted": 224, "conversion": 49.02 },
       "msk":     { "leads": 82,  "cpl": 98,  "spend": 8065,  "adapted": 4,   "conversion": 4.88 },
+      "rostiks": { "leads": 104, "cpl": 116, "spend": 12038, "adapted": null, "conversion": null },
       "social": [
         {
           "name": "💙 ВКонтакте",

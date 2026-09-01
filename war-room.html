@@ -452,7 +452,7 @@ function renderChannels(w, prev, idx) {
   }
 
   // ── ДРС / Урбан Дикси ──
-  if (w.urban || w.chlbkzn || w.msk) {
+  if (w.urban || w.chlbkzn || w.msk || w.rostiks) {
     h += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #F1F5F9;">' +
          '<div style="font-size:11px;color:#94A3B8;margin-bottom:8px;font-weight:600;letter-spacing:0.5px;">Проекты ДРС</div>';
     var u = w.urban, pu = prev && prev.urban;
@@ -516,6 +516,20 @@ function renderChannels(w, prev, idx) {
       if (m.adapted != null) l3.push('вышедших: ' + m.adapted);
       if (m.conversion != null) l3.push('конверсия: <span style="color:#10B981;font-weight:600;">' + String(m.conversion).replace('.', ',') + '%</span>');
       if (l3.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l3.join(' • ') + '</div>';
+    }
+    var rk = w.rostiks, pr = prev && prev.rostiks;
+    if (rk) {
+      h += '<div class="channel-item" style="padding-top:8px;border-top:1px solid #F8FAFC;margin-bottom:4px;">' +
+           '<div><div class="channel-name">🛠 Ростикс ДРС</div></div>' +
+           '<div class="channel-meta"><span class="channel-leads" style="color:#334155;">' + fmt(rk.leads) + ' лидов</span>' +
+           '<span class="channel-cpl ' + cplClass(rk.cpl) + '">CPL: ' + fmt(rk.cpl) + ' ₽</span></div></div>';
+      var l4 = [];
+      if (pr && pr.leads != null) { var dr = rk.leads - pr.leads; l4.push(fmt(pr.leads) + ' → ' + fmt(rk.leads) + ' лидов (' + sign(pr.leads ? Math.round(dr / pr.leads * 100) : 0) + '%)'); }
+      else l4.push('новый проект в таблице');
+      if (rk.spend != null) l4.push('затраты: ' + fmt(rk.spend) + ' ₽');
+      if (rk.adapted != null) l4.push('вышедших: ' + rk.adapted);
+      else l4.push('вышедшие: не заполнены');
+      if (l4.length) h += '<div style="font-size:11px;color:#64748B;padding-left:4px;">' + l4.join(' • ') + '</div>';
     }
     h += '</div>';
   }
