@@ -815,8 +815,11 @@ function cliTotals(c) {
   var l=0,s=0;
   // pending — канал есть, но данные ещё не внесены в таблицу: в итоги не берём.
   NEW_TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v && !v.pending){ l+=v.leads; s+=v.spend; } });
-  return { leads:l, spend:s, cpl:l?Math.round(s/l):null,
-           conv:(l && c.adapted!=null)?c.adapted/l*100:null };
+  // Знаменатель конверсии — лиды Авито, а не все каналы: «Вышедшие» ведутся только
+  // по Авито-проектам, добавлять в базу ВК и Юлу — занижать показатель.
+  var av = c.tools.avito, base = (av && !av.pending) ? av.leads : l;
+  return { leads:l, spend:s, cpl:l?Math.round(s/l):null, convBase:base,
+           conv:(base && c.adapted!=null)?c.adapted/base*100:null };
 }
 function cliWeekTotals(cw) {
   var l=0,s=0,a=0,p=0;
