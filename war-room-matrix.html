@@ -713,10 +713,10 @@ var CLIENTS = {
         {n:"ЧЛБ Пятёрочка",plan:15,fact:47,spend:4328,ad:22},
         {n:"ЧЛБ Монетка",plan:160,fact:193,spend:18867,ad:118},
         {n:"КЗН Табыш",plan:40,fact:54,spend:6282,ad:18},
-        {n:"Лента КЗН",plan:15,fact:21,spend:3567,ad:0},
-        {n:"Пятёрочка КЗН",plan:10,fact:15,spend:3189,ad:0},
+        {n:"Лента КЗН",plan:15,fact:21,spend:3567,ad:null},
+        {n:"Пятёрочка КЗН",plan:10,fact:15,spend:3189,ad:null},
         {n:"МСК ВкусВилл",plan:80,fact:82,spend:8065,ad:4},
-        {n:"Ростикс ДРС",plan:100,fact:104,spend:12038,ad:0}
+        {n:"Ростикс ДРС",plan:100,fact:104,spend:12038,ad:null}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:1620, adapted:16,
       tools:{ avito:{leads:3012,spend:383331}, direct:null, social:{leads:8,spend:16584}, yula:{leads:3,spend:1599} },
@@ -834,7 +834,7 @@ function convClass(v) { return v==null?'':(v>=25?'conv-hi':'conv-mid'); }
 // Конверсия по проекту: 0 вышедших — серым (это «не заполнено / не выходили»),
 // оранжевый на нуле читался бы как проблема самого проекта.
 function projConv(ad, fact) {
-  if (!fact) return '<span class="conv-zero">—</span>';
+  if (ad == null || !fact) return '<span class="conv-zero">—</span>';
   var v = ad / fact * 100;
   var cls = !ad ? 'conv-zero' : v >= 25 ? 'conv-hi' : v >= 5 ? 'conv-mid' : 'conv-lo';
   return '<span class="' + cls + '" style="font-weight:700">' + dec1(v) + '%</span>';
@@ -937,10 +937,10 @@ function renderCliDetails(cw) {
        '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th></tr></thead><tbody>';
     var sp=0,sf=0,ss=0,sa=0;
     c.projects.forEach(function(p){
-      var pc=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=p.ad;
+      var pc=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=(p.ad||0);
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
          '<td><span class="pill '+(pc>=100?'pill-ok':'pill-no')+'">'+pc+'%</span></td>'+
-         '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+fmt(p.ad)+'</td>'+
+         '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+(p.ad==null?'<span class="conv-zero">—</span>':fmt(p.ad))+'</td>'+
          '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
     });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
