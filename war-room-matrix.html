@@ -892,11 +892,6 @@ function renderCliKPI(cw, pcw) {
         (d>0.05?'↑':d<-0.05?'↓':'→')+' '+dec1(pc.conv)+'% → '+dec1(ct.conv)+'% ('+(d>0?'+':'')+dec1(d)+' п.п.)</span>')+'</div>';
   });
   h+='<div class="kpi-card"><div class="kpi-label">Конверсия в вышедших</div>'+convRows+'</div>';
-  h+='<div class="kpi-card" style="background:#FAFBFC;border:1px dashed #CBD5E1;box-shadow:none">'+
-     '<div class="kpi-label" style="text-transform:none;font-size:12px">eNPS</div>'+
-     '<div class="kpi-value" style="font-size:18px;color:#94A3B8">нет замеров</div>'+
-     '<div class="kpi-sub">нужен опрос сотрудников</div>'+
-     '<div class="kpi-delta neutral">замеряется раз в квартал</div></div>';
   return h+'</div>';
 }
 
