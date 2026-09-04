@@ -857,5 +857,57 @@ function saveScriptUrl() {
 
 renderAll();
 </script>
+
+<!-- Экран не гаснет, пока дашборд открыт -->
+<script>
+(function () {
+  var lock = null, on = true;
+
+  function badge() {
+    var b = document.getElementById('wake-badge');
+    if (!b) return;
+    b.textContent = on ? '🖵 экран не гаснет' : '🖵 экран гаснет';
+    b.style.opacity = on ? '1' : '0.45';
+  }
+
+  async function acquire() {
+    if (!on || !('wakeLock' in navigator) || document.visibilityState !== 'visible') return;
+    try {
+      lock = await navigator.wakeLock.request('screen');
+      lock.addEventListener('release', function () { lock = null; });
+    } catch (e) { /* батарея, вкладка неактивна или запрет браузера */ }
+  }
+
+  function release() {
+    if (lock) { try { lock.release(); } catch (e) {} lock = null; }
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') acquire();
+  });
+
+  window.addEventListener('DOMContentLoaded', function () {
+    if (!('wakeLock' in navigator)) return;
+    var b = document.createElement('div');
+    b.id = 'wake-badge';
+    b.title = 'Нажмите, чтобы разрешить экрану гаснуть';
+    b.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:9999;cursor:pointer;' +
+      'font:12px/1.4 system-ui,sans-serif;padding:6px 10px;border-radius:14px;' +
+      'background:rgba(0,0,0,.55);color:#fff;user-select:none';
+    b.onclick = function () { on = !on; on ? acquire() : release(); badge(); };
+    document.body.appendChild(b);
+    badge();
+    acquire();
+  });
+
+  // Первый клик или касание — на случай, если браузер требует жест пользователя
+  ['click', 'touchstart', 'keydown'].forEach(function (ev) {
+    document.addEventListener(ev, function once() {
+      acquire();
+      document.removeEventListener(ev, once);
+    }, { passive: true });
+  });
+})();
+</script>
 </body>
 </html>
