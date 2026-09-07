@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#05070F"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png"/>
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png"/>
+<link rel="apple-touch-icon" href="icon-180.png"/>
+<link rel="manifest" href="manifest.json"/>
+<title>Реактор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: radial-gradient(1100px 500px at 70% -10%, rgba(124,107,255,0.14), transparent 60%),
+                radial-gradient(800px 500px at 10% 110%, rgba(61,255,197,0.08), transparent 55%), #05070F;
+    font-family: 'Manrope', system-ui, sans-serif; color: #E8ECF8;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 580px; margin: 0 auto; padding: max(26px, env(safe-area-inset-top)) 16px 48px; position: relative; }
+  .panel {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(124,107,255,0.16);
+    border-radius: 18px; padding: 18px; backdrop-filter: blur(8px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+  h1 { font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 26px; margin: 6px 0 14px;
+       color: #fff; letter-spacing: 1px; text-shadow: 0 0 24px rgba(124,107,255,0.45); }
+  h1 b { color: #7C6BFF; font-weight: 900; }
+  h2 { font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #C9D2E8; }
+  .date { font-size: 11px; color: #5E6B8C; letter-spacing: 3px; text-transform: uppercase; }
+  .statusrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .lvl { font-family:'Unbounded',sans-serif; font-size: 11px; font-weight: 700; color: #3DFFC5;
+         letter-spacing: 1px; text-shadow: 0 0 10px rgba(61,255,197,0.6); }
+  .xpbar { width: 120px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08);
+           overflow: hidden; border: 1px solid rgba(124,107,255,0.3); }
+  .xpbar i { display:block; height:100%; background: linear-gradient(90deg,#7C6BFF,#3DFFC5);
+             box-shadow: 0 0 10px rgba(124,107,255,0.8); transition: width .6s ease; }
+  .xpnum { font-size: 12px; color: #5E6B8C; }
+  .streak { font-size: 12px; font-weight: 800; color: #FF6B35; text-shadow: 0 0 10px rgba(255,107,53,0.6); }
+  .combo { font-size: 12px; font-weight: 800; color: #FFB020; text-shadow: 0 0 10px rgba(255,176,32,0.6); }
+  .cores { display: flex; gap: 6px; justify-content: space-between; padding: 26px 10px 20px; }
+  .core { text-align: center; flex: 1; min-width: 96px; position: relative; }
+  .bat { position: relative; width: 72px; height: 140px; margin: 0 auto; }
+  .cap { position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+         width: 26px; height: 10px; border-radius: 5px 5px 0 0; transition: all .9s ease; }
+  .body { position: absolute; top: 10px; left: 0; right: 0; bottom: 0; border-radius: 16px;
+          overflow: hidden; background: linear-gradient(180deg,#0B1024,#060814);
+          transition: box-shadow .9s ease, border-color .9s ease; }
+  .fill { position: absolute; left: 0; right: 0; bottom: 0;
+          transition: height .9s cubic-bezier(.22,1,.36,1); }
+  .flow { position: absolute; inset: 0; mix-blend-mode: overlay;
+          background: repeating-linear-gradient(180deg, rgba(255,255,255,0.22) 0 3px, transparent 3px 14px);
+          animation: flowUp 1.6s linear infinite; }
+  .meniscus { position: absolute; top: -2px; left: 4px; right: 4px; height: 5px; border-radius: 4px;
+              background: rgba(255,255,255,0.7); filter: blur(2px); }
+  .tick { position: absolute; right: 4px; width: 9px; height: 1.5px; border-radius: 1px; }
+  .pct { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .pct b { font-family:'Unbounded',sans-serif; font-size: 24px; font-weight: 700; color: #fff; }
+  .pct s { font-size: 9px; letter-spacing: 2px; color: #fff; opacity: .85; text-decoration: none; }
+  .burst { position: absolute; inset: 4px -8px -8px; border-radius: 20px;
+           animation: burstRing .8s ease-out forwards; pointer-events: none; }
+  .corename { margin-top: 14px; font-family:'Unbounded',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2.5px; }
+  .corehint { font-size: 10.5px; color: #5E6B8C; margin-top: 4px; line-height: 1.4; padding: 0 4px; }
+  .mini { width: 30px; height: 30px; border-radius: 15px; cursor: pointer;
+          background: rgba(var(--g),0.10); color: rgb(var(--g));
+          border: 1px solid rgba(var(--g),0.45); font-size: 16px; line-height: 1;
+          font-family: inherit; transition: box-shadow .2s, background .2s; }
+  .mini.sm { width: 24px; height: 24px; font-size: 13px; }
+  .mini:active, .mini:hover { background: rgba(var(--g),0.22); box-shadow: 0 0 12px rgba(var(--g),0.5); }
+  .quest { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+  .qbar { display: flex; gap: 5px; margin-top: 6px; }
+  .qseg { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); transition: all .4s; }
+  .qseg.on { background: linear-gradient(90deg,#3DFFC5,#7C6BFF); box-shadow: 0 0 8px rgba(61,255,197,0.6); }
+  .qstat { font-family:'Unbounded',sans-serif; font-size: 13px; font-weight: 700; color: #5E6B8C; }
+  .qstat.done { color: #3DFFC5; text-shadow: 0 0 10px rgba(61,255,197,0.7); }
+  .task { display: flex; align-items: center; gap: 10px; padding: 10px 2px;
+          border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .check { width: 30px; height: 30px; border-radius: 15px; flex-shrink: 0; cursor: pointer;
+           border: 1px solid rgba(255,176,32,0.5); background: rgba(255,176,32,0.10);
+           color: #FFB020; font-size: 14px; line-height: 1; font-family: inherit; }
+  .tname { font-size: 14px; font-weight: 600; color: #E8ECF8; }
+  .badges { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .badge { font-size: 10px; font-weight: 800; letter-spacing: .5px; border-radius: 6px; padding: 2px 8px; }
+  .ghost { width: 26px; height: 26px; border-radius: 8px; border: none; background: transparent;
+           color: #39435E; cursor: pointer; font-size: 13px; font-family: inherit; }
+  .primary { border: 1px solid rgba(124,107,255,0.5); border-radius: 10px;
+             background: linear-gradient(135deg, rgba(124,107,255,0.25), rgba(61,255,197,0.15));
+             color: #fff; padding: 11px 18px; font-family:'Unbounded',sans-serif;
+             font-size: 11px; font-weight: 700; letter-spacing: 1.5px; cursor: pointer;
+             box-shadow: 0 0 20px rgba(124,107,255,0.25); }
+  .form { margin-top: 12px; padding: 14px; border-radius: 14px;
+          background: rgba(124,107,255,0.06); border: 1px solid rgba(124,107,255,0.2); }
+  .form input[type=text] { width: 100%; padding: 11px 13px; border-radius: 10px;
+          border: 1px solid rgba(124,107,255,0.35); font-size: 16px; font-family: inherit;
+          background: #0B1024; color: #E8ECF8; }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .ptabs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .ptab { border: none; background: transparent; color: #5E6B8C; border-radius: 8px;
+          padding: 5px 10px; font-size: 12px; font-weight: 700; font-family: inherit;
+          cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; }
+  .ptab.on { color: #3DFFC5; border-bottom-color: #3DFFC5;
+             text-shadow: 0 0 8px rgba(61,255,197,0.5); }
+  .preset { border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04);
+            color: #C9D2E8; border-radius: 20px; padding: 5px 12px; font-size: 12px;
+            font-family: inherit; cursor: pointer; transition: all .2s; }
+  .preset:hover, .preset:active { border-color: rgba(61,255,197,0.6); color: #3DFFC5;
+            box-shadow: 0 0 10px rgba(61,255,197,0.3); }
+  .steppers { display: flex; gap: 8px; flex-wrap: wrap; }
+  .stepper { display: flex; align-items: center; gap: 7px; border-radius: 10px; padding: 6px 9px; }
+  .stepper .nm { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; min-width: 56px; font-family:'Unbounded',sans-serif; }
+  .stepper .val { min-width: 32px; text-align: center; font-size: 13px; font-weight: 800; }
+  .hintline { font-size: 12px; color: #5E6B8C; margin: 12px 0 8px; }
+  .empty { font-size: 13.5px; color: #5E6B8C; margin: 4px 0 14px; line-height: 1.5; }
+  .chartbox svg { display: block; width: 100%; height: auto; }
+  .legend { display: flex; gap: 14px; margin-top: 8px; justify-content: center; }
+  .legend span { font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+  .achs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .ach { display: flex; align-items: center; gap: 6px; border-radius: 10px; padding: 6px 10px;
+         font-size: 11px; font-weight: 700; border: 1px solid rgba(255,255,255,0.10);
+         background: rgba(255,255,255,0.03); color: #39435E; }
+  .ach.on { border-color: rgba(255,176,32,0.5); color: #FFB020;
+            box-shadow: 0 0 12px rgba(255,176,32,0.25); background: rgba(255,176,32,0.07); }
+  .footerbtns { display: flex; gap: 10px; justify-content: center; margin-top: 22px; }
+  .footerbtns button { border: 1px solid rgba(255,255,255,0.12); background: transparent;
+         color: #5E6B8C; border-radius: 10px; padding: 8px 14px; font-size: 12px;
+         font-family: inherit; cursor: pointer; }
+  .logtitle { font-size: 10px; color: #5E6B8C; text-transform: uppercase; letter-spacing: 2px; margin: 16px 0 6px; padding: 0 6px; }
+  .logline { font-size: 12px; color: #5E6B8C; padding: 3px 6px; display: flex; gap: 10px; }
+  .logline time { color: #39435E; font-variant-numeric: tabular-nums; }
+  .lvlflash { position: fixed; top: 50%; left: 50%; z-index: 50; transform: translate(-50%,-50%);
+              animation: lvlPop 1.6s ease forwards; font-family:'Unbounded',sans-serif;
+              font-weight: 900; font-size: 30px; color: #fff; text-align: center;
+              text-shadow: 0 0 30px #7C6BFF, 0 0 60px #3DFFC5; pointer-events: none; }
+  .lvlflash small { font-size: 15px; color: #3DFFC5; }
+  .toast { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 60;
+           background: rgba(11,16,36,0.95); border: 1px solid rgba(255,176,32,0.5);
+           color: #FFB020; border-radius: 12px; padding: 10px 18px; font-size: 13px; font-weight: 700;
+           box-shadow: 0 0 24px rgba(255,176,32,0.35); animation: toastIn 3s ease forwards; }
+  .stars { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
+  .star { position: absolute; border-radius: 50%; opacity: .35; filter: blur(.5px);
+          animation: starDrift linear infinite; }
+  .spark { position: absolute; bottom: -12px; border-radius: 50%;
+           animation-name: sparkRise, sparkTwinkle; animation-iteration-count: infinite;
+           animation-timing-function: linear, ease-in-out; }
+  .comet { position: absolute; width: 90px; height: 2px; border-radius: 2px;
+           opacity: 0; transform-origin: left center;
+           animation: cometShoot 9s ease-in infinite; }
+  .low-pulse { animation: lowPulse 1.4s ease-in-out infinite; }
+  @keyframes flowUp { from { background-position-y: 0; } to { background-position-y: -28px; } }
+  @keyframes lowPulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.5); } }
+  @keyframes burstRing { from { transform: scale(.9); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
+  @keyframes starDrift { from { transform: translateY(0); } to { transform: translateY(-140px); } }
+  @keyframes sparkRise {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(14px, -25vh); }
+    50%  { transform: translate(-10px, -50vh); }
+    75%  { transform: translate(12px, -75vh); }
+    100% { transform: translate(-6px, -105vh); }
+  }
+  @keyframes sparkTwinkle {
+    0%, 100% { opacity: 0; }
+    8%  { opacity: .9; }
+    45% { opacity: .35; }
+    70% { opacity: .8; }
+    92% { opacity: .1; }
+  }
+  @keyframes cometShoot {
+    0%, 88% { opacity: 0; transform: rotate(35deg) translateX(0); }
+    90% { opacity: .9; }
+    100% { opacity: 0; transform: rotate(35deg) translateX(70vw); }
+  }
+  @keyframes lvlPop { 0% { transform: translate(-50%,-50%) scale(.6); opacity: 0; }
+    15% { opacity: 1; } 70% { transform: translate(-50%,-50%) scale(1.05); opacity: 1; }
+    100% { transform: translate(-50%,-50%) scale(1.15); opacity: 0; } }
+  @keyframes toastIn { 0% { opacity: 0; transform: translate(-50%, 14px); }
+    10%,80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; } }
+  button:focus-visible, input:focus-visible { outline: 2px solid #7C6BFF; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="stars" id="stars" aria-hidden="true"></div>
+<div class="wrap" id="app"></div>
+
+<script>
+"use strict";
+var APP_VERSION = "2.5";
+var KEY = "daria-energy-vessels";
+
+var CORES = [
+  { id:"energy", name:"ЭНЕРГИЯ", neon:"#FFB020", neon2:"#FF6B35", g:"255,176,32",
+    hint:"топливо тела: сон, движение, силы" },
+  { id:"spirit", name:"ДУХ", neon:"#3DFFC5", neon2:"#00B8A9", g:"61,255,197",
+    hint:"внутренний огонь: смысл, вдохновение, спокойствие" },
+  { id:"focus", name:"ФОКУС", neon:"#7C6BFF", neon2:"#3B82F6", g:"124,107,255",
+    hint:"луч внимания: ясность ума, концентрация" }
+];
+var RANKS = ["Искра","Заряд","Импульс","Разряд","Вольтова дуга","Реактор","Ядро","Плазма","Квазар","Сверхновая"];
+
+var PRESET_CATS = [
+  { id:"body", name:"💪 Тело", items:[
+    { name:"Тренировка",            e:{energy:15,spirit:5,focus:0} },
+    { name:"Зарядка утром",         e:{energy:10,spirit:0,focus:5} },
+    { name:"Прогулка",              e:{energy:10,spirit:10,focus:0} },
+    { name:"Растяжка / йога",       e:{energy:10,spirit:10,focus:0} },
+    { name:"Бассейн",               e:{energy:15,spirit:5,focus:0} },
+    { name:"Сон вовремя",           e:{energy:20,spirit:0,focus:5} },
+    { name:"Ранний подъём",         e:{energy:5,spirit:0,focus:10} },
+    { name:"Контрастный душ",       e:{energy:10,spirit:0,focus:0} },
+    { name:"Дневной отдых 20 мин",  e:{energy:10,spirit:0,focus:5} },
+    { name:"Здоровый обед",         e:{energy:10,spirit:0,focus:0} },
+    { name:"День без сладкого",     e:{energy:5,spirit:0,focus:5} },
+    { name:"Массаж / баня",         e:{energy:15,spirit:10,focus:0} }
+  ]},
+  { id:"spirit", name:"🜂 Дух", items:[
+    { name:"Медитация",             e:{energy:0,spirit:15,focus:10} },
+    { name:"Творчество",            e:{energy:0,spirit:15,focus:0} },
+    { name:"Время с близкими",      e:{energy:5,spirit:15,focus:0} },
+    { name:"Свидание / романтика",  e:{energy:5,spirit:15,focus:0} },
+    { name:"Позвонить родителям",   e:{energy:0,spirit:10,focus:0} },
+    { name:"Выйти на природу",      e:{energy:5,spirit:15,focus:0} },
+    { name:"Чтение книги",          e:{energy:0,spirit:10,focus:5} },
+    { name:"Дневник / рефлексия",   e:{energy:0,spirit:10,focus:5} },
+    { name:"Благодарность: 3 пункта", e:{energy:0,spirit:10,focus:0} },
+    { name:"Помочь кому-то",        e:{energy:0,spirit:15,focus:0} },
+    { name:"Любимая музыка",        e:{energy:5,spirit:10,focus:0} },
+    { name:"Побыть в тишине",       e:{energy:0,spirit:10,focus:5} },
+    { name:"Час без телефона",      e:{energy:0,spirit:10,focus:10} }
+  ]},
+  { id:"focus", name:"◎ Фокус", items:[
+    { name:"Глубокая работа",       e:{energy:-5,spirit:0,focus:15} },
+    { name:"Одна сложная задача",   e:{energy:-10,spirit:0,focus:15} },
+    { name:"Стратегическая сессия", e:{energy:-5,spirit:0,focus:15} },
+    { name:"Планирование дня",      e:{energy:0,spirit:0,focus:10} },
+    { name:"Навести порядок",       e:{energy:0,spirit:5,focus:10} },
+    { name:"Закрыть хвосты",        e:{energy:0,spirit:5,focus:10} },
+    { name:"Инбокс-ноль",           e:{energy:-5,spirit:0,focus:10} },
+    { name:"Обучение / курс",       e:{energy:0,spirit:5,focus:10} },
+    { name:"Изучить новый инструмент", e:{energy:0,spirit:5,focus:10} },
+    { name:"Разбор почты",          e:{energy:-5,spirit:0,focus:5} },
+    { name:"Выключить уведомления", e:{energy:0,spirit:0,focus:10} },
+    { name:"Без соцсетей до обеда", e:{energy:0,spirit:5,focus:15} }
+  ]},
+  { id:"home", name:"🏠 Быт", items:[
+    { name:"Уборка дома",           e:{energy:-5,spirit:5,focus:5} },
+    { name:"Приготовить ужин",      e:{energy:0,spirit:5,focus:0} },
+    { name:"Закупка продуктов",     e:{energy:-5,spirit:0,focus:5} },
+    { name:"Оплатить счета",        e:{energy:0,spirit:0,focus:5} },
+    { name:"Разобрать гардероб",    e:{energy:0,spirit:5,focus:10} },
+    { name:"Уход за растениями",    e:{energy:0,spirit:10,focus:0} }
+  ]},
+  { id:"drain", name:"🌀 Затратные", items:[
+    { name:"Планёрка",              e:{energy:-5,spirit:0,focus:-5} },
+    { name:"Сложные переговоры",    e:{energy:-15,spirit:0,focus:10} },
+    { name:"Дедлайн-спринт",        e:{energy:-15,spirit:-5,focus:10} },
+    { name:"Работа сверхурочно",    e:{energy:-15,spirit:-5,focus:5} },
+    { name:"Конфликтный разговор",  e:{energy:-10,spirit:-10,focus:0} },
+    { name:"Рутина / отчёты",       e:{energy:-5,spirit:-5,focus:5} },
+    { name:"Дорога / пробки",       e:{energy:-10,spirit:0,focus:0} },
+    { name:"Публичное выступление", e:{energy:-10,spirit:5,focus:10} }
+  ]}
+];
+
+var ACHS = [
+  { id:"first",   name:"Первая искра", emoji:"✦",  test:function(s){ return s.totalDone >= 1; } },
+  { id:"ten",     name:"10 задач",     emoji:"⚡", test:function(s){ return s.totalDone >= 10; } },
+  { id:"fifty",   name:"50 задач",     emoji:"💫", test:function(s){ return s.totalDone >= 50; } },
+  { id:"streak3", name:"Серия 3 дня",  emoji:"🔥", test:function(s){ return s.streak.count >= 3; } },
+  { id:"streak7", name:"Серия неделя", emoji:"🌋", test:function(s){ return s.streak.count >= 7; } },
+  { id:"lvl5",    name:"Уровень 5",    emoji:"🚀", test:function(s){ return s.xp >= 400; } },
+  { id:"full",    name:"Полный заряд", emoji:"🔋", test:function(s){
+      return s.batteries.energy >= 80 && s.batteries.spirit >= 80 && s.batteries.focus >= 80; } }
+];
+
+/* ── АВТОПЛАНИРОВЩИК ── */
+var PLAN_V = 2;       // меняется вместе с составом рутины: план пересобирается в тот же день
+var PLANNER = {
+  size: 9,            // будни: рутина (5) + 4 задачи под просевшие сферы
+  weekendSize: 7,     // выходные: рутина (4) + 3 задачи
+  anchor: [2026, 6, 8], // 08.07.2026 — точка отсчёта директорских дней (раз в 2 недели, среда)
+  rituals: [   /* утренняя рутина — попадает в план всегда, до умного добора */
+    { name:"Стакан воды",       e:{energy:5, spirit:0, focus:0},  weekend:true  },
+    { name:"Контрастный душ",   e:{energy:10,spirit:0, focus:0},  weekend:true  },
+    { name:"Зарядка утром",     e:{energy:10,spirit:0, focus:5},  weekend:true  },
+    { name:"Массаж",            e:{energy:10,spirit:10,focus:0},  weekend:true, blocks:"Массаж / баня" },
+    { name:"Планирование дня",  e:{energy:0, spirit:0, focus:10}, weekend:false }
+  ]
+};
+function stripTime(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function buildPlan() {
+  var now = new Date(); var dow = now.getDay();
+  var weekend = (dow === 0 || dow === 6);
+  var target = weekend ? PLANNER.weekendSize : PLANNER.size;
+  var names = {};
+  state.tasks.forEach(function(t){ names[t.name] = 1; });
+  state.done.filter(function(t){ return t.doneAt === today(); }).forEach(function(t){ names[t.name] = 1; });
+  var added = 0;
+  function push(name, e) {
+    if (names[name]) return false;
+    names[name] = 1; added++;
+    state.tasks.push({ id: Date.now() + Math.floor(Math.random()*100000), name: name, effects: Object.assign({}, e), src:"auto" });
+    return true;
+  }
+  /* фиксированные события по расписанию Дарьи */
+  if (dow === 3) {
+    push("Оперсовет 11:00–13:00", {energy:-10,spirit:0,focus:-5});
+    var anchor = new Date(PLANNER.anchor[0], PLANNER.anchor[1], PLANNER.anchor[2]);
+    var diffDays = Math.round((stripTime(now) - anchor) / 86400000);
+    if (diffDays >= 0 && (diffDays / 7) % 2 === 0)
+      push("Директорский день 14:00", {energy:-15,spirit:5,focus:10});
+  }
+  /* утренние ритуалы */
+  PLANNER.rituals.forEach(function(r){
+    if (weekend && !r.weekend) return;
+    push(r.name, r.e);
+    if (r.blocks) names[r.blocks] = 1;   /* похожий пункт библиотеки в этот день не предлагаем */
+  });
+  /* умный добор: под самую нуждающуюся сферу, с опорой на то, что делается обычно */
+  function pickFrom(catId) {   /* запасной путь: случайная задача из категории */
+    var cat = PRESET_CATS.find(function(c){ return c.id === catId; });
+    var pool = cat ? cat.items.filter(function(i){ return !names[i.name]; }) : [];
+    if (!pool.length) return false;
+    var p = pool[Math.floor(Math.random() * pool.length)];
+    return push(p.name, p.e);
+  }
+  var needs = coreNeeds();
+  var catUsed = {}, chosen = [];
+  state.tasks.forEach(function(t){
+    var c = categoryFor(t.effects); catUsed[c] = (catUsed[c] || 0) + 1;
+  });
+  var guard = 0;
+  while (state.tasks.length < target && guard++ < 30) {
+    var lastSlot = state.tasks.length === target - 1;   /* последний слот — для свежего */
+    var placed = false;
+    for (var i = 0; i < needs.length && !placed; i++) {
+      var pool = poolFor(needs[i].core.id, weekend, names, lastSlot);
+      var cand = null;
+      for (var j = 0; j < pool.length && !cand; j++)
+        if ((catUsed[pool[j].cat] || 0) < 2) cand = pool[j];
+      if (!cand && pool.length) cand = pool[0];
+      if (!cand) continue;
+      if (push(cand.name, cand.e)) {
+        catUsed[cand.cat] = (catUsed[cand.cat] || 0) + 1;
+        chosen.push({ name: cand.name, core: needs[i].core, habit: cand.habit, ago: cand.ago });
+        placed = true;
+      }
+    }
+    if (!placed) break;
+  }
+  /* в плане всегда есть что-то для Духа */
+  if (!state.tasks.some(function(t){ return t.effects.spirit >= 10; })) pickFrom("spirit");
+  if (added) {
+    var weak = needs.filter(function(x){ return x.need >= 25; })
+                    .map(function(x){ return x.core.name + " " + x.v + "%"; });
+    pushLog(weak.length
+      ? "Просело: " + weak.join(", ") + " — под них и собран план"
+      : "Все батареи в норме — план на поддержание");
+    if (chosen.length) pushLog("Добавлено: " + chosen.map(function(x){
+      return x.name + (x.habit >= 3 ? " (делаете обычно)" : x.ago >= 10 ? " (давно не было)" : "");
+    }).join(", "));
+  }
+  state.planDate = today();
+  state.planV = PLAN_V;
+}
+
+/* ── чем и под что добирать план ── */
+function daysAgoDone(name) {
+  var d = today(), best = 99;
+  state.done.forEach(function(t){
+    if (t.name !== name || !t.doneAt) return;
+    var diff = daysBetween(t.doneAt, d);
+    if (diff >= 0 && diff < best) best = diff;
+  });
+  return best;
+}
+function habitCount(name, days) {
+  var d = today(), n = 0;
+  state.done.forEach(function(t){
+    if (t.name !== name || !t.doneAt) return;
+    var diff = daysBetween(t.doneAt, d);
+    if (diff >= 0 && diff < days) n++;
+  });
+  return n;
+}
+function skipCount(name, days) {
+  var d = today(), n = 0;
+  (state.skipped || []).forEach(function(x){
+    if (x.name !== name || !x.date) return;
+    var diff = daysBetween(x.date, d);
+    if (diff >= 0 && diff < days) n++;
+  });
+  return n;
+}
+/* сферы по нужде: ниже заряд, хуже недельный тренд и меньше подпитки — выше приоритет */
+function coreNeeds() {
+  var hist = state.history.slice(-7), d = today();
+  return CORES.map(function(c){
+    var v = state.batteries[c.id];
+    var trend = v - (hist.length ? hist[0][c.id] : v);
+    var week = 0;
+    state.done.forEach(function(t){
+      if (!t.doneAt) return;
+      var diff = daysBetween(t.doneAt, d);
+      if (diff >= 0 && diff < 7 && (t.effects[c.id] || 0) > 0) week += t.effects[c.id];
+    });
+    return { core:c, v:v, trend:trend, week:week,
+             need: (100 - v) + Math.max(0, -trend) * 0.6 + Math.max(0, 30 - week) * 0.4 };
+  }).sort(function(a,b){ return b.need - a.need; });
+}
+/* кандидаты под сферу: свои задачи и шаблоны, отранжированные по пользе */
+function poolFor(coreId, weekend, names, freshBias) {
+  var out = [];
+  function add(name, e, mine) {
+    if (names[name] || (e[coreId] || 0) <= 0) return;
+    var cat = categoryFor(e);
+    if (weekend && cat === "focus") return;          /* в выходные без рабочего фокуса */
+    var harm = 0;                                     /* не жечь батарею, которая и так низкая */
+    CORES.forEach(function(o){
+      if (o.id === coreId || (e[o.id] || 0) >= 0) return;
+      var lvl = state.batteries[o.id];
+      harm += -e[o.id] * (lvl < 50 ? 1.2 : lvl < 70 ? 0.6 : 0.3);
+    });
+    var habit = habitCount(name, 14), ago = daysAgoDone(name);
+    var w = e[coreId] - harm - skipCount(name, 7) * 6 + (mine ? 5 : 0);
+    if (freshBias) w += (ago >= 10 ? 10 : 0) - Math.min(habit, 4) * 2;   /* слот на разнообразие */
+    else w += Math.min(habit, 5) * 6;                                     /* привычное — в приоритете */
+    out.push({ name:name, e:e, cat:cat, habit:habit, ago:ago, w:w });
+  }
+  (state.myTasks || []).forEach(function(t){ add(t.name, t.e, true); });
+  PRESET_CATS.forEach(function(c){ c.items.forEach(function(i){ add(i.name, i.e, false); }); });
+  return out.sort(function(a,b){ return b.w - a.w; });
+}
+
+
+
+function load() {
+  var def = { batteries:{energy:60,spirit:60,focus:60}, tasks:[], done:[], xp:0, log:[],
+              streak:{count:0,lastDate:null}, combo:{count:0,date:null},
+              history:[], lastVisit:null, totalDone:0, ach:[], planDate:null, planV:0,
+              checkinDate:null, notes:[], spent:0, myTasks:[], skipped:[],
+              rewards:[
+                {id:1, name:"Час с книгой без чувства вины", cost:40},
+                {id:2, name:"Серия любимого сериала", cost:60},
+                {id:3, name:"Долгая ванна со свечами", cost:80},
+                {id:4, name:"Ленивое утро в выходной", cost:150},
+                {id:5, name:"Внеплановый шопинг", cost:300}
+              ] };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (!raw) raw = localStorage.getItem(KEY + "-bak"); /* основная запись повреждена — берём копию */
+    if (raw) { var p = JSON.parse(raw); for (var k in def) if (!(k in p)) p[k] = def[k]; return p; }
+  } catch(e) {
+    try {
+      var bak = localStorage.getItem(KEY + "-bak");
+      if (bak) { var p2 = JSON.parse(bak); for (var k2 in def) if (!(k2 in p2)) p2[k2] = def[k2]; return p2; }
+    } catch(e2) {}
+  }
+  return def;
+}
+function save(push) {
+  state.savedAt = Date.now();
+  try {
+    var payload = JSON.stringify(state);
+    localStorage.setItem(KEY, payload);
+    localStorage.setItem(KEY + "-bak", payload);
+  } catch(e) {}
+  if (push !== false) syncPush();
+}
+
+function today() { return new Date().toLocaleDateString("ru-RU"); }
+function isYesterday(d) { if (!d) return false; var y = new Date(); y.setDate(y.getDate()-1);
+  return d === y.toLocaleDateString("ru-RU"); }
+function daysBetween(a, b) {
+  function toD(s){ var p = s.split("."); return new Date(+p[2], +p[1]-1, +p[0]); }
+  return Math.round((toD(b) - toD(a)) / 86400000);
+}
+function clamp(v) { return Math.max(0, Math.min(100, v)); }
+function fmt(v) { return v > 0 ? "+"+v : ""+v; }
+function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function pushLog(text) {
+  state.log.unshift({ time: new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}), text: text });
+  state.log = state.log.slice(0, 12);
+}
+function ruWord(n, one, few, many){ var m10=n%10, m100=n%100;
+  if (m10===1 && m100!==11) return one;
+  if (m10>=2 && m10<=4 && (m100<10||m100>=20)) return few;
+  return many; }
+function ruDays(n){ return ruWord(n, "день", "дня", "дней"); }
+
+/* своя задача (рабочая, вписанная руками) — переносим; подкинутую планировщиком — списываем */
+function isOwnTask(t) {
+  if (t.src === "manual") return true;
+  if (t.src === "auto") return false;
+  return (state.myTasks || []).some(function(m){ return m.name === t.name; });  /* задачи без пометки */
+}
+function expireTasks(dateKey) {
+  if (!state.tasks.length) return;
+  state.skipped = state.skipped || [];
+  var keep = [], dropped = 0;
+  state.tasks.forEach(function(t){
+    if (isOwnTask(t)) { keep.push(t); return; }
+    state.skipped.unshift({ name:t.name, effects:t.effects, date:dateKey });
+    dropped++;
+  });
+  state.skipped = state.skipped.slice(0, 80);
+  state.tasks = keep;
+  if (dropped) pushLog("Не израсходовано за " + dateKey + ": " + dropped + " " +
+          ruWord(dropped, "задача списана", "задачи списаны", "задач списано"));
+  if (keep.length) pushLog("Ваши задачи перенесены на сегодня: " + keep.length);
+}
+
+/* ── новый день: снимок в историю + ночной саморазряд ── */
+function handleNewDay() {
+  var d = today();
+  if (!state.lastVisit) { state.lastVisit = d; save(); return; }
+  if (state.lastVisit === d) return;
+  state.history.push({
+    date: state.lastVisit,
+    energy: state.batteries.energy, spirit: state.batteries.spirit, focus: state.batteries.focus
+  });
+  state.history = state.history.slice(-14);
+  expireTasks(state.lastVisit);
+  var missed = Math.min(daysBetween(state.lastVisit, d), 3);
+  if (missed > 0) {
+    var drain = 8 * missed;
+    CORES.forEach(function(c){ state.batteries[c.id] = Math.max(5, state.batteries[c.id] - drain); });
+    pushLog("Ночной саморазряд: −" + drain + " всем батареям. Доброе утро — пора заряжаться!");
+  }
+  state.lastVisit = d;
+  save();
+}
+
+/* ── действия ── */
+function adjust(id, d) {
+  state.batteries[id] = clamp(state.batteries[id] + d);
+  var core = CORES.find(function(c){return c.id===id;});
+  pushLog(core.name + ": вручную " + fmt(d));
+  if (d > 0) ui.bursts[id] = Date.now();
+  checkAchs(); save(); render();
+}
+function addTask() {
+  var name = ui.title.trim(); if (!name) return;
+  var hasEff = CORES.some(function(c){ return ui.effects[c.id] !== 0; });
+  var eff = hasEff ? Object.assign({}, ui.effects) : {energy:10,spirit:0,focus:0};
+  state.tasks.push({ id: Date.now(), name: name, effects: eff, src:"manual" });
+  rememberTask(name, eff);
+  ui.title = ""; ui.effects = {energy:0,spirit:0,focus:0}; ui.showForm = false;
+  save(); render();
+}
+/* свои задачи запоминаются и появляются во вкладке «Мои» */
+function rememberTask(name, eff) {
+  var isPreset = PRESET_CATS.some(function(c){
+    return c.items.some(function(i){ return i.name === name; });
+  });
+  /* служебные события планировщика в библиотеку не попадают */
+  if (name === 'Оперсовет 11:00–13:00' || name === 'Директорский день 14:00') return;
+  if (isPreset) return;
+  state.myTasks = (state.myTasks || []).filter(function(t){ return t.name !== name; });
+  state.myTasks.unshift({ name: name, e: Object.assign({}, eff) });
+  state.myTasks = state.myTasks.slice(0, 30);
+}
+function delMyTask(i) {
+  state.myTasks.splice(i, 1);
+  save(); render();
+}
+function dominantColor(eff) {
+  var cat = categoryFor(eff);
+  if (cat === "body") return CORES[0];
+  if (cat === "spirit") return CORES[1];
+  if (cat === "focus") return CORES[2];
+  return { neon: "#5E6B8C", g: "94,107,140" };
+}
+function categoryFor(eff) {
+  var best = null, bestV = 0;
+  ["energy","spirit","focus"].forEach(function(k){
+    if ((eff[k] || 0) > bestV) { bestV = eff[k]; best = k; }
+  });
+  if (best === "energy") return "body";
+  if (best === "spirit") return "spirit";
+  if (best === "focus") return "focus";
+  return "drain";
+}
+function allCats() {
+  return PRESET_CATS.map(function(c){
+    var mine = (state.myTasks || []).map(function(t, idx){
+      return { name: t.name, e: t.e, mine: true, idx: idx };
+    }).filter(function(t){ return categoryFor(t.e) === c.id; });
+    return { id: c.id, name: c.name, items: mine.concat(c.items) };
+  });
+}
+function usePreset(cat, i) {
+  var p = allCats()[cat].items[i];
+  ui.title = p.name;
+  ui.effects = Object.assign({}, p.e);
+  render();
+  var inp = document.getElementById("taskTitle");
+  if (inp) inp.focus();
+}
+function setPresetCat(i) { ui.presetCat = i; render(); }
+function completeTask(id) {
+  var t = state.tasks.find(function(x){return x.id===id;}); if (!t) return;
+  CORES.forEach(function(c){ if (t.effects[c.id] > 0) ui.bursts[c.id] = Date.now(); });
+  for (var k in t.effects) state.batteries[k] = clamp(state.batteries[k] + t.effects[k]);
+  var d = today();
+  var combo = state.combo.date === d ? state.combo.count + 1 : 1;
+  var mult = 1 + Math.min(combo - 1, 5) * 0.2;
+  var absSum = 0; for (var k2 in t.effects) absSum += Math.abs(t.effects[k2]);
+  var gained = Math.round((10 + absSum / 5) * mult);
+  var prevLvl = Math.floor(state.xp / 100);
+  state.xp += gained;
+  if (Math.floor(state.xp / 100) > prevLvl) flashLevel();
+  if (state.streak.lastDate !== d)
+    state.streak = { count: isYesterday(state.streak.lastDate) ? state.streak.count + 1 : 1, lastDate: d };
+  state.combo = { count: combo, date: d };
+  state.totalDone += 1;
+  state.tasks = state.tasks.filter(function(x){return x.id!==id;});
+  state.done.unshift({ id:t.id, name:t.name, effects:t.effects, doneAt:d, gained:gained });
+  state.done = state.done.slice(0, 150);   /* глубина истории: на ней считается «что делаю обычно» */
+  pushLog("«" + t.name + "» → +" + gained + " ✦" + (combo > 1 ? " (комбо ×" + mult.toFixed(1) + ")" : ""));
+  checkAchs(); save(); render();
+}
+function undoTask(id) {
+  var t = state.done.find(function(x){return x.id===id;}); if (!t) return;
+  for (var k in t.effects) state.batteries[k] = clamp(state.batteries[k] - t.effects[k]);
+  state.done = state.done.filter(function(x){return x.id!==id;});
+  state.tasks.unshift({ id:t.id, name:t.name, effects:t.effects });
+  state.xp = Math.max(0, state.xp - (t.gained || 10));
+  state.combo.count = Math.max(0, state.combo.count - 1);
+  state.totalDone = Math.max(0, state.totalDone - 1);
+  pushLog("Возвращено в план: «" + t.name + "»");
+  save(); render();
+}
+function repeatTask(id) {
+  var t = state.done.find(function(x){return x.id===id;}); if (!t) return;
+  state.tasks.push({ id: Date.now(), name: t.name, effects: Object.assign({}, t.effects), src: t.src || "manual" });
+  pushLog("В план снова: «" + t.name + "»");
+  save(); render();
+}
+function removeTask(id) {
+  state.tasks = state.tasks.filter(function(x){return x.id!==id;});
+  save(); render();
+}
+function stepEffect(id, d) {
+  ui.effects[id] = Math.max(-25, Math.min(25, ui.effects[id] + d));
+  render();
+}
+function checkAchs() {
+  ACHS.forEach(function(a){
+    if (state.ach.indexOf(a.id) === -1 && a.test(state)) {
+      state.ach.push(a.id);
+      toast(a.emoji + " Достижение: " + a.name + "!");
+    }
+  });
+}
+function flashLevel() {
+  var lvl = Math.floor(state.xp / 100) + 1;
+  var el = document.createElement("div");
+  el.className = "lvlflash";
+  el.innerHTML = "УРОВЕНЬ " + lvl + "<br><small>ранг: " + RANKS[Math.min(lvl-1, RANKS.length-1)] + "</small>";
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 1700);
+}
+function toast(text) {
+  var el = document.createElement("div");
+  el.className = "toast";
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 3100);
+}
+
+/* ── ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ (приватный репозиторий GitHub) ── */
+var SYNC = { owner:"DariaClaude", repo:"reactor-data", path:"state.json", tokenKey:"reactor-sync-token" };
+var syncState = { status:"off", last:null, timer:null };
+function syncToken(){ try { return localStorage.getItem(SYNC.tokenKey) || ""; } catch(e){ return ""; } }
+function b64enc(str){ return btoa(unescape(encodeURIComponent(str))); }
+function b64dec(b){ return decodeURIComponent(escape(atob(b))); }
+function ghUrl(){ return "https://api.github.com/repos/"+SYNC.owner+"/"+SYNC.repo+"/contents/"+SYNC.path; }
+function ghHeaders(){ return { "Authorization": "Bearer " + syncToken(), "Accept": "application/vnd.github+json" }; }
+function syncTimeStr(){ return syncState.last ? syncState.last.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}) : ""; }
+
+function syncPull(silent, cb) {
+  if (!syncToken()) { if (cb) cb(); return; }
+  syncState.status = "sync";
+  fetch(ghUrl(), { headers: ghHeaders() })
+    .then(function(r){
+      if (r.status === 404) return null;
+      if (r.status === 401 || r.status === 403) { syncState.badKey = true; throw new Error("HTTP "+r.status); }
+      if (!r.ok) throw new Error("HTTP "+r.status);
+      syncState.badKey = false;
+      return r.json();
+    })
+    .then(function(d){
+      if (d && d.content) {
+        try {
+          var remote = JSON.parse(b64dec(d.content.replace(/\n/g,"")));
+          if (remote && remote.batteries && (remote.savedAt || 0) > (state.savedAt || 0)) {
+            state = remote;
+            save(false);
+            if (!silent) toast("☁️ Данные подтянуты с другого устройства");
+          }
+        } catch(e) {}
+      }
+      syncState.status = "ok"; syncState.last = new Date();
+      render();
+      if (cb) cb();
+    })
+    .catch(function(){ syncState.status = "err"; render(); if (cb) cb(); });
+}
+function syncPush() {
+  if (!syncToken()) return;
+  clearTimeout(syncState.timer);
+  syncState.timer = setTimeout(function(){
+    syncState.status = "sync";
+    fetch(ghUrl(), { headers: ghHeaders() })
+      .then(function(r){ return r.status === 404 ? { sha:null } : r.json(); })
+      .then(function(d){
+        /* СТРАХОВКА: если в облаке данных заметно больше, чем на этом устройстве, —
+           не перезаписываем, а наоборот восстанавливаемся из облака */
+        var remote = null;
+        try { if (d && d.content) remote = JSON.parse(b64dec(d.content.replace(/\n/g,""))); } catch(e) {}
+        if (remote && remote.batteries) {
+          var cloudRicher = ((remote.xp || 0) > (state.xp || 0) + 50) ||
+                            ((remote.totalDone || 0) > (state.totalDone || 0) + 3);
+          if (cloudRicher) {
+            state = remote; save(false);
+            syncState.status = "ok"; syncState.last = new Date();
+            toast("☁️ В облаке данные полнее — восстановила их на это устройство");
+            render();
+            return null;
+          }
+        }
+        var payload = { message: "sync " + new Date().toISOString(), content: b64enc(JSON.stringify(state)), branch: "main" };
+        if (d && d.sha) payload.sha = d.sha;
+        return fetch(ghUrl(), { method:"PUT",
+          headers: Object.assign({ "Content-Type":"application/json" }, ghHeaders()),
+          body: JSON.stringify(payload) });
+      })
+      .then(function(r){
+        if (r === null || r === undefined) return;
+        if (!r.ok && !syncState.retried) {
+          syncState.retried = true;
+          syncPush(); /* конфликт одновременной записи — повторим со свежим sha */
+          return;
+        }
+        syncState.retried = false;
+        syncState.status = r.ok ? "ok" : "err";
+        if (r.ok) syncState.last = new Date();
+        render();
+      })
+      .catch(function(){ syncState.status = "err"; render(); });
+  }, 2500);
+}
+function syncConnect() {
+  var t = window.prompt("Вставьте ключ синхронизации (github_pat_..., доступ только к reactor-data):");
+  if (!t || t.indexOf("github_pat_") !== 0) { if (t !== null) toast("Не похоже на ключ github_pat_..."); return; }
+  try { localStorage.setItem(SYNC.tokenKey, t.trim()); } catch(e) {}
+  toast("☁️ Подключаю синхронизацию…");
+  syncPull();
+  syncPush();
+}
+function syncDisconnect() {
+  try { localStorage.removeItem(SYNC.tokenKey); } catch(e) {}
+  syncState.status = "off"; syncState.last = null;
+  toast("Синхронизация отключена, данные остались на устройстве");
+  render();
+}
+
+/* ── вечерний чек-ин ── */
+function openCheckin() { ui.checkin = { energy: state.batteries.energy, spirit: state.batteries.spirit, focus: state.batteries.focus, note: "" }; render(); }
+function checkinSlide(id, v) { ui.checkin[id] = parseInt(v, 10); render(); }
+function saveCheckin() {
+  CORES.forEach(function(c){ state.batteries[c.id] = clamp(ui.checkin[c.id]); });
+  var note = (ui.checkin.note || "").trim();
+  if (note) { state.notes.unshift({ date: today(), text: note }); state.notes = state.notes.slice(0, 30); }
+  state.checkinDate = today();
+  state.xp += 5;
+  pushLog("🌙 Чек-ин: батареи откалиброваны по ощущениям (+5 ✦)");
+  ui.checkin = null;
+  toast("🌙 Чек-ин сохранён, +5 ✦ за честность");
+  checkAchs(); save(); render();
+}
+
+/* ── магазин наград ── */
+function sparkBalance() { return Math.max(0, state.xp - (state.spent || 0)); }
+function buyReward(id) {
+  var r = state.rewards.find(function(x){ return x.id === id; }); if (!r) return;
+  if (sparkBalance() < r.cost) { toast("Не хватает искр — реактор ещё не накопил"); return; }
+  state.spent = (state.spent || 0) + r.cost;
+  pushLog("🎁 Награда куплена: «" + r.name + "» (−" + r.cost + " ✦)");
+  toast("🎁 Заслужено: " + r.name + "!");
+  save(); render();
+}
+function addReward() {
+  var name = window.prompt("Название награды:"); if (!name || !name.trim()) return;
+  var cost = parseInt(window.prompt("Стоимость в искрах ✦ (например, 100):"), 10);
+  if (!cost || cost < 1) return;
+  state.rewards.push({ id: Date.now(), name: name.trim(), cost: cost });
+  save(); render();
+}
+function delReward(id) {
+  state.rewards = state.rewards.filter(function(r){ return r.id !== id; });
+  save(); render();
+}
+
+/* ── разбор недели ── */
+function weeklyInsights() {
+  if (state.history.length < 3) return null;
+  var out = [];
+  var last = state.history.slice(-7);
+  /* хронически слабая батарея */
+  var avg = { energy:0, spirit:0, focus:0 };
+  last.forEach(function(h){ CORES.forEach(function(c){ avg[c.id] += h[c.id]; }); });
+  CORES.forEach(function(c){ avg[c.id] = Math.round(avg[c.id] / last.length); });
+  var weakest = CORES.slice().sort(function(a,b){ return avg[a.id] - avg[b.id]; })[0];
+  var strongest = CORES.slice().sort(function(a,b){ return avg[b.id] - avg[a.id]; })[0];
+  out.push("Средний заряд: ⚡ " + avg.energy + " · 🜂 " + avg.spirit + " · ◎ " + avg.focus + ".");
+  out.push("Чаще всего проседает <b style=\"color:" + weakest.neon + "\">" + weakest.name + "</b> — планировщик уже подкидывает ей больше задач.");
+  out.push("Сильнее всего держится <b style=\"color:" + strongest.neon + "\">" + strongest.name + "</b>.");
+  /* лучший и худший день */
+  var scored = last.map(function(h){ return { d: h.date, v: h.energy + h.spirit + h.focus }; });
+  scored.sort(function(a,b){ return b.v - a.v; });
+  if (scored.length >= 2)
+    out.push("Самый заряженный день — " + scored[0].d + ", самый выжатый — " + scored[scored.length-1].d + ".");
+  /* самые заряжающие задачи из выполненных */
+  var gains = {};
+  state.done.forEach(function(t){
+    var plus = 0; for (var k in t.effects) if (t.effects[k] > 0) plus += t.effects[k];
+    if (plus > 0) gains[t.name] = (gains[t.name] || 0) + plus;
+  });
+  var top = Object.keys(gains).sort(function(a,b){ return gains[b] - gains[a]; }).slice(0, 3);
+  if (top.length) out.push("Ваши главные зарядные станции: " + top.map(function(n){ return "«" + n + "»"; }).join(", ") + ".");
+  return out;
+}
+
+/* ── резервная копия ── */
+function backup() {
+  var data = JSON.stringify(state);
+  function done(){ toast("💾 Копия скопирована — сохраните её в заметки"); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(data).then(done, function(){ window.prompt("Скопируйте текст копии:", data); });
+  } else { window.prompt("Скопируйте текст копии:", data); }
+}
+function restore() {
+  var raw = window.prompt("Вставьте текст резервной копии:");
+  if (!raw) return;
+  try {
+    var p = JSON.parse(raw);
+    if (!p.batteries) throw new Error("нет данных");
+    state = p; handleNewDay(); save(); render();
+    toast("✓ Данные восстановлены");
+  } catch(e) { toast("Не похоже на копию Реактора — проверьте текст"); }
+}
+
+/* ── прогноз на вечер: текущий заряд + эффекты невыполненных задач ── */
+function forecast() {
+  var f = { energy: state.batteries.energy, spirit: state.batteries.spirit, focus: state.batteries.focus };
+  state.tasks.forEach(function(t){
+    for (var k in t.effects) f[k] = clamp(f[k] + t.effects[k]);
+  });
+  return f;
+}
+
+/* ── отрисовка ── */
+function coreHTML(c) {
+  var v = state.batteries[c.id];
+  var fv = forecast()[c.id];
+  var marker = Math.abs(fv - v) >= 3
+    ? '<div style="position:absolute;left:3px;right:3px;bottom:'+fv+'%;border-top:2px dashed rgba('+c.g+',0.85);filter:drop-shadow(0 0 4px rgba('+c.g+',0.8))" title="прогноз на вечер"></div>'
+    : '';
+  var it = 0.25 + (v / 100) * 0.75;
+  var low = v <= 20;
+  var burst = ui.bursts[c.id] && (Date.now() - ui.bursts[c.id] < 900)
+    ? '<div class="burst" style="border:2px solid rgba('+c.g+',0.9)"></div>' : '';
+  return '<div class="core">' +
+    '<div class="bat">' +
+      '<div class="cap" style="background:rgba('+c.g+','+(0.35+0.5*it)+');box-shadow:0 0 '+(8+v*0.15)+'px rgba('+c.g+','+(0.7*it)+')"></div>' +
+      '<div class="body'+(low?' low-pulse':'')+'" style="border:1.5px solid rgba('+c.g+','+(low?0.9:0.35+0.35*it)+');box-shadow:0 0 '+(12+v*0.4)+'px rgba('+c.g+','+(0.5*it)+'),0 0 '+(40+v*0.8)+'px rgba('+c.g+','+(0.18*it)+'),inset 0 0 18px rgba('+c.g+','+(0.18*it)+'),inset 0 2px 4px rgba(255,255,255,0.08)">' +
+        '<div class="fill" style="height:'+v+'%;background:linear-gradient(180deg,rgba('+c.g+',0.95),'+c.neon2+');box-shadow:0 0 24px rgba('+c.g+',0.9)">' +
+          '<div class="flow"></div><div class="meniscus"></div></div>' +
+        [25,50,75].map(function(m){ return '<div class="tick" style="bottom:'+m+'%;background:rgba('+c.g+',0.45)"></div>'; }).join('') +
+        marker + '<div class="pct"><b style="text-shadow:0 0 14px rgba('+c.g+',1),0 1px 3px rgba(0,0,0,0.5)">'+v+'</b><s style="text-shadow:0 0 8px rgba('+c.g+',1)">%</s></div>' +
+      '</div>' + burst +
+    '</div>' +
+    '<div class="corename" style="color:'+c.neon+';text-shadow:0 0 12px rgba('+c.g+',0.6)">'+c.name+'</div>' +
+    '<div class="corehint">'+c.hint+'</div>' +
+    '<div style="display:inline-flex;gap:8px;margin-top:10px">' +
+      '<button class="mini" style="--g:'+c.g+'" onclick="adjust(\''+c.id+'\',-5)" aria-label="Убавить">−</button>' +
+      '<button class="mini" style="--g:'+c.g+'" onclick="adjust(\''+c.id+'\',5)" aria-label="Прибавить">+</button>' +
+    '</div></div>';
+}
+function badgeHTML(t) {
+  return CORES.filter(function(c){return t.effects[c.id]!==0;}).map(function(c){
+    return '<span class="badge" style="color:'+c.neon+';background:rgba('+c.g+',0.10);border:1px solid rgba('+c.g+',0.3)">'+c.name+' '+fmt(t.effects[c.id])+'</span>';
+  }).join('');
+}
+function chartHTML() {
+  var pts = state.history.slice(-6).concat([{
+    date: today(), energy: state.batteries.energy, spirit: state.batteries.spirit, focus: state.batteries.focus
+  }]);
+  if (pts.length < 2)
+    return '<p class="empty" style="margin:8px 0 0">График недели появится, когда накопится пара дней истории.</p>';
+  var W = 520, H = 130, pad = 14;
+  function x(i){ return pad + i * ((W - 2*pad) / (pts.length - 1)); }
+  function y(v){ return H - pad - (v / 100) * (H - 2*pad); }
+  function line(id, color) {
+    var d = pts.map(function(p,i){ return (i?'L':'M') + x(i).toFixed(1) + ' ' + y(p[id]).toFixed(1); }).join(' ');
+    var dots = pts.map(function(p,i){
+      return '<circle cx="'+x(i).toFixed(1)+'" cy="'+y(p[id]).toFixed(1)+'" r="3" fill="'+color+'"/>';
+    }).join('');
+    return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="2.5" stroke-linecap="round" style="filter:drop-shadow(0 0 5px '+color+')"/>' + dots;
+  }
+  var labels = pts.map(function(p,i){
+    var parts = p.date.split(".");
+    return '<text x="'+x(i).toFixed(1)+'" y="'+(H-1)+'" font-size="9" fill="#5E6B8C" text-anchor="middle">'+parts[0]+'.'+parts[1]+'</text>';
+  }).join('');
+  var grid = [25,50,75].map(function(v){
+    return '<line x1="'+pad+'" y1="'+y(v)+'" x2="'+(W-pad)+'" y2="'+y(v)+'" stroke="rgba(255,255,255,0.06)"/>';
+  }).join('');
+  return '<div class="chartbox"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="График заряда за неделю">' +
+    grid + line("energy","#FFB020") + line("spirit","#3DFFC5") + line("focus","#7C6BFF") + labels +
+    '</svg><div class="legend">' +
+    '<span style="color:#FFB020">— ЭНЕРГИЯ</span><span style="color:#3DFFC5">— ДУХ</span><span style="color:#7C6BFF">— ФОКУС</span>' +
+    '</div></div>';
+}
+function achsHTML() {
+  return '<div class="achs">' + ACHS.map(function(a){
+    var on = state.ach.indexOf(a.id) !== -1;
+    return '<span class="ach'+(on?' on':'')+'">'+a.emoji+' '+a.name+'</span>';
+  }).join('') + '</div>';
+}
+function render() {
+  var lvl = Math.floor(state.xp / 100) + 1;
+  var rank = RANKS[Math.min(lvl-1, RANKS.length-1)];
+  var prog = state.xp % 100;
+  var d = today();
+  var comboToday = state.combo.date === d ? state.combo.count : 0;
+  var mult = 1 + Math.min(comboToday, 5) * 0.2;
+  var doneToday = state.done.filter(function(t){return t.doneAt===d;});
+  var quest = Math.min(doneToday.length, 3);
+  var dateStr = new Date().toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"});
+
+  var h = '';
+  h += '<div style="margin-bottom:20px">';
+  h += '<div class="date">'+dateStr+'</div>';
+  h += '<h1 style="display:flex;align-items:center;gap:12px"><img src="icon-180.png?v=green" alt="" style="width:38px;height:38px;border-radius:10px;box-shadow:0 0 16px rgba(61,255,197,0.5);flex-shrink:0"/><span>РЕАКТОР <b>Дарьи</b></span></h1>';
+  h += '<div class="statusrow">';
+  h += '<span class="lvl">LVL '+lvl+' · '+rank.toUpperCase()+'</span>';
+  h += '<span class="xpbar"><i style="width:'+prog+'%"></i></span>';
+  h += '<span class="xpnum">'+sparkBalance()+' ✦</span>';
+  if (state.streak.count > 1) h += '<span class="streak">🔥 серия '+state.streak.count+' '+ruDays(state.streak.count)+'</span>';
+  if (comboToday > 1) h += '<span class="combo">комбо ×'+mult.toFixed(1)+'</span>';
+  h += '</div></div>';
+
+  h += '<div class="panel cores">' + CORES.map(coreHTML).join('') + '</div>';
+  if (state.tasks.length) {
+    var fc = forecast();
+    var parts = CORES.map(function(c){
+      var dlt = fc[c.id] - state.batteries[c.id];
+      var arrow = dlt > 0 ? ' <b style="color:#3DFFC5">+'+dlt+'</b>' : dlt < 0 ? ' <b style="color:#FF5C7A">'+dlt+'</b>' : '';
+      return '<span style="color:'+c.neon+';font-weight:800">'+fc[c.id]+'</span>'+arrow;
+    });
+    h += '<div style="text-align:center;font-size:12px;color:#5E6B8C;margin-top:10px">'+
+         'Если закрыть весь план, к вечеру: &nbsp;⚡ '+parts[0]+' &nbsp;·&nbsp; 🜂 '+parts[1]+' &nbsp;·&nbsp; ◎ '+parts[2]+'</div>';
+  }
+
+  h += '<div class="panel quest" style="margin-top:12px">';
+  h += '<span style="font-size:18px">🎯</span><div style="flex:1">';
+  h += '<div style="font-size:12px;font-weight:700;color:#C9D2E8">Квест дня: выполнить 3 задачи</div>';
+  h += '<div class="qbar">'+[0,1,2].map(function(i){return '<div class="qseg'+(i<quest?' on':'')+'"></div>';}).join('')+'</div></div>';
+  h += '<span class="qstat'+(quest===3?' done':'')+'">'+(quest===3?'✓ ГОТОВО':quest+'/3')+'</span></div>';
+
+  h += '<div class="panel" style="margin-top:12px">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">';
+  h += '<h2>ЗАДАЧИ</h2><span><button class="preset" onclick="buildPlan();save();render()">⟳ собрать день</button></span></div>';
+  if (!state.tasks.length && !ui.showForm)
+    h += '<p class="empty">Реактору нужно топливо. Добавьте задачу — или возьмите готовую из шаблонов.</p>';
+  var CAT_ORDER = { body: 1, spirit: 2, focus: 3, drain: 4 };
+  var sortedTasks = state.tasks.slice().sort(function(a, b){
+    return (CAT_ORDER[categoryFor(a.effects)] || 9) - (CAT_ORDER[categoryFor(b.effects)] || 9);
+  });
+  h += sortedTasks.map(function(t){
+    var dc = dominantColor(t.effects);
+    return '<div class="task" style="border-left:2px solid rgba('+dc.g+',0.55);padding-left:10px">' +
+      '<button class="check" onclick="completeTask('+t.id+')" aria-label="Выполнить">⚡</button>' +
+      '<div style="flex:1;min-width:0"><div class="tname">'+esc(t.name)+'</div><div class="badges">'+badgeHTML(t)+'</div></div>' +
+      '<button class="ghost" onclick="removeTask('+t.id+')" aria-label="Удалить">✕</button></div>';
+  }).join('');
+  if (ui.showForm) {
+    h += '<div class="form">';
+    h += '<input type="text" id="taskTitle" placeholder="Например: тренировка / сложные переговоры" value="'+esc(ui.title)+'"/>';
+    var cats = allCats();
+    var pc = Math.min(ui.presetCat || 0, cats.length - 1);
+    h += '<div class="ptabs">'+cats.map(function(c,i){
+      return '<button class="ptab'+(pc===i?' on':'')+'" onclick="setPresetCat('+i+')">'+c.name+' <i style="font-style:normal;opacity:.55">'+c.items.length+'</i></button>';
+    }).join('')+'</div>';
+    h += '<div class="presets">'+cats[pc].items.map(function(p,i){
+      var del = p.mine
+        ? ' <span onclick="event.stopPropagation();delMyTask('+p.idx+')" style="opacity:.5;padding-left:4px" role="button" aria-label="Забыть задачу">✕</span>'
+        : '';
+      return '<button class="preset" onclick="usePreset('+pc+','+i+')">'+esc(p.name)+del+'</button>';
+    }).join('')+'</div>';
+    h += '<div class="hintline">Эффект на батареи — плюс заряжает, минус сжигает:</div>';
+    h += '<div class="steppers">'+CORES.map(function(c){
+      var v = ui.effects[c.id];
+      var col = v>0?'#3DFFC5':v<0?'#FF5C7A':'#5E6B8C';
+      var sh = v!==0?('text-shadow:0 0 8px '+(v>0?'rgba(61,255,197,0.5)':'rgba(255,92,122,0.5)')):'';
+      return '<div class="stepper" style="background:rgba('+c.g+',0.08);border:1px solid rgba('+c.g+',0.25)">' +
+        '<span class="nm" style="color:'+c.neon+'">'+c.name+'</span>' +
+        '<button class="mini sm" style="--g:'+c.g+'" onclick="stepEffect(\''+c.id+'\',-5)">−</button>' +
+        '<span class="val" style="color:'+col+';'+sh+'">'+fmt(v)+'</span>' +
+        '<button class="mini sm" style="--g:'+c.g+'" onclick="stepEffect(\''+c.id+'\',5)">+</button></div>';
+    }).join('')+'</div>';
+    h += '<div style="display:flex;gap:8px;margin-top:14px">';
+    h += '<button class="primary" onclick="submitTask()">ЗАРЯДИТЬ ПЛАН</button>';
+    h += '<button class="ghost" style="width:auto;padding:0 14px" onclick="ui.showForm=false;render()">Отмена</button></div></div>';
+  } else {
+    h += '<button class="primary" style="margin-top:8px" onclick="ui.showForm=true;ui.focusForm=true;render()">+ НОВАЯ ЗАДАЧА</button>';
+  }
+  h += '</div>';
+
+  if (doneToday.length) {
+    h += '<div class="panel" style="margin-top:12px"><h2>ВЫПОЛНЕНО СЕГОДНЯ — '+doneToday.length+'</h2><div style="margin-top:6px">';
+    h += doneToday.map(function(t){
+      return '<div class="task" style="opacity:.7">' +
+        '<span class="check" style="background:rgba(61,255,197,0.15);border-color:rgba(61,255,197,0.5);color:#3DFFC5;cursor:default">✓</span>' +
+        '<div style="flex:1;font-size:13.5px;color:#C9D2E8;text-decoration:line-through">'+esc(t.name)+
+        ' <b style="color:#3DFFC5;text-decoration:none">+'+(t.gained||10)+' ✦</b></div>' +
+        '<button class="ghost" style="width:auto;padding:0 8px;font-size:11px" onclick="repeatTask('+t.id+')">ещё раз</button>' +
+        '<button class="ghost" style="width:auto;padding:0 8px;font-size:11px" onclick="undoTask('+t.id+')">вернуть</button></div>';
+    }).join('');
+    h += '</div></div>';
+  }
+
+  /* вечерний чек-ин */
+  if (state.checkinDate !== d) {
+    h += '<div class="panel" style="margin-top:12px">';
+    if (ui.checkin) {
+      h += '<h2>🌙 ВЕЧЕРНИЙ ЧЕК-ИН</h2><p class="empty" style="margin:8px 0 4px">Как день по ощущениям? Подвиньте — батареи откалибруются.</p>';
+      CORES.forEach(function(c){
+        h += '<div style="margin:10px 0 2px;display:flex;align-items:center;gap:10px">' +
+          '<span style="font-family:\'Unbounded\',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:'+c.neon+';min-width:64px">'+c.name+'</span>' +
+          '<input type="range" min="0" max="100" value="'+ui.checkin[c.id]+'" oninput="checkinSlide(\''+c.id+'\', this.value)" style="flex:1;accent-color:'+c.neon+'"/>' +
+          '<b style="min-width:30px;text-align:right;color:'+c.neon+'">'+ui.checkin[c.id]+'</b></div>';
+      });
+      h += '<input type="text" id="checkinNote" placeholder="Пара слов о дне (необязательно)" value="'+esc(ui.checkin.note||'')+'" style="width:100%;box-sizing:border-box;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px solid rgba(124,107,255,0.35);font-size:16px;font-family:inherit;background:#0B1024;color:#E8ECF8"/>';
+      h += '<div style="display:flex;gap:8px;margin-top:12px"><button class="primary" onclick="saveCheckin()">СОХРАНИТЬ ЧЕК-ИН</button>' +
+           '<button class="ghost" style="width:auto;padding:0 14px" onclick="ui.checkin=null;render()">Позже</button></div>';
+    } else {
+      h += '<div style="display:flex;align-items:center;gap:12px"><span style="font-size:18px">🌙</span>' +
+        '<div style="flex:1"><div style="font-size:12px;font-weight:700;color:#C9D2E8">Вечерний чек-ин</div>' +
+        '<div style="font-size:11px;color:#5E6B8C">Откалибруйте батареи по реальным ощущениям (+5 ✦)</div></div>' +
+        '<button class="preset" onclick="openCheckin()">пройти</button></div>';
+    }
+    h += '</div>';
+  }
+
+  h += '<div class="panel" style="margin-top:12px"><h2>НЕДЕЛЯ РЕАКТОРА</h2>' + chartHTML() + '</div>';
+
+  /* разбор недели */
+  var insights = weeklyInsights();
+  if (insights) {
+    h += '<div class="panel" style="margin-top:12px"><h2>РАЗБОР НЕДЕЛИ</h2><div style="margin-top:8px">';
+    insights.forEach(function(line){
+      h += '<p style="font-size:13px;color:#C9D2E8;line-height:1.55;margin:6px 0">• ' + line + '</p>';
+    });
+    h += '</div></div>';
+  }
+
+  /* магазин наград */
+  h += '<div class="panel" style="margin-top:12px">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><h2>МАГАЗИН НАГРАД</h2>' +
+       '<span style="font-size:12px;color:#FFB020;font-weight:800">баланс: '+sparkBalance()+' ✦</span></div>';
+  state.rewards.forEach(function(r){
+    var can = sparkBalance() >= r.cost;
+    h += '<div class="task"><span style="font-size:16px">🎁</span>' +
+      '<div style="flex:1;font-size:13.5px;color:#E8ECF8">'+esc(r.name)+'</div>' +
+      '<span style="font-size:12px;font-weight:800;color:'+(can?'#FFB020':'#39435E')+'">'+r.cost+' ✦</span>' +
+      '<button class="preset" '+(can?'':'disabled style="opacity:.35;cursor:default" ')+'onclick="buyReward('+r.id+')">купить</button>' +
+      '<button class="ghost" onclick="delReward('+r.id+')" aria-label="Удалить награду">✕</button></div>';
+  });
+  h += '<button class="preset" style="margin-top:10px" onclick="addReward()">+ своя награда</button>';
+  h += '</div>';
+
+  h += '<div class="panel" style="margin-top:12px"><h2>ДОСТИЖЕНИЯ</h2>' + achsHTML() + '</div>';
+
+  if (state.log.length) {
+    h += '<div class="logtitle">журнал реактора</div>';
+    h += state.log.slice(0,6).map(function(l){
+      return '<div class="logline"><time>'+l.time+'</time><span>'+esc(l.text)+'</span></div>';
+    }).join('');
+  }
+
+  /* синхронизация */
+  h += '<div class="panel" style="margin-top:12px">';
+  var dotColor = syncState.status === "ok" ? "#3DFFC5" : syncState.status === "sync" ? "#FFB020" : syncState.status === "err" ? "#FF5C7A" : "#39435E";
+  h += '<div style="display:flex;align-items:center;gap:12px">' +
+    '<span style="width:10px;height:10px;border-radius:5px;background:'+dotColor+';box-shadow:0 0 8px '+dotColor+';flex-shrink:0"></span>' +
+    '<div style="flex:1"><div style="font-size:12px;font-weight:700;color:#C9D2E8">☁️ Синхронизация устройств</div>';
+  if (syncToken()) {
+    h += '<div style="font-size:11px;color:#5E6B8C">' +
+      (syncState.status === "err" ? (syncState.badKey ? "ключ не подошёл или отозван — перевыпустите и подключите заново" : "нет связи с облаком — проверьте интернет") :
+       syncState.status === "sync" ? "обмен данными…" :
+       "подключена · хранилище: reactor-data" + (syncTimeStr() ? " · " + syncTimeStr() : "")) + '</div></div>';
+    h += '<button class="preset" onclick="syncPull()">обновить</button>' +
+         '<button class="ghost" style="width:auto;padding:0 10px;font-size:11px" onclick="syncDisconnect()">откл.</button>';
+  } else {
+    var freshHint = (state.xp === 0 && state.totalDone === 0)
+      ? 'уже пользовались Реактором? Подключите — и всё вернётся из облака'
+      : 'общий прогресс на телефоне и компьютере';
+    h += '<div style="font-size:11px;color:' + (state.xp === 0 && state.totalDone === 0 ? '#FFB020' : '#5E6B8C') + '">' + freshHint + '</div></div>';
+    h += '<button class="preset" onclick="syncConnect()">подключить</button>';
+  }
+  h += '</div></div>';
+
+  h += '<div class="footerbtns">' +
+    '<button onclick="backup()">💾 Резервная копия</button>' +
+    '<button onclick="restore()">↩ Восстановить</button></div>';
+  h += '<div style="text-align:center;font-size:10px;color:#39435E;margin-top:10px">Реактор v' + APP_VERSION + '</div>';
+
+  document.getElementById("app").innerHTML = h;
+  var inp = document.getElementById("taskTitle");
+  if (inp) {
+    inp.addEventListener("input", function(){ ui.title = this.value; });
+    inp.addEventListener("keydown", function(e){ if (e.key === "Enter") submitTask(); });
+    if (ui.showForm && ui.focusForm) { inp.focus(); ui.focusForm = false; }
+  }
+  var cn = document.getElementById("checkinNote");
+  if (cn) cn.addEventListener("input", function(){ ui.checkin.note = this.value; });
+}
+function submitTask(){ addTask(); }
+
+/* звёзды, искры и кометы */
+(function(){
+  var box = document.getElementById("stars");
+  var colors = ["#FFB020","#3DFFC5","#7C6BFF"];
+  var glows  = ["255,176,32","61,255,197","124,107,255"];
+  for (var i = 0; i < 18; i++) {
+    var st = document.createElement("span");
+    st.className = "star";
+    st.style.left = (i*41)%100 + "%";
+    st.style.top = (i*67)%100 + "%";
+    st.style.width = st.style.height = (i%3 ? 2 : 3) + "px";
+    st.style.background = colors[i%3];
+    st.style.animationDuration = (14 + (i%7)*3) + "s";
+    box.appendChild(st);
+  }
+  /* искры-угольки: поднимаются, покачиваясь и мерцая */
+  for (var j = 0; j < 26; j++) {
+    var sp = document.createElement("span");
+    sp.className = "spark";
+    var sz = 2 + (j % 3);
+    sp.style.left = (j*37 + 11) % 100 + "%";
+    sp.style.width = sp.style.height = sz + "px";
+    sp.style.background = colors[j%3];
+    sp.style.boxShadow = "0 0 " + (4 + sz*2) + "px rgba(" + glows[j%3] + ",0.9)";
+    var dur = 9 + (j % 8) * 2;
+    sp.style.animationDuration = dur + "s, " + (2.2 + (j%5)*0.6) + "s";
+    sp.style.animationDelay = (j * 0.9) % dur + "s, 0s";
+    box.appendChild(sp);
+  }
+  /* редкие кометы */
+  for (var k = 0; k < 2; k++) {
+    var cm = document.createElement("span");
+    cm.className = "comet";
+    cm.style.left = (10 + k*45) + "%";
+    cm.style.top = (12 + k*20) + "%";
+    cm.style.background = "linear-gradient(90deg, " + colors[k+1] + ", transparent)";
+    cm.style.boxShadow = "0 0 8px rgba(" + glows[k+1] + ",0.8)";
+    cm.style.animationDelay = (k * 4.5) + "s";
+    box.appendChild(cm);
+  }
+})();
+
+/* ── ЗАПУСК ── */
+window.addEventListener("error", function(ev){
+  try { toast("⚠️ Сбой: " + String(ev.message || "").slice(0, 70)); } catch(e) {}
+});
+
+window.addEventListener("error", function(ev){
+  try { toast("⚠️ Сбой: " + String(ev.message || "").slice(0, 70)); } catch(e) {}
+});
+
+var state = load();
+var ui = { showForm:false, title:"", effects:{energy:0,spirit:0,focus:0}, bursts:{} };
+function dayTick() {
+  var changed = false;
+  if (!state.migratedDone) {
+    (state.done || []).slice().reverse().forEach(function(t){
+      if (t && t.name && t.effects) rememberTask(t.name, t.effects);
+    });
+    (state.tasks || []).forEach(function(t){
+      if (t && t.name && t.effects) rememberTask(t.name, t.effects);
+    });
+    state.migratedDone = true; changed = true;
+  }
+  if (state.lastVisit !== today()) { handleNewDay(); changed = true; }
+  if (state.planDate !== today() || state.planV !== PLAN_V) { buildPlan(); changed = true; }
+  if (changed) save();
+  if (!ui.showForm && !ui.checkin) render();
+}
+
+/* пробуждение из памяти телефона: проверяем смену дня и обновляем экран */
+var lastWake = 0;
+function wakeUp() {
+  if (Date.now() - lastWake < 30000) { dayTick(); return; }   /* без штурма сети при частых переключениях */
+  lastWake = Date.now();
+  syncPull(true, dayTick);
+}
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "visible") wakeUp();
+});
+window.addEventListener("focus", wakeUp);
+
+checkAchs();
+render();
+syncPull(true, dayTick);
+</script>
+</body>
+</html>

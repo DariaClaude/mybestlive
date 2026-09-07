@@ -1,0 +1,202 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Развитие компетенций — Краснеева Е.</title>
+<style>
+@page{size:338.67mm 190.5mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+:root{--grn:#00833C;--red:#E2231A;--gr:#8A8A8A}
+html,body{background:#fff;color:#000;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.slide{width:338.67mm;height:190.5mm;overflow:hidden;page-break-after:always;padding:13mm 18mm 12mm;
+  display:flex;flex-direction:column;background:#fff}
+.slide:last-child{page-break-after:auto}
+.top{display:flex;justify-content:space-between;align-items:baseline;font-size:9pt;
+  letter-spacing:.17em;text-transform:uppercase;font-weight:500;padding-bottom:2.5mm}
+.top .r{font-weight:700}
+.rule{height:0;border-top:.5pt solid #000}
+.rule-thick{height:0;border-top:1.8pt solid #000}
+.body{flex:1;display:flex;flex-direction:column;padding-top:6mm;min-height:0}
+h1{font-size:34pt;font-weight:700;letter-spacing:-.026em;line-height:1.05;max-width:24ch}
+h2{font-size:27pt;font-weight:700;letter-spacing:-.022em;line-height:1.05;max-width:36ch}
+.sub{font-size:12.5pt;font-weight:300;color:var(--gr);margin-top:3.5mm;max-width:96ch;line-height:1.3}
+.lead{font-size:14.5pt;font-weight:300;line-height:1.38;max-width:88ch;margin-top:6mm}
+.lead b{font-weight:700}
+.g{color:var(--grn);font-weight:700}
+.r-{color:var(--red);font-weight:700}
+.dt{color:var(--gr);font-weight:400;font-size:.86em;white-space:nowrap}
+
+.figs{display:grid;grid-template-columns:repeat(3,1fr);margin-top:auto}
+.fig{padding-right:8mm;border-right:.5pt solid #000}
+.fig:last-child{border-right:none}
+.fig:not(:first-child){padding-left:8mm}
+.fnum{font-size:38pt;font-weight:700;letter-spacing:-.038em;line-height:.98;
+  font-variant-numeric:tabular-nums;color:var(--grn)}
+.fnum .was{color:var(--gr);font-weight:300}
+.fnum .cur{letter-spacing:0;padding-left:2mm}
+.fnum .dt{font-size:.3em;display:block;margin-top:2.5mm;letter-spacing:0}
+.fname{font-size:12pt;font-weight:700;margin-top:3.5mm;line-height:1.24}
+.fnote{font-size:10.5pt;font-weight:300;color:#4A4A4A;margin-top:2mm;line-height:1.32}
+.figs.six{grid-template-columns:repeat(3,1fr);row-gap:8mm;margin-bottom:auto}
+.figs.six .fig:nth-child(3n){border-right:none;padding-right:0}
+.figs.six .fig:nth-child(3n+1){padding-left:0}
+.figs.six .fig:nth-child(-n+3){padding-bottom:8mm;border-bottom:.5pt solid #000}
+
+table{width:100%;border-collapse:collapse}
+thead th{font-size:9pt;letter-spacing:.15em;text-transform:uppercase;font-weight:700;text-align:left;
+  padding:0 5mm 2.5mm 0;border-bottom:1.4pt solid #000;vertical-align:bottom}
+tbody td,tbody th{border-bottom:.5pt solid #C4C4C4;vertical-align:top;text-align:left}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none}
+td.grey{color:#5A5A5A;font-weight:300}
+
+/* роли */
+.t-roles{font-size:10.8pt}
+.t-roles tbody td,.t-roles tbody th{padding:2.3mm 5mm 2.3mm 0;line-height:1.26}
+.t-roles tbody th{font-weight:700;font-size:10.8pt}
+
+/* компетенции */
+.t-comp{font-size:11pt}
+.t-comp tbody td,.t-comp tbody th{padding:2.1mm 4mm 2.1mm 0;line-height:1.24}
+.t-comp td.grey{font-size:10pt}
+.t-comp tbody th{font-weight:700;font-size:11pt}
+.t-comp td.n{font-variant-numeric:tabular-nums;font-weight:700;font-size:13pt;color:var(--grn)}
+.t-comp td.n-t{font-variant-numeric:tabular-nums;font-weight:300;font-size:13pt;color:var(--gr)}
+.bar{display:flex;gap:1.1mm;align-items:center}
+.seg{width:5.1mm;height:3.2mm}
+.seg.on{background:#000}
+.seg.gap{border:.6pt solid var(--red);background:repeating-linear-gradient(135deg,#fff,#fff 1.1px,#F9D6D3 1.1px,#F9D6D3 2.4px)}
+.seg.hz{border:.6pt dotted #B4B4B4}
+.score{font-size:11pt;font-weight:700;font-variant-numeric:tabular-nums;padding-left:1mm}
+.score .t{font-weight:300;color:var(--gr)}
+.gapn{font-size:12pt;font-weight:700;font-variant-numeric:tabular-nums}
+.gapn.c3{color:var(--red)}
+.gapn.c1{color:var(--gr);font-weight:300}
+
+/* было → стало */
+.t-ba{font-size:11pt}
+.t-ba tbody td,.t-ba tbody th{padding:2.4mm 5mm 2.4mm 0;line-height:1.28}
+.t-ba tbody th{font-weight:700;font-size:10.5pt}
+.t-ba td.was{color:var(--gr);font-weight:300}
+.t-ba tbody td{border-left:.5pt solid #C4C4C4;padding-left:6mm}
+
+.legend{font-size:9.6pt;font-weight:300;color:#4A4A4A;margin-top:3mm;
+  padding-top:2.5mm;border-top:.5pt solid #C4C4C4;line-height:1.38}
+.legend b{font-weight:700;color:#000}
+.foot{font-size:9.5pt;font-weight:300;color:var(--gr);padding-top:3mm;
+  border-top:.5pt solid #C4C4C4;margin-top:auto;line-height:1.38}
+.t-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;padding-top:4mm}
+.t-meta dt{font-size:8.5pt;letter-spacing:.15em;text-transform:uppercase;color:var(--gr);
+  font-weight:500;padding-bottom:1.5mm}
+.t-meta dd{font-size:11.5pt;font-weight:500;line-height:1.3}
+</style></head><body>
+
+<!-- 01 -->
+<div class="slide">
+  <div><div class="top"><span>Отдел маркетинга · РМ Групп · Оценка компетенций</span><span class="r">01</span></div><div class="rule-thick"></div></div>
+  <div class="body">
+    <h1>Авитолог и Старший авитолог: роли, компетенции, динамика</h1>
+    <p class="lead">На входе до целевого уровня дотягивали <b>две компетенции из двенадцати</b>. Критичными были <b>наставничество</b> и <b>тестирование гипотез</b> — обе оценены в <span class="r-">1 балл из 4</span>, то есть фактически не проявлены. Сегодня обучение команды идёт системно, гипотезы доводятся до цифры и переносятся на другие проекты.</p>
+    <div class="figs">
+      <div class="fig"><div class="fnum">5<span class="dt">01.06 — 27.07.2026</span></div><div class="fname">Обучающих разборов для команды и смежных отделов</div><div class="fnote">Наставничество: автоматизация БВ, сниппеты, новые инструменты</div></div>
+      <div class="fig"><div class="fnum">+142%<span class="dt">14–27.07.2026</span></div><div class="fname">Прирост лидов по проверенной гипотезе</div><div class="fnote">Тестирование гипотез: кампания с подгруппами, 7 → 17 лидов</div></div>
+      <div class="fig"><div class="fnum">×2,1<span class="dt">16.06 — 12.07.2026</span></div><div class="fname">Рост лидов после автоматизации</div><div class="fnote">1018 лидов вручную 16–28.06 против 2134 на автоматизации 29.06–12.07</div></div>
+    </div>
+    <div class="rule" style="margin-top:6mm"></div>
+    <dl class="t-meta">
+      <div><dt>Сотрудник</dt><dd>Краснеева Екатерина</dd></div>
+      <div><dt>Должность</dt><dd>Старший авитолог</dd></div>
+      <div><dt>Руководитель</dt><dd>Вишневская Дарья, digital-маркетолог</dd></div>
+      <div><dt>Период · формат</dt><dd>20.04 — 27.07.2026 · 1:1 раз в две недели</dd></div>
+    </dl>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="slide">
+  <div><div class="top"><span>Разграничение ролей</span><span class="r">02</span></div><div class="rule-thick"></div></div>
+  <div class="body">
+    <h2>Зоны ответственности</h2>
+    <p class="sub">Отличие не в объёме работы, а в масштабе владения: авитолог отвечает за свои кабинеты, старший — за инфраструктуру, бюджет и производительность команды.</p>
+    <table class="t-roles" style="margin-top:6mm">
+      <thead><tr><th style="width:16%">Зона</th><th style="width:36%">Авитолог</th><th style="width:48%">Старший авитолог</th></tr></thead>
+      <tbody>
+        <tr><th>Размещение</th><td class="grey">Выкладка на закреплённых кабинетах: база вакансий и ручной режим</td><td>Архитектура размещения по сети: проекты и регионы по ЮЛ, обход лимитов</td></tr>
+        <tr><th>Кабинеты и ЮЛ</th><td class="grey">Работа внутри выданных кабинетов, соблюдение лимитов</td><td><span class="g">Создание кабинетов под ключ:</span> ЮЛ, реквизиты, тарифы, передача доступов</td></tr>
+        <tr><th>Бюджет</th><td class="grey">Расход продвижения в рамках своих объявлений</td><td><span class="g">Контроль ДС на всех кабинетах</span>, счета заранее, разбивка затрат в финотдел</td></tr>
+        <tr><th>Качество объявлений</th><td class="grey">Заголовки, описания, фото, продвижение, дубли</td><td><span class="g">Стандарты качества:</span> структура текста, требования к фото, механика дублей</td></tr>
+        <tr><th>Аналитика</th><td class="grey">Просмотры и контакты по своим объявлениям</td><td><span class="g">Сводная статистика по проектам:</span> конверсия, разбор причин падений</td></tr>
+        <tr><th>Команда</th><td class="grey">Обратная связь по инструментам, своя часть нагрузки</td><td><span class="g">Распределение нагрузки, обучение, согласование премий</span></td></tr>
+        <tr><th>Внешние коммуникации</th><td class="grey">Обращения в поддержку по своим кабинетам</td><td>Менеджер Авито, IT, подрядчики. <span class="g">Постановка ТЗ и приёмка доработок</span></td></tr>
+        <tr><th>Новые инструменты</th><td class="grey">Применяет после обучения</td><td><span class="g">Тестирует первой</span>, считает результат, раскатывает на команду</td></tr>
+        <tr><th>Риски</th><td class="grey">Сообщает о проблеме на своём участке</td><td><span class="g">Подсвечивает риски до старта</span>, фиксирует договорённости, эскалирует</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="slide">
+  <div><div class="top"><span>Компетенции · планка и точка входа 21.04.2026</span><span class="r">03</span></div><div class="rule-thick"></div></div>
+  <div class="body">
+    <h2>С чем пришла Краснеева</h2>
+    <table class="t-comp" style="margin-top:5mm">
+      <thead><tr><th style="width:23%">Компетенция</th><th style="width:8%">Авито&shy;лог</th><th style="width:8%">Стар&shy;ший</th><th style="width:16%">Факт на входе</th><th style="width:7%">Разрыв</th><th style="width:38%">Что это означало на практике</th></tr></thead>
+      <tbody>
+        <tr><th>Наставничество</th><td class="n-t">1</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">1<span class="t">/4</span></span></div></td><td><span class="gapn c3">3</span></td><td class="grey">Экспертиза не выходила за пределы своей работы</td></tr>
+        <tr><th>Тестирование гипотез</th><td class="n-t">1</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">1<span class="t">/4</span></span></div></td><td><span class="gapn c3">3</span></td><td class="grey">Улучшения точечные, без фиксации результата</td></tr>
+        <tr><th>Проактивность</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Реакция на проблему после указания руководителя</td></tr>
+        <tr><th>Инициативность</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Новые инструменты не предлагались к запуску</td></tr>
+        <tr><th>Самостоятельность</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Согласования по ЮЛ и счетам — через руководителя</td></tr>
+        <tr><th>Ответственность за результат</th><td class="n-t">3</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Падение объяснялось внешними причинами</td></tr>
+        <tr><th>Аналитика и работа с данными</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Отчёт был перечнем показателей без выводов</td></tr>
+        <tr><th>Коммуникация</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Статус приходилось запрашивать дополнительно</td></tr>
+        <tr><th>Управление временем</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Риски озвучивались ближе к сроку, а не на старте</td></tr>
+        <tr><th>Обучение и саморазвитие</th><td class="n-t">2</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">2<span class="t">/4</span></span></div></td><td><span class="gapn">2</span></td><td class="grey">Новые знания появлялись по мере необходимости</td></tr>
+        <tr><th>Профессиональные знания Avito</th><td class="n-t">3</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">3<span class="t">/4</span></span></div></td><td><span class="gapn c1">1</span></td><td class="grey">Обновления площадки отслеживались нерегулярно</td></tr>
+        <tr><th>Качество объявлений</th><td class="n-t">3</td><td class="n">4</td><td><div class="bar"><span class="seg on"></span><span class="seg on"></span><span class="seg on"></span><span class="seg gap"></span><span class="seg hz"></span><span class="score">3<span class="t">/4</span></span></div></td><td><span class="gapn c1">1</span></td><td class="grey">Без чек-листа и регулярного аудита размещений</td></tr>
+      </tbody>
+    </table>
+    <p class="legend">Шкала 0–5: <b>0</b> не проявлено · <b>1</b> при постоянном контроле · <b>2</b> с поддержкой · <b>3</b> самостоятельно · <b class="g">4 целевой для Старшего:</b> самостоятельно и передаёт другим · <b>5</b> горизонт: задаёт стандарт компании. Залитые деления — факт, штрихованные — разрыв до планки 4, точечное — горизонт до 5.</p>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="slide">
+  <div><div class="top"><span>Что подтянули за период</span><span class="r">04</span></div><div class="rule-thick"></div></div>
+  <div class="body">
+    <h2>Динамика по компетенциям</h2>
+    <p class="sub">Разрывы, зафиксированные на 21.04.2026, закрыты практикой с подтверждённым результатом.</p>
+    <table class="t-ba" style="margin-top:5mm">
+      <thead><tr><th style="width:25%">Компетенция</th><th>Что изменилось · подтверждённая практика</th></tr></thead>
+      <tbody>
+        <tr><th>Наставничество</th><td><span class="g">5 обучающих разборов</span> для команды и ОПИ: автоматизация БВ, сниппеты, работа с потребностью <span class="dt">(01.06 — 27.07.2026)</span></td></tr>
+        <tr><th>Тестирование гипотез</th><td>Лента ЧЛБ <span class="g">+9%</span> <span class="dt">(16–24.05)</span>, Вкусвилл МСК <span class="g">+15%</span> <span class="dt">(25–31.05)</span>, кампания <span class="g">7 → 17 лидов</span> по <span class="g">73 ₽</span> <span class="dt">(14–27.07.2026)</span></td></tr>
+        <tr><th>Проактивность</th><td>Довела падение до первопричины — сбой телефонии Mango: уровень сервиса <span class="g">29 → 41%</span> <span class="dt">(20–30.04.2026)</span></td></tr>
+        <tr><th>Инициативность</th><td>Стратегия по мобильному персоналу Ленты: КЗН <span class="g">566 → 1314</span>, МСК <span class="g">393 → 1424</span> лидов <span class="dt">(01–06.04 против 07–12.04.2026)</span></td></tr>
+        <tr><th>Самостоятельность</th><td><span class="g">5 кабинетов под ключ</span> <span class="dt">(19.05 — 12.07.2026)</span>, контроль ДС, разбивка затрат в финотдел, премии авитологов</td></tr>
+        <tr><th>Ответственность за результат</th><td>Четыре просевших проекта в рост: Ростикс <span class="g">+2%</span>, Вкусвилл <span class="g">+15%</span>, Лента ЧЛБ <span class="g">+9%</span>, Командор <span class="g">+40%</span> <span class="dt">(16–31.05.2026)</span></td></tr>
+        <tr><th>Аналитика и работа с данными</th><td>ДРС ЧЛБ и КЗН: <span class="g">1369 лидов</span>, конверсия <span class="g">43,46%</span> <span class="dt">(13–26.07)</span>. Выявлена аномалия: Лента КРД <span class="r-">0,56%</span> <span class="dt">(01–26.07.2026)</span></td></tr>
+        <tr><th>Коммуникация</th><td>ТЗ IT-директору: одна вакансия сразу на все кабинеты, скорость выкладки <span class="g">+86%</span> <span class="dt">(14–27.07.2026)</span></td></tr>
+        <tr><th>Управление временем</th><td>Массовый запрос ОПИ: <span class="g">600 вакансий на 9 кабинетов за 3 дня</span>, риски подсвечены до старта <span class="dt">(10–28.06.2026)</span></td></tr>
+        <tr><th>Обучение и саморазвитие</th><td>Разобраны и вынесены на команду: «Компас», ИИ-ассистент Авито Pro, целевой поиск кандидатов <span class="dt">(01.07 — 27.07.2026)</span></td></tr>
+        <tr><th>Профессиональные знания Avito</th><td>Рекламный кабинет освоен первой: <span class="g">14 лидов за сутки</span> <span class="dt">(01–12.07)</span>. Отработан рост тарифа <span class="r-">+30%</span> <span class="dt">(18.05.2026)</span></td></tr>
+        <tr><th>Качество объявлений</th><td>Регламент дублей для команды: при нуле контактов за два дня — пять дублей в радиусе 2 км, продвижение на сработавший</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="slide">
+  <div><div class="top"><span>Результат периода в цифрах</span><span class="r">05</span></div><div class="rule-thick"></div></div>
+  <div class="body">
+    <h2>Что изменилось в показателях</h2>
+    <div class="figs six">
+      <div class="fig"><div class="fnum"><span class="was">1018&thinsp;→</span>&thinsp;2134<span class="dt">16.06 — 12.07.2026</span></div><div class="fname">Лиды за две недели после автоматизации</div><div class="fnote">Ручная выкладка 16–28.06 против автоматизации 29.06–12.07</div></div>
+      <div class="fig"><div class="fnum">+86%<span class="dt">14–27.07.2026</span></div><div class="fname">Скорость выкладки объявлений</div><div class="fnote">Одна вакансия сразу на всех кабинетах: 100 вакансий — чуть больше часа</div></div>
+      <div class="fig"><div class="fnum"><span class="was">29&thinsp;→</span>&thinsp;41%<span class="dt">20–30.04.2026</span></div><div class="fname">Уровень сервиса кабинетов МСК и СПБ</div><div class="fnote">Устранён сбой телефонии Mango, пропущенные снижены на 5 п.п.</div></div>
+      <div class="fig"><div class="fnum">73<span class="cur">₽</span><span class="dt">14–27.07.2026</span></div><div class="fname">Стоимость лида в рекламном кабинете Авито</div><div class="fnote">Новый для компании инструмент, освоен самостоятельно</div></div>
+      <div class="fig"><div class="fnum">43,5%<span class="dt">13–26.07.2026</span></div><div class="fname">Конверсия ДРС ЧЛБ и КЗН</div><div class="fnote">1369 лидов, 595 адаптированных — лучший показатель по направлению</div></div>
+      <div class="fig"><div class="fnum">5<span class="dt">19.05 — 12.07.2026</span></div><div class="fname">Кабинетов запущено под ключ</div><div class="fnote">КЗН ОБ, ЧЛБ ОБ, СПБ, КРД, МСК — от согласования ЮЛ до передачи доступов</div></div>
+    </div>
+    <p class="foot">Источники: матрица компетенций от 21.04.2026, протоколы 1:1 раз в две недели за 20.04 — 27.07.2026, статистика кабинетов Авито, отчёты по проектам. Показатели приведены на даты замеров, текущие значения могут отличаться.</p>
+  </div>
+</div>
+
+</body></html>

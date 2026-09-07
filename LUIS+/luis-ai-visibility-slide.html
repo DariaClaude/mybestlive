@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUIS+ · Как бренд выглядит в нейросетях · Июль 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --red:#BE1730; --steel:#7D98AB; --ink:#1a1a1e; --mut:#6b7078;
+    --line:#e7e9ec; --bg:#ffffff; --soft:#f6f7f9; --warn:#fbeaec;
+  }
+  body{font-family:'Exo 2',-apple-system,Segoe UI,Roboto,sans-serif;background:#eceef1;color:var(--ink);
+    display:flex;flex-direction:column;align-items:center;gap:26px;padding:34px 18px}
+  .slide{width:1120px;max-width:100%;background:var(--bg);border-radius:18px;overflow:hidden;
+    box-shadow:0 18px 50px rgba(20,24,34,.14);border:1px solid var(--line)}
+  .pad{padding:44px 52px}
+
+  /* header */
+  .top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:26px 52px}
+  .logo{font-weight:800;font-size:26px;letter-spacing:.5px}
+  .logo b{color:var(--red)}
+  .kick{font-size:13px;font-weight:600;color:var(--steel);text-transform:uppercase;letter-spacing:2px}
+
+  h1{font-size:38px;font-weight:800;line-height:1.12;margin-bottom:8px;letter-spacing:-.5px}
+  h1 em{color:var(--red);font-style:normal}
+  .sub{font-size:16px;color:var(--mut);margin-bottom:32px;max-width:760px;line-height:1.5}
+
+  /* hero stat */
+  .hero{display:flex;align-items:stretch;gap:26px;margin-bottom:30px}
+  .bignum{flex:0 0 300px;background:linear-gradient(150deg,#BE1730,#8f1024);color:#fff;border-radius:16px;
+    padding:30px 30px;display:flex;flex-direction:column;justify-content:center}
+  .bignum .n{font-size:76px;font-weight:800;line-height:.9;letter-spacing:-2px}
+  .bignum .of{font-size:19px;font-weight:600;opacity:.9;margin-top:6px}
+  .bignum .lbl{font-size:14px;opacity:.85;margin-top:14px;line-height:1.45}
+  .heroright{flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px}
+  .heroright p{font-size:17px;line-height:1.55}
+  .heroright .strong{font-weight:700}
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+  .chip{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:600;color:#3a3f47}
+  .chip b{color:var(--red)}
+
+  /* hallucination cards */
+  .halh{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .halh::before{content:"";width:26px;height:2px;background:var(--red)}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:8px}
+  .card{background:var(--warn);border:1px solid #f2ccd2;border-radius:14px;padding:22px 24px;position:relative}
+  .card .eng{font-size:15px;font-weight:800;color:var(--red);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .card .eng .x{background:var(--red);color:#fff;border-radius:6px;font-size:12px;padding:2px 8px;font-weight:700}
+  .card .q{font-size:16px;line-height:1.5;color:#2a2226;font-style:italic}
+  .card .q b{font-style:normal;font-weight:700}
+  .reality{font-size:14.5px;color:var(--mut);margin-top:16px;line-height:1.5;padding:14px 18px;background:var(--soft);border-radius:10px;border-left:3px solid var(--steel)}
+  .reality b{color:var(--ink)}
+
+  /* direct queries strip */
+  .strip{margin-top:26px;border-top:1px solid var(--line);padding-top:22px}
+  .strip .h{font-size:15px;font-weight:700;margin-bottom:12px}
+  .qrow{display:flex;flex-wrap:wrap;gap:10px}
+  .qtag{font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 13px;display:flex;align-items:center;gap:9px;color:#3a3f47}
+  .qtag .no{color:var(--red);font-weight:800;font-size:15px}
+
+  /* recommendations slide */
+  h2{font-size:30px;font-weight:800;margin-bottom:6px;letter-spacing:-.4px}
+  .recs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+  .rec{display:flex;gap:16px;align-items:flex-start;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .rec .i{flex:0 0 38px;height:38px;background:var(--red);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}
+  .rec h4{font-size:17px;font-weight:700;margin-bottom:6px}
+  .rec p{font-size:14.5px;color:var(--mut);line-height:1.5}
+
+  .foot{padding:20px 52px;border-top:1px solid var(--line);display:flex;justify-content:space-between;
+    font-size:12.5px;color:var(--mut);flex-wrap:wrap;gap:8px}
+  .foot b{color:#3a3f47}
+  @media(max-width:720px){
+    .hero{flex-direction:column}.bignum{flex:none}.cards,.recs{grid-template-columns:1fr}
+    .pad{padding:30px 26px}.top,.foot{padding:20px 26px}h1{font-size:28px}h2{font-size:24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== СЛАЙД 1 ===== -->
+<div class="slide">
+  <div class="top">
+    <div class="logo">LUIS<b>+</b></div>
+    <div class="kick">GEO-аудит · нейросети · июль 2026</div>
+  </div>
+  <div class="pad">
+    <h1>Как LUIS+ выглядит <em>в нейросетях</em></h1>
+    <p class="sub">Замер видимости бренда в ответах ИИ по 1&nbsp;282 коммерческим запросам отрасли — от товарных до профильных (СКУД, Болид, Орион).</p>
+
+    <div class="hero">
+      <div class="bignum">
+        <div class="n">0</div>
+        <div class="of">из 1 282 запросов</div>
+        <div class="lbl">luis.ru не попал в топ-10 ответов ни разу — ни в одном движке</div>
+      </div>
+      <div class="heroright">
+        <p><span class="strong">Живой замер по API:</span> «Алиса» (YandexGPT) и «ГигаЧат» (Сбер) — <b>2 564 ответа, все подтверждены</b> (0 сбоев). luis.ru не появился ни в одном.</p>
+        <p>ChatGPT, Gemini и Perplexity (без API) дают ту же картину — присутствие близко к нулю.</p>
+        <div class="chips">
+          <div class="chip">Алиса · <b>0%</b></div>
+          <div class="chip">ГигаЧат · <b>0%</b></div>
+          <div class="chip">5 движков</div>
+          <div class="chip">1 282 запроса</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="halh">Проблема глубже: модели не знают, чем занимается компания</div>
+    <div class="cards">
+      <div class="card">
+        <div class="eng"><span class="x">неверно</span> ГигаЧат</div>
+        <div class="q">«ЛУИС+ — российская компания, специализирующаяся на разработке <b>программного обеспечения</b>: ERP-систем, CRM-решений, автоматизации бизнес-процессов».</div>
+      </div>
+      <div class="card">
+        <div class="eng"><span class="x">неверно</span> Алиса · YandexGPT</div>
+        <div class="q">«Компания „ЛУИС+“ занимается производством и продажей <b>одежды, обуви и аксессуаров</b>».</div>
+      </div>
+    </div>
+    <div class="reality">На самом деле <b>ЛУИС+ (luis.ru)</b> — один из крупнейших в России дистрибьюторов систем безопасности и слаботочного оборудования: СКУД, ОПС, видеонаблюдение, оповещение. Нейросети заполняют информационный вакуум вымыслом.</div>
+
+    <div class="strip">
+      <div class="h">Даже прямые запросы не выводят luis.ru:</div>
+      <div class="qrow">
+        <div class="qtag"><span class="no">✕</span> «дистрибьютор Болид Орион»</div>
+        <div class="qtag"><span class="no">✕</span> «где купить оборудование Болид оптом»</div>
+        <div class="qtag"><span class="no">✕</span> «поставщик систем безопасности оптом»</div>
+        <div class="qtag"><span class="no">✕</span> «ЛУИС+ купить оборудование»</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span>Источник: живой замер API «Алиса» (YandexGPT) и «ГигаЧат», <b>1 282/1 282 подтверждено</b> · ChatGPT/Gemini/Perplexity — оценка (без API)</span>
+    <span>LUIS+ · Отдел маркетинга · июль 2026</span>
+  </div>
+</div>
+
+<!-- ===== СЛАЙД 2 · ВЫВОДЫ ===== -->
+<div class="slide">
+  <div class="top">
+    <div class="logo">LUIS<b>+</b></div>
+    <div class="kick">Приоритеты · GEO-стратегия</div>
+  </div>
+  <div class="pad">
+    <h2>Что с этим делать</h2>
+    <p class="sub">Нулевая видимость в ИИ — это не «плохой замер», а незанятая ниша. Задача — дать нейросетям корректные данные о бренде из источников, которым они доверяют.</p>
+    <div class="recs">
+      <div class="rec"><div class="i">1</div><div><h4>Исправить факты о компании</h4><p>Википедия/Рувики, Rusprofile, отраслевые каталоги и справочники, отзовики — там, откуда LLM берут описания брендов. Сейчас данных нет, и модели выдумывают.</p></div></div>
+      <div class="rec"><div class="i">2</div><div><h4>Разметить сайт для ИИ</h4><p>Структурированные данные schema.org Organization и понятный раздел «О компании»: кто такие, что дистрибутируют, ключевые бренды (Болид, Орион). Машиночитаемо.</p></div></div>
+      <div class="rec"><div class="i">3</div><div><h4>Экспертный контент под цитирование</h4><p>Обзоры, сравнения, гайды по СКУД/ОПС/Болид — форматы, которые нейросети берут как источник и на которые ссылаются в ответах.</p></div></div>
+      <div class="rec"><div class="i">4</div><div><h4>Мониторить и добиваться правок</h4><p>Регулярно проверять, как ИИ описывает LUIS+, и точечно исправлять фактические ошибки. GEO-видимость — управляемая метрика.</p></div></div>
+    </div>
+  </div>
+  <div class="foot">
+    <span>Приоритет на ближайший квартал: <b>перевести GEO-видимость LUIS+ из 0% в измеримый рост</b></span>
+    <span>LUIS+ · Отдел маркетинга · июль 2026</span>
+  </div>
+</div>
+
+</body>
+</html>

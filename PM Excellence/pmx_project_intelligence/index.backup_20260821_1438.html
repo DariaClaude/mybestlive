@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Цифровой штаб — независимый ИИ-контур управления крупным проектом | PM Excellence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="https://pmexcellence.com/favicon.ico">
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Цифровой штаб — независимый ИИ-контур управления крупными и мегапроектами. Из первичных данных проекта за 10 дней создаём независимую картину сроков, стоимости, критического пути и рисков. ИИ + эксперты PM Excellence." />
+
+    <!-- Фирменные стили сайта pmexcellence.com (шапка/футер/типографика) -->
+    <link href="https://pmexcellence.com/bitrix/cache/css/s1/main/page_7bd579fe58a34d5a5e134e98ea9549c4/page_7bd579fe58a34d5a5e134e98ea9549c4_v1.css?1779964386160279" type="text/css" rel="stylesheet" />
+    <link href="https://pmexcellence.com/bitrix/cache/css/s1/main/template_96fbdcb055a7a880bb0621f335e05692/template_96fbdcb055a7a880bb0621f335e05692_v1.css?1779964386108081" type="text/css" data-template-style="true" rel="stylesheet" />
+
+    <script src="https://pmexcellence.com/local/static/js/jquery-1.12.4.min.js"></script>
+    <script src="https://pmexcellence.com/local/static/js/libs.js"></script>
+    <script src="https://pmexcellence.com/local/static/js/scripts.js"></script>
+
+<style id="pmi-page">
+:root{
+  --pmi-bordo:#852a34;
+  --pmi-bordo-dk:#6b1e27;
+  --pmi-ink:#222;
+  --pmi-sec:#565656;
+  --pmi-muted:#929291;
+  --pmi-line:#ededed;
+  --pmi-warm:#faf8f7;
+  --pmi-sans:-apple-system,'Segoe UI',Arial,sans-serif;
+}
+.pmi-wrap{max-width:1200px;margin:0 auto;padding:0 30px}
+.pmi-eyebrow{display:inline-block;font-family:var(--pmi-sans);font-size:12px;
+  letter-spacing:2.2px;text-transform:uppercase;color:var(--pmi-bordo);
+  font-weight:700;margin-bottom:18px}
+.pmi-section{padding:54px 0}
+.pmi-section--warm{background:var(--pmi-warm);border-top:1px solid var(--pmi-line);border-bottom:1px solid var(--pmi-line)}
+.pmi-h2{position:relative;font-size:34px;line-height:1.25;font-weight:700;color:var(--pmi-ink);margin:0 0 24px;padding-bottom:16px}
+.pmi-h2:after{content:'';position:absolute;left:0;bottom:0;width:76px;height:4px;background:var(--pmi-bordo)}
+.pmi-h2--center{text-align:center}
+.pmi-h2--center:after{left:50%;transform:translateX(-50%)}
+.pmi-lead{font-family:var(--pmi-sans);font-size:19px;line-height:1.65;color:var(--pmi-sec);max-width:820px;margin:0}
+.pmi-btn{display:inline-block;background:var(--pmi-bordo);color:#fff;font-family:var(--pmi-sans);
+  font-size:16px;font-weight:600;padding:16px 34px;border-radius:3px;text-decoration:none;transition:background .2s}
+.pmi-btn:hover{background:var(--pmi-bordo-dk);color:#fff}
+.pmi-btn--ghost{background:transparent;color:var(--pmi-bordo);border:1.5px solid var(--pmi-bordo);padding:14.5px 32px}
+.pmi-btn--ghost:hover{background:var(--pmi-bordo);color:#fff}
+
+/* HERO */
+.pmi-hero{background:linear-gradient(180deg,var(--pmi-warm) 0%,#fff 100%);padding:66px 0 60px;border-bottom:1px solid var(--pmi-line)}
+.pmi-hero__chip{display:inline-block;font-family:var(--pmi-sans);font-size:13px;font-weight:600;
+  color:var(--pmi-bordo);background:rgba(133,42,52,.08);border:1px solid rgba(133,42,52,.18);
+  border-radius:40px;padding:7px 18px;margin-bottom:26px}
+.pmi-hero__h1{font-size:48px;line-height:1.14;font-weight:800;color:var(--pmi-ink);margin:0 0 24px;letter-spacing:-.5px;max-width:940px}
+.pmi-hero__h1 span{color:var(--pmi-bordo)}
+.pmi-hero__sub{font-family:var(--pmi-sans);font-size:20px;line-height:1.6;color:var(--pmi-sec);max-width:840px;margin:0 0 34px}
+.pmi-hero__cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+
+/* PROBLEM */
+.pmi-problem{border-left:4px solid var(--pmi-bordo);background:#fff;padding:34px 40px;border-radius:3px;
+  box-shadow:0 12px 40px rgba(133,42,52,.06);max-width:900px}
+.pmi-problem p{font-family:var(--pmi-sans);font-size:20px;line-height:1.6;color:var(--pmi-ink);margin:0}
+.pmi-problem b{color:var(--pmi-bordo)}
+
+/* FORMULA */
+.pmi-formula{background:var(--pmi-bordo);color:#fff;text-align:center;padding:50px 0}
+.pmi-formula__title{font-family:var(--pmi-sans);font-size:13px;letter-spacing:2.4px;text-transform:uppercase;
+  color:rgba(255,255,255,.72);font-weight:700;margin:0 0 18px}
+.pmi-formula__lead{font-family:var(--pmi-sans);font-size:19px;line-height:1.55;color:rgba(255,255,255,.92);
+  max-width:800px;margin:0 auto 36px}
+.pmi-formula__row{display:flex;justify-content:center;align-items:stretch;gap:0;flex-wrap:wrap}
+.pmi-formula__item{flex:1 1 240px;max-width:320px;padding:0 34px}
+.pmi-formula__item + .pmi-formula__item{border-left:1px solid rgba(255,255,255,.22)}
+.pmi-formula__num{font-family:var(--pmi-sans);font-size:12px;letter-spacing:1.5px;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:10px}
+.pmi-formula__txt{font-size:23px;line-height:1.3;font-weight:700}
+.pmi-formula__txt small{display:block;font-family:var(--pmi-sans);font-size:15px;font-weight:400;line-height:1.5;color:rgba(255,255,255,.82);margin-top:8px}
+
+/* PROMISES */
+.pmi-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.pmi-promise{border:1px solid var(--pmi-line);border-radius:3px;padding:34px 30px;transition:box-shadow .2s,transform .2s}
+.pmi-promise:hover{box-shadow:0 14px 36px rgba(133,42,52,.10);transform:translateY(-4px)}
+.pmi-promise__label{font-family:var(--pmi-sans);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--pmi-muted);font-weight:700;margin-bottom:12px}
+.pmi-promise__h{font-size:24px;font-weight:700;color:var(--pmi-ink);margin:0 0 12px}
+.pmi-promise p{font-family:var(--pmi-sans);font-size:16px;line-height:1.6;color:var(--pmi-sec);margin:0}
+
+/* EXECUTIVE VIEW */
+.pmi-exec{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--pmi-line);border-radius:4px;overflow:hidden}
+.pmi-exec__cell{padding:30px 26px;border-right:1px solid var(--pmi-line)}
+.pmi-exec__cell:last-child{border-right:0}
+.pmi-exec__num{width:38px;height:38px;border-radius:50%;background:var(--pmi-bordo);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--pmi-sans);font-weight:700;font-size:16px;margin-bottom:16px}
+.pmi-exec__txt{font-size:18px;line-height:1.4;font-weight:600;color:var(--pmi-ink)}
+
+/* WHAT'S INSIDE */
+.pmi-inside{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.pmi-col{background:#fff;border:1px solid var(--pmi-line);border-radius:4px;padding:32px 30px}
+.pmi-col__h{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;color:var(--pmi-ink);margin:0 0 20px;padding-bottom:16px;border-bottom:1px solid var(--pmi-line)}
+.pmi-col__tag{font-family:var(--pmi-sans);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#fff;background:var(--pmi-bordo);border-radius:3px;padding:4px 9px;font-weight:700}
+.pmi-list{list-style:none;margin:0;padding:0}
+.pmi-list li{position:relative;font-family:var(--pmi-sans);font-size:15px;line-height:1.5;color:var(--pmi-sec);padding:0 0 11px 22px}
+.pmi-list li:before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;background:var(--pmi-bordo);border-radius:50%}
+
+/* CREDIBILITY INDEX */
+.pmi-index{display:flex;gap:48px;align-items:center;flex-wrap:wrap;background:var(--pmi-warm);
+  border:1px solid var(--pmi-line);border-left:4px solid var(--pmi-bordo);border-radius:4px;padding:44px 46px}
+.pmi-index__head{flex:1 1 360px}
+.pmi-index__body{flex:1 1 420px}
+.pmi-index__body p{font-family:var(--pmi-sans);font-size:16px;line-height:1.6;color:var(--pmi-sec);margin:0 0 16px}
+.pmi-chips{display:flex;flex-wrap:wrap;gap:10px}
+.pmi-chips span{font-family:var(--pmi-sans);font-size:14px;color:var(--pmi-ink);background:#fff;border:1px solid var(--pmi-line);border-radius:40px;padding:8px 16px}
+
+/* PRODUCTS */
+.pmi-prod{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.pmi-prod__card{position:relative;border:1px solid var(--pmi-line);border-radius:4px;padding:26px 24px;background:#fff;transition:box-shadow .2s,transform .2s}
+.pmi-prod__card:hover{box-shadow:0 14px 36px rgba(133,42,52,.10);transform:translateY(-4px)}
+.pmi-prod__lvl{font-family:var(--pmi-sans);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--pmi-bordo);font-weight:700;margin-bottom:10px}
+.pmi-prod__name{font-size:20px;font-weight:700;color:var(--pmi-ink);margin:0 0 8px;line-height:1.2}
+.pmi-prod__meta{font-family:var(--pmi-sans);font-size:14px;color:var(--pmi-muted);font-weight:600;margin:0 0 16px}
+.pmi-prod__desc{font-family:var(--pmi-sans);font-size:16px;line-height:1.6;color:var(--pmi-sec);margin:0}
+.pmi-prod__card--flag{border-top:3px solid var(--pmi-bordo)}
+.pmi-prod__badge{position:absolute;top:22px;right:24px;font-family:var(--pmi-sans);font-size:11px;letter-spacing:.6px;
+  text-transform:uppercase;color:#fff;background:var(--pmi-bordo);border-radius:3px;padding:5px 11px;font-weight:700}
+
+/* PILOT / OFFER */
+.pmi-offer{background:var(--pmi-bordo);color:#fff;border-radius:6px;padding:56px 54px}
+.pmi-offer__grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+.pmi-offer h3{font-size:30px;line-height:1.25;font-weight:800;margin:0 0 18px}
+.pmi-offer p{font-family:var(--pmi-sans);font-size:18px;line-height:1.6;color:rgba(255,255,255,.9);margin:0 0 26px}
+.pmi-offer .pmi-btn{background:#fff;color:var(--pmi-bordo)}
+.pmi-offer .pmi-btn:hover{background:var(--pmi-warm);color:var(--pmi-bordo-dk)}
+.pmi-offer__crit{list-style:none;margin:0;padding:0}
+.pmi-offer__crit li{position:relative;font-family:var(--pmi-sans);font-size:15px;line-height:1.5;color:#fff;padding:0 0 13px 26px}
+.pmi-offer__crit li:before{content:'✓';position:absolute;left:0;top:0;color:#fff;font-weight:700}
+.pmi-offer__crit-t{font-family:var(--pmi-sans);font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700;margin:0 0 16px}
+
+/* FINAL CTA */
+.pmi-final{background:var(--pmi-warm);border-top:1px solid var(--pmi-line);padding:60px 0;text-align:center}
+.pmi-final__h{font-size:36px;line-height:1.2;font-weight:800;color:var(--pmi-ink);margin:0 0 16px}
+.pmi-final p{font-family:var(--pmi-sans);font-size:19px;line-height:1.6;color:var(--pmi-sec);margin:0 auto 30px;max-width:640px}
+.pmi-final__contacts{font-family:var(--pmi-sans);font-size:16px;color:var(--pmi-muted);margin-top:24px}
+.pmi-final__contacts a{color:var(--pmi-bordo);text-decoration:none;font-weight:600}
+
+.pmi-fade{max-width:820px}
+
+/* KEY ADVANTAGE */
+.pmi-adv{display:flex;gap:52px;align-items:center;flex-wrap:wrap}
+.pmi-adv__stat{flex:0 0 240px;text-align:center;border-right:1px solid var(--pmi-line);padding-right:44px}
+.pmi-adv__num{font-size:66px;font-weight:800;color:var(--pmi-bordo);line-height:1;letter-spacing:-1.5px}
+.pmi-adv__lbl{font-family:var(--pmi-sans);font-size:16px;color:var(--pmi-sec);margin-top:14px;line-height:1.4}
+.pmi-adv__body{flex:1 1 480px}
+.pmi-adv__body p{font-family:var(--pmi-sans);font-size:18px;line-height:1.65;color:var(--pmi-sec);margin:0}
+.pmi-adv__body b{color:var(--pmi-ink)}
+
+/* WHAT'S INCLUDED */
+.pmi-incl{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:8px}
+.pmi-incl__h{display:flex;align-items:baseline;gap:12px;font-size:21px;font-weight:700;color:var(--pmi-ink);margin:0 0 12px}
+.pmi-incl__h i{font-family:var(--pmi-sans);font-style:normal;font-size:14px;font-weight:700;color:var(--pmi-bordo)}
+.pmi-incl__item p{font-family:var(--pmi-sans);font-size:16px;line-height:1.6;color:var(--pmi-sec);margin:0}
+
+@media(max-width:991px){
+  .pmi-exec{grid-template-columns:repeat(1,1fr)}
+  .pmi-exec__cell{border-right:0;border-bottom:1px solid var(--pmi-line)}
+  .pmi-exec__cell:last-child{border-bottom:0}
+}
+/* Мобильные: штатный шаблон Битрикса сам сворачивает меню в бургер.
+   Оставляем только страховку от горизонтального сдвига. */
+@media(max-width:991px){
+  html,body{overflow-x:hidden;max-width:100%}
+  .pmi-wrap{box-sizing:border-box;width:100%}
+}
+@media(max-width:1100px){
+  .pmi-prod{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .pmi-hero__h1{font-size:34px}
+  .pmi-hero__sub{font-size:17px}
+  .pmi-h2{font-size:26px}
+  .pmi-final__h{font-size:27px}
+  .pmi-grid3,.pmi-inside,.pmi-prod{grid-template-columns:1fr}
+  .pmi-formula__item + .pmi-formula__item{border-left:0;border-top:1px solid rgba(255,255,255,.22);padding-top:26px;margin-top:26px}
+  .pmi-offer__grid{grid-template-columns:1fr;gap:32px}
+  .pmi-offer{padding:38px 28px}
+  .pmi-index{padding:30px 26px}
+  .pmi-adv{gap:26px}
+  .pmi-adv__stat{flex-basis:100%;border-right:0;border-bottom:1px solid var(--pmi-line);padding-right:0;padding-bottom:22px}
+  .pmi-adv__num{font-size:52px}
+  .pmi-incl{grid-template-columns:1fr;gap:26px}
+  .pmi-problem{padding:26px 24px}
+  .pmi-problem p{font-size:17px}
+}
+</style>
+
+</head>
+<body>
+
+<!-- ===== ВЕРХНЯЯ ПЛАШКА (как на pmexcellence.com) ===== -->
+<div class="panel">
+    <div class="panel__row">
+        <span class="panel--address">127030, Москва, Новослободская ул., д. 20<br>107078, Москва, Каланчевская ул., д. 15</span>
+        <div class="panel__rc">
+            <a href="mailto:pmc@pmexcellence.com" class="panel--email">
+                <span>pmc@pmexcellence.com</span>
+            </a>
+            <a href="tel:+74999385439" class="panel--phone">+7 (499) 938-54-39</a>
+            <a href="https://t.me/pmexcellence" target="_blank">
+                <img alt="telegram" style="width: 27px" src="https://pmexcellence.com/local/templates/main/images/telegram1.png">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper ">
+
+    <!-- ===== ШАПКА ===== -->
+    <header class="header">
+        <div class="header__row">
+            <div class="header--logo">
+                <a href="https://pmexcellence.com/"><img src="https://pmexcellence.com/local/static/img/new_logo.svg" width="248" height="39" alt=""></a>
+                <span class="logo_text">Профессиональное управление<br>крупными и мегапроектами</span>
+            </div>
+
+            <a href="https://pmexcellence.com/?lang=eng" class="panel--phone mobile-show" style="color: #000;text-align: right;font-size: 20px;z-index:100;position:relative;">EN</a>
+
+<nav class="nav "  >
+                <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/about_company/">О компании</a>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/service-map/">Сервисы</a>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/experience/">Примеры проектов</a>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/news/">Медиацентр</a>
+                <div class="nav_submenu">
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/news/">Новости</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/news/article/">Статьи</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/presentations/">Презентации</a>
+                </div>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/pm-guide/">Материалы</a>
+                <div class="nav_submenu">
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/pm-guide/">PM GUIDE</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/pm-gate/">PM GATE</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/pm-portfolio/">PM PORTFOLIO</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/pm_benchmark/">PM Benchmark 1.0</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/pm_benchmark_2.0/">PM Benchmark 2.0</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/pm-benchmark-3-0/">PM Benchmark 3.0</a>
+                </div>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/team/">Команда</a>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/business-meeting/">Мероприятия</a>
+                <div class="nav_submenu">
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/webinars/">Вебинары</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/business-meeting-mos/">Москва 2025</a>
+                    <a style="text-align: start;" class="col-12 nav_submenu_item " href="https://pmexcellence.com/business-meeting/">Владивосток 2024</a>
+                </div>
+                    </div>
+            <div class="nav-item">
+            <a class="nav-item-title " href="https://pmexcellence.com/risk-session_new_front/">Риск-сессия</a>
+                    </div>
+
+    <div class="nav-item show">
+		<div><a class="show_phone" href="tel:+74999385439">+7 (499) 938-54-39</a></div><a href="https://t.me/pmexcellence" target="_blank"><img style="width: 23px" alt="telegram" src="https://pmexcellence.com/local/templates/main/images/telegram1.png"></a>
+    </div>
+</nav>
+
+<script>
+    $(".nav-item").click(function(e){
+        if(window.innerWidth < 991.98
+            && $(e.target).closest(".nav-item").find(".nav_submenu").length
+            && !$(e.target).hasClass("nav_submenu_item")
+        ){
+            e.preventDefault;
+            $(e.target).closest(".nav-item").find(".nav_submenu").toggleClass("show");
+            return false;
+        }
+    })
+</script>
+
+        </div>
+
+        <div class="header__menu">
+            <div class="header__row">
+<nav class="header-menu "  >
+    <div class="header-menu__list">
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="https://pmexcellence.com/about_company/">О компании</a>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="https://pmexcellence.com/service-map/">Сервисы</a>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="https://pmexcellence.com/experience/">Примеры проектов</a>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="javascript:void(0)">Медиацентр</a>
+                    <div class="header-menu__submenu">
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/news/">Новости</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/news/article/">Статьи</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/presentations/">Презентации</a></div>
+                    </div>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="javascript:void(0)">Материалы</a>
+                    <div class="header-menu__submenu">
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/pm-guide/">PM GUIDE</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/pm-gate/">PM GATE</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/pm-portfolio/">PM PORTFOLIO</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/pm_benchmark/">PM Benchmark 1.0</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/pm_benchmark_2.0/">PM Benchmark 2.0</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/pm-benchmark-3-0/">PM Benchmark 3.0</a></div>
+                    </div>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="https://pmexcellence.com/team/">Команда</a>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  " href="javascript:void(0)">Мероприятия</a>
+                    <div class="header-menu__submenu">
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/webinars/">Вебинары</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/business-meeting-mos/">Москва 2025</a></div>
+                            <div class="header-menu__submenu-item"><a class="header-menu__submenu-link " href="https://pmexcellence.com/business-meeting/">Владивосток 2024</a></div>
+                    </div>
+                            </div>
+                    <div class="header-menu__item">
+				                <a class="header-menu__link  header-menu__link--new" href="https://pmexcellence.com/risk-session_new_front/">Риск-сессия</a>
+                            </div>
+            </div>
+</nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ===== КОНТЕНТ: PMX PROJECT INTELLIGENCE ===================== -->
+    <!-- ============================================================ -->
+
+    <!-- HERO -->
+    <section class="pmi-hero">
+        <div class="pmi-wrap">
+            <span class="pmi-hero__chip">Цифровой штаб · новый сервис PM Excellence</span>
+            <h1 class="pmi-hero__h1">Вы знаете, что происходит с&nbsp;вашим проектом <span>на&nbsp;самом деле?</span></h1>
+            <p class="pmi-hero__sub">Цифровой штаб превращает первичные данные крупного проекта в&nbsp;независимую картину сроков, стоимости, критического пути и&nbsp;рисков — с&nbsp;помощью искусственного интеллекта и&nbsp;20-летней экспертизы команды PM&nbsp;Excellence.</p>
+            <div class="pmi-hero__cta">
+                <a href="#offer" class="pmi-btn">Получить независимую диагностику</a>
+                <a href="#how" class="pmi-btn pmi-btn--ghost">Как это работает</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="pmi-section">
+        <div class="pmi-wrap">
+            <span class="pmi-eyebrow">Проблема первого лица</span>
+            <h2 class="pmi-h2">О проблемах проекта вы узнаёте последним</h2>
+            <div class="pmi-problem">
+                <p>Сроки, бюджет и&nbsp;риски вам показывает <b>та&nbsp;же команда, которая ведёт проект</b>, — независимой проверки нет. Поэтому срывы всплывают поздно, графики расходятся с&nbsp;реальностью, а&nbsp;решения принимаются на устаревших данных.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION + FORMULA -->
+    <section class="pmi-formula" id="how">
+        <div class="pmi-wrap">
+            <p class="pmi-formula__title">Решение · независимый цифровой контур управления</p>
+            <p class="pmi-formula__lead">Забираем первичные данные проекта, ИИ восстанавливает реальную модель — график, критический путь, стоимость, риски и&nbsp;прогноз, — а&nbsp;эксперты PM&nbsp;Excellence подтверждают её управленческий смысл.</p>
+            <div class="pmi-formula__row">
+                <div class="pmi-formula__item">
+                    <div class="pmi-formula__num">01</div>
+                    <div class="pmi-formula__txt">ИИ обрабатывает массив<small>Весь объём первичных данных проекта</small></div>
+                </div>
+                <div class="pmi-formula__item">
+                    <div class="pmi-formula__num">02</div>
+                    <div class="pmi-formula__txt">Эксперты понимают смысл<small>Проверяют управленческую логику и реалистичность</small></div>
+                </div>
+                <div class="pmi-formula__item">
+                    <div class="pmi-formula__num">03</div>
+                    <div class="pmi-formula__txt">Первое лицо принимает решение<small>На основе независимой достоверной картины</small></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT'S INCLUDED -->
+    <section class="pmi-section">
+        <div class="pmi-wrap">
+            <span class="pmi-eyebrow">Что входит в услугу</span>
+            <h2 class="pmi-h2">Аналитика отчётов и реалистичное планирование</h2>
+            <div class="pmi-incl">
+                <div class="pmi-incl__item">
+                    <div class="pmi-incl__h"><i>01</i> Аналитика текущих отчётов</div>
+                    <p>Разбираем действующие отчёты, графики и&nbsp;сметы: где данные расходятся, что уже неактуально и&nbsp;какие риски скрыты за благополучными цифрами.</p>
+                </div>
+                <div class="pmi-incl__item">
+                    <div class="pmi-incl__h"><i>02</i> Планирование от реального</div>
+                    <p>Строим план от того, что действительно выполнимо: реалистичные сроки, приоритеты и&nbsp;сценарии, как выправить проект.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEY ADVANTAGE -->
+    <section class="pmi-section pmi-section--warm">
+        <div class="pmi-wrap">
+            <div class="pmi-adv">
+                <div class="pmi-adv__stat">
+                    <div class="pmi-adv__num">20 лет</div>
+                    <div class="pmi-adv__lbl">управления крупными<br>и&nbsp;мегапроектами</div>
+                </div>
+                <div class="pmi-adv__body">
+                    <span class="pmi-eyebrow">Главное преимущество</span>
+                    <h2 class="pmi-h2">За выводами стоят люди, а&nbsp;не алгоритм</h2>
+                    <p>Технологию можно повторить, отдельного специалиста&nbsp;— нанять. Но <b>20&nbsp;лет опыта PM&nbsp;Excellence и&nbsp;команду экспертов, которые сами управляли крупными и&nbsp;мегапроектами</b>, воспроизвести нельзя. Каждый вывод ИИ проходит их проверку — за управленческий смысл отвечают люди.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THREE PROMISES -->
+    <section class="pmi-section">
+        <div class="pmi-wrap">
+            <span class="pmi-eyebrow">Ценность для руководства</span>
+            <h2 class="pmi-h2">Что даёт независимый контур</h2>
+            <div class="pmi-grid3">
+                <div class="pmi-promise">
+                    <div class="pmi-promise__label">01 / Независимость</div>
+                    <h3 class="pmi-promise__h">Независимый взгляд на проект</h3>
+                    <p>Внешняя оценка: реалистичен ли график, где настоящий критический путь и достижима ли заявленная дата.</p>
+                </div>
+                <div class="pmi-promise">
+                    <div class="pmi-promise__label">02 / Скорость</div>
+                    <h3 class="pmi-promise__h">Новый отчёт — за часы, а не недели</h3>
+                    <p>Новый вопрос первого лица — готовый отчёт за часы или один рабочий день, а не через недели ручной сборки таблиц и презентаций.</p>
+                </div>
+                <div class="pmi-promise">
+                    <div class="pmi-promise__label">03 / Экономика</div>
+                    <h3 class="pmi-promise__h">Меньше стоимость ошибки</h3>
+                    <p>Меньше ручного контроля и поздних решений. Один усиленный ИИ эксперт заменяет группу планировщиков и аналитиков.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXECUTIVE VIEW -->
+    <section class="pmi-section pmi-section--warm">
+        <div class="pmi-wrap">
+            <h2 class="pmi-h2">Ответы о состоянии проекта — без 5&nbsp;000 строк графика</h2>
+            <div class="pmi-exec">
+                <div class="pmi-exec__cell">
+                    <div class="pmi-exec__num">1</div>
+                    <div class="pmi-exec__txt">Где проект находится сейчас</div>
+                </div>
+                <div class="pmi-exec__cell">
+                    <div class="pmi-exec__num">2</div>
+                    <div class="pmi-exec__txt">Какая дата завершения наиболее вероятна</div>
+                </div>
+                <div class="pmi-exec__cell">
+                    <div class="pmi-exec__num">3</div>
+                    <div class="pmi-exec__txt">Что мешает достижению целевой даты</div>
+                </div>
+                <div class="pmi-exec__cell">
+                    <div class="pmi-exec__num">4</div>
+                    <div class="pmi-exec__txt">Какие 3–5 решений требуются от руководства</div>
+                </div>
+                <div class="pmi-exec__cell">
+                    <div class="pmi-exec__num">5</div>
+                    <div class="pmi-exec__txt">Что изменилось с прошлого отчётного периода</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PILOT / OFFER -->
+    <section class="pmi-section" id="offer">
+        <div class="pmi-wrap">
+            <h2 class="pmi-h2 pmi-h2--center" style="margin:0 auto 38px;max-width:760px">Это не информационная система,<br>а независимый контур достоверности вашего проекта.</h2>
+            <div class="pmi-offer">
+                <div class="pmi-offer__grid">
+                    <div>
+                        <h3>Проверим на одном участке вашего проекта</h3>
+                        <p>За 10 рабочих дней мы покажем то, что видит наша система и&nbsp;чего не показывает существующая отчётность, — независимую картину и&nbsp;перечень решений.</p>
+                        <a href="mailto:pmc@pmexcellence.com?subject=Цифровой%20штаб%20—%20пилот" class="pmi-btn">Запросить пилот</a>
+                    </div>
+                    <div>
+                        <p class="pmi-offer__crit-t">Критерии успеха пилота</p>
+                        <ul class="pmi-offer__crit">
+                            <li>Найденные существенные расхождения</li>
+                            <li>Обнаруженный скрытый критический путь</li>
+                            <li>Изменение прогноза даты завершения</li>
+                            <li>Несогласованные объёмы и сметы</li>
+                            <li>Скорость обновления отчёта</li>
+                            <li>Появившиеся управленческие решения</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- ===== ФУТЕР (как на pmexcellence.com) ===== -->
+<footer class="footer">
+    <div class="footer__row">
+        <div class="footer__about">
+            <img src="https://pmexcellence.com/local/static/img/new_logo.svg" width="223" height="35" class="footer--logo" alt="">
+            <p class="footer--copy" style="color: #ffffff">Профессиональное управление <br>крупными и мегапроектами</p>
+        </div>
+
+        <div class="footer__nav">
+            <ul>
+                <li><a class="" href="https://pmexcellence.com/about_company/">О компании</a></li>
+                <li><a class="" href="https://pmexcellence.com/service-map/">Услуги</a></li>
+                <li><a class="" href="https://pmexcellence.com/experience/">Примеры проектов</a></li>
+                <li><a class="" href="https://pmexcellence.com/news/">Медиацентр</a></li>
+                <li><a class="" href="https://pmexcellence.com/pm-guide/">Материалы</a></li>
+                <li><a class="" href="https://pmexcellence.com/team/">Команда</a></li>
+                <li><a class="" href="https://pmexcellence.com/contacts/">Контакты</a></li>
+                <li><a class="" href="https://pmexcellence.com/webinars/">Мероприятия</a></li>
+            </ul>
+        </div>
+
+        <div class="footer__contacts">
+            <p style="margin: 0; color: white; font-size: 20px !important;">Контакты</p>
+            <div class="list">
+                <p style="font-size: 14px !important;"><a href="tel:+74999385439" class="">+7 (499) 938-54-39</a></p>
+                <p><a href="mailto:pmc@pmexcellence.com" class="">pmc@pmexcellence.com</a></p>
+            </div>
+            <p style="white-space: nowrap;" class="address">127030, Москва, Новослободская ул., д. 20<br>107078, Москва, Каланчевская ул., д. 15</p><br>
+            <p>
+                <a href="https://max.ru/join/nCaK7Q_R602ZqiIVu-TW5NrbAcNNFqNbNfem8CmEJA4" target="_blank"><img style="width: 10%" alt="max" src="https://pmexcellence.com/local/templates/main/images/max.png"></a>
+                <a href="https://t.me/pmexcellence" target="_blank"><img style="width: 10%" alt="telegram" src="https://pmexcellence.com/local/templates/main/images/telegram1.png"></a>
+                <a class="soc-vc" href="https://vc.ru/id3291224" target="_blank">vc.ru</a>
+            </p>
+            <div class="d-none d-md-block">
+                <p class="footer-copyright footer--copy">&copy; 2026 ООО "ПИЭМСИ"</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</div><!-- /wrapper -->
+
+</body>
+</html>

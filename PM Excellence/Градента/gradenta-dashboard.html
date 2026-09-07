@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Градента · Аналитика трафика</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f6; --card:#ffffff; --ink:#0f1b3d; --muted:#6b7690;
+    --border:#e6e9f0; --accent:#2f6feb; --accent-soft:#eaf1ff;
+    --pos:#12a150; --neg:#e0364f; --warn:#b7791f; --warn-bg:#fff7e6; --warn-bd:#f3d488;
+    --shadow:0 1px 2px rgba(15,27,61,.04),0 8px 24px rgba(15,27,61,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);
+    -webkit-font-smoothing:antialiased;line-height:1.4}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px 56px}
+
+  /* Header */
+  .top{background:linear-gradient(135deg,#0f1b3d 0%,#1c2f63 55%,#24408a 100%);color:#fff;box-shadow:var(--shadow)}
+  .top-in{max-width:1160px;margin:0 auto;padding:26px 20px 24px;display:flex;justify-content:space-between;
+    align-items:flex-end;gap:20px;flex-wrap:wrap}
+  .brand h1{font-size:26px;font-weight:800;letter-spacing:-.5px}
+  .brand p{color:#aebbe0;font-size:13.5px;margin-top:3px;font-weight:500}
+  .brand .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3ddb8f;margin-right:7px;
+    vertical-align:middle;box-shadow:0 0 0 3px rgba(61,219,143,.2)}
+  .controls{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .pills{display:flex;gap:4px;background:rgba(255,255,255,.09);padding:4px;border-radius:11px}
+  .pill{border:none;background:transparent;color:#c3cdea;font:600 13px 'Inter';padding:7px 15px;
+    border-radius:8px;cursor:pointer;transition:.15s}
+  .pill:hover{color:#fff}
+  .pill.on{background:#fff;color:var(--ink)}
+  .live{font-size:12px;color:#aebbe0}
+  .live b{color:#fff}
+
+  /* Reading guide */
+  .guide{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 14px;font-size:12.5px;color:var(--muted)}
+  .guide .g{background:#fff;border:1px solid var(--border);border-radius:9px;padding:7px 12px}
+  .guide .g b{color:var(--ink)}
+
+  /* Warning banner */
+  .banner{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:14px;padding:14px 18px;
+    margin-bottom:16px;font-size:13px;color:#7a5a12;line-height:1.5}
+  .banner b{color:var(--warn)}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+  .kpi .lbl{font-size:12.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+  .kpi .val{font-size:32px;font-weight:800;letter-spacing:-1px;margin-top:6px}
+  .kpi .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .delta{display:inline-flex;align-items:center;gap:3px;font-size:12.5px;font-weight:700;
+    padding:3px 8px;border-radius:20px;margin-top:9px}
+  .delta.up{color:var(--pos);background:rgba(18,161,80,.1)}
+  .delta.down{color:var(--neg);background:rgba(224,54,79,.1)}
+  .delta.flat{color:var(--muted);background:#f0f2f7}
+
+  /* Panels & grid */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .grid.wide{grid-template-columns:1.4fr 1fr}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 22px;
+    box-shadow:var(--shadow);margin-bottom:16px}
+  .panel h2{font-size:15px;font-weight:700;margin-bottom:2px}
+  .panel .hint{font-size:12px;color:var(--muted);margin-bottom:15px;font-weight:500}
+  .flow{font-size:11px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+
+  /* Source bars */
+  .src{margin-bottom:14px}
+  .src:last-child{margin-bottom:0}
+  .src-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .src-name{font-size:13.5px;font-weight:600}
+  .src-meta{font-size:12.5px;color:var(--muted)}
+  .src-meta .forms{color:var(--accent);font-weight:700;margin-left:8px}
+  .bar{height:9px;background:#eef1f7;border-radius:6px;overflow:hidden}
+  .bar span{display:block;height:100%;background:linear-gradient(90deg,#2f6feb,#5b8bf5);border-radius:6px}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+    font-weight:600;padding:0 0 9px;border-bottom:1px solid var(--border)}
+  th.r,td.r{text-align:right}
+  td{padding:10px 0;border-bottom:1px solid var(--border);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  td.url{word-break:break-all;color:var(--ink);font-weight:500;max-width:420px}
+  td a{color:var(--ink);text-decoration:none}
+  td a:hover{color:var(--accent)}
+  .big{font-weight:800;font-size:15px}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .b-admin{background:rgba(224,54,79,.1);color:var(--neg)}
+  .b-int{background:#f0f2f7;color:var(--muted)}
+  .b-ext{background:rgba(18,161,80,.12);color:var(--pos)}
+  .b-direct{background:var(--accent-soft);color:var(--accent)}
+  .b-real{background:rgba(18,161,80,.12);color:var(--pos)}
+  .b-serv{background:rgba(224,54,79,.1);color:var(--neg)}
+
+  /* Goals */
+  .goal{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+  .goal:last-child{border-bottom:none}
+  .goal-name{font-size:13.5px;font-weight:600}
+  .goal-name.main{color:var(--accent)}
+  .goal-conv{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .goal-val{font-size:22px;font-weight:800;letter-spacing:-.5px}
+
+  /* Chart */
+  .bars{display:flex;align-items:flex-end;gap:2px;height:130px;padding-top:10px}
+  .cbar{flex:1;min-width:2px;background:#cdd7ee;border-radius:2px 2px 0 0;transition:.15s}
+  .cbar:hover{background:var(--accent)}
+  .cbar.y{background:var(--accent)}
+  .cbar.today{background:#9db6ee;background-image:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,.5) 3px,rgba(255,255,255,.5) 4px)}
+  .axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px;font-weight:500}
+
+  /* Glossary */
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+  .gl{font-size:12.5px;line-height:1.5}
+  .gl b{color:var(--ink)}
+  .gl span{color:var(--muted)}
+
+  .empty{color:var(--muted);font-size:13px;padding:6px 0}
+  .todo{background:#f7f9fc;border:1px dashed var(--border);border-radius:12px;padding:14px;
+    font-size:12.5px;color:var(--muted);text-align:center}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:26px;line-height:1.8}
+  .msg{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;
+    box-shadow:var(--shadow);color:var(--muted);font-size:14px;line-height:1.7}
+  .msg code{background:#f0f2f7;padding:2px 7px;border-radius:5px;color:var(--ink);font-size:13px}
+
+  .secthead{display:flex;align-items:baseline;gap:12px;margin:26px 2px 14px;flex-wrap:wrap;
+    border-top:2px solid #dfe4ee;padding-top:18px}
+  .secthead h3{font-size:17px;font-weight:800;letter-spacing:-.3px}
+  .secthead span{font-size:12.5px;color:var(--muted);font-weight:500}
+  .zero{background:var(--accent-soft);border:1px solid #cfe0fb;border-radius:12px;padding:12px 16px;
+    margin-bottom:16px;font-size:13px;color:#26468a;line-height:1.5}
+  .zero b{color:var(--accent)}
+
+  @media(max-width:860px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid,.grid.wide,.gloss{grid-template-columns:1fr}
+    .top-in,.controls{align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>Градента</h1>
+      <p><span class="dot"></span>Аналитика трафика · gradenta.info</p>
+    </div>
+    <div class="controls">
+      <div class="pills" id="pills">
+        <button class="pill" data-p="Сегодня">Сегодня</button>
+        <button class="pill" data-p="Вчера">Вчера</button>
+        <button class="pill on" data-p="7 дней">7 дней</button>
+        <button class="pill" data-p="30 дней">30 дней</button>
+        <button class="pill" data-p="90 дней">90 дней</button>
+      </div>
+      <div class="live" id="live"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="app"><div class="msg">Загружаем данные из Яндекс Метрики…</div></div>
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+// ───────────── КОНФИГ ─────────────
+const SHEET_ID = '1nFM1WMS0TCYJ25gckMw4Tu05UnjK-2ntqWPN6dJYVkQ';
+const GID = new URLSearchParams(location.search).get('id') || SHEET_ID;
+const METRIC_COLS = 7;
+const MAIN_GOAL = 'Отправка формы';
+
+let STATE = { period:'7 дней' };
+
+// ───────────── ЗАГРУЗКА ─────────────
+async function gviz(tab){
+  const url = `https://docs.google.com/spreadsheets/d/${GID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(tab)}`;
+  const res = await fetch(url);
+  const text = await res.text();
+  const json = JSON.parse(text.replace(/^[\s\S]*?setResponse\(/, '').replace(/\);?\s*$/, ''));
+  if(!json.table || json.status==='error') throw new Error('нет вкладки '+tab);
+  const cols = json.table.cols.map((c,i)=> (c.label && c.label.trim()) || c.id || ('c'+i));
+  const rows = json.table.rows.map(r=>{
+    const o = {};
+    r.c.forEach((cell,i)=>{ o[cols[i]] = cell ? ((cell.v!==null&&cell.v!==undefined)?cell.v:(cell.f??null)) : null; });
+    return o;
+  });
+  return { cols, rows };
+}
+const opt = (tab)=> gviz(tab).catch(()=>null);   // необязательная вкладка
+
+async function load(){
+  if(!GID){ return showMsg('Не указан ID таблицы. Откройте как <code>?id=ВАШ_ID</code>.'); }
+  try{
+    const [ov, sr, st, za, pg, qr, dv, se, co, mt] = await Promise.all([
+      gviz('Обзор'), gviz('Источники'), gviz('Сайты'),
+      opt('Заявки'), opt('Страницы'), opt('Запросы'), opt('Устройства'),
+      opt('Разделы'), opt('Материалы'), opt('Мета')
+    ]);
+    STATE.overview=ov; STATE.sources=sr; STATE.sites=st;
+    STATE.zayavki=za; STATE.pages=pg; STATE.queries=qr; STATE.devices=dv;
+    STATE.sections=se; STATE.content=co; STATE.meta=mt;
+    STATE.goalCols = ov.cols.slice(METRIC_COLS);
+    bindPills(); render();
+  }catch(e){
+    showMsg('Не удалось прочитать таблицу. Проверьте доступ «Все, у кого есть ссылка → Читатель» и верность ID.<br><br><span style="font-size:12px">'+String(e)+'</span>');
+  }
+}
+
+// ───────────── АГРЕГАЦИЯ (период) ─────────────
+function num(x){ const n = typeof x==='number'? x : parseFloat(String(x).replace(',','.')); return isNaN(n)?0:n; }
+function periodRange(){
+  const rows=STATE.overview.rows, n=rows.length, iToday=n-1, iY=n-2;
+  if(STATE.period==='Сегодня') return [iToday, iToday];
+  if(iY<0) return [0,n-1];
+  const span={'Вчера':1,'7 дней':7,'30 дней':30,'90 дней':1e9}[STATE.period];
+  return [Math.max(0,iY-span+1), iY];
+}
+function agg(s,e){
+  const rows=STATE.overview.rows;
+  let visits=0,users=0,pv=0,bw=0,dw=0,tw=0; const goals={}; STATE.goalCols.forEach(g=>goals[g]=0);
+  for(let i=s;i<=e&&i<rows.length;i++){
+    const r=rows[i]; const v=num(r['Визиты']);
+    visits+=v; users+=num(r['Посетители']); pv+=num(r['Просмотры']);
+    bw+=num(r['Отказы %'])*v; dw+=num(r['Глубина'])*v; tw+=num(r['Время, сек'])*v;
+    STATE.goalCols.forEach(g=>goals[g]+=num(r[g]));
+  }
+  return {visits,users,pv,goals,bounce:visits?bw/visits:0,depth:visits?dw/visits:0,dur:visits?tw/visits:0};
+}
+function prevRange(s,e){ const len=e-s+1,pe=s-1; if(pe<0) return null; return [Math.max(0,pe-len+1),pe]; }
+function pct(cur,prev){ if(prev===null) return null; if(prev===0) return cur>0?100:0; return (cur-prev)/prev*100; }
+
+// ───────────── РЕНДЕР ─────────────
+function render(){
+  const [s,e]=periodRange();
+  const cur=agg(s,e); const pr=prevRange(s,e); const prev=pr?agg(pr[0],pr[1]):null;
+  const rows=STATE.overview.rows;
+  const zeroNote = cur.visits===0 ? `<div class="zero">За выбранный период («${esc(STATE.period)}») визитов не было — потому цифры и «как вчера». Для малотрафкового сайта это норма. Нажмите <b>7</b>, <b>30</b> или <b>90 дней</b>, чтобы увидеть картину.</div>` : '';
+  document.getElementById('app').innerHTML =
+    guideBlock() +
+    bannerBlock() +
+    sectionHead('За период: '+STATE.period, 'Этот блок меняется от кнопок вверху (Сегодня / Вчера / 7 / 30 / 90 дней)') +
+    zeroNote +
+    kpiBlock(cur,prev) +
+    `<div class="grid wide"><div class="panel">${sourcesBlock(s,e,cur.visits)}</div><div class="panel">${goalsBlock(cur)}</div></div>` +
+    sectionHead('Детальная аналитика', 'За всё время — 90 дней · НЕ зависит от кнопок периода') +
+    panel(formSourcesBlock()) +
+    panel(sectionsBlock()) +
+    panel(contentBlock()) +
+    panel(pagesBlock()) +
+    `<div class="grid"><div class="panel">${queriesBlock()}</div><div class="panel">${devicesBlock()}</div></div>` +
+    panel(sitesBlock()) +
+    panel(chartBlock()) +
+    panel(glossaryBlock());
+
+  const today=rows[rows.length-1], dFrom=rows[s]?.['Дата'], dTo=rows[e]?.['Дата'];
+  document.getElementById('live').innerHTML =
+    `Сегодня в моменте: <b>${num(today?.['Визиты'])}</b> визитов · период: <b>${ruDate(dFrom)} — ${ruDate(dTo)}</b>`;
+  const upd = STATE.meta ? (STATE.meta.rows.find(r=>r['Ключ']==='Обновлено')||{})['Значение'] : '';
+  const lastDate = ruDate(rows[rows.length-1]?.['Дата']);
+  const fresh = upd ? ('обновлено '+upd) : ('обновляется каждый час · данные по '+lastDate);
+  document.getElementById('foot').innerHTML =
+    `Источник: Яндекс Метрика · счётчик 109163509 · gradenta.info · ${fresh}` +
+    `<br>«Детальная аналитика» — за всё время (90 дней). Верхний блок (KPI, источники, цели) — за выбранный период.`;
+}
+
+function panel(inner){ return `<div class="panel">${inner}</div>`; }
+function sectionHead(title,sub){ return `<div class="secthead"><h3>${esc(title)}</h3><span>${esc(sub)}</span></div>`; }
+
+function guideBlock(){
+  return `<div class="guide">
+    <div class="g"><b>ЧТО</b> — сколько визитов и заявок</div>
+    <div class="g"><b>ОТКУДА</b> — источник, сайт, страница, город</div>
+    <div class="g"><b>К ЧЕМУ</b> — какая форма (цель) и где заполнена</div>
+  </div>`;
+}
+
+function bannerBlock(){
+  return `<div class="banner">⚠️ <b>Важно про «Отправку формы».</b> Это автоцель Метрики — она срабатывает на <b>любую</b> форму, включая вход в админку Битрикса, поэтому её цифры завышены. <b>Точный показатель — цель «Заявка с формы (точная)»</b> (настроена 20.07): она считает только реальные отправки формы посетителями. Также добавлены цели: воспроизведение видео, переход в модули, посещение контактов — все в блоке «Цели».</div>`;
+}
+
+function kpi(lbl,val,sub,delta,invert){
+  let d='';
+  if(delta!==null&&delta!==undefined){
+    const cls=delta>0?(invert?'down':'up'):delta<0?(invert?'up':'down'):'flat';
+    const arr=delta>0?'▲':delta<0?'▼':'—';
+    d=`<div class="delta ${cls}">${arr} ${Math.abs(delta).toFixed(0)}%</div>`;
+  }
+  return `<div class="kpi"><div class="lbl">${lbl}</div><div class="val">${val}</div><div class="sub">${sub||''}</div>${d}</div>`;
+}
+function kpiBlock(cur,prev){
+  const forms=cur.goals[MAIN_GOAL]||0, formsPrev=prev?(prev.goals[MAIN_GOAL]||0):null;
+  const conv=cur.visits?(forms/cur.visits*100):0;
+  return `<div class="kpis">
+    ${kpi('Визиты',fmt(cur.visits),'за '+STATE.period,pct(cur.visits,prev?prev.visits:null))}
+    ${kpi('Посетители',fmt(cur.users),'уникальные',pct(cur.users,prev?prev.users:null))}
+    ${kpi('Отказы',cur.bounce.toFixed(1)+'%','глубина '+cur.depth.toFixed(1)+' стр.',pct(cur.bounce,prev?prev.bounce:null),true)}
+    ${kpi('Отправка формы',fmt(forms),'вкл. служебные · '+conv.toFixed(1)+'%',pct(forms,formsPrev))}
+  </div>`;
+}
+
+function formSourcesBlock(){
+  const t=STATE.zayavki;
+  const head=`<div class="flow">К ЧЕМУ ← ОТКУДА</div><h2>Откуда приходят заявки (отправки формы)</h2><div class="hint">Конкретная ссылка, с которой пришёл человек, заполнивший форму · за 90 дней</div>`;
+  if(!t || !t.cols.includes('Форм')) return head + todoHint();
+  const rows=t.rows.filter(r=>r['Откуда (ссылка)'] && !String(r['Откуда (ссылка)']).startsWith('—'));
+  if(!rows.length) return head+'<div class="empty">Форм за период не было.</div>';
+  const body=rows.map(r=>{
+    const url=String(r['Откуда (ссылка)']); const type=String(r['Тип']||'');
+    const bc = /админк/.test(type)?'b-admin':/внутрен/.test(type)?'b-int':/внешн/.test(type)?'b-ext':'b-direct';
+    const disp=url.replace(/^https?:\/\//,'');
+    return `<tr><td class="url">${esc(disp)}</td><td class="r big">${num(r['Форм'])}</td>`+
+      `<td class="r" style="color:var(--muted)">${num(r['Визитов'])}</td><td class="r"><span class="badge ${bc}">${esc(type)}</span></td></tr>`;
+  }).join('');
+  return head+`<table><thead><tr><th>Откуда (ссылка)</th><th class="r">Форм</th><th class="r">Виз.</th><th class="r">Тип</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function sourcesBlock(s,e,totalVisits){
+  const dFrom=STATE.overview.rows[s]['Дата'], dTo=STATE.overview.rows[e]['Дата'];
+  const map={};
+  STATE.sources.rows.forEach(r=>{
+    const d=r['Дата']; if(d<dFrom||d>dTo) return;
+    const name=r['Источник']||'—';
+    if(!map[name]) map[name]={visits:0,forms:0};
+    map[name].visits+=num(r['Визиты']); map[name].forms+=num(r['Формы']);
+  });
+  const list=Object.entries(map).map(([k,v])=>({name:k,...v})).sort((a,b)=>b.visits-a.visits);
+  const total=totalVisits||list.reduce((s,x)=>s+x.visits,0)||1;
+  const body=list.length?list.map(x=>{
+    const share=x.visits/total*100;
+    return `<div class="src"><div class="src-top"><span class="src-name">${esc(x.name)}</span>`+
+      `<span class="src-meta">${x.visits} · ${share.toFixed(0)}%${x.forms?`<span class="forms">${x.forms} форм</span>`:''}</span></div>`+
+      `<div class="bar"><span style="width:${Math.max(share,1.5)}%"></span></div></div>`;
+  }).join(''):'<div class="empty">За период визитов не было.</div>';
+  return `<div class="flow">ОТКУДА · ${esc(STATE.period)}</div><h2>Источники трафика</h2><div class="hint">По типу источника за выбранный период · точные источники заявок — в блоке «Откуда приходят заявки» ниже</div>${body}`;
+}
+
+function goalsBlock(cur){
+  const body=STATE.goalCols.map(g=>{
+    const val=cur.goals[g]||0; const conv=cur.visits?(val/cur.visits*100):0;
+    return `<div class="goal"><div><div class="goal-name ${(g===MAIN_GOAL||g==='Заявка с формы (точная)')?'main':''}">${esc(g)}</div>`+
+      `<div class="goal-conv">конверсия ${conv.toFixed(1)}%</div></div><div class="goal-val">${val}</div></div>`;
+  }).join('');
+  return `<div class="flow">К ЧЕМУ · ${esc(STATE.period)}</div><h2>Цели</h2><div class="hint">Все 5 целей счётчика за выбранный период</div>${body}`;
+}
+
+function pagesBlock(){
+  const t=STATE.pages;
+  const head=`<div class="flow">ОТКУДА / К ЧЕМУ</div><h2>Страницы входа</h2><div class="hint">На какую страницу человек попал первой и сколько форм с неё · служебные (админка) скрыты · за 90 дней</div>`;
+  if(!t || !t.cols.includes('Форм')) return head+todoHint();
+  const rows=t.rows.filter(r=>!/bitrix|back_url_admin|clear_cache/i.test(String(r['Страница входа']||''))).slice(0,12);
+  const body=rows.map(r=>{
+    const url=String(r['Страница входа']||''); const disp=url.replace(/^https?:\/\//,'');
+    const forms=num(r['Форм']);
+    const mark = (/contacts/i.test(url) && forms>0) ? '<span class="badge b-real">боевая форма</span>' : '';
+    return `<tr><td class="url">${esc(disp)} ${mark}</td><td class="r">${num(r['Визитов'])}</td>`+
+      `<td class="r" style="color:var(--muted)">${num(r['Посетителей'])}</td><td class="r big">${forms||''}</td></tr>`;
+  }).join('');
+  return head+`<table><thead><tr><th>Страница входа</th><th class="r">Виз.</th><th class="r">Посет.</th><th class="r">Форм</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function sectionsBlock(){
+  const t=STATE.sections;
+  const head=`<div class="flow">ЧТО СМОТРЯТ</div><h2>Разделы сайта</h2><div class="hint">Сколько людей заходило в каждый раздел и сколько просмотров · за 90 дней</div>`;
+  if(!t || !t.cols.includes('Раздел')) return head+todoHint();
+  const rows=t.rows.filter(r=>num(r['Просмотры'])>0);
+  if(!rows.length) return head+'<div class="empty">Нет данных.</div>';
+  const maxU=Math.max(...rows.map(r=>num(r['Посетители'])),1);
+  const body=rows.map(r=>{
+    const u=num(r['Посетители']), pv=num(r['Просмотры']);
+    return `<div class="src"><div class="src-top"><span class="src-name">${esc(r['Раздел'])}</span>`+
+      `<span class="src-meta">${u} чел · ${pv} просм.</span></div>`+
+      `<div class="bar"><span style="width:${Math.max(u/maxU*100,2)}%"></span></div></div>`;
+  }).join('');
+  return head+body;
+}
+
+function contentBlock(){
+  const t=STATE.content;
+  const head=`<div class="flow">ЧТО СМОТРЯТ</div><h2>Статьи, новости, видео</h2><div class="hint">Конкретные материалы и сколько людей их открывало · за 90 дней</div>`;
+  if(!t || !t.cols.includes('Материал')) return head+todoHint();
+  const rows=t.rows.filter(r=>r['Материал'] && !String(r['Материал']).startsWith('—')).slice(0,15);
+  if(!rows.length) return head+'<div class="empty">Материалов пока нет.</div>';
+  const bc={'Видео':'b-ext','Новости':'b-direct','Статьи':'b-int'};
+  const body=rows.map(r=>{
+    const url=String(r['Материал']||''); const sect=String(r['Раздел']||'');
+    const segs=url.replace(/\/$/,'').split('/').filter(Boolean);
+    const label = segs.length<=2 ? ('Раздел целиком: '+esc(sect)) : esc(segs[segs.length-1].replace(/-/g,' '));
+    return `<tr><td class="url">${label}</td><td><span class="badge ${bc[sect]||'b-int'}">${esc(sect)}</span></td>`+
+      `<td class="r" style="color:var(--muted)">${num(r['Просмотры'])}</td><td class="r big">${num(r['Посетители'])}</td></tr>`;
+  }).join('');
+  return head+`<table><thead><tr><th>Материал</th><th>Раздел</th><th class="r">Просм.</th><th class="r">Чел.</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function queriesBlock(){
+  const t=STATE.queries;
+  const head=`<div class="flow">ОТКУДА</div><h2>Поисковые запросы</h2><div class="hint">Что вводили в поиске перед заходом · за 90 дней</div>`;
+  if(!t || !t.cols.includes('Визитов')) return head+todoHint();
+  const rows=t.rows.filter(r=>r['Поисковый запрос'] && !String(r['Поисковый запрос']).startsWith('—')).slice(0,10);
+  if(!rows.length) return head+'<div class="empty">Поисковых запросов не зафиксировано.</div>';
+  const body=rows.map(r=>`<tr><td>${esc(r['Поисковый запрос'])}</td><td class="r big">${num(r['Визитов'])}</td></tr>`).join('');
+  return head+`<table><thead><tr><th>Запрос</th><th class="r">Виз.</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function devicesBlock(){
+  const t=STATE.devices;
+  const head=`<div class="flow">ОТКУДА / К ЧЕМУ</div><h2>Устройства</h2><div class="hint">С чего заходят и как конвертят · за 90 дней</div>`;
+  if(!t || !t.cols.includes('Форм')) return head+todoHint();
+  const body=t.rows.map(r=>`<tr><td>${esc(r['Устройство'])}</td><td class="r">${num(r['Визитов'])}</td><td class="r big">${num(r['Форм'])}</td></tr>`).join('');
+  return head+`<table><thead><tr><th>Устройство</th><th class="r">Виз.</th><th class="r">Форм</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function sitesBlock(){
+  const rows=STATE.sites.rows.filter(r=>r['Сайт'] && !String(r['Сайт']).startsWith('—')).slice(0,10);
+  const head=`<div class="flow">ОТКУДА</div><h2>Сайты-доноры (внешние)</h2><div class="hint">Реальные внешние сайты со ссылками на вас · за 30 дней</div>`;
+  if(!rows.length) return head+'<div class="empty">Внешних реферальных переходов не было.</div>';
+  const body=rows.map(r=>{
+    const url=String(r['Сайт']); const disp=url.replace(/^https?:\/\//,'').replace(/\/$/,'');
+    return `<tr><td class="url"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(disp)}</a></td><td class="r big">${num(r['Визиты'])}</td></tr>`;
+  }).join('');
+  return head+`<table><thead><tr><th>Сайт</th><th class="r">Виз.</th></tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function chartBlock(){
+  const rows=STATE.overview.rows; const vis=rows.map(r=>num(r['Визиты']));
+  const max=Math.max(1,...vis); const iY=rows.length-2, iToday=rows.length-1;
+  const bars=rows.map((r,i)=>{
+    const h=Math.max(2,vis[i]/max*118); const cls=i===iToday?'today':(i===iY?'y':'');
+    return `<div class="cbar ${cls}" style="height:${h}px" title="${ruDate(r['Дата'])}: ${vis[i]} визитов"></div>`;
+  }).join('');
+  return `<div class="flow">ЧТО</div><h2>Динамика визитов</h2><div class="hint">По дням за 90 дней · синим — вчера, штриховкой — сегодня (неполный)</div>`+
+    `<div class="bars">${bars}</div><div class="axis"><span>${ruDate(rows[0]?.['Дата'])}</span><span>${ruDate(rows[iToday]?.['Дата'])}</span></div>`;
+}
+
+function glossaryBlock(){
+  const items=[
+    ['Прямые заходы','адрес вручную, закладки, ссылка из мессенджера/письма/документа без метки'],
+    ['Поиск','из органической выдачи Яндекса/Google (не реклама)'],
+    ['Переходы по ссылкам','с другого сайта; сюда же Метрика относит переходы из админки Битрикса'],
+    ['Внутренние переходы','со своей же страницы, засчитанные новым визитом (возврат спустя 30+ мин)'],
+    ['Реклама','клики по объявлениям с UTM-метками (Директ, РСЯ)'],
+    ['Соцсети / Мессенджеры','ВК, ОК, Telegram, WhatsApp и т.п.'],
+  ];
+  return `<h2>Что означают источники</h2><div class="hint">Как Метрика классифицирует трафик</div>`+
+    `<div class="gloss">`+items.map(i=>`<div class="gl"><b>${i[0]}</b> — <span>${i[1]}</span></div>`).join('')+`</div>`;
+}
+
+function todoHint(){ return `<div class="todo">Раздел появится после обновления данных.<br>Запустите функцию <b>refresh</b> в скрипте Apps Script один раз (вкладки досоздадутся).</div>`; }
+
+// ───────────── УТИЛИТЫ ─────────────
+function bindPills(){
+  document.querySelectorAll('.pill').forEach(b=>{
+    b.classList.toggle('on', b.dataset.p===STATE.period);
+    b.onclick=()=>{ STATE.period=b.dataset.p; document.querySelectorAll('.pill').forEach(x=>x.classList.toggle('on',x===b)); render(); };
+  });
+}
+function fmt(n){ return (Math.round(n)||0).toLocaleString('ru-RU'); }
+function ruDate(s){ if(!s) return '—'; const p=String(s).split('-'); return p.length===3?p[2]+'.'+p[1]:s; }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function showMsg(html){ document.getElementById('app').innerHTML=`<div class="msg">${html}</div>`; }
+
+load();
+</script>
+</body>
+</html>

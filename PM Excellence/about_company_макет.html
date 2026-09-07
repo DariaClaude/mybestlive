@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>О компании — PM Excellence (макет)</title>
+<style>
+  :root{
+    --accent:#852a34; --accent-dark:#6b1e27; --text:#222222;
+    --grey:#565656; --bg:#f3f3f3; --line:#ededed;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Gotham Pro','Inter','Segoe UI',Arial,sans-serif;color:var(--text);background:#fff;line-height:1.55}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+
+  /* ── шапка ── */
+  .top{border-bottom:1px solid var(--line);font-size:13px;color:var(--grey)}
+  .top .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:10px;padding-bottom:10px;gap:16px;flex-wrap:wrap}
+  .top a{color:var(--grey);text-decoration:none}
+  header{border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:18px;padding-bottom:18px;gap:24px;flex-wrap:wrap}
+  .logo{font-size:22px;font-weight:800;letter-spacing:.5px;color:var(--accent);text-decoration:none}
+  .logo span{color:var(--text)}
+  nav{display:flex;gap:26px;flex-wrap:wrap}
+  nav a{color:var(--text);text-decoration:none;font-size:14px}
+  nav a.active{color:var(--accent);font-weight:600}
+
+  .crumbs{font-size:12px;color:#929291;padding:18px 0 0}
+  .crumbs a{color:#929291;text-decoration:none}
+
+  /* ── герой ── */
+  .hero{padding:44px 0 52px;border-bottom:1px solid var(--line)}
+  .hero h1{font-size:40px;line-height:1.15;font-weight:800;max-width:760px}
+  .hero p{margin-top:18px;font-size:18px;color:var(--grey);max-width:720px}
+  .btn{display:inline-block;margin-top:28px;background:var(--accent);color:#fff;text-decoration:none;
+       padding:15px 34px;font-size:15px;font-weight:600;border-radius:3px;transition:.2s}
+  .btn:hover{background:var(--accent-dark)}
+  .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent);padding:13px 32px}
+  .btn.ghost:hover{background:var(--accent);color:#fff}
+
+  /* ── цифры ── */
+  .stats{background:var(--bg);padding:40px 0}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .stat b{display:block;font-size:36px;font-weight:800;color:var(--accent);line-height:1.1}
+  .stat span{display:block;margin-top:8px;font-size:14px;color:var(--grey)}
+
+  /* ── секции ── */
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:28px;font-weight:800;margin-bottom:18px}
+  section p{max-width:760px;color:var(--grey);font-size:16px}
+
+  .industries{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  .industry{background:var(--bg);border-left:4px solid var(--accent);padding:18px 20px;font-size:15px;font-weight:600}
+  .budget{margin-top:22px;font-size:17px;color:var(--text);font-weight:600}
+
+  .logos{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:26px}
+  .logos div{background:#fff;border:1px solid var(--line);height:74px;display:flex;align-items:center;justify-content:center;
+             font-weight:700;color:#929291;font-size:14px}
+  .logos-note{margin-top:14px;font-size:13px;color:#929291}
+
+  /* ── цитата ── */
+  .quote{background:var(--bg)}
+  .quote .inner{display:flex;gap:30px;align-items:center;max-width:860px}
+  .avatar{flex:0 0 96px;height:96px;border-radius:50%;background:var(--accent);color:#fff;display:flex;
+          align-items:center;justify-content:center;font-size:26px;font-weight:800}
+  .quote blockquote{font-size:21px;font-weight:600;line-height:1.4;color:var(--text)}
+  .quote cite{display:block;margin-top:12px;font-style:normal;font-size:14px;color:var(--grey)}
+
+  /* ── финальный CTA ── */
+  .final{background:var(--accent);color:#fff;text-align:center;border-bottom:none}
+  .final h2{color:#fff;font-size:30px}
+  .final p{margin:14px auto 0;color:rgba(255,255,255,.85)}
+  .final .btn{background:#fff;color:var(--accent)}
+  .final .btn:hover{background:var(--bg)}
+
+  /* ── контакты + подвал ── */
+  .contacts{padding:34px 0;font-size:15px;color:var(--grey);display:flex;gap:34px;flex-wrap:wrap}
+  .contacts b{color:var(--text)}
+  .contacts a{color:var(--accent);text-decoration:none}
+  footer{background:#222;color:#929291;font-size:13px;padding:22px 0}
+
+  @media(max-width:820px){
+    .hero h1{font-size:30px}
+    .stats .wrap{grid-template-columns:repeat(2,1fr)}
+    .industries{grid-template-columns:1fr 1fr}
+    .logos{grid-template-columns:repeat(3,1fr)}
+    .quote .inner{flex-direction:column;align-items:flex-start}
+  }
+  @media(max-width:520px){
+    .industries{grid-template-columns:1fr}
+    .logos{grid-template-columns:repeat(2,1fr)}
+    nav{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div>127030, Москва, Новослободская ул., д. 20</div>
+    <div><a href="mailto:pmc@pmexcellence.com">pmc@pmexcellence.com</a> &nbsp;·&nbsp; <a href="tel:+74999385439">+7 (499) 938-54-39</a></div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">PM<span>Excellence</span></a>
+    <nav>
+      <a href="#" class="active">О компании</a>
+      <a href="#">Сервисы</a>
+      <a href="#">Примеры проектов</a>
+      <a href="#">Медиацентр</a>
+      <a href="#">Команда</a>
+      <a href="#">Мероприятия</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap crumbs"><a href="#">Главная</a> / О компании</div>
+
+<!-- ПРАВКА №2: первый экран -->
+<div class="hero">
+  <div class="wrap">
+    <h1>Берём управление вашим крупным проектом на себя</h1>
+    <p>PM Excellence — первый PMC (Project Management Contractor) подрядчик в России.
+       Управляем проектами от 10 до 100+ миллиардов рублей с 2002 года — командой,
+       которая работает у вас на объекте.</p>
+    <a class="btn" href="#form">Обсудить ваш проект</a>
+  </div>
+</div>
+
+<!-- ПРАВКА №3: цифровой блок -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><b>24 года</b><span>в управлении крупными проектами</span></div>
+    <div class="stat"><b>60+</b><span>экспертов в штате</span></div>
+    <div class="stat"><b>700+</b><span>специалистов в резерве</span></div>
+    <div class="stat"><b>100+ млрд ₽</b><span>бюджеты проектов под управлением</span></div>
+  </div>
+</div>
+
+<!-- ПРАВКА №4: секция 1 -->
+<section>
+  <div class="wrap">
+    <h2>Управляем там, где строится ваш проект</h2>
+    <p>Команда PM Excellence выходит на объект заказчика в любой точке России.
+       Мы не консультируем со стороны: наши руководители проектов, планировщики и инженеры
+       работают внутри вашего проекта каждый день — в штабе стройки, а не в удалённом офисе.</p>
+    <a class="btn ghost" href="#form">Обсудить ваш проект</a>
+  </div>
+</section>
+
+<!-- ПРАВКА №4: секция 2 -->
+<section>
+  <div class="wrap">
+    <h2>Отрасли, в которых мы дома</h2>
+    <div class="industries">
+      <div class="industry">Нефтегазовая промышленность</div>
+      <div class="industry">Горнодобыча и металлургия</div>
+      <div class="industry">Энергетика</div>
+      <div class="industry">Инфраструктурное строительство</div>
+      <div class="industry">Морские и речные порты</div>
+      <div class="industry">Телекоммуникации и банковский сектор</div>
+    </div>
+    <div class="budget">Управляем проектами с бюджетом от 10 до 100+ миллиардов рублей.</div>
+  </div>
+</section>
+
+<!-- ПРАВКА №4: секция 3 -->
+<section>
+  <div class="wrap">
+    <h2>Нам доверяют лидеры отраслей</h2>
+    <div class="logos">
+      <div>ГАЗПРОМ</div><div>РОСНЕФТЬ</div><div>РОСАТОМ</div>
+      <div>ЕВРАЗ</div><div>ФСК ЕЭС</div><div>СБЕР</div>
+    </div>
+    <div class="logos-note">А также Ренессанс-Капитал, ГК Олимпстрой и другие.</div>
+    <a class="btn ghost" href="#">Посмотреть примеры проектов</a>
+  </div>
+</section>
+
+<!-- ПРАВКА №5: цитата -->
+<section class="quote">
+  <div class="wrap">
+    <div class="inner">
+      <div class="avatar">АК</div>
+      <blockquote>
+        «Мы единственные на рынке, кто отвечает за результат проекта деньгами — через Success Fee».
+        <cite>Александр Кутузов, РМЕ</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ПРАВКА №6: закрывающий блок -->
+<section class="final" id="form">
+  <div class="wrap">
+    <h2>Не уверены, что проект под контролем?</h2>
+    <p>Проведём PM Check-up — независимую диагностику вашего проекта за две недели.
+       Вы получите честную картину: где проект находится сейчас, какие риски накапливаются
+       и что сделать в первую очередь.</p>
+    <a class="btn" href="#">Заказать диагностику</a>
+  </div>
+</section>
+
+<!-- ПРАВКА №1: контакты с верным адресом -->
+<div class="wrap contacts">
+  <div><b>Телефон:</b> +7 (499) 938-54-39</div>
+  <div><b>E-mail:</b> <a href="mailto:pmc@pmexcellence.com">pmc@pmexcellence.com</a></div>
+  <div><b>Telegram-канал:</b> <a href="https://t.me/pmexcellence">t.me/pmexcellence</a></div>
+</div>
+
+<footer><div class="wrap">© 2026 ООО «ПИЭМСИ»</div></footer>
+
+</body>
+</html>
