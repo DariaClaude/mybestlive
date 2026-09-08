@@ -703,6 +703,34 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "31 августа–6 сентября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:760, adapted:null,
+      tools:{ avito:{leads:1031,spend:146782}, direct:null, social:{leads:19,spend:14017}, yula:{leads:6,spend:1156} },
+      projects:[
+        {n:"МСК Урбан Дикси",plan:200,fact:273,spend:49757,ad:null},
+        {n:"ЧЛБ Табыш",plan:70,fact:84,spend:9806,ad:null},
+        {n:"Лента ЧЛБ",plan:50,fact:46,spend:6334,ad:null},
+        {n:"ЧЛБ Пятёрочка",plan:15,fact:17,spend:3129,ad:null},
+        {n:"ЧЛБ Монетка",plan:160,fact:181,spend:16446,ad:null},
+        {n:"КЗН Табыш",plan:40,fact:68,spend:5426,ad:null},
+        {n:"Лента КЗН",plan:15,fact:28,spend:4334,ad:null},
+        {n:"Пятёрочка КЗН",plan:10,fact:17,spend:3594,ad:null},
+        {n:"МСК ВкусВилл",plan:100,fact:180,spend:23724,ad:null},
+        {n:"Ростикс ДРС",plan:100,fact:137,spend:24232,ad:null}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2230, adapted:42,
+      tools:{ avito:{leads:3499,spend:317617}, direct:null, social:{leads:40,spend:30836}, yula:{leads:8,spend:1543} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:150,fact:196,spend:19128,ad:9},
+        {n:"ЛЕНТА КРД",plan:450,fact:459,spend:32107,ad:5},
+        {n:"ЛЕНТА КЗН",plan:80,fact:106,spend:15753,ad:null},
+        {n:"ЛЕНТА МСК",plan:500,fact:587,spend:29306,ad:1},
+        {n:"ЛЕНТА ЧЛБ",plan:30,fact:33,spend:4623,ad:null},
+        {n:"Курьеры",plan:300,fact:440,spend:61757,ad:2},
+        {n:"Инвентаризация",plan:700,fact:1617,spend:141137,ad:25},
+        {n:"Гравис",plan:20,fact:61,spend:13806,ad:null}
+      ] },
+  ],
   "24–30 августа": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:740, adapted:251,
       tools:{ avito:{leads:842,spend:133172}, direct:null, social:{leads:15,spend:13593}, yula:{leads:5,spend:2644} },
@@ -959,8 +987,10 @@ function renderCliDetails(cw) {
          '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
     });
     var avg = cliConvAvg(c);
+    // Если «Вышедшие» не заполнены ни по одному проекту, в итоге прочерк, а не ноль.
+    var anyAd = c.projects.some(function(p){ return p.ad != null; });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
-       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+fmt(sa)+'</td>'+
+       '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+(anyAd?fmt(sa):'<span class="conv-zero">—</span>')+'</td>'+
        '<td>'+(avg==null?'<span class="conv-zero">—</span>':
          '<span class="'+(avg>=25?'conv-hi':avg>=5?'conv-mid':'conv-lo')+'" style="font-weight:700">'+dec1(avg)+'%</span>')+
        '</td></tr></tbody></table></div>';
