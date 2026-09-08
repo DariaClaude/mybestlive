@@ -5,9 +5,10 @@
 
 const SPREADSHEET_ID = '18osrbAdyrdSqRDuyfko8wuOzM__DPoYG93z9M_WdNgg';
 const SHEET_GID = 1073707391;
-const TELEGRAM_TOKEN = '8653621049:AAHP8JqcPLzDR82CLSjcHiXzf_ek93bjJkU';
+// Значения токенов — в keys/monitoring_secrets.txt (при вставке в Apps Script подставить вручную)
+const TELEGRAM_TOKEN = '__ВСТАВИТЬ_ИЗ_keys/monitoring_secrets.txt__';
 const RECIPIENTS = ['514283583', '704072834']; // daria_vis, olga_strela_coach
-const DEEPSEEK_API_KEY = 'sk-8df7579cc97447638665e7214a58db95';
+const DEEPSEEK_API_KEY = '__ВСТАВИТЬ_ИЗ_keys/monitoring_secrets.txt__';
 
 // Оставлено для обратной совместимости (не используется в hasKeyword)
 const KEYWORDS = [

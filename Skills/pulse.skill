@@ -8,12 +8,12 @@ description: Утренний пульс маркетинга. Быстрый с
 
 **Яндекс Метрика**
 - ID счётчика: 99547216
-- Токен: y0__xC4weLRBxiGjUAgrsetghcwpfiy7QdTY9PFOy94n1aP7WcyKMD4LVStZg
+- Токен: прочитай из файла keys/monitoring_secrets.txt, блок «Яндекс Метрика — pulse.skill»
 - Период: вчера vs позавчера + вчера vs неделю назад
 
 **Яндекс Директ**
 - Логин: sorockanova-o
-- OAuth токен: y0__xC4weLRBxBxiRuRggwresghcwpfiy7QfEF1yfgwL5JLiM6dmuhkYgr4iFVQ
+- OAuth токен: прочитай из файла keys/monitoring_secrets.txt, блок «Яндекс Директ OAuth — pulse.skill»
 
 ## Алгоритм
 

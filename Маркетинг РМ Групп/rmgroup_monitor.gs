@@ -11,9 +11,10 @@
 const RMG_CONFIG = {
   SPREADSHEET_ID: '1z49f3iBXx3YrCoQ9p6TRkAX5uqzxNj6uFHO_6lJrD7E',
   SHEET_GID:      0,
-  TELEGRAM_TOKEN: '8303531456:AAFXjyvqYvDimqYIp3WVf_cAixHNz0JMGuY',
+  // Значения токенов — в keys/monitoring_secrets.txt (при вставке в Apps Script подставить вручную)
+  TELEGRAM_TOKEN: '__ВСТАВИТЬ_ИЗ_keys/monitoring_secrets.txt__',
   RECIPIENTS:     [514283583], // Дарья @daria_vis
-  DEEPSEEK_KEY:   'sk-8df7579cc97447638665e7214a58db95'
+  DEEPSEEK_KEY:   '__ВСТАВИТЬ_ИЗ_keys/monitoring_secrets.txt__'
 };
 
 // ============================================================

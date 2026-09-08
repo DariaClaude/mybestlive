@@ -6,7 +6,8 @@
 // ================================================================
 
 const MON = {
-  TG_TOKEN:      '8643049824:AAFLJ8FNCikRATkSgUS1YafZX86Iaph8KHY',
+  // Значение токена — в keys/monitoring_secrets.txt (при вставке в Apps Script подставить вручную)
+  TG_TOKEN:      '__ВСТАВИТЬ_ИЗ_keys/monitoring_secrets.txt__',
   TG_CHAT:       '514283583',
   FETCH_TIMEOUT: 8,
   FIRST_RUN_FROM: new Date('2026-05-01T00:00:00+03:00'),
