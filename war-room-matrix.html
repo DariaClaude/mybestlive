@@ -368,7 +368,7 @@ function delta(cur, prev, opts) {
   var p = prev !== 0 ? Math.round(diff / prev * 100) : 0;
   var text;
   if (opts.mode === 'series') text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(p) + '%)';
-  else if (opts.mode === 'rub') text = arrow + ' ' + sign(diff) + ' \u20BD (' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' \u20BD)';
+  else if (opts.mode === 'rub') text = arrow + ' ' + sign(diff) + ' \u20BD, ' + sign(p) + '% (' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' \u20BD)';
   else if (opts.mode === 'pctOnly') text = arrow + ' ' + sign(p) + '% к прошл. неделе (' + fmt(prev) + ' \u20BD)';
   else text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(diff) + ' ' + (opts.unit || '') + ')';
   return '<div class="kpi-delta ' + cls + '">' + text + '</div>';
@@ -705,7 +705,7 @@ function renderSocial(w) {
 var CLIENTS = {
   "31 августа–6 сентября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:760, adapted:235,
-      tools:{ avito:{leads:1031,spend:146782}, direct:null, social:{leads:20,spend:14017}, yula:{leads:6,spend:2820} },
+      tools:{ avito:{leads:1031,spend:146782}, direct:null, social:{leads:20,spend:8460}, yula:{leads:6,spend:1620} },
       projects:[
         {n:"МСК Урбан Дикси",plan:200,fact:273,spend:49757,ad:25},
         {n:"ЧЛБ Табыш",plan:70,fact:84,spend:9806,ad:19},
@@ -719,7 +719,7 @@ var CLIENTS = {
         {n:"Ростикс ДРС",plan:100,fact:137,spend:24232,ad:null}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2230, adapted:71,
-      tools:{ avito:{leads:3499,spend:317617}, direct:null, social:{leads:42,spend:30836}, yula:{leads:9,spend:4230} },
+      tools:{ avito:{leads:3499,spend:317617}, direct:null, social:{leads:42,spend:17766}, yula:{leads:9,spend:2430} },
       projects:[
         {n:"МАГНИТ КРД",plan:150,fact:196,spend:19128,ad:9},
         {n:"ЛЕНТА КРД",plan:450,fact:459,spend:32107,ad:8},
@@ -880,7 +880,7 @@ function convClass(v) { return v==null?'':(v>=25?'conv-hi':'conv-mid'); }
 function projConv(ad, fact) {
   if (ad == null || !fact) return '<span class="conv-zero">—</span>';
   var v = ad / fact * 100;
-  var cls = !ad ? 'conv-zero' : v >= 25 ? 'conv-hi' : v >= 5 ? 'conv-mid' : 'conv-lo';
+  var cls = !ad ? 'conv-zero' : v >= 25 ? 'conv-hi' : 'conv-mid';
   return '<span class="' + cls + '" style="font-weight:700">' + dec1(v) + '%</span>';
 }
 function dec1(v) { return v.toFixed(1).replace('.',','); }
@@ -927,6 +927,17 @@ function renderCliKPI(cw, pcw) {
   return h+'</div>';
 }
 
+// Динамика к прошлой неделе одной строкой: стрелка + процент.
+// goodUp=true — рост это хорошо (лиды), false — рост плохо (CPL, расход).
+function cellDelta(cur, prev, goodUp) {
+  if (cur == null || prev == null || !prev) return '';
+  var d = cur - prev, p = Math.round(d / prev * 100);
+  if (d === 0) return '<span class="cell-s" style="color:#94A3B8">\u2192 0%</span>';
+  var good = (d > 0) === goodUp;
+  return '<span class="cell-s" style="color:' + (good ? '#10B981' : '#EF4444') + ';font-weight:700">' +
+         (d > 0 ? '\u2191' : '\u2193') + ' ' + sign(p) + '%</span>';
+}
+
 function renderCliMatrix(cw, pcw) {
   var h='<div class="card" style="margin-bottom:16px"><div class="card-title"><span class="dot dot-blue"></span>Клиенты × инструменты'+
         '<span class="fmt-badge">НОВЫЙ ФОРМАТ</span></div>'+
@@ -938,19 +949,21 @@ function renderCliMatrix(cw, pcw) {
     var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
     h+='<tr><td><div class="cl-name">'+esc(c.name)+'</div><div class="cl-scope">'+esc(c.scope)+'</div></td>';
     NEW_TOOLS.forEach(function(tool){
-      var v=c.tools[tool.k];
+      var v=c.tools[tool.k], pv = pc && pc.tools ? pc.tools[tool.k] : null;
       if(!v){ h+='<td><span class="cell-none">в разработке</span></td>'; return; }
       if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">не внесено<br>в таблицу</span></td>'; return; }
       h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
+         ((pv && !pv.pending) ? cellDelta(v.leads, pv.leads, true) : '')+
          '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
          '<span class="cell-b">'+fmt(v.spend)+' ₽</span></td>';
     });
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+
-       (ptt?'<span class="cell-s '+(t.leads>=ptt.leads?'stat-up':'stat-down')+'" style="color:'+(t.leads>=ptt.leads?'#10B981':'#EF4444')+'">'+(t.leads>=ptt.leads?'↑':'↓')+' '+sign(t.leads-ptt.leads)+'</span>':'')+'</td>';
+       (ptt?'<span class="cell-s '+(t.leads>=ptt.leads?'stat-up':'stat-down')+'" style="color:'+(t.leads>=ptt.leads?'#10B981':'#EF4444')+';font-weight:700">'+(t.leads>=ptt.leads?'↑':'↓')+' '+sign(t.leads-ptt.leads)+' ('+sign(Math.round((t.leads-ptt.leads)/ptt.leads*100))+'%)</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span>'+
+       (ptt?cellDelta(t.spend, ptt.spend, false):'')+
        (c.plan?'<span class="cell-s">план '+fmt(c.plan)+' лид.</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</span>'+
-       (ptt?'<span class="cell-s" style="color:'+(t.cpl<=ptt.cpl?'#10B981':'#EF4444')+'">'+(t.cpl<=ptt.cpl?'↓':'↑')+' '+sign(t.cpl-ptt.cpl)+' ₽</span>':'')+'</td>';
+       (ptt?'<span class="cell-s" style="color:'+(t.cpl<=ptt.cpl?'#10B981':'#EF4444')+';font-weight:700">'+(t.cpl<=ptt.cpl?'↓':'↑')+' '+sign(t.cpl-ptt.cpl)+' ₽ ('+sign(Math.round((t.cpl-ptt.cpl)/ptt.cpl*100))+'%)</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+(t.conv==null?'—':dec1(t.conv)+'%')+'</span>'+
        '<span class="cell-s">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span></td></tr>';
   });
@@ -970,29 +983,50 @@ function renderCliMatrix(cw, pcw) {
   return h+'</tbody></table></div>';
 }
 
-function renderCliDetails(cw) {
+// Динамика конверсии проекта к прошлой неделе, в процентных пунктах.
+// Рост — зелёный, снижение — оранжевый: красным в этой колонке ничего не красим.
+function projConvDelta(p, pp) {
+  if (!p || !pp || p.ad == null || pp.ad == null || !p.fact || !pp.fact) return '';
+  var cur = p.ad / p.fact * 100, prev = pp.ad / pp.fact * 100, d = cur - prev;
+  if (Math.abs(d) < 0.05) return '<div style="font-size:10px;color:#94A3B8">\u2192 0 п.п.</div>';
+  return '<div style="font-size:10px;font-weight:700;color:' + (d > 0 ? '#10B981' : '#F59E0B') + '">' +
+         (d > 0 ? '\u2191 +' : '\u2193 ') + dec1(d) + ' п.п.</div>';
+}
+function findProj(c, name) {
+  if (!c || !c.projects) return null;
+  for (var i = 0; i < c.projects.length; i++) if (c.projects[i].n === name) return c.projects[i];
+  return null;
+}
+
+function renderCliDetails(cw, pcw) {
   if (!cw.some(function(c){ return c.projects && c.projects.length; })) return '';
   var h='<div class="split2">';
-  cw.forEach(function(c){
+  cw.forEach(function(c, ci){
+    var pc = pcw && pcw[ci] ? pcw[ci] : null;
     if (!c.projects || !c.projects.length) return;
     h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — детализация'+
        '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито</span></div>'+
        '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th></tr></thead><tbody>';
     var sp=0,sf=0,ss=0,sa=0;
     c.projects.forEach(function(p){
-      var pc=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=(p.ad||0);
+      // pctPlan, не pc — иначе затеняется клиент прошлой недели и сравнение конверсий не считается
+      var pctPlan=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=(p.ad||0);
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
-         '<td><span class="pill '+(pc>=100?'pill-ok':'pill-no')+'">'+pc+'%</span></td>'+
+         '<td><span class="pill '+(pctPlan>=100?'pill-ok':'pill-no')+'">'+pctPlan+'%</span></td>'+
          '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+(p.ad==null?'<span class="conv-zero">—</span>':fmt(p.ad))+'</td>'+
-         '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
+         '<td>'+projConv(p.ad, p.fact)+projConvDelta(p, findProj(pc, p.n))+'</td></tr>';
     });
-    var avg = cliConvAvg(c);
+    var avg = cliConvAvg(c), pavg = pc ? cliConvAvg(pc) : null;
+    var davg = (avg != null && pavg != null) ? avg - pavg : null;
     // Если «Вышедшие» не заполнены ни по одному проекту, в итоге прочерк, а не ноль.
     var anyAd = c.projects.some(function(p){ return p.ad != null; });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
        '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+(anyAd?fmt(sa):'<span class="conv-zero">—</span>')+'</td>'+
        '<td>'+(avg==null?'<span class="conv-zero">—</span>':
-         '<span class="'+(avg>=25?'conv-hi':avg>=5?'conv-mid':'conv-lo')+'" style="font-weight:700">'+dec1(avg)+'%</span>')+
+         '<span class="'+(avg>=25?'conv-hi':'conv-mid')+'" style="font-weight:700">'+dec1(avg)+'%</span>')+
+       (davg==null?'':(Math.abs(davg)<0.05?'<div style="font-size:10px;color:#94A3B8">\u2192 0 п.п.</div>'
+         :'<div style="font-size:10px;font-weight:700;color:'+(davg>0?'#10B981':'#F59E0B')+'">'+
+           (davg>0?'\u2191 +':'\u2193 ')+dec1(davg)+' п.п.</div>'))+
        '</td></tr></tbody></table></div>';
   });
   return h+'</div>';
@@ -1005,7 +1039,7 @@ function renderPeriod(idx) {
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
     // Соцсети идут сразу после детализации по клиентам — «Требует внимания» замыкает период.
-    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliDetails(cw) +
+    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliDetails(cw, pcw) +
            renderSocial(w) +
            '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>';
   } else {
