@@ -983,21 +983,6 @@ function renderCliMatrix(cw, pcw) {
   return h+'</tbody></table></div>';
 }
 
-// Динамика конверсии проекта к прошлой неделе, в процентных пунктах.
-// Рост — зелёный, снижение — оранжевый: красным в этой колонке ничего не красим.
-function projConvDelta(p, pp) {
-  if (!p || !pp || p.ad == null || pp.ad == null || !p.fact || !pp.fact) return '';
-  var cur = p.ad / p.fact * 100, prev = pp.ad / pp.fact * 100, d = cur - prev;
-  if (Math.abs(d) < 0.05) return '<div style="font-size:10px;color:#94A3B8">\u2192 0 п.п.</div>';
-  return '<div style="font-size:10px;font-weight:700;color:' + (d > 0 ? '#10B981' : '#F59E0B') + '">' +
-         (d > 0 ? '\u2191 +' : '\u2193 ') + dec1(d) + ' п.п.</div>';
-}
-function findProj(c, name) {
-  if (!c || !c.projects) return null;
-  for (var i = 0; i < c.projects.length; i++) if (c.projects[i].n === name) return c.projects[i];
-  return null;
-}
-
 function renderCliDetails(cw, pcw) {
   if (!cw.some(function(c){ return c.projects && c.projects.length; })) return '';
   var h='<div class="split2">';
@@ -1014,7 +999,7 @@ function renderCliDetails(cw, pcw) {
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
          '<td><span class="pill '+(pctPlan>=100?'pill-ok':'pill-no')+'">'+pctPlan+'%</span></td>'+
          '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+(p.ad==null?'<span class="conv-zero">—</span>':fmt(p.ad))+'</td>'+
-         '<td>'+projConv(p.ad, p.fact)+projConvDelta(p, findProj(pc, p.n))+'</td></tr>';
+         '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
     });
     var avg = cliConvAvg(c), pavg = pc ? cliConvAvg(pc) : null;
     var davg = (avg != null && pavg != null) ? avg - pavg : null;
