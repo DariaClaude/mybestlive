@@ -1,0 +1,460 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C1C2E; --ink2:#3A3D4D; --muted:#6B7080; --line:#E4E7EF;
+  --bg:#F4F6FA; --card:#FFFFFF;
+  --lime:#BCD531; --lime-d:#A3BD1C; --lime-soft:#EEF5C9;
+  --violet:#7B27E8; --violet-d:#6A1FCB; --violet-soft:#F1E8FF;
+  --r:18px; --r-sm:12px; --max:1120px;
+  --shadow:0 10px 30px rgba(28,28,46,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.45;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+h1,h2,h3{line-height:1.08;letter-spacing:-.02em}
+h1{font-weight:900;font-size:clamp(30px,6vw,56px)}
+h2{font-weight:800;font-size:clamp(24px,3.6vw,38px);margin-bottom:22px}
+h3{font-weight:800;font-size:20px}
+.muted{color:var(--muted)}
+section{padding:56px 0}
+@media(min-width:860px){section{padding:84px 0}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:12px 26px;border-radius:999px;font-weight:800;font-size:17px;line-height:1.15;text-align:center;text-decoration:none;border:0;cursor:pointer;transition:transform .12s,box-shadow .2s,background .2s;-webkit-tap-highlight-color:transparent;min-width:0;max-width:100%}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--violet);color:#fff;box-shadow:0 10px 26px rgba(123,39,232,.32)}
+.btn-primary:hover{background:var(--violet-d)}
+.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-lime:hover{background:var(--lime-d)}
+.btn-ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-tg{background:var(--ink);color:#fff}
+.btn-block{width:100%}
+.btn svg{width:22px;height:22px;flex:none}
+
+/* header */
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.3) blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:15px;line-height:1.1}
+.brand img{height:34px;width:auto}
+.brand small{display:block;font-weight:600;color:var(--muted);font-size:12px}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-phone{font-weight:800;text-decoration:none;font-size:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:2px solid var(--line)}
+.nav-phone svg{width:18px;height:18px}
+.nav-phone span{display:none}
+@media(min-width:640px){.nav-phone span{display:inline}}
+.nav-cta{display:none}
+@media(min-width:860px){.nav-cta{display:inline-flex;min-height:46px;padding:0 20px;font-size:15px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:44px 0 40px;background:
+  radial-gradient(900px 500px at 85% -10%, var(--lime-soft), transparent 60%),
+  radial-gradient(700px 400px at -10% 100%, var(--violet-soft), transparent 60%), #fff}
+@media(min-width:860px){.hero{padding:76px 0 72px}}
+.hero-word{position:absolute;left:-10px;top:4px;font-weight:900;font-size:min(30vw,300px);line-height:.8;color:transparent;-webkit-text-stroke:2px var(--lime);opacity:.22;white-space:nowrap;letter-spacing:-.05em;user-select:none;pointer-events:none}
+.hero-grid{position:relative;display:grid;gap:18px;align-items:center;min-width:0;grid-template-areas:"top" "photo" "bottom"}
+.hero-grid>div{min-width:0}
+.hero-top{grid-area:top}.hero-bottom{grid-area:bottom}.hero-photo{grid-area:photo}
+@media(min-width:860px){.hero-grid{grid-template-columns:1.15fr .85fr;grid-template-areas:"top photo" "bottom photo";gap:0 48px;row-gap:24px}}
+.chip{display:inline-flex;align-items:center;gap:8px;max-width:100%;background:var(--lime);color:var(--ink);font-weight:800;font-size:13px;padding:8px 14px;border-radius:999px;margin-bottom:18px;text-transform:uppercase;letter-spacing:.04em}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--ink2);margin:16px 0 0;max-width:560px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:26px}
+.fact{min-width:0;overflow-wrap:anywhere;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 12px;box-shadow:var(--shadow)}
+.fact b{display:block;font-size:clamp(17px,2.4vw,24px);font-weight:900;line-height:1.1;letter-spacing:-.02em}
+.fact span{display:block;font-size:12px;color:var(--muted);margin-top:4px;line-height:1.3}
+@media(max-width:400px){.facts{grid-template-columns:1fr 1fr}.fact:last-child{grid-column:1/-1}}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-actions .btn{flex:1 1 100%}
+@media(min-width:640px){.hero-actions .btn{flex:0 0 auto}}
+.hero-photo{position:relative}
+.hero-photo img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 30%;border-radius:20px;box-shadow:0 18px 40px rgba(28,28,46,.16)}
+@media(min-width:860px){.hero-photo img{aspect-ratio:4/4.4;border-radius:28px;object-position:center}}
+.hero-photo img{background:linear-gradient(160deg,var(--lime-soft),var(--violet-soft));box-shadow:0 30px 60px rgba(28,28,46,.18)}
+
+.hero-badge{display:none;position:absolute;left:-16px;bottom:28px;background:var(--ink);color:#fff;border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);gap:12px;align-items:center}
+@media(min-width:860px){.hero-badge{display:flex}}
+.hero-badge b{font-size:22px;font-weight:900;color:var(--lime);line-height:1}
+.hero-badge span{font-size:13px;line-height:1.25;color:#D6D8E3}
+
+/* stats band */
+.stats{background:var(--ink);color:#fff;padding:28px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat{min-width:0}
+.stat b{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;font-size:clamp(26px,4vw,44px);font-weight:900;color:var(--lime);line-height:1;letter-spacing:-.02em}
+.stat b small{font-size:.5em;font-weight:800;color:#fff;letter-spacing:0}
+.stat span{display:block;font-size:13px;color:#C9CBD6;margin-top:6px}
+@media(max-width:480px){.stat span{font-size:12px}}
+
+/* why */
+.why-grid{display:grid;gap:12px}
+.why,.step,.vac{min-width:0}
+@media(min-width:640px){.why-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.why-grid{grid-template-columns:repeat(4,1fr)}}
+.why{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px}
+.why .ic{width:44px;height:44px;border-radius:12px;background:var(--lime-soft);display:grid;place-items:center;margin-bottom:14px}
+.why .ic svg{width:24px;height:24px}
+.why h3{font-size:17px;margin-bottom:6px}
+.why p{font-size:14.5px;color:var(--muted)}
+
+/* vacancies */
+.vac-grid{display:grid;gap:16px}
+@media(min-width:860px){.vac-grid{grid-template-columns:1fr 1fr}}
+.vac{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.vac-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.vac h3{font-size:22px}
+.rate{flex:none;text-align:right}
+.rate b{display:block;background:var(--lime);border-radius:10px;padding:8px 12px;font-size:18px;font-weight:900;white-space:nowrap}
+.rate b.tbd{background:var(--violet-soft);font-size:14px;font-weight:800;color:var(--violet-d);white-space:normal;max-width:150px}
+.rate span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.meta div{background:var(--bg);border-radius:10px;padding:10px 12px;font-size:14px}
+.meta div small{display:block;color:var(--muted);font-size:12px;margin-bottom:2px}
+.meta div.full{grid-column:1/-1}
+.vac ul{list-style:none;display:grid;gap:6px;font-size:14.5px;color:var(--ink2)}
+.vac ul li{padding-left:22px;position:relative}
+.vac ul li::before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:50%;background:var(--lime)}
+.vac ul.req li::before{background:var(--violet-soft);border:2px solid var(--violet)}
+.vac .lbl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+.vac .btn{margin-top:auto}
+
+/* partners */
+.partners{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 0}
+.partners h2{font-size:clamp(20px,2.6vw,28px);text-align:center;margin-bottom:8px}
+.partners p{text-align:center;color:var(--muted);margin-bottom:26px;font-size:15px}
+.logos{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 34px;align-items:center}
+.logos img{height:30px;width:auto;filter:grayscale(1);opacity:.7;transition:.2s}
+.logos img:hover{filter:none;opacity:1}
+@media(min-width:860px){.logos img{height:36px}}
+
+/* steps */
+.steps{display:grid;gap:12px;counter-reset:s}
+@media(min-width:860px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px 20px;position:relative}
+.step i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--lime);font-style:normal;font-weight:900;font-size:17px;margin-bottom:14px}
+.step h3{font-size:17px;margin-bottom:6px}
+.step p{font-size:14.5px;color:var(--muted)}
+
+/* form section */
+.form-sec{background:var(--ink);color:#fff}
+.form-grid{display:grid;gap:28px;align-items:center}
+@media(min-width:860px){.form-grid{grid-template-columns:1fr 1fr;gap:56px}}
+.form-sec h2{color:#fff}
+.form-sec p.lead{color:#C9CBD6;font-size:17px;max-width:480px}
+.form-sec .contact-lines{margin-top:22px;display:grid;gap:10px;font-weight:600}
+.form-sec .contact-lines a{text-decoration:none;display:flex;gap:10px;align-items:center}
+.form-sec .contact-lines svg{width:20px;height:20px;color:var(--lime)}
+form.lead{background:#fff;color:var(--ink);border-radius:24px;padding:26px 22px;box-shadow:0 30px 60px rgba(0,0,0,.3)}
+@media(min-width:640px){form.lead{padding:32px 30px}}
+form.lead h3{font-size:22px;margin-bottom:4px}
+form.lead .hint{font-size:14px;color:var(--muted);margin-bottom:18px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink2)}
+.field input{width:100%;height:54px;border:2px solid var(--line);border-radius:14px;padding:0 16px;font:inherit;font-size:17px;color:var(--ink);background:#fff;outline:none;transition:border .15s}
+.field input:focus{border-color:var(--violet)}
+.field input.err{border-color:#E5484D}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+.consent{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.4}
+.consent a{color:var(--muted)}
+.form-msg{display:none;margin-top:12px;font-size:14px;font-weight:600}
+.form-msg.show{display:block}
+.form-msg.ok{color:#2E7D32}
+.form-msg.bad{color:#C62828}
+.success{text-align:center;padding:14px 4px}
+.success .ok-ic{width:64px;height:64px;border-radius:50%;background:var(--lime);display:grid;place-items:center;margin:0 auto 14px}
+.success .ok-ic svg{width:30px;height:30px}
+.success h3{margin-bottom:6px}
+.success p{color:var(--muted);font-size:15px;margin-bottom:16px}
+
+/* footer */
+footer{padding:28px 0 20px;font-size:13px;color:var(--muted)}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none}
+footer .brand img{height:26px}
+
+/* sticky bar (mobile) */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;transform:translateY(0);transition:transform .25s}
+.bar .btn-primary{flex:1;min-height:54px}
+.bar .call{width:54px;height:54px;border-radius:50%;background:var(--lime);display:grid;place-items:center;flex:none}
+.bar .call svg{width:24px;height:24px}
+.bar.hide{transform:translateY(120%)}
+@media(min-width:860px){.bar{display:none}body{padding-bottom:0}}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-end;justify-content:center;background:rgba(28,28,46,.6);padding:0}
+@media(min-width:640px){.modal{align-items:center;padding:20px}}
+.modal.open{display:flex}
+.modal .box{background:#fff;width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));position:relative;max-height:92vh;overflow:auto;animation:up .25s ease-out}
+@media(min-width:640px){.modal .box{border-radius:24px;padding:30px 28px}}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.modal .x{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);font-size:20px;cursor:pointer;display:grid;place-items:center}
+.modal .vac-name{display:inline-block;background:var(--lime-soft);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:700;margin-bottom:14px}
+.modal h3{font-size:22px;margin-bottom:4px;padding-right:40px}
+.modal .hint{font-size:14px;color:var(--muted);margin-bottom:16px}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="РМ Групп">
+      <img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/rm-dark.png" alt="РМ Групп" width="47" height="34">
+      <span>РМ Групп<small>вакансии рядом с домом</small></span>
+    </a>
+    <div class="nav-right">
+      <a class="nav-phone" href="tel:+74995048804" data-ym="phone_click">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span>8 (499) 504-88-04</span>
+      </a>
+      <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-word" aria-hidden="true">РАБОТА</div>
+  <div class="wrap hero-grid">
+    <div class="hero-top">
+      <div class="chip">Москва и область · 4 адреса</div>
+      <h1>Пекари и повара</h1>
+      <p class="lead">Кухня и касса в кафе и пекарнях рядом с домом. Без опыта, обучим по стандартам компании.</p>
+    </div>
+    <div class="hero-bottom">
+      <div class="facts"><div class="fact"><b>до 4 730 ₽</b><span>за смену</span></div><div class="fact"><b>ЛМК</b><span>компенсируем после 1 смены</span></div><div class="fact"><b>без опыта</b><span>обучим на месте</span></div></div>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-open="">Оставить заявку и выйти на работу</button><a class="btn btn-ghost" href="https://max.ru" target="_blank" rel="noopener" data-ym="max_click"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1709837167684-47d7ccf0ed89?auto=format&amp;fit=crop&amp;w=1100&amp;q=75" alt="" loading="eager" fetchpriority="high" onerror="this.removeAttribute('src')">
+      <div class="hero-badge"><b>до 4 730 ₽</b><span>за смену</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap stats-grid"><div class="stat"><b>16<small>лет</small></b><span>выводим людей на работу</span></div><div class="stat"><b>4000+<small>человек</small></b><span>работают с нами сегодня</span></div><div class="stat"><b>93<small>проекта</small></b><span>в крупных компаниях</span></div></div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <h2 class="reveal">Почему с нами</h2>
+    <div class="why-grid"><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Выплаты каждую неделю</h3><p>Деньги на карту раз в неделю, без задержек и «в конце месяца».</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Официальный договор</h3><p>Все условия прописаны на бумаге: ставка, график, выплаты.</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3>Любое гражданство с документами</h3><p>Берём с 18 лет, опыт не обязателен: покажем всё на месте.</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Свой куратор на объекте</h3><p>Поможет в первую смену и ответит на вопросы по телефону.</p></div></div>
+  </div>
+</section>
+
+<section id="vacancies" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="reveal">Выберите адрес</h2>
+    <div class="vac-grid"><article class="vac reveal">
+  <div class="vac-head"><h3>Повар-кассир</h3><div class="rate"><b>3 520 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>сменный</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Московская область</small>ул. Маяковского, 5, Лобня</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Приготовление блюд по стандартам компании</li><li>Приём и выдача заказов, работа на кассе</li><li>Компенсация ЛМК после 1 смены</li><li>АПД 13 000 ₽</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Без опыта</li><li>ЛМК</li></ul></div>
+  <button class="btn btn-lime btn-block" data-open="Повар-кассир">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Повар-кассир</h3><div class="rate"><b>2 970 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>сменный</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Московская область</small>Химки, микрорайон «ИКЕА», корп. 1</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Приготовление блюд по стандартам компании</li><li>Приём и выдача заказов, работа на кассе</li><li>Компенсация ЛМК после 1 смены</li><li>АПД 13 000 ₽</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Без опыта</li></ul></div>
+  <button class="btn btn-lime btn-block" data-open="Повар-кассир">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Пекарь-универсал</h3><div class="rate"><b>4 730 ₽</b><span>за смену 12 часов</span></div></div>
+  <div class="meta">
+    <div><small>График</small>смены по 12 часов, час на обед</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Москва</small>ул. Мосфильмовская, 74Б, Москва</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Акция «Приведи друга»: 5 000 ₽ после 10 смен</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>ЛМК</li></ul></div>
+  <button class="btn btn-lime btn-block" data-open="Пекарь-универсал">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Повар-кассир</h3><div class="rate"><b>2 970 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>сменный</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Москва</small>Парк Горького, Пушкинская набережная, Москва</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Компенсация ЛМК после 1 смены</li><li>АПД 13 000 ₽</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Без опыта</li><li>ЛМК</li></ul></div>
+  <button class="btn btn-lime btn-block" data-open="Повар-кассир">Оставить заявку на вакансию</button>
+</article></div>
+  </div>
+</section>
+
+<div class="partners">
+  <div class="wrap">
+    <h2>Наши сотрудники работают в</h2>
+    <p>Смены в крупных сетях и на складах, официально через «РМ Групп»</p>
+    <div class="logos"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/ozon.png" alt="ozon" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/lenta.png" alt="lenta" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/pyaterochka.png" alt="pyaterochka" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/x5.png" alt="x5" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/vkusvill.png" alt="vkusvill" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/samokat.png" alt="samokat" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/okey.png" alt="okey" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/diksi.png" alt="diksi" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/selgros.png" alt="selgros" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/fmlogistic.png" alt="fmlogistic" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/miratorg.png" alt="miratorg" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/gazprom.png" alt="gazprom" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/katren.png" alt="katren" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/verniy.png" alt="verniy" loading="lazy"></div>
+  </div>
+</div>
+
+<section id="steps">
+  <div class="wrap">
+    <h2 class="reveal">Как выйти на работу</h2>
+    <div class="steps"><div class="step reveal"><i>1</i><h3>Оставляете заявку</h3><p>Имя и телефон, 20 секунд.</p></div><div class="step reveal"><i>2</i><h3>Перезваниваем</h3><p>Подбираем объект рядом с вами и удобные смены.</p></div><div class="step reveal"><i>3</i><h3>Оформляем официально</h3><p>Заключаем договор, где прописаны все условия.</p></div><div class="step reveal"><i>4</i><h3>Выходите на работу</h3><p>Первая выплата уже через неделю.</p></div></div>
+  </div>
+</section>
+
+<section class="form-sec" id="form">
+  <div class="wrap form-grid">
+    <div>
+      <h2>Ответим на все вопросы</h2>
+      <p class="lead">Оставьте номер: перезвоним, подберём смены рядом с домом и расскажем, что взять с собой в первый день.</p>
+      <div class="contact-lines">
+        <a href="tel:+74995048804" data-ym="phone_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg>8 (499) 504-88-04</a>
+        <a href="https://max.ru" target="_blank" rel="noopener" data-ym="max_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a>
+        <a href="mailto:info@rmgk.online"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>info@rmgk.online</a>
+      </div>
+    </div>
+    <form class="lead" id="mainForm" novalidate>
+      <h3>Оставить заявку</h3>
+      <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
+      <div class="field"><label for="f-name">Ваше имя</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
+      <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="vacancy" value="Повар/пекарь">
+      <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
+      <div class="form-msg"></div>
+      <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="https://rmgk.online/politika" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="https://rmgk.online/soglasie_na_obrabotku" target="_blank" rel="noopener">согласие на обработку персональных данных</a>.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <a class="brand" href="#top"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/rm-dark.png" alt="РМ Групп"></a>
+    <div>ООО «Урбан Сервис» · 115407, Москва, Нагатинская наб., д. 54</div>
+    <div><a href="tel:+74995048804">8 (499) 504-88-04</a> · <a href="mailto:info@rmgk.online">info@rmgk.online</a></div>
+  </div>
+</footer>
+
+<div class="bar" id="bar">
+  <button class="btn btn-primary" data-open="">Откликнуться</button>
+  <a class="call" href="tel:+74995048804" aria-label="Позвонить" data-ym="phone_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="box">
+    <button class="x" type="button" data-close aria-label="Закрыть">×</button>
+    <div class="vac-name" id="m-vac"></div>
+    <h3 id="m-title">Заявка на вакансию</h3>
+    <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
+    <form class="lead-modal" id="modalForm" novalidate>
+      <div class="field"><label for="m-name">Ваше имя</label><input id="m-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
+      <div class="field"><label for="m-phone">Телефон</label><input id="m-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="vacancy" value="Повар/пекарь">
+      <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
+      <div class="form-msg"></div>
+      <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="https://rmgk.online/politika" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="https://rmgk.online/soglasie_na_obrabotku" target="_blank" rel="noopener">согласие на обработку ПД</a>.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ENDPOINT = "";
+  var REGION = "МСК";
+  var GOAL = "vacancy_lead";
+  var TG = "https://max.ru";
+  var PHONE_LINK = "+74995048804";
+  var PHONE = "8 (499) 504-88-04";
+
+  function ym_(goal){ try{ if(window.ym && GOAL){ ym(99547216, 'reachGoal', goal); } }catch(e){} }
+
+  /* phone mask */
+  function mask(input){
+    input.addEventListener('input', function(){
+      var d = input.value.replace(/\D/g,'');
+      if(d.charAt(0)==='8') d = '7'+d.slice(1);
+      if(d.charAt(0)!=='7' && d.length) d = '7'+d;
+      d = d.slice(0,11);
+      var out = '+7';
+      if(d.length>1) out += ' ('+d.slice(1,4);
+      if(d.length>=4) out += ') '+d.slice(4,7);
+      if(d.length>=7) out += '-'+d.slice(7,9);
+      if(d.length>=9) out += '-'+d.slice(9,11);
+      input.value = out;
+    });
+    input.addEventListener('focus', function(){ if(!input.value) input.value='+7 ('; });
+    input.addEventListener('blur', function(){ if(input.value==='+7 (') input.value=''; });
+  }
+  document.querySelectorAll('input[type=tel]').forEach(mask);
+
+  /* modal */
+  var modal = document.getElementById('modal'), bar = document.getElementById('bar');
+  var mVac = document.getElementById('m-vac'), mVacInput = document.querySelector('#modalForm input[name=vacancy]');
+  var defaultVac = mVacInput.value;
+  function openModal(vac){
+    mVac.textContent = vac || defaultVac; mVacInput.value = vac || defaultVac;
+    modal.classList.add('open'); document.body.style.overflow='hidden';
+    setTimeout(function(){ document.getElementById('m-name').focus(); }, 250);
+    ym_('form_open');
+  }
+  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+  document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click', function(){ openModal(b.getAttribute('data-open')); }); });
+  document.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', closeModal); });
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  /* hide sticky bar when the big form is on screen */
+  var formSec = document.getElementById('form');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ es.forEach(function(e){ bar.classList.toggle('hide', e.isIntersecting); }); }, {threshold:.25}).observe(formSec);
+    var ro = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target);} }); }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+  } else { document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); }); }
+
+  /* submit */
+  function utm(){ return (location.search||'').slice(1).slice(0,300); }
+  function submit(form){
+    var phoneEl = form.querySelector('input[name=phone]'), nameEl = form.querySelector('input[name=name]');
+    var msg = form.querySelector('.form-msg'), btn = form.querySelector('button[type=submit]');
+    var digits = phoneEl.value.replace(/\D/g,'');
+    phoneEl.classList.remove('err'); msg.className='form-msg';
+    if(digits.length!==11){ phoneEl.classList.add('err'); phoneEl.focus(); msg.textContent='Введите номер полностью: +7 (___) ___-__-__'; msg.className='form-msg show bad'; return; }
+    if(form.querySelector('input[name=website]').value){ done(form); return; }
+    var body = new URLSearchParams({
+      name: nameEl.value.trim(), phone: '+'+digits, vacancy: form.querySelector('input[name=vacancy]').value,
+      region: REGION, page: location.pathname, utm: utm()
+    }).toString();
+    btn.disabled = true; var old = btn.textContent; btn.textContent = 'Отправляем…';
+    if(!ENDPOINT){ console.warn('ENDPOINT не задан: заявка не отправлена (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
+    fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if(!j.ok) throw new Error(j.error||'bad'); done(form); })
+      .catch(function(){
+        btn.disabled=false; btn.textContent=old;
+        msg.innerHTML = 'Не получилось отправить. Позвоните <a href="tel:'+PHONE_LINK+'">'+PHONE+'</a> или напишите в <a href="'+TG+'" target="_blank" rel="noopener">MAX</a>.';
+        msg.className='form-msg show bad';
+      });
+  }
+  function done(form){
+    ym_(GOAL);
+    form.innerHTML = '<div class="success"><div class="ok-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>'+
+      '<h3>Заявка принята</h3><p>Перезвоним в течение 15 минут в рабочее время. Если удобнее, напишите нам в MAX.</p>'+
+      '<a class="btn btn-tg btn-block" href="'+TG+'" target="_blank" rel="noopener">Написать в MAX</a></div>';
+  }
+  document.querySelectorAll('form').forEach(function(f){ f.addEventListener('submit', function(e){ e.preventDefault(); submit(f); }); });
+  document.querySelectorAll('[data-ym]').forEach(function(a){ a.addEventListener('click', function(){ ym_(a.getAttribute('data-ym')); }); });
+})();
+</script>
+
