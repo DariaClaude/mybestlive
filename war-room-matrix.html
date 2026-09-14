@@ -703,8 +703,36 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "7–13 сентября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:710, adapted:2,
+      tools:{ avito:{leads:847,spend:68919}, direct:null, social:{leads:12,spend:10838}, yula:{leads:8,spend:618} },
+      projects:[
+        {n:"МСК Урбан Дикси",plan:100,fact:104,spend:8355,ad:null},
+        {n:"ЧЛБ Табыш",plan:70,fact:107,spend:10201,ad:null},
+        {n:"Лента ЧЛБ",plan:50,fact:58,spend:4326,ad:null},
+        {n:"ЧЛБ Пятёрочка",plan:15,fact:35,spend:3636,ad:null},
+        {n:"ЧЛБ Монетка",plan:160,fact:144,spend:13842,ad:null},
+        {n:"КЗН Табыш",plan:40,fact:56,spend:4205,ad:null},
+        {n:"Лента КЗН",plan:15,fact:13,spend:1629,ad:null},
+        {n:"Пятёрочка КЗН",plan:10,fact:9,spend:1828,ad:null},
+        {n:"МСК ВкусВилл",plan:150,fact:205,spend:19121,ad:2},
+        {n:"Ростикс ДРС",plan:100,fact:116,spend:1776,ad:null}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:3520, adapted:12,
+      tools:{ avito:{leads:5811,spend:362641}, direct:null, social:{leads:50,spend:30675}, yula:{leads:11,spend:850} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:150,fact:343,spend:28050,ad:null},
+        {n:"ЛЕНТА КРД",plan:450,fact:812,spend:48248,ad:null},
+        {n:"ЛЕНТА КЗН",plan:80,fact:116,spend:13605,ad:4},
+        {n:"ЛЕНТА МСК",plan:500,fact:924,spend:36505,ad:null},
+        {n:"ЛЕНТА ЧЛБ",plan:20,fact:24,spend:4221,ad:null},
+        {n:"Курьеры",plan:300,fact:575,spend:58137,ad:null},
+        {n:"Инвентаризация",plan:2000,fact:2993,spend:163709,ad:8},
+        {n:"Гравис",plan:20,fact:24,spend:10166,ad:null}
+      ] },
+  ],
   "31 августа–6 сентября": [
-    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:760, adapted:235,
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:760, adapted:237,
       tools:{ avito:{leads:1031,spend:146782}, direct:null, social:{leads:20,spend:8460}, yula:{leads:6,spend:1620} },
       projects:[
         {n:"МСК Урбан Дикси",plan:200,fact:273,spend:49757,ad:25},
@@ -713,10 +741,10 @@ var CLIENTS = {
         {n:"ЧЛБ Пятёрочка",plan:15,fact:17,spend:3129,ad:5},
         {n:"ЧЛБ Монетка",plan:160,fact:181,spend:16446,ad:150},
         {n:"КЗН Табыш",plan:40,fact:68,spend:5426,ad:14},
-        {n:"Лента КЗН",plan:15,fact:28,spend:4334,ad:null},
-        {n:"Пятёрочка КЗН",plan:10,fact:17,spend:3594,ad:null},
+        {n:"Лента КЗН",plan:15,fact:28,spend:4334,ad:1},
+        {n:"Пятёрочка КЗН",plan:10,fact:17,spend:3594,ad:1},
         {n:"МСК ВкусВилл",plan:100,fact:180,spend:23724,ad:null},
-        {n:"Ростикс ДРС",plan:100,fact:137,spend:24232,ad:null}
+        {n:"Ростикс ДРС",plan:100,fact:137,spend:24232,ad:0}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2230, adapted:79,
       tools:{ avito:{leads:3499,spend:317617}, direct:null, social:{leads:42,spend:17766}, yula:{leads:9,spend:2430} },
@@ -885,6 +913,15 @@ function projConv(ad, fact) {
 }
 function dec1(v) { return v.toFixed(1).replace('.',','); }
 
+// Конверсию недели сравниваем с прошлой, только если «Вышедшие» заполнены хотя бы
+// по половине проектов с лидами: иначе недозаполненность выглядит как обвал.
+function convReady(c) {
+  if (!c || !c.projects || !c.projects.length) return true;
+  var withLeads = c.projects.filter(function(p){ return p.fact; });
+  var filled = withLeads.filter(function(p){ return p.ad != null; });
+  return filled.length * 2 >= withLeads.length;
+}
+
 function renderCliKPI(cw, pcw) {
   var t=cliWeekTotals(cw), pt=pcw?cliWeekTotals(pcw):null;
   // Пока Авито не внесён — период неполный. Сравнивать его с полной неделей нельзя:
@@ -910,7 +947,7 @@ function renderCliKPI(cw, pcw) {
   var convRows = '';
   cw.forEach(function(c,i){
     var ct=cliTotals(c), pc = pcw && pcw[i] ? cliTotals(pcw[i]) : null;
-    var d = (pc && ct.conv!=null && pc.conv!=null) ? ct.conv-pc.conv : null;
+    var d = (convReady(c) && pc && ct.conv!=null && pc.conv!=null) ? ct.conv-pc.conv : null;
     convRows += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:'+(i?8:2)+'px">'+
       '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
       '<span style="font-size:20px;font-weight:800" class="'+convClass(ct.conv)+'">'+(ct.conv==null?'—':dec1(ct.conv)+'%')+'</span></div>'+
@@ -998,7 +1035,7 @@ function renderCliDetails(cw, pcw) {
          '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
     });
     var avg = cliConvAvg(c), pavg = pc ? cliConvAvg(pc) : null;
-    var davg = (avg != null && pavg != null) ? avg - pavg : null;
+    var davg = (convReady(c) && avg != null && pavg != null) ? avg - pavg : null;
     // Если «Вышедшие» не заполнены ни по одному проекту, в итоге прочерк, а не ноль.
     var anyAd = c.projects.some(function(p){ return p.ad != null; });
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
