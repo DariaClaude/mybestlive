@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0F172A"/><rect x="13" y="34" width="9" height="17" rx="3" fill="#38BDF8"/><rect x="27" y="26" width="9" height="25" rx="3" fill="#60A5FA"/><rect x="41" y="16" width="9" height="35" rx="3" fill="#10B981"/><circle cx="45.5" cy="14" r="7" fill="#0F172A"/><circle cx="45.5" cy="14" r="4.5" fill="#F59E0B"/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0F172A"/><rect x="13" y="34" width="9" height="17" rx="3" fill="#38BDF8"/><rect x="27" y="26" width="9" height="25" rx="3" fill="#60A5FA"/><rect x="41" y="16" width="9" height="35" rx="3" fill="#10B981"/><circle cx="45.5" cy="14" r="7" fill="#0F172A"/><circle cx="45.5" cy="14" r="4.5" fill="#F59E0B"/></svg>">
 <title>РМ Групп — отчёт по клиентам (тест)</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -939,9 +941,13 @@ function renderCliKPI(cw, pcw) {
      '<div class="kpi-sub" style="line-height:1.7">Авито '+(bAv.pending?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>')+'<br>'+
      'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b></div>'+
      (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
-  h+='<div class="kpi-card"><div class="kpi-label">CPL</div><div class="kpi-value '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</div>'+
-     '<div class="kpi-sub">'+(partial?'только ВК и Юла':'сводный по всем каналам')+'</div>'+
-     (partial ? waitNote : delta(t.cpl, pt&&pt.cpl, {goodUp:false, mode:'rub'}))+'</div>';
+  // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
+  // перекашивали сводную цифру вверх.
+  var pbAv = pcw ? cliToolTotal(pcw,'avito') : null;
+  h+='<div class="kpi-card"><div class="kpi-label">CPL Авито</div><div class="kpi-value '+cplClass(bAv.cpl)+'">'+
+     (bAv.pending?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(bAv.cpl)+' ₽')+'</div>'+
+     '<div class="kpi-sub">'+fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽</div>'+
+     (partial ? waitNote : delta(bAv.cpl, pbAv&&pbAv.cpl, {goodUp:false, mode:'rub'}))+'</div>';
   // Конверсия — отдельной строкой по каждому клиенту, общей цифры не показываем:
   // у ОПИ и ДРС разные бизнес-процессы, среднее по ним смысла не имеет.
   var convRows = '';
