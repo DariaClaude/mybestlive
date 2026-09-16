@@ -978,12 +978,23 @@ function cellDelta(cur, prev, goodUp) {
          (d > 0 ? '\u2191' : '\u2193') + ' ' + sign(p) + '%</span>';
 }
 
+// Ячейка «План»: план клиента по проектам Авито и процент выполнения.
+// Выполнение считаем по лидам Авито — план ставится на Авито-проекты,
+// так цифра совпадает с «Итого» в детализации.
+function planCell(plan, avitoLeads) {
+  if (!plan) return '<span class="cell-none">—</span>';
+  if (avitoLeads == null) return '<span class="cell-l">'+fmt(plan)+'</span>';
+  var pct = Math.round(avitoLeads / plan * 100);
+  return '<span class="cell-l">'+fmt(plan)+'</span>'+
+         '<span class="cell-s" style="font-weight:700;color:'+(pct>=100?'#10B981':'#F59E0B')+'">выполнен '+pct+'%</span>';
+}
+
 function renderCliMatrix(cw, pcw) {
   var h='<div class="card" style="margin-bottom:16px"><div class="card-title"><span class="dot dot-blue"></span>Клиенты × инструменты'+
         '<span class="fmt-badge">НОВЫЙ ФОРМАТ</span></div>'+
         '<table class="mx"><thead><tr><th>Клиент</th>';
   NEW_TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
-  h+='<th class="col-tot">Итого лидов</th><th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
+  h+='<th class="col-tot">Итого лидов</th><th class="col-tot">План</th><th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
   var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
   cw.forEach(function(c,i){
     var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
@@ -999,9 +1010,10 @@ function renderCliMatrix(cw, pcw) {
     });
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+
        (ptt?'<span class="cell-s '+(t.leads>=ptt.leads?'stat-up':'stat-down')+'" style="color:'+(t.leads>=ptt.leads?'#10B981':'#EF4444')+';font-weight:700">'+(t.leads>=ptt.leads?'↑':'↓')+' '+sign(t.leads-ptt.leads)+' ('+sign(Math.round((t.leads-ptt.leads)/ptt.leads*100))+'%)</span>':'')+'</td>';
+    var av=c.tools.avito;
+    h+='<td class="col-tot">'+planCell(c.plan, (av && !av.pending) ? av.leads : null)+'</td>';
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span>'+
-       (ptt?cellDelta(t.spend, ptt.spend, false):'')+
-       (c.plan?'<span class="cell-s">план '+fmt(c.plan)+' лид.</span>':'')+'</td>';
+       (ptt?cellDelta(t.spend, ptt.spend, false):'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</span>'+
        (ptt?'<span class="cell-s" style="color:'+(t.cpl<=ptt.cpl?'#10B981':'#EF4444')+';font-weight:700">'+(t.cpl<=ptt.cpl?'↓':'↑')+' '+sign(t.cpl-ptt.cpl)+' ₽ ('+sign(Math.round((t.cpl-ptt.cpl)/ptt.cpl*100))+'%)</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+(t.conv==null?'—':dec1(t.conv)+'%')+'</span>'+
@@ -1017,7 +1029,10 @@ function renderCliMatrix(cw, pcw) {
   });
   // Общей конверсии по строке «Итого» нет намеренно: у ОПИ и ДРС разные
   // воронки, среднее по ним не имеет смысла — смотрим по каждому клиенту.
-  h+='<td class="col-tot">'+fmt(tt.leads)+'</td><td class="col-tot">'+fmt(tt.spend)+' ₽</td>'+
+  var tav=cliToolTotal(cw,'avito');
+  h+='<td class="col-tot">'+fmt(tt.leads)+'</td>'+
+     '<td class="col-tot">'+planCell(tt.plan, tav.any ? tav.leads : null)+'</td>'+
+     '<td class="col-tot">'+fmt(tt.spend)+' ₽</td>'+
      '<td class="col-tot">'+fmt(tt.cpl)+' ₽</td>'+
      '<td class="col-tot"><span class="cell-none">по клиентам</span></td></tr>';
   return h+'</tbody></table></div>';
