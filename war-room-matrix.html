@@ -992,13 +992,17 @@ function planCell(plan, avitoLeads) {
 function renderCliMatrix(cw, pcw) {
   var h='<div class="card" style="margin-bottom:16px"><div class="card-title"><span class="dot dot-blue"></span>Клиенты × инструменты'+
         '<span class="fmt-badge">НОВЫЙ ФОРМАТ</span></div>'+
-        '<table class="mx"><thead><tr><th>Клиент</th>';
+        '<table class="mx"><thead><tr><th>Клиент</th><th class="col-tot">План</th><th class="col-tot">Итого лидов</th>';
   NEW_TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
-  h+='<th class="col-tot">Итого лидов</th><th class="col-tot">План</th><th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
+  h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
   var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
   cw.forEach(function(c,i){
     var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
+    var av=c.tools.avito;
     h+='<tr><td><div class="cl-name">'+esc(c.name)+'</div><div class="cl-scope">'+esc(c.scope)+'</div></td>';
+    h+='<td class="col-tot">'+planCell(c.plan, (av && !av.pending) ? av.leads : null)+'</td>';
+    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+
+       (ptt?'<span class="cell-s '+(t.leads>=ptt.leads?'stat-up':'stat-down')+'" style="color:'+(t.leads>=ptt.leads?'#10B981':'#EF4444')+';font-weight:700">'+(t.leads>=ptt.leads?'↑':'↓')+' '+sign(t.leads-ptt.leads)+' ('+sign(Math.round((t.leads-ptt.leads)/ptt.leads*100))+'%)</span>':'')+'</td>';
     NEW_TOOLS.forEach(function(tool){
       var v=c.tools[tool.k], pv = pc && pc.tools ? pc.tools[tool.k] : null;
       if(!v){ h+='<td><span class="cell-none">в разработке</span></td>'; return; }
@@ -1008,10 +1012,6 @@ function renderCliMatrix(cw, pcw) {
          '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
          '<span class="cell-b">'+fmt(v.spend)+' ₽</span></td>';
     });
-    h+='<td class="col-tot"><span class="cell-l">'+fmt(t.leads)+'</span>'+
-       (ptt?'<span class="cell-s '+(t.leads>=ptt.leads?'stat-up':'stat-down')+'" style="color:'+(t.leads>=ptt.leads?'#10B981':'#EF4444')+';font-weight:700">'+(t.leads>=ptt.leads?'↑':'↓')+' '+sign(t.leads-ptt.leads)+' ('+sign(Math.round((t.leads-ptt.leads)/ptt.leads*100))+'%)</span>':'')+'</td>';
-    var av=c.tools.avito;
-    h+='<td class="col-tot">'+planCell(c.plan, (av && !av.pending) ? av.leads : null)+'</td>';
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span>'+
        (ptt?cellDelta(t.spend, ptt.spend, false):'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</span>'+
@@ -1019,8 +1019,10 @@ function renderCliMatrix(cw, pcw) {
     h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+(t.conv==null?'—':dec1(t.conv)+'%')+'</span>'+
        '<span class="cell-s">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span></td></tr>';
   });
-  var tt=cliWeekTotals(cw);
-  h+='<tr class="total"><td>Итого</td>';
+  var tt=cliWeekTotals(cw), tav=cliToolTotal(cw,'avito');
+  h+='<tr class="total"><td>Итого</td>'+
+     '<td class="col-tot">'+planCell(tt.plan, tav.any ? tav.leads : null)+'</td>'+
+     '<td class="col-tot">'+fmt(tt.leads)+'</td>';
   NEW_TOOLS.forEach(function(tool){
     var tv=cliToolTotal(cw,tool.k);
     h+='<td>'+(tv.any? fmt(tv.leads)+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>'
@@ -1029,10 +1031,7 @@ function renderCliMatrix(cw, pcw) {
   });
   // Общей конверсии по строке «Итого» нет намеренно: у ОПИ и ДРС разные
   // воронки, среднее по ним не имеет смысла — смотрим по каждому клиенту.
-  var tav=cliToolTotal(cw,'avito');
-  h+='<td class="col-tot">'+fmt(tt.leads)+'</td>'+
-     '<td class="col-tot">'+planCell(tt.plan, tav.any ? tav.leads : null)+'</td>'+
-     '<td class="col-tot">'+fmt(tt.spend)+' ₽</td>'+
+  h+='<td class="col-tot">'+fmt(tt.spend)+' ₽</td>'+
      '<td class="col-tot">'+fmt(tt.cpl)+' ₽</td>'+
      '<td class="col-tot"><span class="cell-none">по клиентам</span></td></tr>';
   return h+'</tbody></table></div>';
