@@ -1,7 +1,13 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/war-room" },
-    { "source": "/luis", "destination": "/luis-dashboard" }
+    {
+      "source": "/",
+      "destination": "/war-room-matrix"
+    },
+    {
+      "source": "/luis",
+      "destination": "/luis-dashboard"
+    }
   ]
 }
