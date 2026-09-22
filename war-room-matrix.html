@@ -977,6 +977,16 @@ function renderCliKPI(cw, pcw) {
      (bAv.pending?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(bAv.cpl)+' ₽')+'</div>'+
      '<div class="kpi-sub">'+(bAv.pending?'ждём выгрузку':fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽')+'</div>'+
      (partial ? waitNote : delta(bAv.cpl, pbAv&&pbAv.cpl, {goodUp:false, mode:'rub'}))+'</div>';
+  // ВК + Юла — итог за неделю и на сколько лидов больше/меньше, чем неделей раньше.
+  // Считаем всегда, даже когда Авито ещё не внесён: ВК и Юла от него не зависят.
+  var sv = bVk.leads + bYu.leads;
+  var pVk = pcw ? cliToolTotal(pcw,'social') : null, pYu = pcw ? cliToolTotal(pcw,'yula') : null;
+  var psv = (pVk && pYu && (pVk.any || pYu.any)) ? pVk.leads + pYu.leads : null;
+  h+='<div class="kpi-card"><div class="kpi-label">ВК + Юла</div><div class="kpi-value '+(psv!=null?(sv>=psv?'kpi-up':'kpi-down'):'')+'">'+fmt(sv)+'</div>'+
+     '<div class="kpi-sub">ВК '+fmt(bVk.leads)+' · Юла '+fmt(bYu.leads)+'</div>'+
+     (psv!=null
+        ? '<div class="kpi-delta '+(sv>psv?'up':sv<psv?'down':'neutral')+'">'+(sv>psv?'↑':sv<psv?'↓':'→')+' '+sign(sv-psv)+' лид. к прошлой неделе ('+fmt(psv)+' → '+fmt(sv)+(psv?', '+sign(Math.round((sv-psv)/psv*100))+'%':'')+')</div>'
+        : '<div class="kpi-delta neutral">прошлой недели в этом формате нет</div>')+'</div>';
   // Конверсия — отдельной строкой по каждому клиенту, общей цифры не показываем:
   // у ОПИ и ДРС разные бизнес-процессы, среднее по ним смысла не имеет.
   var convRows = '';
@@ -994,6 +1004,17 @@ function renderCliKPI(cw, pcw) {
   });
   h+='<div class="kpi-card"><div class="kpi-label">Конверсия в вышедших</div>'+convRows+'</div>';
   return h+'</div>';
+}
+
+// Абсолютная дельта лидов к прошлой неделе: «↑ +31 лид. (+32%)».
+// Дарья просила видеть, на сколько ЛИДОВ больше/меньше, а не только процент.
+function leadDelta(cur, prev, extraStyle) {
+  if (cur == null || prev == null) return '';
+  var d = cur - prev, p = prev ? Math.round(d / prev * 100) : null;
+  var color = d > 0 ? '#10B981' : d < 0 ? '#EF4444' : '#94A3B8';
+  return '<span class="cell-s" style="color:' + color + ';font-weight:700' + (extraStyle || '') + '">' +
+         (d > 0 ? '\u2191' : d < 0 ? '\u2193' : '\u2192') + ' ' + sign(d) + ' лид.' +
+         (p != null ? ' (' + sign(p) + '%)' : '') + '</span>';
 }
 
 // Динамика к прошлой неделе одной строкой: стрелка + процент.
@@ -1053,8 +1074,10 @@ function renderCliMatrix(cw, pcw) {
      '<td class="col-tot">'+planCell(tt.plan, tav.any ? tav.leads : null)+'</td>'+
      '<td class="col-tot">'+fmt(tt.leads)+'</td>';
   NEW_TOOLS.forEach(function(tool){
-    var tv=cliToolTotal(cw,tool.k);
-    h+='<td>'+(tv.any? fmt(tv.leads)+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>'
+    var tv=cliToolTotal(cw,tool.k), ptv = pcw ? cliToolTotal(pcw,tool.k) : null;
+    // ВК и Юла сравниваем с прошлой неделей всегда; Авито — только когда обе недели полные.
+    var showD = ptv && ptv.any && tv.any && (tool.k!=='avito' || !partial);
+    h+='<td>'+(tv.any? fmt(tv.leads)+(showD?leadDelta(tv.leads, ptv.leads):'')+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>'
              : tv.pending ? '<span class="cell-none" style="color:#F59E0B">не внесено</span>'
              : '<span class="cell-none">—</span>')+'</td>';
   });
