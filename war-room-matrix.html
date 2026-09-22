@@ -707,32 +707,12 @@ function renderSocial(w) {
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
   "14–20 сентября": [
-    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:894, adapted:180,
-      tools:{ avito:{leads:1474,spend:160785}, direct:null, social:{leads:23,spend:21083}, yula:{leads:11,spend:10318} },
-      projects:[
-        {n:"МСК Урбан Дикси",plan:100,fact:336,spend:43069,ad:12},
-        {n:"ЧЛБ Табыш",plan:70,fact:73,spend:7214,ad:36},
-        {n:"Лента ЧЛБ",plan:50,fact:51,spend:4023,ad:16},
-        {n:"ЧЛБ Пятёрочка",plan:15,fact:21,spend:2159,ad:11},
-        {n:"ЧЛБ Монетка",plan:200,fact:267,spend:27604,ad:88},
-        {n:"КЗН Табыш",plan:40,fact:76,spend:10334,ad:12},
-        {n:"Лента КЗН",plan:12,fact:14,spend:2111,ad:null},
-        {n:"Пятёрочка КЗН",plan:7,fact:6,spend:1283,ad:null},
-        {n:"МСК ВкусВилл",plan:300,fact:428,spend:34706,ad:2},
-        {n:"Ростикс ДРС",plan:100,fact:202,spend:28282,ad:3}
-      ] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:3420, adapted:91,
-      tools:{ avito:{leads:4675,spend:238618}, direct:null, social:{leads:104,spend:68440}, yula:{leads:5,spend:4690} },
-      projects:[
-        {n:"МАГНИТ КРД",plan:150,fact:201,spend:19308,ad:4},
-        {n:"ЛЕНТА КРД",plan:350,fact:372,spend:22457,ad:2},
-        {n:"ЛЕНТА КЗН",plan:80,fact:102,spend:11877,ad:1},
-        {n:"ЛЕНТА МСК",plan:500,fact:1020,spend:40116,ad:3},
-        {n:"ЛЕНТА ЧЛБ",plan:20,fact:38,spend:6439,ad:0},
-        {n:"Курьеры",plan:300,fact:399,spend:46851,ad:11},
-        {n:"Инвентаризация",plan:2000,fact:2522,spend:80384,ad:70},
-        {n:"Гравис",plan:20,fact:21,spend:11186,ad:0}
-      ] },
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:23,spend:21083}, yula:{leads:11,spend:10318} },
+      projects:[] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:104,spend:68440}, yula:{leads:5,spend:4690} },
+      projects:[] },
   ],
   "7–13 сентября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:710, adapted:200,
