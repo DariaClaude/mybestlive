@@ -706,6 +706,14 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "14–20 сентября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:23,spend:21083}, yula:{leads:11,spend:10318} },
+      projects:[] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:104,spend:68440}, yula:{leads:5,spend:4690} },
+      projects:[] },
+  ],
   "7–13 сентября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:710, adapted:200,
       tools:{ avito:{leads:847,spend:68919}, direct:null, social:{leads:22,spend:7150}, yula:{leads:8,spend:1416} },
@@ -947,7 +955,7 @@ function renderCliKPI(cw, pcw) {
   var pbAv = pcw ? cliToolTotal(pcw,'avito') : null;
   h+='<div class="kpi-card"><div class="kpi-label">CPL Авито</div><div class="kpi-value '+cplClass(bAv.cpl)+'">'+
      (bAv.pending?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(bAv.cpl)+' ₽')+'</div>'+
-     '<div class="kpi-sub">'+fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽</div>'+
+     '<div class="kpi-sub">'+(bAv.pending?'ждём выгрузку':fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽')+'</div>'+
      (partial ? waitNote : delta(bAv.cpl, pbAv&&pbAv.cpl, {goodUp:false, mode:'rub'}))+'</div>';
   // Конверсия — отдельной строкой по каждому клиенту, общей цифры не показываем:
   // у ОПИ и ДРС разные бизнес-процессы, среднее по ним смысла не имеет.
