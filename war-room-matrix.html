@@ -372,7 +372,13 @@ function delta(cur, prev, opts) {
   var text;
   if (opts.mode === 'series') text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(p) + '%)';
   else if (opts.mode === 'rub') text = arrow + ' ' + sign(diff) + ' \u20BD, ' + sign(p) + '% (' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' \u20BD)';
-  else if (opts.mode === 'pctOnly') text = arrow + ' ' + sign(p) + '% к прошл. неделе (' + fmt(prev) + ' \u20BD)';
+  // Бюджет: всегда разница в рублях + процент с десятыми. Округление до целого
+  // процента давало «±0%» при росте на 2 065 ₽ — Дарья это поймала 23.09.
+  else if (opts.mode === 'pctOnly') {
+    var p1 = prev !== 0 ? (diff / prev * 100) : 0;
+    var p1s = (p1 > 0 ? '+' : p1 < 0 ? '\u2212' : '') + Math.abs(p1).toFixed(1).replace('.', ',') + '%';
+    text = arrow + ' ' + sign(diff) + ' \u20BD (' + p1s + ') к прошл. неделе (' + fmt(prev) + ' \u20BD)';
+  }
   else text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(diff) + ' ' + (opts.unit || '') + ')';
   return '<div class="kpi-delta ' + cls + '">' + text + '</div>';
 }
