@@ -953,7 +953,7 @@ function convReady(c) {
   return withLeads.every(function(p){ return p.ad != null; });
 }
 
-function renderCliKPI(cw, pcw) {
+function renderCliKPI(cw, pcw, w, pw) {
   var t=cliWeekTotals(cw), pt=pcw?cliWeekTotals(pcw):null;
   // Пока Авито не внесён — период неполный. Сравнивать его с полной неделей нельзя:
   // получится «−99% лидов» и «CPL 1 284 ₽», хотя это просто отсутствие данных.
@@ -973,10 +973,15 @@ function renderCliKPI(cw, pcw) {
   // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
   // перекашивали сводную цифру вверх.
   var pbAv = pcw ? cliToolTotal(pcw,'avito') : null;
-  h+='<div class="kpi-card"><div class="kpi-label">CPL Авито</div><div class="kpi-value '+cplClass(bAv.cpl)+'">'+
-     (bAv.pending?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(bAv.cpl)+' ₽')+'</div>'+
-     '<div class="kpi-sub">'+(bAv.pending?'ждём выгрузку':fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽')+'</div>'+
-     (partial ? waitNote : delta(bAv.cpl, pbAv&&pbAv.cpl, {goodUp:false, mode:'rub'}))+'</div>';
+  // Ручной CPL: если в war-room-data.js у недели стоит avito.cplManual — показываем
+  // заданное среднее (например, 70 ₽ от Дарьи), а не расход ÷ лиды.
+  var manual = (w && w.avito && w.avito.cplManual && w.avito.cpl != null) ? w.avito : null;
+  var pManual = (pw && pw.avito && pw.avito.cplManual && pw.avito.cpl != null) ? pw.avito : null;
+  var cplCur = manual ? manual.cpl : bAv.cpl, cplPrev = pManual ? pManual.cpl : (pbAv && pbAv.cpl);
+  h+='<div class="kpi-card"><div class="kpi-label">CPL Авито</div><div class="kpi-value '+cplClass(cplCur)+'">'+
+     (bAv.pending?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(cplCur)+' ₽')+'</div>'+
+     '<div class="kpi-sub">'+(bAv.pending?'ждём выгрузку':(manual ? esc(manual.cplNote || 'средний') + ' · ' : '')+fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽')+'</div>'+
+     (partial ? waitNote : delta(cplCur, cplPrev, {goodUp:false, mode:'rub'}))+'</div>';
   // Конверсия — отдельной строкой по каждому клиенту, общей цифры не показываем:
   // у ОПИ и ДРС разные бизнес-процессы, среднее по ним смысла не имеет.
   var convRows = '';
@@ -1120,7 +1125,7 @@ function renderPeriod(idx) {
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
     // Соцсети идут сразу после детализации по клиентам — «Требует внимания» замыкает период.
-    body = renderCliKPI(cw, pcw) + renderCliMatrix(cw, pcw) + renderCliDetails(cw, pcw) +
+    body = renderCliKPI(cw, pcw, w, prev) + renderCliMatrix(cw, pcw) + renderCliDetails(cw, pcw) +
            renderSocial(w) +
            '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>';
   } else {
