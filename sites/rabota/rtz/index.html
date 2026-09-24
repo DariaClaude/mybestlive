@@ -339,7 +339,7 @@ footer .brand{font-size:15px;opacity:.85}footer a{text-decoration:none}
 
 <script>
 (function(){
-  var ENDPOINT = "";
+  var ENDPOINT = "https://rabota-leads.vercel.app/api/lead";
   var REGION = "МСК";
   var GOAL = "vacancy_lead";
   var TG = "https://web.max.ru/386377559";
@@ -402,7 +402,7 @@ footer .brand{font-size:15px;opacity:.85}footer a{text-decoration:none}
     if(form.querySelector('input[name=website]').value){ done(form); return; }
     var body = new URLSearchParams({
       name: nameEl.value.trim(), phone: '+'+digits, vacancy: form.querySelector('input[name=vacancy]').value,
-      region: REGION, page: location.pathname, utm: utm()
+      region: REGION, page: location.host + location.pathname, utm: utm()
     }).toString();
     btn.disabled = true; var old = btn.textContent; btn.textContent = 'Отправляем…';
     if(!ENDPOINT){ console.warn('ENDPOINT не задан: заявка не отправлена (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
