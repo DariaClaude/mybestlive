@@ -289,7 +289,7 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
 
 <script>
 (function(){
-  var ENDPOINT = "https://rabota-leads.vercel.app/api/lead";
+  var ENDPOINTS = ["https://rabota-leads.vercel.app/api/lead"];
   var REGION = "СПБ";
   var GOAL = "vacancy_lead";
   var TG = "https://web.max.ru/386377559";
@@ -355,15 +355,31 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
       region: REGION, page: location.host + location.pathname, utm: utm()
     }).toString();
     btn.disabled = true; var old = btn.textContent; btn.textContent = 'Отправляем…';
-    if(!ENDPOINT){ console.warn('ENDPOINT не задан: заявка не отправлена (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
-    fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body})
-      .then(function(r){ return r.json(); })
-      .then(function(j){ if(!j.ok) throw new Error(j.error||'bad'); done(form); })
-      .catch(function(){
+    if(!ENDPOINTS.length){ console.warn('ENDPOINTS не заданы (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
+    function post(url, ms){
+      var ctl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = setTimeout(function(){ if(ctl) ctl.abort(); }, ms);
+      var opts = {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body};
+      if(ctl) opts.signal = ctl.signal;
+      if(url.indexOf('script.google.com')>-1){ opts.mode='no-cors'; opts.redirect='follow'; }
+      return fetch(url, opts).then(function(r){
+        clearTimeout(timer);
+        if(r.type==='opaque') return {ok:true};
+        return r.json();
+      }).then(function(j){ if(!j.ok) throw new Error(j.error||'bad'); return true; })
+        .catch(function(e){ clearTimeout(timer); throw e; });
+    }
+    var i = 0;
+    function next(){
+      if(i >= ENDPOINTS.length){
         btn.disabled=false; btn.textContent=old;
         msg.innerHTML = 'Не получилось отправить. Позвоните <a href="tel:'+PHONE_LINK+'">'+PHONE+'</a> или напишите в <a href="'+TG+'" target="_blank" rel="noopener">MAX</a>.';
-        msg.className='form-msg show bad';
-      });
+        msg.className='form-msg show bad'; return;
+      }
+      var url = ENDPOINTS[i++];
+      post(url, i===1 ? 7000 : 12000).then(function(){ done(form); }).catch(function(){ next(); });
+    }
+    next();
   }
   function done(form){
     ym_(GOAL);
