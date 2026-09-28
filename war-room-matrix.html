@@ -28,6 +28,8 @@
   .tab-btn { padding: 12px 20px; font-size: 13px; font-weight: 600; color: #64748B; border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
   .tab-btn:hover { color: #0EA5E9; }
   .tab-btn.active { color: #0EA5E9; border-bottom-color: #0EA5E9; }
+  .tab-btn.tab-sum { color: #0F172A; background: #F1F5F9; border-radius: 8px 8px 0 0; margin-right: 8px; }
+  .tab-btn.tab-sum.active { color: #0EA5E9; }
 
   /* LAYOUT */
   .content { padding: 24px 32px; max-width: 1600px; }
@@ -903,6 +905,83 @@ var CLIENTS = {
 
 var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, {k:"social",n:"ВК"}, {k:"yula",n:"Юла"} ];
 
+// ── Сводные вкладки: сумма нескольких недель ─────────────────────────
+// Складываем разрез по клиентам из CLIENTS: план, лиды и расход по каналам,
+// проекты по имени, вышедшие. Сравнений с прошлым периодом нет — это итог.
+// CPL считается расход ÷ лиды (ручной cplManual недели в сумму не переносится).
+var SUMMARIES = [
+  { key: "sum-0920", label: "31.08–20.09 · итого",
+    title: "Сводно за 31 августа – 20 сентября",
+    weeks: ["31 августа–6 сентября", "7–13 сентября", "14–20 сентября"] }
+];
+
+function sumClients(labels) {
+  var byName = {}, order = [];
+  labels.forEach(function(lb){
+    var cw = CLIENTS[lb]; if (!cw) return;
+    cw.forEach(function(c){
+      var a = byName[c.name];
+      if (!a) { a = byName[c.name] = { name:c.name, scope:c.scope, plan:0, adapted:null, tools:{}, _pr:{}, _prOrder:[] }; order.push(c.name); }
+      a.scope = c.scope;
+      a.plan += (c.plan || 0);
+      if (c.adapted != null) a.adapted = (a.adapted || 0) + c.adapted;
+      NEW_TOOLS.forEach(function(t){
+        var v = c.tools[t.k];
+        if (v === null || v === undefined) { if (!(t.k in a.tools)) a.tools[t.k] = null; return; }
+        if (v.pending) return;
+        var cur = a.tools[t.k] || { leads:0, spend:0 };
+        a.tools[t.k] = { leads: cur.leads + (v.leads || 0), spend: cur.spend + (v.spend || 0) };
+      });
+      (c.projects || []).forEach(function(pr){
+        var q = a._pr[pr.n];
+        if (!q) { q = a._pr[pr.n] = { n:pr.n, plan:0, fact:0, spend:0, ad:null }; a._prOrder.push(pr.n); }
+        q.plan += (pr.plan || 0); q.fact += (pr.fact || 0); q.spend += (pr.spend || 0);
+        if (pr.ad != null) q.ad = (q.ad || 0) + pr.ad;
+      });
+    });
+  });
+  return order.map(function(n){
+    var a = byName[n];
+    a.projects = a._prOrder.map(function(k){ return a._pr[k]; }).filter(function(q){ return q.fact; });
+    delete a._pr; delete a._prOrder;
+    return a;
+  });
+}
+
+// Таблица «По неделям» внутри сводной вкладки: видно, из чего сложился итог.
+function renderSummaryWeeks(sm, cw) {
+  var h='<div class="card" style="margin-bottom:16px"><div class="card-title"><span class="dot dot-blue"></span>По неделям</div>'+
+        '<table class="pt"><thead><tr><th>Неделя</th>';
+  cw.forEach(function(c){ h+='<th>'+esc(c.name)+'</th>'; });
+  h+='<th>Итого лидов</th><th>Авито</th><th>ВК</th><th>Юла</th><th>Бюджет</th><th>CPL</th></tr></thead><tbody>';
+  sm.weeks.forEach(function(lb){
+    var w = CLIENTS[lb]; if (!w) return;
+    var t = cliWeekTotals(w), av = cliToolTotal(w,'avito'), vk = cliToolTotal(w,'social'), yu = cliToolTotal(w,'yula');
+    h+='<tr><td>'+esc(lb)+'</td>';
+    cw.forEach(function(c){
+      var m = null; w.forEach(function(x){ if (x.name===c.name) m = x; });
+      h+='<td>'+(m ? fmt(cliTotals(m).leads) : '\u2014')+'</td>';
+    });
+    h+='<td><b>'+fmt(t.leads)+'</b></td><td>'+fmt(av.leads)+'</td><td>'+fmt(vk.leads)+'</td><td>'+fmt(yu.leads)+'</td>'+
+       '<td>'+fmt(t.spend)+' ₽</td><td>'+fmt(t.cpl)+' ₽</td></tr>';
+  });
+  var tt = cliWeekTotals(cw), tav = cliToolTotal(cw,'avito'), tvk = cliToolTotal(cw,'social'), tyu = cliToolTotal(cw,'yula');
+  h+='<tr class="sum"><td>Итого</td>';
+  cw.forEach(function(c){ h+='<td>'+fmt(cliTotals(c).leads)+'</td>'; });
+  h+='<td>'+fmt(tt.leads)+'</td><td>'+fmt(tav.leads)+'</td><td>'+fmt(tvk.leads)+'</td><td>'+fmt(tyu.leads)+'</td>'+
+     '<td>'+fmt(tt.spend)+' ₽</td><td>'+fmt(tt.cpl)+' ₽</td></tr>';
+  return h+'</tbody></table></div>';
+}
+
+function renderSummary(sm) {
+  var cw = sumClients(sm.weeks);
+  var head = '<div class="card" style="margin-bottom:16px;padding:14px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">'+
+    '<div style="font-size:15px;font-weight:800;color:#0F172A">'+esc(sm.title)+'</div>'+
+    '<div style="font-size:12px;color:#64748B">сумма недель: '+sm.weeks.map(esc).join(' · ')+' · CPL = расход ÷ лиды · без сравнения с прошлым периодом</div></div>';
+  var body = head + renderCliKPI(cw, null, null, null) + renderCliMatrix(cw, null) + renderSummaryWeeks(sm, cw) + renderCliDetails(cw, null);
+  return '<div class="period-section" id="period-' + sm.key + '" data-key="' + sm.key + '">' + body + '</div>';
+}
+
 function cliTotals(c) {
   var l=0,s=0;
   // pending — канал есть, но данные ещё не внесены в таблицу: в итоги не берём.
@@ -1145,6 +1224,15 @@ function renderTabs() {
   var bar = document.getElementById('tabs-bar');
   bar.querySelectorAll('.tab-btn').forEach(function(b) { b.remove(); });
   var refBtn = document.getElementById('refresh-btn');
+  // Сводные вкладки — первыми слева, до недель.
+  SUMMARIES.forEach(function(sm) {
+    var b = document.createElement('button');
+    b.className = 'tab-btn tab-sum';
+    b.textContent = sm.label;
+    b.dataset.key = sm.key;
+    b.onclick = function() { showSummary(sm.key); };
+    bar.insertBefore(b, refBtn);
+  });
   // Свежие периоды — слева: перебираем массив от последнего к первому.
   for (var i = W.length - 1; i >= 0; i--) {
     (function(idx) {
@@ -1160,7 +1248,8 @@ function renderTabs() {
 
 function renderAll() {
   renderTabs();
-  document.getElementById('periods').innerHTML = W.map(function(_, i) { return renderPeriod(i); }).join('');
+  document.getElementById('periods').innerHTML = W.map(function(_, i) { return renderPeriod(i); }).join('') +
+    SUMMARIES.map(renderSummary).join('');
   renderTasks();
   restoreTasks();
   validateData();
@@ -1168,9 +1257,14 @@ function renderAll() {
 
 function showPeriod(idx) {
   currentIdx = idx;
-  document.querySelectorAll('.period-section').forEach(function(el, i) { el.classList.toggle('active', i === idx); });
+  // Секции ищем по id, а не по позиции: после недель идут сводные вкладки.
+  document.querySelectorAll('.period-section').forEach(function(el) { el.classList.toggle('active', el.id === 'period-' + idx); });
   // Порядок вкладок обратный порядку данных — сверяем по data-idx, не по позиции.
-  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.toggle('active', +el.dataset.idx === idx); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.toggle('active', el.dataset.idx != null && +el.dataset.idx === idx); });
+}
+function showSummary(key) {
+  document.querySelectorAll('.period-section').forEach(function(el) { el.classList.toggle('active', el.dataset.key === key); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.toggle('active', el.dataset.key === key); });
 }
 
 // ── Валидация данных (пункт 2): расхождения — в консоль и статус ────
