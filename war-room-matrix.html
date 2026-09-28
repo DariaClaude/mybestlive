@@ -1005,6 +1005,14 @@ function cliConvAvg(c) {
   if (!v.length) return null;
   return v.reduce(function(a, b){ return a + b; }, 0) / v.length;
 }
+// Стоимость одного вышедшего сотрудника = расход Авито ÷ вышедшие по проектам Авито
+// (та же база, что у конверсии: «Вышедшие» ведутся только по Авито-проектам).
+// Задача руководителя от 28.09.2026 — показатель в шапке, в матрице и по проектам.
+function cliCostOut(c) {
+  var av = c.tools.avito;
+  if (!av || av.pending || c.adapted == null || !c.adapted) return null;
+  return Math.round(av.spend / c.adapted);
+}
 function cliWeekTotals(cw) {
   var l=0,s=0,a=0,p=0;
   cw.forEach(function(c){ var t=cliTotals(c); l+=t.leads; s+=t.spend; a+=c.adapted; p+=c.plan; });
@@ -1082,6 +1090,20 @@ function renderCliKPI(cw, pcw, w, pw) {
         : (!convReady(c) ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:11px">в процессе сбора информации</span>' : ''))+'</div>';
   });
   h+='<div class="kpi-card"><div class="kpi-label">Конверсия в вышедших</div>'+convRows+'</div>';
+  // Стоимость 1 вышедшего — по каждому клиенту, общей цифры нет (разные воронки).
+  var costRows = '';
+  cw.forEach(function(c,i){
+    var v = cliCostOut(c), pv = (pcw && pcw[i] && !partial) ? cliCostOut(pcw[i]) : null;
+    var d = (convReady(c) && v != null && pv != null) ? v - pv : null;
+    costRows += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:'+(i?8:2)+'px">'+
+      '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
+      '<span style="font-size:20px;font-weight:800;color:'+(v==null?'#CBD5E1':'#0F172A')+'">'+(v==null?'—':fmt(v)+' ₽')+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between;gap:8px">'+
+      '<span style="font-size:10px;color:#CBD5E1">'+(v==null?'нет вышедших':'расход Авито ÷ '+fmt(c.adapted)+' выш.')+'</span>'+
+      (d!=null?'<span class="kpi-delta '+(d<0?'up':d>0?'down':'neutral')+'" style="margin-top:0;font-size:11px">'+
+        (d<0?'↓':d>0?'↑':'→')+' '+fmt(pv)+' → '+fmt(v)+' ₽</span>':'')+'</div>';
+  });
+  h+='<div class="kpi-card"><div class="kpi-label">Стоимость 1 вышедшего</div>'+costRows+'</div>';
   return h+'</div>';
 }
 
@@ -1123,7 +1145,7 @@ function renderCliMatrix(cw, pcw) {
         '<span class="fmt-badge">НОВЫЙ ФОРМАТ</span></div>'+
         '<table class="mx"><thead><tr><th>Клиент</th><th class="col-tot">План</th><th class="col-tot">Итого лидов</th>';
   NEW_TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
-  h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th></tr></thead><tbody>';
+  h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th><th class="col-tot">₽ / вышедший</th></tr></thead><tbody>';
   var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
   cw.forEach(function(c,i){
     var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
@@ -1146,7 +1168,10 @@ function renderCliMatrix(cw, pcw) {
     h+='<td class="col-tot"><span class="cell-l '+cplClass(t.cpl)+'">'+fmt(t.cpl)+' ₽</span>'+
        (ptt?'<span class="cell-s" style="color:'+(t.cpl<=ptt.cpl?'#10B981':'#EF4444')+';font-weight:700">'+(t.cpl<=ptt.cpl?'↓':'↑')+' '+sign(t.cpl-ptt.cpl)+' ₽ ('+sign(Math.round((t.cpl-ptt.cpl)/ptt.cpl*100))+'%)</span>':'')+'</td>';
     h+='<td class="col-tot"><span class="cell-l '+convClass(t.conv)+'">'+(t.conv==null?'—':dec1(t.conv)+'%')+'</span>'+
-       '<span class="cell-s">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span></td></tr>';
+       '<span class="cell-s">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span></td>';
+    var co = cliCostOut(c), pco = pc ? cliCostOut(pc) : null;
+    h+='<td class="col-tot">'+(co==null?'<span class="cell-none">—</span>':'<span class="cell-l">'+fmt(co)+' ₽</span>'+
+       ((convReady(c) && pco!=null)?cellDelta(co, pco, false):'')+'<span class="cell-s">расход Авито ÷ вышедшие</span>')+'</td></tr>';
   });
   var tt=cliWeekTotals(cw), tav=cliToolTotal(cw,'avito');
   h+='<tr class="total"><td>Итого</td>'+
@@ -1164,6 +1189,7 @@ function renderCliMatrix(cw, pcw) {
   // воронки, среднее по ним не имеет смысла — смотрим по каждому клиенту.
   h+='<td class="col-tot">'+fmt(tt.spend)+' ₽</td>'+
      '<td class="col-tot">'+fmt(tt.cpl)+' ₽</td>'+
+     '<td class="col-tot"><span class="cell-none">по клиентам</span></td>'+
      '<td class="col-tot"><span class="cell-none">по клиентам</span></td></tr>';
   return h+'</tbody></table></div>';
 }
@@ -1176,7 +1202,7 @@ function renderCliDetails(cw, pcw) {
     if (!c.projects || !c.projects.length) return;
     h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — детализация'+
        '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито</span></div>'+
-       '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th></tr></thead><tbody>';
+       '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th><th>₽ / выш.</th></tr></thead><tbody>';
     var sp=0,sf=0,ss=0,sa=0;
     c.projects.forEach(function(p){
       // pctPlan, не pc — иначе затеняется клиент прошлой недели и сравнение конверсий не считается
@@ -1184,7 +1210,8 @@ function renderCliDetails(cw, pcw) {
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
          '<td><span class="pill '+(pctPlan>=100?'pill-ok':'pill-no')+'">'+pctPlan+'%</span></td>'+
          '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+(p.ad==null?'<span class="conv-zero">—</span>':fmt(p.ad))+'</td>'+
-         '<td>'+projConv(p.ad, p.fact)+'</td></tr>';
+         '<td>'+projConv(p.ad, p.fact)+'</td>'+
+         '<td>'+(p.ad?fmt(Math.round(p.spend/p.ad))+' ₽':'<span class="conv-zero">—</span>')+'</td></tr>';
     });
     var avg = cliConvAvg(c), pavg = pc ? cliConvAvg(pc) : null;
     var davg = (convReady(c) && avg != null && pavg != null) ? avg - pavg : null;
@@ -1197,7 +1224,7 @@ function renderCliDetails(cw, pcw) {
        (davg==null?'':(Math.abs(davg)<0.05?'<div style="font-size:10px;color:#94A3B8">\u2192 0 п.п.</div>'
          :'<div style="font-size:10px;font-weight:700;color:'+(davg>0?'#10B981':'#F59E0B')+'">'+
            (davg>0?'\u2191 +':'\u2193 ')+dec1(davg)+' п.п.</div>'))+
-       '</td></tr></tbody></table></div>';
+       '</td><td>'+(sa?fmt(Math.round(ss/sa))+' ₽':'<span class="conv-zero">—</span>')+'</td></tr></tbody></table></div>';
   });
   return h+'</div>';
 }
