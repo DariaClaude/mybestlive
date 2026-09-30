@@ -264,13 +264,6 @@
 <div class="content">
   <div id="periods"></div>
 
-  <!-- TASKS -->
-  <div class="section-head">Задачи</div>
-  <div class="tasks-section">
-    <div class="tasks-grid">
-      <div class="task-group" id="tasks"></div>
-    </div>
-  </div>
 </div><!-- /content -->
 
 <script src="war-room-data.js?v=20260922c"></script>
@@ -690,7 +683,6 @@ function renderTabs() {
 function renderAll() {
   renderTabs();
   document.getElementById('periods').innerHTML = W.map(function(_, i) { return renderPeriod(i); }).join('');
-  renderTasks();
   restoreTasks();
   validateData();
 }
@@ -724,11 +716,6 @@ function validateData() {
 }
 
 // ── Задачи ───────────────────────────────────────────────────────────
-function renderTasks() {
-  document.getElementById('tasks').innerHTML = WAR_ROOM_DATA.tasks.map(function(t) {
-    return '<div class="task-item" onclick="toggleTask(this)"><div class="task-cb"></div><div class="task-text">' + esc(t) + '</div></div>';
-  }).join('');
-}
 function toggleTask(el) {
   el.classList.toggle('done');
   var text = el.querySelector('.task-text').textContent.trim();
