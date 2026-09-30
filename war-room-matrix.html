@@ -728,7 +728,7 @@ var CLIENTS = {
         {n:"МСК ВкусВилл",plan:300,fact:441,spend:37778,ad:null},
         {n:"Ростикс ДРС",plan:100,fact:237,spend:15874,ad:null}
       ] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4640, adapted:170,
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4640, adapted:172,
       tools:{ avito:{leads:4996,spend:330642}, direct:null, social:{leads:61,spend:39269}, yula:{leads:10,spend:3420} },
       projects:[
         {n:"МАГНИТ КРД",plan:300,fact:359,spend:28274,ad:5},
@@ -738,7 +738,7 @@ var CLIENTS = {
         {n:"ЛЕНТА ЧЛБ",plan:40,fact:51,spend:8326,ad:8},
         {n:"Курьеры",plan:600,fact:710,spend:86184,ad:17},
         {n:"Инвентаризация",plan:2000,fact:2113,spend:106571,ad:84},
-        {n:"Гравис",plan:20,fact:25,spend:7425,ad:null}
+        {n:"Гравис",plan:20,fact:25,spend:7425,ad:2}
       ] },
   ],
   "14–20 сентября": [
@@ -938,9 +938,10 @@ var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, 
 // проекты по имени, вышедшие. Сравнений с прошлым периодом нет — это итог.
 // CPL считается расход ÷ лиды (ручной cplManual недели в сумму не переносится).
 var SUMMARIES = [
-  { key: "sum-0920", label: "31.08–20.09 · итого",
-    title: "Сводно за 31 августа – 20 сентября",
-    weeks: ["31 августа–6 сентября", "7–13 сентября", "14–20 сентября"] }
+  { key: "sum-0930", label: "31.08–30.09 · итого",
+    title: "Сводно за 31 августа – 30 сентября",
+    note: "Авито — по 27.09 (неделя 28.09–04.10 в таблице ещё не заведена), ВК и Юла — по 30.09",
+    weeks: ["31 августа–6 сентября", "7–13 сентября", "14–20 сентября", "21–27 сентября"] }
 ];
 
 function sumClients(labels) {
@@ -1005,7 +1006,8 @@ function renderSummary(sm) {
   var cw = sumClients(sm.weeks);
   var head = '<div class="card" style="margin-bottom:16px;padding:14px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">'+
     '<div style="font-size:15px;font-weight:800;color:#0F172A">'+esc(sm.title)+'</div>'+
-    '<div style="font-size:12px;color:#64748B">сумма недель: '+sm.weeks.map(esc).join(' · ')+' · CPL = расход ÷ лиды · без сравнения с прошлым периодом</div></div>';
+    '<div style="font-size:12px;color:#64748B">сумма недель: '+sm.weeks.map(esc).join(' · ')+' · CPL = расход ÷ лиды · без сравнения с прошлым периодом'+
+    (sm.note ? '<br>'+esc(sm.note) : '')+'</div></div>';
   var body = head + renderCliKPI(cw, null, null, null) + renderCliMatrix(cw, null) + renderSummaryWeeks(sm, cw) + renderCliDetails(cw, null);
   return '<div class="period-section" id="period-' + sm.key + '" data-key="' + sm.key + '">' + body + '</div>';
 }
