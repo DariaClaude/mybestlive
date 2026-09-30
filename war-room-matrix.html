@@ -721,7 +721,7 @@ var CLIENTS = {
         {n:"МСК ВкусВилл",plan:300,fact:441,spend:37778,ad:null},
         {n:"Ростикс ДРС",plan:100,fact:237,spend:15874,ad:null}
       ] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4640, adapted:170,
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4640, adapted:172,
       tools:{ avito:{leads:4996,spend:330642}, direct:null, social:{leads:61,spend:39269}, yula:{leads:10,spend:3420} },
       projects:[
         {n:"МАГНИТ КРД",plan:300,fact:359,spend:28274,ad:5},
@@ -731,9 +731,7 @@ var CLIENTS = {
         {n:"ЛЕНТА ЧЛБ",plan:40,fact:51,spend:8326,ad:8},
         {n:"Курьеры",plan:600,fact:710,spend:86184,ad:17},
         {n:"Инвентаризация",plan:2000,fact:2113,spend:106571,ad:84},
-        {n:"Гравис",plan:20,fact:25,spend:7425,ad:0},
-        {n:"Санкт-Петербург",plan:0,fact:0,spend:0,ad:7},
-        {n:"Магнит сборка (Москва)",plan:0,fact:0,spend:0,ad:18}
+        {n:"Гравис",plan:20,fact:25,spend:7425,ad:2}
       ] },
   ],
   "14–20 сентября": [
@@ -966,7 +964,7 @@ function sumClients(labels) {
   });
   return order.map(function(n){
     var a = byName[n];
-    a.projects = a._prOrder.map(function(k){ return a._pr[k]; }).filter(function(q){ return q.fact || q.ad; });
+    a.projects = a._prOrder.map(function(k){ return a._pr[k]; }).filter(function(q){ return q.fact; });
     delete a._pr; delete a._prOrder;
     return a;
   });
@@ -1230,16 +1228,6 @@ function renderCliDetails(cw, pcw) {
        '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th><th>₽ / выш.</th></tr></thead><tbody>';
     var sp=0,sf=0,ss=0,sa=0;
     c.projects.forEach(function(p){
-      // Проект есть в табеле вышедших, но не ведётся в таблице Авито (нет плана/лидов/расхода):
-      // показываем только «Вышедшие», остальное прочерками — иначе в ячейках NaN.
-      if (!p.fact) {
-        var dash='<span class="conv-zero">—</span>';
-        sa+=(p.ad||0);
-        h+='<tr><td>'+esc(p.n)+'<div style="font-size:10px;color:#94A3B8;font-weight:400">нет в таблице Авито</div></td>'+
-           '<td>'+dash+'</td><td>'+dash+'</td><td>'+dash+'</td><td>'+dash+'</td>'+
-           '<td>'+(p.ad==null?dash:fmt(p.ad))+'</td><td>'+dash+'</td><td>'+dash+'</td></tr>';
-        return;
-      }
       // pctPlan, не pc — иначе затеняется клиент прошлой недели и сравнение конверсий не считается
       var pctPlan=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=(p.ad||0);
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
