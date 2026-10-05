@@ -706,6 +706,14 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "28 сентября–4 октября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:17,spend:17612}, yula:{leads:5,spend:7159} },
+      projects:[] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:56,spend:37070}, yula:{leads:16,spend:22908} },
+      projects:[] },
+  ],
   "21–27 сентября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:894, adapted:78,
       tools:{ avito:{leads:1696,spend:156898}, direct:null, social:{leads:12,spend:7548}, yula:{leads:16,spend:5320} },
@@ -722,7 +730,7 @@ var CLIENTS = {
         {n:"Ростикс ДРС",plan:100,fact:237,spend:15874,ad:null}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4640, adapted:172,
-      tools:{ avito:{leads:4996,spend:330642}, direct:null, social:{leads:61,spend:39269}, yula:{leads:10,spend:3420} },
+      tools:{ avito:{leads:4996,spend:330642}, direct:null, social:{leads:55,spend:39269}, yula:{leads:10,spend:3420} },
       projects:[
         {n:"МАГНИТ КРД",plan:300,fact:359,spend:28274,ad:5},
         {n:"ЛЕНТА КРД",plan:850,fact:885,spend:47300,ad:13},
@@ -933,7 +941,7 @@ var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, 
 var SUMMARIES = [
   { key: "sum-0930", label: "31.08–30.09 · итого",
     title: "Сводно за 31 августа – 30 сентября",
-    note: "Авито — по 27.09 (неделя 28.09–04.10 в таблице ещё не заведена), ВК и Юла — по 30.09",
+    note: "Авито — по 27.09, ВК и Юла — по 28.09; дни 29–30.09 входят в неделю 28.09–04.10",
     weeks: ["31 августа–6 сентября", "7–13 сентября", "14–20 сентября", "21–27 сентября"] }
 ];
 
