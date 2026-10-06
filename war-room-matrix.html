@@ -708,11 +708,20 @@ function renderSocial(w) {
 var CLIENTS = {
   "28 сентября–4 октября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
-      tools:{ avito:{pending:true}, direct:null, social:{leads:17,spend:17612}, yula:{leads:5,spend:7159} },
+      tools:{ avito:{pending:true}, direct:null, social:{leads:25,spend:20177}, yula:{leads:10,spend:11136} },
       projects:[] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
-      tools:{ avito:{pending:true}, direct:null, social:{leads:56,spend:37070}, yula:{leads:16,spend:22908} },
-      projects:[] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4890, adapted:null,
+      tools:{ avito:{leads:5209,spend:258345}, direct:null, social:{leads:67,spend:38447}, yula:{leads:17,spend:18931} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:110,fact:125,spend:14287,ad:null},
+        {n:"ЛЕНТА КРД",plan:200,fact:216,spend:19226,ad:null},
+        {n:"ЛЕНТА КЗН",plan:80,fact:92,spend:14222,ad:null},
+        {n:"ЛЕНТА ЧЛБ",plan:40,fact:39,spend:6709,ad:null},
+        {n:"Курьеры",plan:400,fact:485,spend:89126,ad:null},
+        {n:"Инвентаризация",plan:4000,fact:4191,spend:110327,ad:null},
+        {n:"Гравис",plan:10,fact:8,spend:2314,ad:null},
+        {n:"Таблоджикс",plan:50,fact:53,spend:2134,ad:null}
+      ] },
   ],
   "21–27 сентября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:894, adapted:78,
@@ -1084,13 +1093,18 @@ function renderCliKPI(cw, pcw, w, pw) {
   if (partial) pt = null;
   var waitNote = '<div class="kpi-delta neutral">сравнение — после внесения Авито</div>';
   var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula');
+  // Авито внесён не по всем клиентам: показываем то, что есть, с пометкой, кого не хватает
+  // (иначе при заполненном ОПИ шапка писала «не внесён», хотя CPL Даниила уже известен).
+  var pendNames = cw.filter(function(c){ return c.tools.avito && c.tools.avito.pending; }).map(function(c){ return (c.scope || c.name).split(' — ')[0]; });
+  var avPartial = bAv.pending && bAv.any, avNone = bAv.pending && !bAv.any;
+  var pendNote = avPartial ? pendNames.map(esc).join(', ') + ' не внесён' : '';
   var h='<div class="kpi-bar">';
   h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value kpi-accent">'+fmt(t.leads)+'</div>'+
      '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?'#10B981':'#F59E0B')+'">'+Math.round(t.leads/t.plan*100)+'%</b>'
         : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
      (partial ? waitNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
-     '<div class="kpi-sub" style="line-height:1.7">Авито '+(bAv.pending?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>')+'<br>'+
+     '<div class="kpi-sub" style="line-height:1.7">Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>'+
      'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b></div>'+
      (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
   // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
@@ -1102,8 +1116,8 @@ function renderCliKPI(cw, pcw, w, pw) {
   var pManual = (pw && pw.avito && pw.avito.cplManual && pw.avito.cpl != null) ? pw.avito : null;
   var cplCur = manual ? manual.cpl : bAv.cpl, cplPrev = pManual ? pManual.cpl : (pbAv && pbAv.cpl);
   h+='<div class="kpi-card"><div class="kpi-label">CPL Авито</div><div class="kpi-value '+cplClass(cplCur)+'">'+
-     (bAv.pending?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(cplCur)+' ₽')+'</div>'+
-     '<div class="kpi-sub">'+(bAv.pending?'ждём выгрузку':(manual ? esc(manual.cplNote || 'средний') + ' · ' : '')+fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽')+'</div>'+
+     (avNone?'<span style="color:#F59E0B;font-size:20px">не внесён</span>':fmt(cplCur)+' ₽')+'</div>'+
+     '<div class="kpi-sub">'+(avNone?'ждём выгрузку':(manual ? esc(manual.cplNote || 'средний') + ' · ' : '')+fmt(bAv.leads)+' лид. · '+fmt(bAv.spend)+' ₽'+(avPartial?' · <span style="color:#F59E0B">'+pendNote+'</span>':''))+'</div>'+
      (partial ? waitNote : delta(cplCur, cplPrev, {goodUp:false, mode:'rub'}))+'</div>';
   // Конверсия — отдельной строкой по каждому клиенту, общей цифры не показываем:
   // у ОПИ и ДРС разные бизнес-процессы, среднее по ним смысла не имеет.
