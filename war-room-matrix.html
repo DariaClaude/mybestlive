@@ -721,7 +721,7 @@ var CLIENTS = {
         {n:"Таблоджикс МСК",plan:50,fact:53,spend:2134,ad:0}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4840, adapted:32,
-      tools:{ avito:{leads:5156,spend:256211}, direct:null, social:{leads:67,spend:38447}, yula:{leads:17,spend:18931} },
+      tools:{ avito:{leads:5156,spend:256211}, direct:{leads:22,spend:13838}, social:{leads:67,spend:38447}, yula:{leads:17,spend:18931} },
       projects:[
         {n:"МАГНИТ КРД",plan:110,fact:125,spend:14287,ad:0},
         {n:"ЛЕНТА КРД",plan:200,fact:216,spend:19226,ad:0},
@@ -1101,7 +1101,7 @@ function renderCliKPI(cw, pcw, w, pw) {
   var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
   if (partial) pt = null;
   var waitNote = '<div class="kpi-delta neutral">сравнение — после внесения Авито</div>';
-  var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula');
+  var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula'), bDi=cliToolTotal(cw,'direct');
   // Авито внесён не по всем клиентам: показываем то, что есть, с пометкой, кого не хватает
   // (иначе при заполненном ОПИ шапка писала «не внесён», хотя CPL Даниила уже известен).
   var pendNames = cw.filter(function(c){ return c.tools.avito && c.tools.avito.pending; }).map(function(c){ return (c.scope || c.name).split(' — ')[0]; });
@@ -1114,7 +1114,8 @@ function renderCliKPI(cw, pcw, w, pw) {
      (partial ? waitNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
      '<div class="kpi-sub" style="line-height:1.7">Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>'+
-     'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b></div>'+
+     'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b>'+
+     (bDi.any ? ' · Директ <b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>' : '')+'</div>'+
      (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
   // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
   // перекашивали сводную цифру вверх.
