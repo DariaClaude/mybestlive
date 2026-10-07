@@ -249,7 +249,8 @@
   .cell-b { font-size:11px; color:#64748B; font-weight:600; display:block; margin-top:1px; }
   .cell-none { color:#CBD5E1; font-size:12px; }
   .col-tot { background:#F8FAFC; }
-  .conv-hi { color:#10B981; } .conv-mid { color:#F59E0B; } .conv-lo { color:#EF4444; } .conv-zero { color:#CBD5E1; }
+  .conv-hi { color:#10B981; } .conv-mid { color:#F59E0B; }
+  .conv-yellow { color:#CA8A04; } .conv-lo { color:#EF4444; } .conv-zero { color:#CBD5E1; }
   .bars { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; }
   .bar-item { padding:14px; border-radius:10px; background:#F8FAFC; }
   .bar-item.dim { background:#FAFBFC; border:1px dashed #E2E8F0; }
@@ -1100,13 +1101,14 @@ function cliToolTotal(cw,k) {
 }
 // Низкая конверсия — оранжевым, а не красным: цифра по ОПИ пока под вопросом
 // (колонка «Вышедшие» по Авито почти не заполняется), красный читался бы как провал.
-function convClass(v) { return v==null?'':(v>=25?'conv-hi':'conv-mid'); }
+function convClass(v) { return v==null?'':(v>=25?'conv-hi':'conv-yellow'); }
 // Конверсия по проекту: 0 вышедших — серым (это «не заполнено / не выходили»),
 // оранжевый на нуле читался бы как проблема самого проекта.
 function projConv(ad, fact) {
   if (ad == null || !fact) return '<span class="conv-zero">—</span>';
   var v = ad / fact * 100;
-  var cls = !ad ? 'conv-zero' : v >= 25 ? 'conv-hi' : 'conv-mid';
+  // По проектам — всегда оранжевый; цветом (жёлтый/зелёный) выделяется только итог клиента.
+  var cls = !ad ? 'conv-zero' : 'conv-mid';
   return '<span class="' + cls + '" style="font-weight:700">' + dec1(v) + '%</span>';
 }
 function dec1(v) { return v.toFixed(1).replace('.',','); }
@@ -1301,7 +1303,7 @@ function renderCliDetails(cw, pcw) {
     h+='<tr class="sum"><td>Итого</td><td>'+fmt(sp)+'</td><td>'+fmt(sf)+'</td><td>'+Math.round(sf/sp*100)+'%</td>'+
        '<td>'+fmt(Math.round(ss/sf))+' ₽</td><td>'+(anyAd?fmt(sa):'<span class="conv-zero">—</span>')+'</td>'+
        '<td>'+(avg==null?'<span class="conv-zero">—</span>':
-         '<span class="'+(avg>=25?'conv-hi':'conv-mid')+'" style="font-weight:700">'+dec1(avg)+'%</span>')+
+         '<span class="'+(avg>=25?'conv-hi':'conv-yellow')+'" style="font-weight:700">'+dec1(avg)+'%</span>')+
        (davg==null?'':(Math.abs(davg)<0.05?'<div style="font-size:10px;color:#94A3B8">\u2192 0 п.п.</div>'
          :'<div style="font-size:10px;font-weight:700;color:'+(davg>0?'#10B981':'#F59E0B')+'">'+
            (davg>0?'\u2191 +':'\u2193 ')+dec1(davg)+' п.п.</div>'))+
