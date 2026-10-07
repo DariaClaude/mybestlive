@@ -3305,9 +3305,7 @@ const WAR_ROOM_DATA = {
         "leads": 5209,
         "plan": 4890,
         "planNote": null,
-        "cpl": 72,
-        "cplManual": true,
-        "cplNote": "средний по колонке таблицы, задан Дарьей 07.10",
+        "cpl": 51,
         "budget": 263498
       },
       "vk": 108,
