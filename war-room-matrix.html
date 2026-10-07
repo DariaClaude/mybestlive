@@ -1135,7 +1135,7 @@ function renderCliKPI(cw, pcw, w, pw) {
   var pendNote = avPartial ? pendNames.map(esc).join(', ') + ' не внесён' : '';
   var h='<div class="kpi-bar">';
   h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value kpi-accent">'+fmt(t.leads)+'</div>'+
-     '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+' · выполнен <b style="color:'+(t.leads>=t.plan?'#10B981':'#F59E0B')+'">'+Math.round(t.leads/t.plan*100)+'%</b>'
+     '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+'<div style="margin-top:4px"><span class="pill '+(t.leads>=t.plan?'pill-ok':'pill-no')+'" style="font-size:12px;padding:2px 8px;white-space:nowrap;display:inline-block">'+(t.leads>=t.plan?'✓ план выполнен':'план не выполнен')+' · '+Math.round(t.leads/t.plan*100)+'%</span></div>'
         : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
      (partial ? waitNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
