@@ -706,6 +706,32 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "Сентябрь · факт": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:3173, adapted:483,
+      tools:{ avito:{leads:3472,spend:344827}, direct:null, social:{leads:77,spend:34543}, yula:{leads:41,spend:12426} },
+      projects:[
+        {n:"Урбан Дикси МСК",plan:235,fact:263,spend:26012,ad:34},
+        {n:"Табыш ЧЛБ",plan:360,fact:370,spend:37350,ad:67},
+        {n:"Лента ЧЛБ",plan:250,fact:261,spend:19578,ad:59},
+        {n:"Пятёрочка ЧЛБ",plan:60,fact:119,spend:15325,ad:68},
+        {n:"Монетка ЧЛБ",plan:720,fact:790,spend:79320,ad:150},
+        {n:"Табыш КЗН",plan:260,fact:317,spend:34691,ad:39},
+        {n:"Лента КЗН",plan:54,fact:61,spend:8998,ad:52},
+        {n:"Пятёрочка КЗН",plan:34,fact:37,spend:8674,ad:8},
+        {n:"ВкусВилл МСК",plan:1200,fact:1254,spend:114879,ad:6}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:10700, adapted:211,
+      tools:{ avito:{leads:12224,spend:653418}, direct:null, social:{leads:275,spend:132565}, yula:{leads:35,spend:9647} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:1050,fact:949,spend:74895,ad:1},
+        {n:"ЛЕНТА КРД",plan:500,fact:531,spend:35992,ad:0},
+        {n:"ЛЕНТА КЗН",plan:400,fact:517,spend:55186,ad:2},
+        {n:"ЛЕНТА ЧЛБ",plan:150,fact:280,spend:23609,ad:0},
+        {n:"Курьеры",plan:1800,fact:1795,spend:238032,ad:35},
+        {n:"Инвентаризация",plan:6700,fact:8034,spend:183121,ad:173},
+        {n:"Гравис",plan:100,fact:118,spend:42583,ad:0}
+      ] },
+  ],
   "28 сентября–4 октября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:699, adapted:97,
       tools:{ avito:{leads:738,spend:59602}, direct:null, social:{leads:25,spend:12675}, yula:{leads:10,spend:11136} },
@@ -957,10 +983,10 @@ var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, 
 // проекты по имени, вышедшие. Сравнений с прошлым периодом нет — это итог.
 // CPL считается расход ÷ лиды (ручной cplManual недели в сумму не переносится).
 var SUMMARIES = [
-  { key: "sum-0930", label: "31.08–30.09 · итого",
-    title: "Сводно за 31 августа – 30 сентября",
-    note: "Авито — по 27.09, ВК и Юла — по 28.09; дни 29–30.09 входят в неделю 28.09–04.10",
-    weeks: ["31 августа–6 сентября", "7–13 сентября", "14–20 сентября", "21–27 сентября"] }
+  { key: "sum-sep", label: "Сентябрь · итого",
+    title: "Сводно за сентябрь (1–30.09)",
+    note: "Авито — вкладка «Сентябрь факт» таблицы (календарный месяц; ЛЕНТЫ МСК и Ростикса в месячной вкладке нет), ВК и Юла — сумма недель 31.08–28.09, Директа в сентябре не было",
+    weeks: ["Сентябрь · факт"] }
 ];
 
 function sumClients(labels) {
@@ -1025,9 +1051,9 @@ function renderSummary(sm) {
   var cw = sumClients(sm.weeks);
   var head = '<div class="card" style="margin-bottom:16px;padding:14px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">'+
     '<div style="font-size:15px;font-weight:800;color:#0F172A">'+esc(sm.title)+'</div>'+
-    '<div style="font-size:12px;color:#64748B">сумма недель: '+sm.weeks.map(esc).join(' · ')+' · CPL = расход ÷ лиды · без сравнения с прошлым периодом'+
+    '<div style="font-size:12px;color:#64748B">'+(sm.weeks.length > 1 ? 'сумма недель: '+sm.weeks.map(esc).join(' · ')+' · ' : '')+'CPL = расход ÷ лиды · без сравнения с прошлым периодом'+
     (sm.note ? '<br>'+esc(sm.note) : '')+'</div></div>';
-  var body = head + renderCliKPI(cw, null, null, null) + renderCliMatrix(cw, null) + renderSummaryWeeks(sm, cw) + renderCliDetails(cw, null);
+  var body = head + renderCliKPI(cw, null, null, null) + renderCliMatrix(cw, null) + (sm.weeks.length > 1 ? renderSummaryWeeks(sm, cw) : '') + renderCliDetails(cw, null);
   return '<div class="period-section" id="period-' + sm.key + '" data-key="' + sm.key + '">' + body + '</div>';
 }
 
