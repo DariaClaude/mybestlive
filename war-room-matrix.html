@@ -707,6 +707,14 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "5–11 октября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:25,spend:14491}, yula:{leads:10,spend:760} },
+      projects:[] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:{leads:31,spend:null}, social:{leads:67,spend:32361}, yula:{leads:14,spend:1064} },
+      projects:[] },
+  ],
   "Сентябрь · факт": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:3173, adapted:483,
       tools:{ avito:{leads:3472,spend:344827}, direct:null, social:{leads:77,spend:34543}, yula:{leads:41,spend:12426} },
@@ -747,7 +755,7 @@ var CLIENTS = {
         {n:"Пятёрочка КЗН",plan:7,fact:3,spend:853,ad:2}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4890, adapted:106,
-      tools:{ avito:{leads:5209,spend:263498}, direct:{leads:26,spend:13838}, social:{leads:83,spend:38447}, yula:{leads:17,spend:8687} },
+      tools:{ avito:{leads:5209,spend:263498}, direct:{leads:22,spend:13838}, social:{leads:67,spend:38447}, yula:{leads:17,spend:8687} },
       projects:[
         {n:"МАГНИТ КРД",plan:110,fact:125,spend:14287,ad:6},
         {n:"ЛЕНТА КРД",plan:200,fact:216,spend:19226,ad:11},
@@ -1061,7 +1069,7 @@ function renderSummary(sm) {
 function cliTotals(c) {
   var l=0,s=0;
   // pending — канал есть, но данные ещё не внесены в таблицу: в итоги не берём.
-  NEW_TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v && !v.pending){ l+=v.leads; s+=v.spend; } });
+  NEW_TOOLS.forEach(function(t){ var v=c.tools[t.k]; if(v && !v.pending){ l+=v.leads; s+=(v.spend||0); } });
   // Знаменатель конверсии — лиды Авито, а не все каналы: «Вышедшие» ведутся только
   // по Авито-проектам, добавлять в базу ВК и Юлу — занижать показатель.
   var av = c.tools.avito, base = (av && !av.pending) ? av.leads : l;
@@ -1096,7 +1104,7 @@ function cliWeekTotals(cw) {
 }
 function cliToolTotal(cw,k) {
   var l=0,s=0,any=false,pending=false;
-  cw.forEach(function(c){ var v=c.tools[k]; if(!v) return; if(v.pending){ pending=true; return; } l+=v.leads; s+=v.spend; any=true; });
+  cw.forEach(function(c){ var v=c.tools[k]; if(!v) return; if(v.pending){ pending=true; return; } l+=v.leads; s+=(v.spend||0); any=true; });
   return { leads:l, spend:s, any:any, pending:pending, cpl:l?Math.round(s/l):null };
 }
 // Низкая конверсия — оранжевым, а не красным: цифра по ОПИ пока под вопросом
@@ -1143,7 +1151,7 @@ function renderCliKPI(cw, pcw, w, pw) {
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
      '<div class="kpi-sub" style="line-height:1.7">Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>'+
      'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b>'+
-     (bDi.any ? ' · Директ <b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>' : '')+'</div>'+
+     (bDi.any ? ' · Директ '+(bDi.spend?'<b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>':'<span style="color:#F59E0B">расход не внесён</span>') : '')+'</div>'+
      (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
   // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
   // перекашивали сводную цифру вверх.
@@ -1243,8 +1251,10 @@ function renderCliMatrix(cw, pcw) {
       if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">не внесено<br>в таблицу</span></td>'; return; }
       h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
          ((pv && !pv.pending) ? cellDelta(v.leads, pv.leads, true) : '')+
-         '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
-         '<span class="cell-b">'+fmt(v.spend)+' ₽</span></td>';
+         (v.spend==null
+            ? '<span class="cell-s" style="color:#F59E0B">расход не внесён</span>'
+            : '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
+              '<span class="cell-b">'+fmt(v.spend)+' ₽</span>')+'</td>';
     });
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span>'+
        (ptt?cellDelta(t.spend, ptt.spend, false):'')+'</td>';
@@ -1264,7 +1274,8 @@ function renderCliMatrix(cw, pcw) {
     var tv=cliToolTotal(cw,tool.k), ptv = pcw ? cliToolTotal(pcw,tool.k) : null;
     // ВК и Юла сравниваем с прошлой неделей всегда; Авито — только когда обе недели полные.
     var showD = ptv && ptv.any && tv.any && (tool.k!=='avito' || !partial);
-    h+='<td>'+(tv.any? fmt(tv.leads)+(showD?leadDelta(tv.leads, ptv.leads):'')+'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>'
+    var noSpend = tv.any && cw.some(function(c){ var v=c.tools[tool.k]; return v && !v.pending && v.spend==null; });
+    h+='<td>'+(tv.any? fmt(tv.leads)+(showD?leadDelta(tv.leads, ptv.leads):'')+(noSpend?'<span class="cell-s" style="color:#F59E0B">расход не внесён</span>':'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>')
              : tv.pending ? '<span class="cell-none" style="color:#F59E0B">не внесено</span>'
              : '<span class="cell-none">—</span>')+'</td>';
   });
