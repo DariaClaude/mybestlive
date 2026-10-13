@@ -708,37 +708,23 @@ function renderSocial(w) {
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
   "5–11 октября": [
-    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
-      tools:{ avito:{pending:true}, direct:null, social:{leads:34,spend:19321}, yula:{leads:11,spend:3241} },
-      projects:[] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
-      tools:{ avito:{pending:true}, direct:{leads:33,spend:null}, social:{leads:76,spend:34855}, yula:{leads:14,spend:4125} },
-      projects:[] },
-  ],
-  "Сентябрь · факт": [
-    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:3173, adapted:483,
-      tools:{ avito:{leads:3472,spend:344827}, direct:null, social:{leads:77,spend:34543}, yula:{leads:41,spend:12426} },
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:185, adapted:7, avitoPartial:true,
+      tools:{ avito:{leads:173,spend:16472}, direct:null, social:{leads:34,spend:19321}, yula:{leads:11,spend:3241} },
       projects:[
-        {n:"Урбан Дикси МСК",plan:235,fact:263,spend:26012,ad:34},
-        {n:"Табыш ЧЛБ",plan:360,fact:370,spend:37350,ad:67},
-        {n:"Лента ЧЛБ",plan:250,fact:261,spend:19578,ad:59},
-        {n:"Пятёрочка ЧЛБ",plan:60,fact:119,spend:15325,ad:68},
-        {n:"Монетка ЧЛБ",plan:720,fact:790,spend:79320,ad:150},
-        {n:"Табыш КЗН",plan:260,fact:317,spend:34691,ad:39},
-        {n:"Лента КЗН",plan:54,fact:61,spend:8998,ad:52},
-        {n:"Пятёрочка КЗН",plan:34,fact:37,spend:8674,ad:8},
-        {n:"ВкусВилл МСК",plan:1200,fact:1254,spend:114879,ad:6}
+        {n:"Урбан Дикси МСК",plan:35,fact:37,spend:3484,ad:7},
+        {n:"Лента КРД",plan:100,fact:91,spend:7457,ad:null},
+        {n:"Лента СПБ",plan:50,fact:45,spend:5531,ad:null}
       ] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:10700, adapted:415,
-      tools:{ avito:{leads:12224,spend:653418}, direct:null, social:{leads:275,spend:132565}, yula:{leads:35,spend:9647} },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:3255, adapted:52,
+      tools:{ avito:{leads:3576,spend:306817}, direct:{leads:33,spend:null}, social:{leads:76,spend:34855}, yula:{leads:14,spend:4125} },
       projects:[
-        {n:"МАГНИТ КРД",plan:1050,fact:949,spend:74895,ad:20},
-        {n:"ЛЕНТА КРД",plan:500,fact:531,spend:35992,ad:32},
-        {n:"ЛЕНТА КЗН",plan:400,fact:517,spend:55186,ad:11},
-        {n:"ЛЕНТА ЧЛБ",plan:150,fact:280,spend:23609,ad:13},
-        {n:"Курьеры",plan:1800,fact:1795,spend:238032,ad:43},
-        {n:"Инвентаризация",plan:6700,fact:8034,spend:183121,ad:228},
-        {n:"Гравис",plan:100,fact:118,spend:42583,ad:3}
+        {n:"МАГНИТ КРД",plan:200,fact:270,spend:16324,ad:1},
+        {n:"ЛЕНТА КРД",plan:300,fact:320,spend:18743,ad:null},
+        {n:"ЛЕНТА КЗН",plan:90,fact:115,spend:8595,ad:null},
+        {n:"ЛЕНТА ЧЛБ",plan:60,fact:61,spend:6994,ad:null},
+        {n:"Курьеры",plan:900,fact:940,spend:125941,ad:7},
+        {n:"Инвентаризация",plan:1700,fact:1866,spend:128682,ad:44},
+        {n:"Гравис",plan:5,fact:4,spend:1538,ad:null}
       ] },
   ],
   "28 сентября–4 октября": [
@@ -1134,9 +1120,11 @@ function renderCliKPI(cw, pcw, w, pw) {
   var t=cliWeekTotals(cw), pt=pcw?cliWeekTotals(pcw):null;
   // Пока Авито не внесён — период неполный. Сравнивать его с полной неделей нельзя:
   // получится «−99% лидов» и «CPL 1 284 ₽», хотя это просто отсутствие данных.
-  var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
+  // avitoPartial — Авито по клиенту внесён частично (в таблице заполнена часть проектов):
+  // цифры показываем, сравнение с прошлой неделей — нет, иначе получится ложное «−77%».
+  var partial = cw.some(function(c){ return (c.tools.avito && c.tools.avito.pending) || c.avitoPartial; });
   if (partial) pt = null;
-  var waitNote = '<div class="kpi-delta neutral">сравнение — после внесения Авито</div>';
+  var waitNote = '<div class="kpi-delta neutral">сравнение — после '+(cw.some(function(c){ return c.avitoPartial; }) ? 'заполнения Авито в таблице' : 'внесения Авито')+'</div>';
   var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula'), bDi=cliToolTotal(cw,'direct');
   // Авито внесён не по всем клиентам: показываем то, что есть, с пометкой, кого не хватает
   // (иначе при заполненном ОПИ шапка писала «не внесён», хотя CPL Даниила уже известен).
@@ -1237,7 +1225,7 @@ function renderCliMatrix(cw, pcw) {
         '<table class="mx"><thead><tr><th>Клиент</th><th class="col-tot">План</th><th class="col-tot">Итого лидов</th>';
   NEW_TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
   h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th><th class="col-tot">₽ / вышедший</th></tr></thead><tbody>';
-  var partial = cw.some(function(c){ return c.tools.avito && c.tools.avito.pending; });
+  var partial = cw.some(function(c){ return (c.tools.avito && c.tools.avito.pending) || c.avitoPartial; });
   cw.forEach(function(c,i){
     var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
     var av=c.tools.avito;
@@ -1249,8 +1237,10 @@ function renderCliMatrix(cw, pcw) {
       var v=c.tools[tool.k], pv = pc && pc.tools ? pc.tools[tool.k] : null;
       if(!v){ h+='<td><span class="cell-none">в разработке</span></td>'; return; }
       if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">не внесено<br>в таблицу</span></td>'; return; }
+      var partNote = (tool.k==='avito' && c.avitoPartial) ? '<span class="cell-s" style="color:#F59E0B">внесено частично</span>' : '';
       h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
          ((pv && !pv.pending) ? cellDelta(v.leads, pv.leads, true) : '')+
+         partNote+
          (v.spend==null
             ? '<span class="cell-s" style="color:#F59E0B">расход не внесён</span>'
             : '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
