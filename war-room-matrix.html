@@ -1149,7 +1149,7 @@ function renderCliKPI(cw, pcw, w, pw) {
      '<div class="kpi-sub" style="line-height:1.7">Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>'+
      'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b>'+
      (bDi.any ? ' · Директ '+(bDi.spend?'<b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>':'<span style="color:#F59E0B">расход не внесён</span>') : '')+'</div>'+
-     '</div>';  // сравнение бюджета с прошлой неделей убрано по просьбе Дарьи (14.10)
+     (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
   // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
   // перекашивали сводную цифру вверх.
   var pbAv = pcw ? cliToolTotal(pcw,'avito') : null;
