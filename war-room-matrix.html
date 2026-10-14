@@ -47,6 +47,7 @@
   .kpi-delta { font-size: 12px; font-weight: 600; margin-top: 4px; }
   .kpi-delta.up { color: #10B981; }
   .kpi-delta.down { color: #EF4444; }
+  .kpi-delta.warn { color: #CA8A04; }
   .kpi-delta.neutral { color: #64748B; }
   .kpi-accent { color: #0EA5E9; }
   .kpi-value.kpi-up { color: #059669; }
@@ -373,6 +374,8 @@ function delta(cur, prev, opts) {
     var p1 = prev !== 0 ? (diff / prev * 100) : 0;
     var p1s = (p1 > 0 ? '+' : p1 < 0 ? '\u2212' : '') + Math.abs(p1).toFixed(1).replace('.', ',') + '%';
     text = arrow + ' ' + sign(diff) + ' \u20BD (' + p1s + ') к прошл. неделе (' + fmt(prev) + ' \u20BD)';
+    // Рост бюджета — жёлтым, не красным: это не провал, а повод посмотреть (Дарья 14.10).
+    if (diff > 0) cls = 'warn';
   }
   else text = arrow + ' ' + fmt(prev) + ' \u2192 ' + fmt(cur) + ' (' + sign(diff) + ' ' + (opts.unit || '') + ')';
   return '<div class="kpi-delta ' + cls + '">' + text + '</div>';
