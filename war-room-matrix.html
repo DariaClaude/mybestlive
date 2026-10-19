@@ -710,22 +710,30 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "12–18 октября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:null, social:{leads:25,spend:13212}, yula:{leads:7,spend:3447} },
+      projects:[] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:null, adapted:null,
+      tools:{ avito:{pending:true}, direct:{leads:25,spend:27732}, social:{leads:47,spend:24461}, yula:{leads:11,spend:5417} },
+      projects:[] },
+  ],
   "5–11 октября": [
-    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:675, adapted:83,
-      tools:{ avito:{leads:697,spend:72178}, direct:null, social:{leads:39,spend:22814}, yula:{leads:11,spend:3001} },
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:675, adapted:75,
+      tools:{ avito:{leads:697,spend:72178}, direct:null, social:{leads:25,spend:14491}, yula:{leads:10,spend:760} },
       projects:[
         {n:"Урбан Дикси МСК",plan:35,fact:37,spend:3484,ad:7},
-        {n:"Табыш ЧЛБ",plan:80,fact:87,spend:13186,ad:15},
+        {n:"Табыш ЧЛБ",plan:80,fact:87,spend:13186,ad:13},
         {n:"Лента ЧЛБ",plan:100,fact:98,spend:11134,ad:4},
         {n:"Пятёрочка ЧЛБ",plan:80,fact:79,spend:8971,ad:10},
-        {n:"Табыш КЗН",plan:150,fact:168,spend:10326,ad:14},
+        {n:"Табыш КЗН",plan:150,fact:168,spend:10326,ad:8},
         {n:"Лента КЗН",plan:40,fact:45,spend:5726,ad:7},
         {n:"Пятёрочка КЗН",plan:40,fact:47,spend:6363,ad:4},
         {n:"Лента КРД",plan:100,fact:91,spend:7457,ad:12},
         {n:"Лента СПБ",plan:50,fact:45,spend:5531,ad:10}
       ] },
     { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:3255, adapted:114,
-      tools:{ avito:{leads:3576,spend:306817}, direct:{leads:36,spend:20520}, social:{leads:80,spend:38612}, yula:{leads:16,spend:4365} },
+      tools:{ avito:{leads:3576,spend:306817}, direct:{leads:31,spend:17670}, social:{leads:67,spend:32361}, yula:{leads:14,spend:1064} },
       projects:[
         {n:"МАГНИТ КРД",plan:200,fact:270,spend:16324,ad:8},
         {n:"ЛЕНТА КРД",plan:300,fact:320,spend:18743,ad:9},
