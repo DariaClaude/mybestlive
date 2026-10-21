@@ -1262,7 +1262,7 @@ function renderCliMatrix(cw, pcw) {
         '<span class="fmt-badge">НОВЫЙ ФОРМАТ</span></div>'+
         '<table class="mx"><thead><tr><th>Клиент</th><th class="col-tot">План</th><th class="col-tot">Итого лидов</th>';
   NEW_TOOLS.forEach(function(t){ h+='<th>'+t.n+'</th>'; });
-  h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL</th><th class="col-tot">Конверсия</th><th class="col-tot">₽ / вышедший</th></tr></thead><tbody>';
+  h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL средний</th><th class="col-tot">Конверсия</th><th class="col-tot">₽ / вышедший</th></tr></thead><tbody>';
   var partial = cw.some(function(c){ return (c.tools.avito && c.tools.avito.pending) || c.avitoPartial; });
   cw.forEach(function(c,i){
     var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
