@@ -1210,14 +1210,15 @@ function renderCliKPI(cw, pcw, w, pw) {
   var costRows = '';
   cw.forEach(function(c,i){
     var v = cliCostOut(c), pv = (pcw && pcw[i] && !partial) ? cliCostOut(pcw[i]) : null;
-    var d = (convReady(c) && v != null && pv != null) ? v - pv : null;
+    var d = (!c.convCollecting && convReady(c) && v != null && pv != null) ? v - pv : null;
     costRows += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:'+(i?8:2)+'px">'+
       '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
       '<span style="font-size:20px;font-weight:800;color:'+(v==null?'#CBD5E1':'#0F172A')+'">'+(v==null?'—':fmt(v)+' ₽')+'</span></div>'+
       '<div style="display:flex;justify-content:space-between;gap:8px">'+
       '<span style="font-size:10px;color:#CBD5E1">'+(v==null?'нет вышедших':'расход Авито ÷ '+fmt(c.adapted)+' выш.')+'</span>'+
       (d!=null?'<span class="kpi-delta '+(d<0?'up':d>0?'down':'neutral')+'" style="margin-top:0;font-size:11px">'+
-        (d<0?'↓':d>0?'↑':'→')+' '+fmt(pv)+' → '+fmt(v)+' ₽</span>':'')+'</div>';
+        (d<0?'↓':d>0?'↑':'→')+' '+fmt(pv)+' → '+fmt(v)+' ₽</span>'
+        : (c.convCollecting ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:11px">идёт сбор информации</span>' : ''))+'</div>';
   });
   h+='<div class="kpi-card"><div class="kpi-label">Стоимость 1 вышедшего</div>'+costRows+'</div>';
   return h+'</div>';
