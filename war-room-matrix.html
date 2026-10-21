@@ -1215,7 +1215,7 @@ function renderCliKPI(cw, pcw, w, pw) {
       '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
       '<span style="font-size:20px;font-weight:800;color:'+(v==null?'#CBD5E1':'#0F172A')+'">'+(v==null?'—':fmt(v)+' ₽')+'</span></div>'+
       '<div style="display:flex;justify-content:space-between;gap:8px">'+
-      '<span style="font-size:10px;color:#CBD5E1">'+(v==null?'нет вышедших':'расход Авито ÷ '+fmt(c.adapted)+' выш.')+'</span>'+
+      '<span style="font-size:10px;color:#CBD5E1">'+(v==null?'нет вышедших':'')+'</span>'+
       (d!=null?'<span class="kpi-delta '+(d<0?'up':d>0?'down':'neutral')+'" style="margin-top:0;font-size:11px">'+
         (d<0?'↓':d>0?'↑':'→')+' '+fmt(pv)+' → '+fmt(v)+' ₽</span>'
         : (c.convCollecting ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:11px">идёт сбор информации</span>' : ''))+'</div>';
@@ -1292,7 +1292,7 @@ function renderCliMatrix(cw, pcw) {
        '<span class="cell-s">'+(c.adapted==null?'нет данных':fmt(c.adapted)+' вышедших')+'</span></td>';
     var co = cliCostOut(c), pco = pc ? cliCostOut(pc) : null;
     h+='<td class="col-tot">'+(co==null?'<span class="cell-none">—</span>':'<span class="cell-l">'+fmt(co)+' ₽</span>'+
-       ((convReady(c) && pco!=null)?cellDelta(co, pco, false):'')+'<span class="cell-s">расход Авито ÷ вышедшие</span>')+'</td></tr>';
+       ((convReady(c) && pco!=null)?cellDelta(co, pco, false):''))+'</td></tr>';
   });
   var tt=cliWeekTotals(cw), tav=cliToolTotal(cw,'avito');
   h+='<tr class="total"><td>Итого</td>'+
