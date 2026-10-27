@@ -1,0 +1,268 @@
+<!-- ==== PMX ДИАГНОСТИКА: блок самооценки системы управления проектом (вставлять перед <h2>Карта сервисов PM Excellence</h2>) ==== -->
+<style id="pmx-diag-styles">
+  .pmx-diag{position:relative;background:#ffffff;border:1px solid #cbcdd4;padding:56px 60px 60px;margin:0 0 90px;font-family:'Gotham Pro',sans-serif;color:#2c2c2c}
+  .pmx-diag:before{content:'';position:absolute;left:-1px;top:-1px;bottom:-1px;width:6px;background:#852a34}
+  .pmx-diag__eyebrow{display:block;color:#852a34;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin:0 0 18px}
+  .pmx-diag__title{font-size:30px;line-height:1.2;font-weight:900;color:#222222;margin:0 0 20px;padding:0}
+  .pmx-diag__title:after{display:none}
+  .pmx-diag__text{color:#565656;font-size:15px;line-height:1.55;max-width:720px;margin:0 0 30px}
+  .pmx-diag__facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin:0 0 34px;padding:0;list-style:none}
+  .pmx-diag__facts li{position:relative;color:#565656;font-size:13px;padding:0 0 0 18px;margin:0}
+  .pmx-diag__facts li:before{content:'⬥';position:absolute;left:0;top:0;color:#852a34}
+  .pmx-btn{display:inline-block;color:#ffffff;font-size:16px;font-weight:600;text-align:center;cursor:pointer;padding:15px 32px;background:#852a34;border:1px solid #852a34;border-radius:3px;transition:all .2s ease;text-decoration:none;line-height:1.2;min-width:150px}
+  .pmx-btn:hover{background:#6b1e27;border-color:#6b1e27;color:#ffffff;text-decoration:none}
+  .pmx-btn--ghost{color:#2c2c2c;background:transparent}
+  .pmx-btn--ghost:hover{color:#ffffff;background:#852a34;border-color:#852a34}
+  .pmx-link{display:inline-block;color:#852a34;font-size:12px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;background:none;border:0;padding:0;border-bottom:1px solid rgba(133,42,52,.4);border-radius:0;width:auto;height:auto;line-height:1.4}
+  .pmx-link:hover{border-bottom-color:transparent}
+  .pmx-diag__screen{display:none}
+  .pmx-diag__screen.is-active{display:block}
+  /* тест */
+  .pmx-diag__progress{display:flex;align-items:center;justify-content:space-between;color:#8d8d8d;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 14px}
+  .pmx-diag__bar{height:4px;background:#e0e0e0;margin:0 0 42px;overflow:hidden}
+  .pmx-diag__bar span{display:block;height:100%;width:0;background:#852a34;transition:width .25s ease}
+  .pmx-diag__q{font-size:22px;line-height:1.4;font-weight:500;color:#222222;min-height:96px;margin:0 0 36px;max-width:860px}
+  .pmx-diag__answers{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 30px}
+  .pmx-diag__answers .pmx-btn{min-width:170px}
+  .pmx-diag__nav{display:flex;align-items:center;gap:30px}
+  /* результат */
+  .pmx-diag__verdict{font-size:26px;line-height:1.25;font-weight:900;color:#222222;margin:0 0 20px}
+  .pmx-diag__verdict--warn{color:#852a34}
+  .pmx-diag__result p{color:#565656;font-size:15px;line-height:1.55;max-width:760px;margin:0 0 18px}
+  .pmx-diag__score{display:inline-block;color:#565656;font-size:13px;padding:12px 18px;background:#f3f3f3;margin:6px 0 30px}
+  .pmx-diag__score b{color:#852a34;font-weight:700}
+  .pmx-diag__actions{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+  /* модальное окно с формой */
+  .pmx-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(34,34,34,.6);overflow-y:auto;padding:40px 16px}
+  .pmx-modal.is-open{display:block}
+  .pmx-modal__box{position:relative;width:100%;max-width:556px;background:#ffffff;padding:56px 68px 44px;margin:0 auto;font-family:'Gotham Pro',sans-serif}
+  .pmx-modal__close{position:absolute;right:0;top:0;width:40px;height:40px;cursor:pointer;background:#acacac;border:0;padding:0;border-radius:0}
+  .pmx-modal__close:after{content:'+';position:absolute;left:0;top:0;width:100%;height:100%;color:#ffffff;font-size:24px;line-height:40px;text-align:center;transform:rotate(45deg)}
+  .pmx-modal__close:hover{background:#852a34}
+  .pmx-modal__title{color:#222222;font-size:24px;font-weight:900;line-height:1.2;margin:0 0 10px}
+  .pmx-modal__sub{color:#8d8d8d;font-size:13px;line-height:1.5;margin:0 0 18px}
+  .pmx-modal input[type=text],.pmx-modal input[type=tel],.pmx-modal input[type=email]{display:block;width:100%;color:#2c2c2c;font-family:'Gotham Pro',sans-serif;font-size:14px;padding:19px 0;border:0;border-bottom:1px solid #ececec;border-radius:0;background:transparent;outline:none}
+  .pmx-modal input:focus{border-bottom-color:#852a34}
+  .pmx-modal input::placeholder{color:#747474}
+  .pmx-modal__agree{display:flex;align-items:flex-start;gap:12px;color:#989898;font-size:13px;line-height:1.45;margin:28px 0 26px;cursor:pointer}
+  .pmx-modal__agree input{margin:2px 0 0;width:16px;height:16px;flex:0 0 16px;accent-color:#852a34}
+  .pmx-modal__agree a{color:#232323;border-bottom:1px solid #d7d7d7}
+  .pmx-modal .pmx-btn{width:100%}
+  .pmx-modal__done{display:none;text-align:center;padding:20px 0 10px}
+  .pmx-modal__done p{color:#565656;font-size:15px;line-height:1.5;margin:0 0 24px}
+  .pmx-modal__error{display:none;color:#e71717;font-size:13px;margin:14px 0 0}
+  @media (max-width:991px){.pmx-diag{padding:44px 36px 48px}.pmx-diag__title{font-size:26px}}
+  @media (max-width:767px){
+    .pmx-diag{padding:36px 22px 40px;margin:0 0 60px}
+    .pmx-diag__title{font-size:22px}.pmx-diag__q{font-size:18px;min-height:0}
+    .pmx-diag__answers .pmx-btn,.pmx-diag__actions .pmx-btn{width:100%}
+    .pmx-modal{padding:16px}.pmx-modal__box{padding:52px 22px 28px}
+  }
+</style>
+
+<section class="pmx-diag" id="pmx-diag">
+
+  <!-- Экран 1: призыв -->
+  <div class="pmx-diag__screen is-active" data-screen="intro">
+    <span class="pmx-diag__eyebrow">Экспресс-диагностика</span>
+    <h3 class="pmx-diag__title">Проверьте систему управления вашим проектом</h3>
+    <p class="pmx-diag__text">15 вопросов из чек-листа самооценки от PM Excellence. Ответьте «да» или «нет» и получите предварительное заключение о состоянии системы управления проектом.</p>
+    <ul class="pmx-diag__facts">
+      <li>15 вопросов</li>
+      <li>около 3 минут</li>
+      <li>предварительное заключение сразу</li>
+    </ul>
+    <button type="button" class="pmx-btn" data-action="start">Пройти диагностику →</button>
+  </div>
+
+  <!-- Экран 2: вопросы -->
+  <div class="pmx-diag__screen" data-screen="quiz">
+    <div class="pmx-diag__progress"><span data-el="counter">Вопрос 1 из 15</span><span>Самооценка</span></div>
+    <div class="pmx-diag__bar"><span data-el="bar"></span></div>
+    <p class="pmx-diag__q" data-el="question"></p>
+    <div class="pmx-diag__answers">
+      <button type="button" class="pmx-btn pmx-btn--ghost" data-answer="yes">Да</button>
+      <button type="button" class="pmx-btn pmx-btn--ghost" data-answer="no">Нет</button>
+    </div>
+    <div class="pmx-diag__nav"><button type="button" class="pmx-link" data-action="back">← Предыдущий вопрос</button></div>
+  </div>
+
+  <!-- Экран 3: заключение -->
+  <div class="pmx-diag__screen pmx-diag__result" data-screen="result">
+    <span class="pmx-diag__eyebrow">Предварительное заключение</span>
+    <div data-result="fail">
+      <h3 class="pmx-diag__verdict pmx-diag__verdict--warn">Некоторые элементы системы управления вашего проекта нуждаются в доработке</h3>
+      <p>Такие пробелы редко заметны на старте, но именно они приводят к срывам сроков и перерасходу бюджета.</p>
+      <p>Закажите чекап проекта: эксперты PM Excellence разберут вашу систему управления по всем ключевым областям управления проектами и дадут конкретные рекомендации, что усилить в первую очередь.</p>
+      <div class="pmx-diag__score">Отклонений от базовых требований: <b data-el="fails">0</b> из 15</div>
+      <div class="pmx-diag__actions">
+        <button type="button" class="pmx-btn" data-action="lead">Заказать чекап проекта →</button>
+        <button type="button" class="pmx-link" data-action="restart">Пройти заново</button>
+      </div>
+    </div>
+    <div data-result="pass">
+      <h3 class="pmx-diag__verdict">По формальным признакам ваша система управления проектом соответствует базовым требованиям</h3>
+      <p>Это хороший фундамент. Но тест проверяет только наличие элементов, а не то, как они работают на практике.</p>
+      <p>Если хотите получить детальное заключение с оценкой зрелости процессов и точками роста, закажите чекап проекта у экспертов PM Excellence.</p>
+      <div class="pmx-diag__actions">
+        <button type="button" class="pmx-btn" data-action="lead">Получить детальное заключение →</button>
+        <button type="button" class="pmx-link" data-action="restart">Пройти заново</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Модальное окно: контактные данные -->
+<div class="pmx-modal" id="pmx-diag-modal" role="dialog" aria-modal="true" aria-labelledby="pmx-diag-modal-title">
+  <div class="pmx-modal__box">
+    <button type="button" class="pmx-modal__close" data-action="close" aria-label="Закрыть"></button>
+    <form action="/ajax/form/send/" method="post" id="pmx-diag-form" novalidate>
+      <h4 class="pmx-modal__title" id="pmx-diag-modal-title">Чекап проекта</h4>
+      <p class="pmx-modal__sub">Оставьте контакты. Эксперт PM Excellence свяжется с вами, чтобы обсудить проект и детальное заключение.</p>
+      <input type="hidden" name="type" value="feedback">
+      <input type="hidden" name="page" value="pmexcellence.com/service-map/">
+      <input type="hidden" name="source" value="Экспресс-диагностика системы управления проектом">
+      <input type="hidden" name="text" value="" data-el="summary">
+      <input name="name" type="text" placeholder="Имя" required autocomplete="name">
+      <input name="phone" type="tel" placeholder="Телефон" required autocomplete="tel">
+      <input name="email" type="email" placeholder="Электронная почта" autocomplete="email">
+      <label class="pmx-modal__agree"><input name="agree" type="checkbox" required><span>Согласен с <a href="/politika/" target="_blank">условиями</a> обработки персональных данных</span></label>
+      <button type="submit" class="pmx-btn diagnostics_goal">Отправить</button>
+      <div class="pmx-modal__error" data-el="error">Заполните имя и телефон и подтвердите согласие на обработку данных.</div>
+    </form>
+    <div class="pmx-modal__done" data-el="done">
+      <h4 class="pmx-modal__title">Спасибо за обращение!</h4>
+      <p>Наш эксперт свяжется с вами в ближайшее время.</p>
+      <button type="button" class="pmx-btn" data-action="close">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script id="pmx-diag-script">
+(function () {
+  // Чек-лист самооценки управления проектом 2026 (АК ЕП). correct — ответ, соответствующий базовым требованиям.
+  var QUESTIONS = [
+    { t: 'В проекте есть утвержденный документ, в котором зафиксированы цель проекта, ожидаемый результат, границы проекта и критерии успешного завершения', correct: 'yes' },
+    { t: 'На проект назначен конкретный руководитель проекта с понятными полномочиями, ответственностью и доступом к лицам, принимающим решения', correct: 'yes' },
+    { t: 'На проекте используются единые шаблоны и правила управления: устав проекта, график, реестр рисков, отчет, протокол, реестр изменений, план коммуникаций', correct: 'yes' },
+    { t: 'В проекте используется матрица ответственности: кто принимает решения, кто участвует в согласовании, кто исполняет, кто информируется', correct: 'yes' },
+    { t: 'В проекте определен понятный порядок эскалации проблем: участники проекта знают, с какими вопросами, к кому и в какие сроки обращаться', correct: 'yes' },
+    { t: 'В проекте используется календарно-сетевой график (КСГ) с ключевыми вехами, взаимосвязями между работами, критическим путем, приоритетными цепочками работ', correct: 'yes' },
+    { t: 'Календарно-сетевой график регулярно актуализируется, а отклонения по срокам фиксируются, анализируются и доводятся до руководства', correct: 'yes' },
+    { t: 'В проекте есть утвержденный бюджет, а фактические расходы регулярно сравниваются с плановыми', correct: 'yes' },
+    { t: 'В проекте ведется и регулярно обновляется реестр рисков с мероприятиями по их управлению, сроками и ответственными за реализацию мероприятий', correct: 'yes' },
+    { t: 'При возникновении проблем на проекте руководству предоставляются проработанные варианты их решения', correct: 'yes' },
+    { t: 'В проекте есть утвержденный порядок управления изменениями: изменение сроков, бюджета, объема или технических решений не происходит без оценки последствий и согласования', correct: 'yes' },
+    { t: 'Документация по проекту хранится в единой среде общих данных или ином едином источнике, где понятны версии, статусы и права доступа', correct: 'yes' },
+    { t: 'По проекту регулярно выпускается управленческая отчетность: статус сроков, бюджета, рисков, проблем, решений и оперативных действий', correct: 'yes' },
+    { t: 'На отчетных совещаниях по одному и тому же вопросу разные участники предоставляют различные отчетные данные', correct: 'no' },
+    { t: 'Подготовка отчетности по проекту занимает более 1 дня', correct: 'no' }
+  ];
+
+  var root = document.getElementById('pmx-diag');
+  var modal = document.getElementById('pmx-diag-modal');
+  if (!root || !modal) return;
+
+  var $ = function (sel, ctx) { return (ctx || root).querySelector(sel); };
+  var screens = root.querySelectorAll('[data-screen]');
+  var answers = [];
+  var idx = 0;
+
+  function show(name) {
+    for (var i = 0; i < screens.length; i++) screens[i].classList.toggle('is-active', screens[i].getAttribute('data-screen') === name);
+    if (name !== 'intro') {
+      var top = root.getBoundingClientRect().top + window.pageYOffset - 110;
+      if (root.getBoundingClientRect().top < 0) window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  function render() {
+    $('[data-el="counter"]').textContent = 'Вопрос ' + (idx + 1) + ' из ' + QUESTIONS.length;
+    $('[data-el="bar"]').style.width = ((idx) / QUESTIONS.length * 100) + '%';
+    $('[data-el="question"]').textContent = QUESTIONS[idx].t;
+    $('[data-action="back"]').style.visibility = idx === 0 ? 'hidden' : 'visible';
+  }
+
+  function fails() {
+    var n = 0;
+    for (var i = 0; i < QUESTIONS.length; i++) if (answers[i] !== QUESTIONS[i].correct) n++;
+    return n;
+  }
+
+  function finish() {
+    var n = fails();
+    $('[data-result="fail"]').style.display = n > 0 ? 'block' : 'none';
+    $('[data-result="pass"]').style.display = n > 0 ? 'none' : 'block';
+    $('[data-el="fails"]').textContent = n;
+    var lines = [];
+    for (var i = 0; i < QUESTIONS.length; i++) lines.push((i + 1) + ': ' + (answers[i] === 'yes' ? 'да' : 'нет') + (answers[i] !== QUESTIONS[i].correct ? ' (отклонение)' : ''));
+    $('[data-el="summary"]', modal).value = 'Экспресс-диагностика системы управления проектом. Результат: ' + (n > 0 ? n + ' отклонений из 15' : 'соответствует базовым требованиям (0 отклонений из 15)') + '. Ответы: ' + lines.join('; ');
+    if (window.ym) { try { ym(47664877, 'reachGoal', 'diagnostika_done'); } catch (e) {} }
+    show('result');
+  }
+
+  root.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-action],[data-answer]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-action');
+    var answer = btn.getAttribute('data-answer');
+    if (action === 'start' || action === 'restart') {
+      answers = []; idx = 0; render(); show('quiz');
+      if (action === 'start' && window.ym) { try { ym(47664877, 'reachGoal', 'diagnostika_start'); } catch (e) {} }
+    } else if (answer) {
+      answers[idx] = answer;
+      if (idx < QUESTIONS.length - 1) { idx++; render(); } else { finish(); }
+    } else if (action === 'back') {
+      if (idx > 0) { idx--; render(); }
+    } else if (action === 'lead') {
+      openModal();
+    }
+  });
+
+  // --- модальное окно ---
+  var form = document.getElementById('pmx-diag-form');
+  var done = $('[data-el="done"]', modal);
+  var err = $('[data-el="error"]', modal);
+
+  function openModal() {
+    form.style.display = 'block'; done.style.display = 'none'; err.style.display = 'none';
+    modal.classList.add('is-open'); document.body.classList.add('is-locked');
+  }
+  function closeModal() { modal.classList.remove('is-open'); document.body.classList.remove('is-locked'); }
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal || e.target.closest('[data-action="close"]')) closeModal();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = form.name.value.trim(), phone = form.phone.value.trim(), agree = form.agree.checked;
+    if (!name || !phone || !agree) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    var submitBtn = form.querySelector('[type="submit"]');
+    submitBtn.disabled = true; submitBtn.textContent = 'Отправляем…';
+
+    var onDone = function () {
+      form.style.display = 'none'; done.style.display = 'block';
+      submitBtn.disabled = false; submitBtn.textContent = 'Отправить';
+      if (window.ym) { try { ym(47664877, 'reachGoal', 'diagnostika_lead'); } catch (e) {} }
+    };
+    var onFail = function () {
+      submitBtn.disabled = false; submitBtn.textContent = 'Отправить';
+      err.textContent = 'Не удалось отправить. Позвоните нам: +7 (499) 938-54-39'; err.style.display = 'block';
+    };
+
+    // На боевом сайте форма уходит в штатный обработчик Битрикса (/ajax/form/send/, как остальные формы сайта).
+    // На превью (не pmexcellence.com) отправка имитируется, чтобы не создавать тестовые лиды.
+    if (location.hostname.indexOf('pmexcellence.com') === -1) { setTimeout(onDone, 600); return; }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', form.getAttribute('action'), true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.onload = function () { (xhr.status >= 200 && xhr.status < 300) ? onDone() : onFail(); };
+    xhr.onerror = onFail;
+    xhr.send(new FormData(form));
+  });
+})();
+</script>
+<!-- ==== /PMX ДИАГНОСТИКА ==== -->

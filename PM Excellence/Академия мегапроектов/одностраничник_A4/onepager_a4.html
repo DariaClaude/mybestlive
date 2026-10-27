@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Академия крупных проектов. Модуль 1 — одностраничник A4</title>
+<style>
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro.woff') format('woff');font-weight:400}
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro-medium.woff') format('woff');font-weight:500}
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro-bold.woff') format('woff');font-weight:700}
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro-black.woff') format('woff');font-weight:900}
+:root{--navy:#07182f;--gold:#c9b27a;--gold-dk:#8f7646;--ink:#0c1a2b;--sec:#46525f;--muted:#7d8894;--line:#dfe4ea}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:210mm;overflow:hidden}
+body{height:297mm;font-family:'Gotham Pro',Arial,sans-serif;color:var(--ink);background:#fff;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9pt;line-height:1.42}
+p{margin:0}
+.page{width:210mm;height:297mm;display:flex;flex-direction:column;overflow:hidden}
+
+/* ---------- ШАПКА ---------- */
+.head{flex:none;position:relative;overflow:hidden;color:#fff;
+  background:#07182f url('assets/hero-academy.jpg') center 42% / cover no-repeat}
+.head:before{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(4,18,36,.96) 0%,rgba(6,30,57,.86) 45%,rgba(9,43,76,.42) 78%,rgba(8,32,57,.22) 100%)}
+.head>*{position:relative}
+.head__in{padding:7mm 14mm 6mm}
+.logo{height:6.2mm;width:auto;display:block;margin-bottom:5mm}
+h1{font-size:24pt;line-height:1.02;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 3.2mm}
+h1 span{color:var(--gold)}
+.module{font-size:13pt;font-weight:700;margin:0;padding-left:3mm;border-left:.6mm solid var(--gold)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);padding:3.8mm 14mm;
+  background:rgba(4,15,31,.55);border-top:.25mm solid rgba(201,178,122,.35)}
+.fact{padding-left:4mm;border-left:.2mm solid rgba(255,255,255,.14)}
+.fact:first-child{padding-left:0;border-left:0}
+.fact b{display:block;font-size:6.6pt;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:1mm}
+.fact span{display:block;font-size:11pt;font-weight:700;line-height:1.2}
+.fact small{display:block;font-size:7.4pt;color:rgba(255,255,255,.62);margin-top:.6mm}
+
+/* ---------- ТЕЛО ---------- */
+.body{flex:1;min-height:0;padding:6mm 14mm 0;display:flex;flex-direction:column}
+.question{font-size:13pt;line-height:1.28;font-weight:700;color:var(--ink);max-width:178mm;margin:0 0 5mm}
+.question em{font-style:normal;color:var(--gold-dk)}
+
+.label{font-size:7pt;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dk);font-weight:700;margin:0 0 3.5mm}
+.qs{display:grid;grid-template-columns:1fr 1fr;column-gap:10mm;margin:0 0 4.5mm}
+.qs div{display:grid;grid-template-columns:7mm 1fr;align-items:baseline;padding:1.5mm 0;border-top:.2mm solid var(--line);font-size:8.6pt;line-height:1.32}
+.qs b{font-size:8pt;font-weight:900;color:var(--gold-dk)}
+
+.info{display:grid;grid-template-columns:1fr 1fr;column-gap:10mm;padding-top:3.5mm;border-top:.5mm solid var(--ink)}
+.info p{color:var(--sec)}
+.info strong{display:block;color:var(--ink);font-size:9.4pt;margin-bottom:1.2mm}
+
+.author{display:flex;align-items:center;gap:5mm;margin-top:auto;padding:4mm 0 5mm}
+.author img{width:17mm;height:17mm;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 .6mm #fff,0 0 0 1mm var(--gold)}
+.author strong{display:block;font-size:10.5pt}
+.author span{display:block;font-size:7.8pt;color:var(--gold-dk);font-weight:700;margin:.4mm 0 1mm}
+.author p{color:var(--sec);font-size:8.4pt;max-width:140mm}
+
+/* ---------- ПОДВАЛ ---------- */
+.foot{flex:none;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:7mm;
+  padding:4.5mm 14mm 5.5mm;border-top:.5mm solid var(--ink)}
+.foot__h{font-size:12pt;white-space:nowrap;font-weight:900;text-transform:uppercase;letter-spacing:.01em;line-height:1.15}
+.foot__s{font-size:8pt;color:var(--muted);margin-top:1.4mm;max-width:80mm}
+.foot__qr{display:flex;align-items:center;gap:3mm}
+.foot__qr img{width:19mm;height:19mm;display:block}
+.foot__qr span{font-size:7.4pt;line-height:1.3;color:var(--sec);max-width:24mm}
+.foot__c{font-size:9.4pt;font-weight:700;line-height:1.5;padding-left:6mm;border-left:.2mm solid var(--line)}
+.foot__c span{display:block;font-size:7.4pt;font-weight:400;color:var(--muted);margin-bottom:.4mm}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="head">
+    <div class="head__in">
+      <img class="logo" src="assets/logo.svg" alt="PM Excellence">
+      <h1>Академия<br><span>крупных проектов</span></h1>
+      <p class="module">Модуль 1. Стадия «Определение»</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>Дата</b><span>5 декабря 2026</span><small>Очно, 09:30–19:30</small></div>
+      <div class="fact"><b>Место</b><span>Москва</span><small>Площадка в центре</small></div>
+      <div class="fact"><b>Формат</b><span>15–20 человек</span><small>Первые лица и инвесторы</small></div>
+      <div class="fact"><b>Участие</b><span>180 000 ₽</span><small>Ранняя цена до 5 ноября</small></div>
+    </div>
+  </header>
+
+  <main class="body">
+    <p class="question">Какие вопросы первое лицо должно задать — и&nbsp;какие ответы получить, прежде чем переводить крупный проект на&nbsp;стадию <em>«Определение»</em>?</p>
+
+    <p class="label">12 вопросов первого лица</p>
+    <div class="qs">
+      <div><b>01</b><span>Что именно мы должны создать и какую выгоду должен обеспечить комплексный результат?</span></div>
+      <div><b>07</b><span>Готова ли организация работать в проектном режиме — в матрице и со специальными правилами МТО, закупок и финансов?</span></div>
+      <div><b>02</b><span>Где проходят границы инвестиционной программы, мегапроекта и входящих в него проектов?</span></div>
+      <div><b>08</b><span>Какая модель реализации и контрактная стратегия подходят проекту и что заказчик обязан сохранить за собой?</span></div>
+      <div><b>03</b><span>Какой реальный приоритет получил проект в портфеле и какие ресурсы за ним закреплены?</span></div>
+      <div><b>09</b><span>Сформирована ли минимально необходимая команда заказчика и вовлечены ли носители требований?</span></div>
+      <div><b>04</b><span>Кто персонально отвечает за выгоды, комплексный запуск и результаты отдельных проектов?</span></div>
+      <div><b>10</b><span>Как будет организовано проектирование и кого выбрать генеральным проектировщиком?</span></div>
+      <div><b>05</b><span>Как устроена система управления, полномочий, принятия решений и эскалации?</span></div>
+      <div><b>11</b><span>Есть ли честная интегрированная календарно-сетевая модель проектирования и планирования?</span></div>
+      <div><b>06</b><span>Кто возглавит комплексный проект и способен ли этот руководитель выполнять роль интегратора?</span></div>
+      <div><b>12</b><span>Какие риски принять на гейте, на каких условиях открыть стадию и что должно произойти в первые 30 дней?</span></div>
+    </div>
+
+    <div class="info">
+      <div>
+        <strong>Для кого</strong>
+        <p>Собственники, генеральные директора, инвесторы, члены советов директоров и инвестиционных комитетов.</p>
+      </div>
+      <div>
+        <strong>В билет включена консультация</strong>
+        <p>Разбор вашего проекта в течение 45 дней после модуля: 60 минут с Александром Кутузовым или 120 минут с директором профильной практики.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="assets/kutuzov.jpg" alt="Александр Кутузов">
+      <div>
+        <strong>Александр Кутузов</strong>
+        <span>PME · Старший вице-президент PM Excellence · Автор и ведущий</span>
+        <p>Основатель PM Expert, разработчик российских стандартов управления проектами. Более 20 лет строит системы управления крупными и мегапроектами.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__cta">
+      <p class="foot__h">Забронируйте место до 5 ноября</p>
+      <p class="foot__s">15–20 участников, ранняя цена 180 000 ₽</p>
+    </div>
+    <div class="foot__qr">
+      <img src="assets/qr-registration.svg" alt="QR-код на анкету участника">
+      <span>Отсканируйте, чтобы заполнить анкету участника</span>
+    </div>
+    <div class="foot__c">
+      <span>Или напишите нам</span>
+      pmc@pmexcellence.com<br>+7 (499) 938-54-39
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

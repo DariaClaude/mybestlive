@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Академия крупных проектов. Модуль 1 — одностраничник A4</title>
+<style>
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro.woff') format('woff');font-weight:400}
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro-medium.woff') format('woff');font-weight:500}
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro-bold.woff') format('woff');font-weight:700}
+@font-face{font-family:'Gotham Pro';src:url('fonts/gothampro-black.woff') format('woff');font-weight:900}
+:root{--navy:#07182f;--navy2:#0d2442;--gold:#c9b27a;--gold-dk:#927b4b;--ink:#0c1a2b;--sec:#4a5768;--muted:#8b97a6;--line:#e3e8ef;--cool:#f5f7fa}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:210mm;overflow:hidden}
+body{width:210mm;height:297mm;font-family:'Gotham Pro',Arial,sans-serif;color:var(--ink);background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:7.4pt;line-height:1.36;overflow:hidden}
+p{margin:0}
+.page{width:210mm;height:297mm;display:flex;flex-direction:column;overflow:hidden}
+
+/* ---- header ---- */
+.head{flex:none;background:#07182f url('assets/hero-academy.jpg') center 42% / cover no-repeat;color:#fff;position:relative;overflow:hidden}
+.head:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,18,36,.96) 0%,rgba(6,30,57,.86) 42%,rgba(9,43,76,.45) 75%,rgba(8,32,57,.25) 100%),radial-gradient(90mm 45mm at 92% 0%,rgba(201,178,122,.16),rgba(201,178,122,0) 65%)}
+.head>*{position:relative}
+.head__top{padding:6mm 11mm 4.2mm}
+.logo{height:6.2mm;width:auto;display:block;margin-bottom:3.4mm}
+.brand{display:flex;align-items:center;gap:3mm;margin-bottom:2mm}
+.brand i{display:block;width:9mm;height:.5mm;background:var(--gold)}
+.brand span{font-size:6.6pt;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+h1{font-size:19pt;line-height:1.05;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 1.8mm}
+h1 span{color:var(--gold)}
+.module{font-size:10.5pt;font-weight:700;margin:0 0 2mm;padding-left:2.6mm;border-left:.5mm solid var(--gold)}
+.lead{font-size:8pt;line-height:1.4;color:rgba(255,255,255,.78);max-width:150mm}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);background:rgba(4,15,31,.45);border-top:.25mm solid rgba(201,178,122,.3);padding:3.2mm 11mm}
+.fact{padding-right:3mm;border-left:.2mm solid rgba(255,255,255,.12);padding-left:3.5mm}
+.fact:first-child{border-left:0;padding-left:0}
+.fact b{display:block;font-size:6pt;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.6mm}
+.fact span{display:block;font-size:9.2pt;font-weight:700;line-height:1.2}
+.fact small{display:block;font-size:6.8pt;color:rgba(255,255,255,.6);margin-top:.5mm}
+
+/* ---- body ---- */
+.body{flex:1;min-height:0;padding:4mm 11mm 2mm;display:grid;grid-template-columns:1fr 62mm;gap:6.5mm;align-content:start}
+.col{display:flex;flex-direction:column;gap:2.8mm}
+.eyebrow{font-size:6.2pt;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dk);font-weight:700;margin-bottom:1.2mm}
+h2{font-size:10.2pt;font-weight:700;line-height:1.2;margin:0 0 1.4mm;color:var(--ink)}
+h3{font-size:8.4pt;font-weight:700;margin:0 0 1.4mm}
+.txt{color:var(--sec)}
+.q{margin-top:1.8mm;background:var(--navy);color:#fff;border-left:.7mm solid var(--gold);padding:2.2mm 3.2mm;font-size:8.2pt;font-weight:700;line-height:1.35}
+.q i{display:block;font-style:normal;font-size:6pt;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1mm}
+
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:1mm 4mm}
+.qs div{display:grid;grid-template-columns:5.5mm 1fr;gap:1.4mm;align-items:start;color:var(--ink);font-size:7pt;line-height:1.3;padding-bottom:1mm;border-bottom:.2mm solid var(--line)}
+.qs div:nth-last-child(-n+2){border-bottom:0}
+.qs b{color:var(--gold-dk);font-size:6.8pt;font-weight:900;letter-spacing:.04em;padding-top:.3mm}
+
+.sched{width:100%;border-collapse:collapse;font-size:7.1pt}
+.sched td{padding:.8mm 0;border-bottom:.2mm solid var(--line);vertical-align:top;color:var(--sec)}
+.sched td:first-child{width:14mm;color:var(--gold-dk);font-weight:700;white-space:nowrap}
+.sched td:nth-child(2){width:46mm;color:var(--ink);font-weight:700;padding-right:2.5mm}
+.sched tr:last-child td{border-bottom:0}
+.note{font-size:6.6pt;color:var(--muted);margin-top:1.2mm}
+
+.box{background:var(--cool);border-top:.6mm solid var(--gold);padding:2.6mm 3.2mm}
+.box--muted{border-top-color:#ccd4de}
+ul{margin:0;padding:0;list-style:none}
+ul li{position:relative;padding-left:3.4mm;margin-bottom:1.1mm;color:var(--sec);line-height:1.34}
+ul li:last-child{margin-bottom:0}
+ul li:before{content:'';position:absolute;left:.3mm;top:1.5mm;width:1.5mm;height:1.5mm;background:var(--gold);transform:rotate(45deg)}
+.who p{margin-bottom:1.2mm;color:var(--sec)}
+.who b{color:var(--ink)}
+.gain li b{color:var(--ink)}
+.mat{margin-top:1.6mm;font-size:6.7pt;color:var(--muted);line-height:1.4}
+.mat b{color:var(--sec);font-weight:700}
+.consult{background:var(--navy);color:#fff;padding:2.8mm 3.2mm}
+.consult .eyebrow{color:var(--gold)}
+.consult h3{color:#fff;margin-bottom:1.6mm}
+.consult p{color:rgba(255,255,255,.72);font-size:7pt}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm;margin:1.8mm 0 0}
+.opts div{border:.2mm solid rgba(201,178,122,.4);padding:1.5mm 2mm}
+.opts b{display:block;color:var(--gold);font-size:9pt;margin-bottom:.5mm}
+.opts span{color:rgba(255,255,255,.75);font-size:6.6pt;line-height:1.3;display:block}
+.spk{display:grid;grid-template-columns:15mm 1fr;gap:3mm;align-items:center}
+.spk img{width:15mm;height:15mm;border-radius:50%;object-fit:cover;box-shadow:0 0 0 .5mm #fff,0 0 0 .9mm var(--gold)}
+.spk b{display:block;font-size:8.6pt}
+.spk i{display:block;font-style:normal;color:var(--gold-dk);font-size:6.6pt;font-weight:700;margin:.4mm 0 .9mm}
+.spk p{color:var(--sec);font-size:6.9pt;line-height:1.32}
+.team{margin-top:2mm;font-size:6.9pt;color:var(--sec);line-height:1.4}
+.team b{color:var(--ink)}
+.price{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+.price div{border:.2mm solid var(--line);padding:2.4mm 2.8mm}
+.price div:first-child{border-top:.6mm solid var(--gold)}
+.price div:last-child{border-top:.6mm solid #ccd4de}
+.price small{display:block;font-size:6pt;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dk);font-weight:700;margin-bottom:1mm}
+.price div:last-child small{color:var(--muted)}
+.price b{display:block;font-size:13pt;font-weight:900;color:var(--navy);line-height:1;margin-bottom:1mm;white-space:nowrap}
+.price span{color:var(--sec);font-size:6.7pt;line-height:1.3;display:block}
+
+/* ---- footer ---- */
+.foot{flex:none;margin-top:auto;background:var(--navy);color:#fff;padding:3.2mm 11mm;font-size:7.2pt}
+.foot__row{display:flex;justify-content:space-between;align-items:center;gap:6mm}
+.foot__row--b{margin-top:2mm;padding-top:2mm;border-top:.2mm solid rgba(255,255,255,.12)}
+.foot .cta{font-weight:700;font-size:8.2pt;white-space:nowrap}
+.foot .cta span{color:var(--gold)}
+.foot .c{display:flex;gap:5mm;color:rgba(255,255,255,.7)}
+.foot .c b{color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="head">
+  <div class="head__top">
+    <img class="logo" src="assets/logo.svg" alt="PM Excellence">
+    <div class="brand"><i></i><span>Управление крупными и мегапроектами</span></div>
+    <h1>Академия <span>крупных проектов</span></h1>
+    <p class="module">Модуль 1. Стадия «Определение»</p>
+    <p class="lead">12 вопросов первого лица перед началом полномасштабного проектирования и планирования реализации. Экспертная сессия Александра Кутузова, PME, с директорами практик PM Excellence.</p>
+  </div>
+  <div class="facts">
+    <div class="fact"><b>Дата и формат</b><span>5 декабря 2026</span><small>Очно, один день, 09:30–19:30</small></div>
+    <div class="fact"><b>Место</b><span>Москва</span><small>Премиальная площадка в центре</small></div>
+    <div class="fact"><b>Участники</b><span>15–20 человек</span><small>Первые лица и инвесторы</small></div>
+    <div class="fact"><b>Участие</b><span>180 000 ₽</span><small>Ранняя стоимость до 5 ноября</small></div>
+  </div>
+</header>
+
+<main class="body">
+  <div class="col">
+    <section>
+      <div class="eyebrow">Исходная ситуация</div>
+      <h2>Инвестиционное решение принято. Но готов ли проект к следующему шагу?</h2>
+      <p class="txt">Проектирование часто стартует до согласования требований, команда заказчика существует только на схеме, проектный институт выбирают по цене, а желаемые даты называют графиком. Цена этих решений выясняется позже — когда исправление стоит кратно дороже.</p>
+      <div class="q"><i>Центральный вопрос дня</i>Какие вопросы первое лицо должно задать — и какие ответы получить, прежде чем переводить крупный проект на стадию «Определение»?</div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Авторская конструкция</div>
+      <h2>12 вопросов первого лица</h2>
+      <div class="qs">
+        <div><b>01</b><span>Что именно мы должны создать и какую выгоду должен обеспечить комплексный результат?</span></div>
+        <div><b>02</b><span>Где проходят границы инвестиционной программы, мегапроекта и входящих в него проектов?</span></div>
+        <div><b>03</b><span>Какой реальный приоритет получил проект в портфеле и какие ресурсы за ним закреплены?</span></div>
+        <div><b>04</b><span>Кто персонально отвечает за выгоды, комплексный запуск и результаты отдельных проектов?</span></div>
+        <div><b>05</b><span>Как устроена система управления, полномочий, принятия решений и эскалации?</span></div>
+        <div><b>06</b><span>Кто возглавит комплексный проект и способен ли этот руководитель выполнять роль интегратора?</span></div>
+        <div><b>07</b><span>Готова ли организация работать в проектном режиме — в матрице и со специальными правилами МТО, закупок и финансов?</span></div>
+        <div><b>08</b><span>Какая модель реализации и контрактная стратегия подходят проекту и что заказчик обязан сохранить за собой?</span></div>
+        <div><b>09</b><span>Сформирована ли минимально необходимая команда заказчика и вовлечены ли носители требований?</span></div>
+        <div><b>10</b><span>Как будет организовано проектирование и кого выбрать генеральным проектировщиком?</span></div>
+        <div><b>11</b><span>Есть ли честная интегрированная календарно-сетевая модель проектирования и планирования?</span></div>
+        <div><b>12</b><span>Какие риски принять на гейте, на каких условиях открыть стадию и что должно произойти в первые 30 дней?</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Расписание</div>
+      <h2>Программа дня</h2>
+      <table class="sched">
+        <tr><td>10:00</td><td>Что может пойти не так?</td><td>Карта проблем зала, roadmap PM GATE, цена ранних решений, конструкция «12 вопросов»</td></tr>
+        <tr><td>10:25</td><td>Вопросы 1–8</td><td>Результат и выгоды, границы, приоритет, ответственность, органы управления, готовность организации, модель реализации и контракты</td></tr>
+        <tr><td>14:40</td><td>Вопросы 9–12</td><td>Команда заказчика, организация проектирования, КСМ стадии «Определение», риски и решение на гейте, первые 30 дней</td></tr>
+        <tr><td>18:00</td><td>Следующий гейт и Модуль 2</td><td>Возврат к карте проблем, вопросы участников, неформальное общение до 19:30</td></tr>
+      </table>
+      <p class="note">Регистрация с 09:30. Блоки по 20–35 минут чередуются с вопросами и голосованиями. Ведущие: А. Кутузов, Р. Черемисин, А. Кочетов, В. Баранов.</p>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="box who">
+      <div class="eyebrow">Для кого</div>
+      <p><b>Аудитория.</b> Собственники, генеральные директора, инвесторы, члены советов директоров и инвестиционных комитетов, руководители портфелей.</p>
+            <p><b>Отраслевой фокус.</b> Нефтегаз, горнодобыча и металлургия, энергетика, промышленное строительство, крупная инфраструктура.</p>
+    </section>
+
+    <section>
+      <div class="eyebrow">Результат</div>
+      <h3>Что участник забирает с собой</h3>
+      <ul class="gain">
+        <li><b>Карта 12 вопросов</b> — инструмент проверки готовности проекта и организации.</li>
+        <li><b>Roadmap гейтов</b> — единая логика PM PORTFOLIO — PM GATE — PM GUIDE.</li>
+        <li><b>Решение на гейте</b> — критерии открытия стадии и план первых 30 дней.</li>
+      </ul>
+      <p class="mat"><b>Материалы:</b> рабочая тетрадь «12 вопросов», карта ролей, чек-лист готовности стадии, матрица контрактной стратегии.</p>
+    </section>
+
+    <section class="consult">
+      <div class="eyebrow">Включено в билет</div>
+      <h3>Индивидуальная стратегическая консультация</h3>
+      <p>По одному проекту или инвестиционной программе, в течение 45 дней после модуля, до трёх руководителей компании.</p>
+      <div class="opts">
+        <div><b>60 минут</b><span>с Александром Кутузовым и директорами практик</span></div>
+        <div><b>120 минут</b><span>с директором профильной практики PM Excellence</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Автор и команда</div>
+      <div class="spk">
+        <img src="assets/kutuzov.jpg" alt="Александр Кутузов">
+        <div>
+          <b>Александр Кутузов</b>
+          <i>PME · Старший вице-президент PM Excellence · Автор и ведущий</i>
+          <p>Основатель PM Expert, разработчик российских стандартов управления проектами. Более 20 лет в системах управления крупными и мегапроектами.</p>
+        </div>
+      </div>
+      <p class="team"><b>Директора практик:</b> Р. Черемисин, А. Кочетов, В. Баранов, П. Лаврентьев, Е. Пикулев, И. Смирнов, С. Штанько, А. Шатурный.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot__row">
+    <div class="cta">Ранняя стоимость до 5 ноября — <span>180 000 ₽</span> · после 5 ноября — по запросу</div>
+    <div class="c"><span>Число мест ограничено</span></div>
+  </div>
+  <div class="foot__row foot__row--b">
+    <div class="cta">Заявка на участие: <span>pmc@pmexcellence.com</span> · <span>+7 (499) 938-54-39</span></div>
+    <div class="c"><span><b>pmexcellence.com</b></span><span>Telegram: <b>@megkutuzov</b> · <b>@pmexcellence</b></span></div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

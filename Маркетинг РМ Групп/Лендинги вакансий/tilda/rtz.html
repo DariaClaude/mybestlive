@@ -1,0 +1,426 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Oswald:wght@500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+@media(min-width:860px){.wrap{padding:0 40px}}
+h1,h2,h3{font-family:var(--font-h);line-height:1.1;letter-spacing:var(--h-ls);text-transform:var(--h-case)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:12px 26px;border-radius:var(--btn-r);font-weight:700;font-size:16px;line-height:1.15;text-align:center;text-decoration:none;border:0;cursor:pointer;transition:.18s;-webkit-tap-highlight-color:transparent;min-width:0;max-width:100%;font-family:var(--font-btn)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-d)}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-block{width:100%}
+.btn svg{width:22px;height:22px;flex:none}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink2)}
+.field input{width:100%;height:54px;border:2px solid var(--line);border-radius:var(--in-r);padding:0 16px;font:inherit;font-size:17px;color:var(--ink);background:#fff;outline:none;transition:border .15s}
+.field input:focus{border-color:var(--accent)}
+.field input.err{border-color:#E5484D}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+.consent{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.4}
+.consent a{color:var(--muted)}
+.form-msg{display:none;margin-top:12px;font-size:14px;font-weight:600}
+.form-msg.show{display:block}.form-msg.ok{color:#2E7D32}.form-msg.bad{color:#C62828}
+.success{text-align:center;padding:14px 4px}
+.success .ok-ic{width:64px;height:64px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin:0 auto 14px}
+.success .ok-ic svg{width:30px;height:30px}
+.success h3{margin-bottom:6px;font-size:22px}
+.success p{color:var(--muted);font-size:15px;margin-bottom:16px}
+.btn-tg{background:var(--ink);color:#fff}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;transition:transform .25s}
+.bar .btn-primary{flex:1;min-height:54px}
+.bar .call{width:54px;height:54px;border-radius:var(--btn-r);background:var(--ink);color:#fff;display:grid;place-items:center;flex:none}
+.bar .call svg{width:24px;height:24px}
+.bar.hide{transform:translateY(120%)}
+@media(min-width:860px){.bar{display:none}body{padding-bottom:0}}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.6)}
+@media(min-width:640px){.modal{align-items:center;padding:20px}}
+.modal.open{display:flex}
+.modal .box{background:#fff;width:100%;max-width:480px;border-radius:var(--card-r) var(--card-r) 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));position:relative;max-height:92vh;overflow:auto;animation:up .25s ease-out}
+@media(min-width:640px){.modal .box{border-radius:var(--card-r);padding:30px 28px}}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.modal .x{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);font-size:20px;cursor:pointer;display:grid;place-items:center}
+.modal .vac-name{display:inline-block;background:var(--accent-soft);color:var(--accent-d);border-radius:var(--in-r);padding:6px 10px;font-size:13px;font-weight:700;margin-bottom:14px}
+.modal h3{font-size:22px;margin-bottom:4px;padding-right:40px}
+.modal .hint{font-size:14px;color:var(--muted);margin-bottom:16px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+.nav-phone svg,.contact-lines svg{width:20px;height:20px;flex:none}
+.logos{display:flex;flex-wrap:wrap;justify-content:center;gap:18px 34px;align-items:center}
+.logos img{height:28px;width:auto;filter:grayscale(1);opacity:.65;transition:.2s}
+.logos img:hover{filter:none;opacity:1}
+@media(min-width:860px){.logos img{height:34px}}
+.vac ul{list-style:none;display:grid;gap:6px;font-size:14.5px;color:var(--ink2)}
+.vac ul li{padding-left:20px;position:relative}
+.vac .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+.vac .btn{margin-top:auto}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.meta div{background:var(--bg);border-radius:var(--in-r);padding:10px 12px;font-size:14px}
+.meta div small{display:block;color:var(--muted);font-size:12px;margin-bottom:2px}
+.meta div.full{grid-column:1/-1}
+
+:root{--ink:#3A2C1C;--ink2:#5A4632;--muted:#A89880;--mid:#7A6858;--line:rgba(58,44,28,.12);--bg:#FAF6EE;--bg2:#F0E8D4;--bg3:#E4D8C4;--dark:#2E2318;--accent:#B07040;--accent-d:#8A5530;--accent-lt:#C98F60;--accent-soft:#F0E8D4;
+--font-h:Oswald,'Arial Narrow',Arial,sans-serif;--font-btn:Inter,system-ui,sans-serif;--h-case:uppercase;--h-ls:.01em;--btn-r:2px;--in-r:2px;--card-r:2px;--max:1140px}
+body{background:var(--bg)}
+.btn{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-lt)}
+.btn-ghost{background:transparent;color:var(--mid);border:1px solid rgba(58,44,28,.25)}.btn-ghost:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+header{position:sticky;top:0;z-index:40;background:var(--dark);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:58px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--accent-lt);font-family:var(--font-h);font-weight:700;font-size:18px;letter-spacing:.14em;text-transform:uppercase}
+.brand svg{width:30px;height:30px}
+.brand small{display:block;font-family:Inter,sans-serif;font-weight:500;font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.5);text-transform:none}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-phone{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px;letter-spacing:.06em;text-decoration:none;padding:9px 12px;border:1px solid rgba(255,255,255,.2);color:#fff}
+.nav-phone svg{color:var(--accent-lt)}.nav-phone span{display:none}@media(min-width:640px){.nav-phone span{display:inline}}
+.nav-cta{display:none}@media(min-width:860px){.nav-cta{display:inline-flex;min-height:40px;padding:0 22px}}
+.hero{position:relative;overflow:hidden;background:var(--bg2);padding:44px 0 36px}
+@media(min-width:860px){.hero{padding:80px 0 64px}}
+.gears{position:absolute;left:-40px;top:-30px;width:560px;height:520px;opacity:.55;pointer-events:none}
+@media(max-width:859px){.gears{width:360px;height:340px;left:-80px;top:auto;bottom:-60px;opacity:.35}}
+.hero-grid{position:relative;display:grid;gap:26px;align-items:center}
+@media(min-width:960px){.hero-grid{grid-template-columns:1fr 1fr;gap:56px}}
+.kicker{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:18px}
+h1{font-size:clamp(34px,5.6vw,66px);font-weight:700;line-height:1;margin-bottom:18px}
+h1 .cu{color:var(--accent)}
+h1 .outline{-webkit-text-stroke:2px rgba(158,84,20,.55);color:transparent}
+.rule{width:48px;height:2px;background:var(--accent);margin:0 0 22px}
+p.lead{font-size:16px;line-height:1.6;color:var(--ink2);max-width:520px;margin-bottom:24px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-actions .btn{flex:1 1 100%}@media(min-width:640px){.hero-actions .btn{flex:0 0 auto;min-width:200px}}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{border:1px solid var(--accent);color:var(--accent-d);background:rgba(255,255,255,.4);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px}
+.hero-photo{position:relative;border:1px solid var(--line);background:#fff;padding:8px}
+.hero-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center 42%;filter:sepia(.18) contrast(1.02)}
+@media(min-width:960px){.hero-photo img{aspect-ratio:4/3.6}}
+.hero-badge{position:absolute;left:8px;bottom:8px;background:var(--dark);color:#fff;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.hero-badge b{font-family:var(--font-h);font-size:26px;font-weight:700;color:var(--accent-lt);line-height:1;text-transform:uppercase}.hero-badge span{font-size:12px;color:rgba(255,255,255,.7)}
+.facts{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding-left:0;padding-right:0}
+.fact{padding:26px 20px;border-right:1px solid var(--line);min-width:0}.fact:last-child{border-right:0}
+@media(max-width:480px){.facts .wrap{grid-template-columns:1fr 1fr}.fact:nth-child(2){border-right:0}.fact:last-child{grid-column:1/-1;border-top:1px solid var(--line)}}
+.fact b{display:block;font-family:var(--font-h);font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--ink);line-height:1;text-transform:uppercase;letter-spacing:.01em}
+.fact b i{font-style:normal;color:var(--accent);font-size:.55em}
+.fact span{display:block;font-size:12px;color:var(--mid);margin-top:6px}
+.stats{padding:26px 0 0}
+.stats .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat b{display:block;font-family:var(--font-h);font-size:clamp(26px,4vw,44px);font-weight:700;line-height:1;color:var(--ink)}
+.stat b i{font-style:normal;color:var(--accent)}
+.stat span{display:block;font-size:12px;color:var(--mid);margin-top:6px}
+.stats-note{font-size:11px;color:var(--muted);padding-top:12px;letter-spacing:.04em}
+section{padding:56px 0}@media(min-width:860px){section{padding:88px 0}}
+.sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+h2{font-size:clamp(26px,3.5vw,42px);font-weight:700;margin-bottom:26px;line-height:1.08}
+.why-grid{display:grid;gap:0;border-top:1px dashed var(--line)}
+@media(min-width:760px){.why-grid{grid-template-columns:1fr 1fr}}@media(min-width:1000px){.why-grid{grid-template-columns:repeat(4,1fr)}}
+.why{padding:22px 0;border-bottom:1px dashed var(--line);display:grid;grid-template-columns:44px 1fr;gap:4px 14px;align-content:start}
+.why .ic{grid-row:1/3}.why h3,.why p{grid-column:2}
+@media(min-width:760px){.why{padding:24px 20px 24px 0}.why+.why{padding-left:20px}}
+.why .ic{width:36px;height:36px;background:var(--bg2);display:grid;place-items:center}
+.why .ic svg{width:18px;height:18px;stroke:var(--accent)}
+.why h3{font-size:15px;font-weight:700;margin-bottom:5px;font-family:Inter,sans-serif;text-transform:none;letter-spacing:0}.why p{font-size:13.5px;color:var(--mid)}
+.vac-grid{display:grid;gap:16px}@media(min-width:860px){.vac-grid{grid-template-columns:1fr 1fr}}
+.vac{background:#fff;border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:14px;position:relative}
+.vac::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.vac-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.vac h3{font-size:22px;font-weight:600}
+.rate{text-align:right}
+.rate b{display:block;font-family:var(--font-h);font-size:26px;font-weight:700;color:var(--accent);white-space:nowrap;line-height:1}
+.rate b.tbd{font-size:13px;font-family:Inter,sans-serif;font-weight:600;white-space:normal;max-width:150px}
+.rate span{display:block;font-size:12px;color:var(--mid);margin-top:4px}
+.meta div{background:var(--bg);border:1px solid var(--line)}
+.vac ul li::before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;background:var(--accent)}
+.vac ul.req li::before{background:transparent;border:1.5px solid var(--ink)}
+.vac .btn{background:transparent;color:var(--ink);border:1px solid rgba(58,44,28,.35)}.vac .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+@media(max-width:859px){.vac .btn{background:var(--accent);border-color:var(--accent);color:#fff}}
+.partners{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 0}
+.partners h2{font-size:24px;text-align:center;margin-bottom:6px}
+.partners p{text-align:center;color:var(--mid);margin-bottom:26px;font-size:14px}
+.logos img{filter:grayscale(1) sepia(.4);opacity:.6}
+.steps{display:grid;gap:0;border-top:1px solid var(--line)}
+@media(min-width:860px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{padding:24px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start}
+@media(min-width:860px){.step{display:block;padding:28px 20px 28px 0;border-bottom:0}.step+.step{padding-left:20px;border-left:1px solid var(--line)}}
+.step i{font-family:var(--font-h);font-style:normal;font-weight:700;font-size:40px;line-height:1;color:var(--accent);display:block;margin-bottom:12px}
+.step i::before{content:"0"}
+.step h3{font-size:15px;font-weight:700;font-family:Inter,sans-serif;text-transform:none;letter-spacing:0;margin-bottom:4px}.step p{font-size:13.5px;color:var(--mid)}
+.form-sec{background:var(--dark);color:#fff}
+.form-sec h2{color:#fff}
+.form-grid{display:grid;gap:28px;align-items:center}@media(min-width:860px){.form-grid{grid-template-columns:1fr 1fr;gap:56px}}
+.form-sec p.lead{color:rgba(255,255,255,.7)}
+.contact-lines{display:grid;gap:10px;font-weight:600}
+.contact-lines a{text-decoration:none;display:flex;gap:10px;align-items:center}
+.contact-lines svg{color:var(--accent-lt)}
+form.lead{background:var(--bg);color:var(--ink);padding:28px 24px;border-top:4px solid var(--accent)}@media(min-width:640px){form.lead{padding:34px 32px}}
+form.lead h3{font-size:24px;margin-bottom:4px}form.lead .hint{font-size:14px;color:var(--mid);margin-bottom:18px}
+.field input{background:#fff}
+.modal .box{background:var(--bg)}
+footer{background:var(--dark);color:rgba(255,255,255,.5);padding:22px 0;font-size:12px;border-top:1px solid rgba(255,255,255,.08)}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:center}
+footer .brand{font-size:15px;opacity:.85}footer a{text-decoration:none}
+.bar{background:rgba(250,246,238,.97)}.bar .call{background:var(--dark)}
+
+</style>
+
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Аркада"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="translate(18,18)"><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(0)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(60)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(120)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(180)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(240)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(300)"/><circle r="11" fill="#C98F60"/><circle r="5" fill="#2E2318"/><path d="M-2.4 3.8 L0 -4 L2.4 3.8 M-1.2 1.2 L1.2 1.2" stroke="#C98F60" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg><span>Аркада<small>вакансии рядом с домом</small></span></a>
+    <div class="nav-right">
+      <a class="nav-phone" href="tel:+74995048804" data-ym="phone_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg><span>8 (499) 504-88-04</span></a>
+      <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
+    </div>
+  </div>
+</header>
+<main id="top">
+<section class="hero">
+  <svg class="gears" viewBox="0 0 560 520" fill="none" stroke="#B07040" stroke-width="1.2" aria-hidden="true">
+<g transform="translate(150,190)"><path d="M0-120 l16 0 4 24 22 8 18-16 12 12-16 18 8 22 24 4 0 16-24 4-8 22 16 18-12 12-18-16-22 8-4 24-16 0-4-24-22-8-18 16-12-12 16-18-8-22-24-4 0-16 24-4 8-22-16-18 12-12 18 16 22-8z" transform="scale(1.05)"/><circle r="34"/><circle r="10"/><path d="M0-34V-10M0 10V34M-34 0H-10M10 0H34" opacity=".5"/></g>
+<g transform="translate(400,110)"><path d="M0-84 l11 0 3 17 15 6 13-11 8 8-11 13 6 15 17 3 0 11-17 3-6 15 11 13-8 8-13-11-15 6-3 17-11 0-3-17-15-6-13 11-8-8 11-13-6-15-17-3 0-11 17-3 6-15-11-13 8-8 13 11 15-6z"/><circle r="22"/><circle r="7"/></g>
+<g transform="translate(330,380)"><path d="M0-62 l8 0 2 12 11 5 10-8 6 6-8 10 5 11 12 2 0 8-12 2-5 11 8 10-6 6-10-8-11 5-2 12-8 0-2-12-11-5-10 8-6-6 8-10-5-11-12-2 0-8 12-2 5-11-8-10 6-6 10 8 11-5z"/><circle r="16"/><circle r="5"/></g>
+<g fill="#B07040" stroke="none" opacity=".5"><circle cx="60" cy="40" r="2"/><circle cx="480" cy="300" r="2"/><circle cx="250" cy="470" r="2"/><circle cx="520" cy="60" r="1.5"/><circle cx="30" cy="330" r="1.5"/></g>
+</svg>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">Москва и область · 6 вакансий</div>
+      <h1>Работники торгового зала<br><span class="cu">сборщики</span><br><span class="outline">комплектовщики</span></h1>
+      <div class="rule"></div>
+      <p class="lead">Смены в магазинах, дарксторах и на складах рядом с домом. Без опыта, с 18 лет, гражданство РФ и СНГ с документами.</p>
+      <div class="hero-actions"><button class="btn btn-primary" data-open="">Оставить заявку и выйти на работу</button><a class="btn btn-ghost" href="https://web.max.ru/386377559" target="_blank" rel="noopener" data-ym="max_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a></div>
+      <div class="tags"><span class="tag">Сборщик заказов</span><span class="tag">Работник торгового зала</span><span class="tag">Комплектовщик на склад</span><span class="tag">Без опыта</span><span class="tag">Выплаты каждую неделю</span></div>
+    </div>
+    <div class="hero-photo">
+      <img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/hero-rtz.jpg" alt="" loading="eager" fetchpriority="high" onerror="this.parentNode.remove()">
+      <div class="hero-badge"><b>до 4 020 ₽</b><span>за смену</span></div>
+    </div>
+  </div>
+</section>
+<div class="facts"><div class="wrap"><div class="fact"><b>до 4 020 ₽</b><span>за смену</span></div><div class="fact"><b>каждую неделю</b><span>выплаты на карту</span></div><div class="fact"><b>18+</b><span>без опыта, с документами</span></div></div></div>
+<div class="stats"><div class="wrap"><div class="stat"><b>16 <small style="font-size:.45em;font-weight:700">лет</small></b><span>выводим людей на работу</span></div><div class="stat"><b>4000<i>+</i> <small style="font-size:.45em;font-weight:700">человек</small></b><span>работают с нами сегодня</span></div><div class="stat"><b>93 <small style="font-size:.45em;font-weight:700">проекта</small></b><span>в крупных компаниях</span></div></div><div class="wrap stats-note">«Аркада» входит в группу компаний «РМ Групп»</div></div>
+<section id="about"><div class="wrap"><div class="sec-label">Почему мы</div><h2>Почему с нами</h2><div class="why-grid"><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Выплаты каждую неделю</h3><p>Деньги на карту раз в неделю, без задержек и «в конце месяца».</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Официальный договор</h3><p>Все условия прописаны на бумаге: ставка, график, выплаты.</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3>Любое гражданство с документами</h3><p>Берём с 18 лет, опыт не обязателен: покажем всё на месте.</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Свой куратор на объекте</h3><p>Поможет в первую смену и ответит на вопросы по телефону.</p></div></div></div></section>
+<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>Выберите вакансию</h2><div class="vac-grid"><article class="vac reveal">
+  <div class="vac-head"><h3>Сборщик заказов</h3><div class="rate"><b>4 020 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>по договорённости</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Коммунарка, Новая Москва</small>Скандинавский бульвар, 17, Москва</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Сборка заказа по списку в ТСД</li><li>Повышенная ставка за качественную сборку</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Полный пакет документов</li></ul></div>
+  <button class="btn btn-block" data-open="Сборщик заказов">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Сборщик заказов</h3><div class="rate"><b>до 3 685 ₽</b><span>за смену 11 часов</span></div></div>
+  <div class="meta">
+    <div><small>График</small>по договорённости</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Московская область</small>Октябрьский бульвар, 26, Королёв</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Собираете заказ по списку</li><li>Созваниваетесь с клиентом, если нужна замена товара</li><li>Следите за качеством и сроками годности</li><li>Упаковываете и передаёте заказ курьеру</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Гражданство РФ, СНГ</li><li>Полный пакет документов</li></ul></div>
+  <button class="btn btn-block" data-open="Сборщик заказов">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Сборщик заказов</h3><div class="rate"><b>4 020 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>по договорённости</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>м. ВДНХ / Алексеевская</small>ул. Аргуновская, 2, Москва</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Собираете заказ по списку</li><li>Созваниваетесь с клиентом, если нужна замена товара</li><li>Следите за качеством и сроками годности</li><li>Упаковываете и передаёте заказ курьеру</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Гражданство РФ, СНГ</li><li>Полный пакет документов</li></ul></div>
+  <button class="btn btn-block" data-open="Сборщик заказов">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Работник торгового зала</h3><div class="rate"><b>3 454 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>5/2, с 9:00 до 18:00</div>
+    <div><small>Выплаты</small>каждую неделю или каждый день</div>
+    <div class="full"><small>Московская область</small>ул. Пушкина, 125, Луховицы (ТК 246)</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Секция «Гастрономия»</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Наличие ЛМК</li><li>Без опыта работы</li></ul></div>
+  <button class="btn btn-block" data-open="Работник торгового зала">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Работник торгового зала</h3><div class="rate"><b>3 432 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>5/2, 6/1 или 7/0, с 10:00 до 19:00</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>м. Бабушкинская</small>Ярославское шоссе, 54 (ТК 304)</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Адресное хранение, разбор паллет</li><li>Работа с ТСД</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Наличие ЛМК</li><li>Хорошее знание русского языка</li><li>Без опыта работы</li></ul></div>
+  <button class="btn btn-block" data-open="Работник торгового зала">Оставить заявку на вакансию</button>
+</article><article class="vac reveal">
+  <div class="vac-head"><h3>Комплектовщик на склад</h3><div class="rate"><b>3 520 ₽</b><span>за смену</span></div></div>
+  <div class="meta">
+    <div><small>График</small>9:00–21:00 или 21:00–9:00</div>
+    <div><small>Выплаты</small>каждую неделю</div>
+    <div class="full"><small>Московская область</small>Вашутинское шоссе, 46, Химки</div>
+  </div>
+  <div><div class="lbl">Условия</div><ul><li>Приёмка, комплектация и отгрузка товара по накладным</li><li>Укладка товара на поддоны и по местам хранения</li></ul></div>
+  <div><div class="lbl">Требования</div><ul class="req"><li>Опыт погрузо-разгрузочных работ, в том числе со средствами малой механизации</li><li>Навык работы со сканером-терминалом</li></ul></div>
+  <button class="btn btn-block" data-open="Комплектовщик на склад">Оставить заявку на вакансию</button>
+</article></div></div></section>
+<div class="partners"><div class="wrap"><h2>Наши сотрудники работают в</h2><p>Смены в крупных сетях и на складах, официально через «Аркада»</p><div class="logos"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/ozon.png" alt="ozon" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/lenta.png" alt="lenta" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/pyaterochka.png" alt="pyaterochka" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/x5.png" alt="x5" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/vkusvill.png" alt="vkusvill" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/samokat.png" alt="samokat" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/okey.png" alt="okey" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/diksi.png" alt="diksi" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/selgros.png" alt="selgros" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/fmlogistic.png" alt="fmlogistic" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/miratorg.png" alt="miratorg" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/gazprom.png" alt="gazprom" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/katren.png" alt="katren" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/verniy.png" alt="verniy" loading="lazy"></div></div></div>
+<section id="steps"><div class="wrap"><div class="sec-label">Этапы</div><h2>Как выйти на работу</h2><div class="steps"><div class="step reveal"><i>1</i><h3>Оставляете заявку</h3><p>Имя и телефон, 20 секунд.</p></div><div class="step reveal"><i>2</i><h3>Перезваниваем</h3><p>Подбираем объект рядом с вами и удобные смены.</p></div><div class="step reveal"><i>3</i><h3>Оформляем официально</h3><p>Заключаем договор, где прописаны все условия.</p></div><div class="step reveal"><i>4</i><h3>Выходите на работу</h3><p>Первая выплата уже через неделю.</p></div></div></div></section>
+<section class="form-sec" id="form"><div class="wrap form-grid">
+  <div>
+    <div class="sec-label">Контакты</div><h2>Ответим на все вопросы</h2>
+    <p class="lead">Оставьте номер: перезвоним, подберём смены рядом с домом и расскажем, что взять с собой в первый день.</p>
+    <div class="contact-lines">
+        <a href="tel:+74995048804" data-ym="phone_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg>8 (499) 504-88-04</a>
+        <a href="https://web.max.ru/386377559" target="_blank" rel="noopener" data-ym="max_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a>
+        <a href="mailto:info@rmgk.online"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>info@rmgk.online</a>
+      </div>
+  </div>
+  <form class="lead" id="mainForm" novalidate>
+      <h3>Оставить заявку</h3>
+      <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
+      <div class="field"><label for="f-name">Ваше имя</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
+      <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="vacancy" value="РТЗ МСК">
+      <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
+      <div class="form-msg"></div>
+      <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/rtz/policy/" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/rtz/policy/" target="_blank" rel="noopener">согласие на обработку персональных данных</a>.</p>
+    </form>
+</div></section>
+</main>
+<footer><div class="wrap row">
+  <a class="brand" href="#top"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="translate(18,18)"><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(0)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(60)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(120)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(180)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(240)"/><rect x="-3" y="-16.5" width="6" height="6" rx="1" fill="#C98F60" transform="rotate(300)"/><circle r="11" fill="#C98F60"/><circle r="5" fill="#2E2318"/><path d="M-2.4 3.8 L0 -4 L2.4 3.8 M-1.2 1.2 L1.2 1.2" stroke="#C98F60" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg><span>Аркада</span></a>
+  <div>ООО «Аркада» · 105082, Москва, пер. Переведеновский, д. 13, стр. 18</div>
+  <div><a href="tel:+74995048804">8 (499) 504-88-04</a> · <a href="mailto:info@rmgk.online">info@rmgk.online</a></div>
+</div></footer>
+<div class="bar" id="bar">
+  <button class="btn btn-primary" data-open="">Откликнуться</button>
+  <a class="call" href="tel:+74995048804" aria-label="Позвонить" data-ym="phone_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="box">
+    <button class="x" type="button" data-close aria-label="Закрыть">×</button>
+    <div class="vac-name" id="m-vac"></div>
+    <h3 id="m-title">Заявка на вакансию</h3>
+    <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
+    <form class="lead-modal" id="modalForm" novalidate>
+      <div class="field"><label for="m-name">Ваше имя</label><input id="m-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
+      <div class="field"><label for="m-phone">Телефон</label><input id="m-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="vacancy" value="РТЗ МСК">
+      <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
+      <div class="form-msg"></div>
+      <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/rtz/policy/" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/rtz/policy/" target="_blank" rel="noopener">согласие на обработку ПД</a>.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ENDPOINTS = ["https://script.google.com/macros/s/AKfycbx95PVfs0YcQYms5Y_HgD8IPzCtHAwOLjHQws1oQrutXgdgR03lA_vb9kX-EDfvqd5O/exec", "https://rabota-leads.vercel.app/api/lead"];
+  var REGION = "МСК";
+  var GOAL = "vacancy_lead";
+  var TG = "https://web.max.ru/386377559";
+  var PHONE_LINK = "+74995048804";
+  var PHONE = "8 (499) 504-88-04";
+
+  function ym_(goal){ try{ if(window.ym && GOAL){ ym(99547216, 'reachGoal', goal); } }catch(e){} }
+
+  /* phone mask */
+  function mask(input){
+    input.addEventListener('input', function(){
+      var d = input.value.replace(/\D/g,'');
+      if(d.charAt(0)==='8') d = '7'+d.slice(1);
+      if(d.charAt(0)!=='7' && d.length) d = '7'+d;
+      d = d.slice(0,11);
+      var out = '+7';
+      if(d.length>1) out += ' ('+d.slice(1,4);
+      if(d.length>=4) out += ') '+d.slice(4,7);
+      if(d.length>=7) out += '-'+d.slice(7,9);
+      if(d.length>=9) out += '-'+d.slice(9,11);
+      input.value = out;
+    });
+    input.addEventListener('focus', function(){ if(!input.value) input.value='+7 ('; });
+    input.addEventListener('blur', function(){ if(input.value==='+7 (') input.value=''; });
+  }
+  document.querySelectorAll('input[type=tel]').forEach(mask);
+
+  /* modal */
+  var modal = document.getElementById('modal'), bar = document.getElementById('bar');
+  var mVac = document.getElementById('m-vac'), mVacInput = document.querySelector('#modalForm input[name=vacancy]');
+  var defaultVac = mVacInput.value;
+  function openModal(vac){
+    mVac.textContent = vac || defaultVac; mVacInput.value = vac || defaultVac;
+    modal.classList.add('open'); document.body.style.overflow='hidden';
+    setTimeout(function(){ document.getElementById('m-name').focus(); }, 250);
+    ym_('form_open');
+  }
+  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+  document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click', function(){ openModal(b.getAttribute('data-open')); }); });
+  document.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', closeModal); });
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  /* hide sticky bar when the big form is on screen */
+  var formSec = document.getElementById('form');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ es.forEach(function(e){ bar.classList.toggle('hide', e.isIntersecting); }); }, {threshold:.25}).observe(formSec);
+    var ro = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target);} }); }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+  } else { document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); }); }
+
+  /* submit */
+  function utm(){ return (location.search||'').slice(1).slice(0,300); }
+  function submit(form){
+    var phoneEl = form.querySelector('input[name=phone]'), nameEl = form.querySelector('input[name=name]');
+    var msg = form.querySelector('.form-msg'), btn = form.querySelector('button[type=submit]');
+    var digits = phoneEl.value.replace(/\D/g,'');
+    phoneEl.classList.remove('err'); msg.className='form-msg';
+    if(digits.length!==11){ phoneEl.classList.add('err'); phoneEl.focus(); msg.textContent='Введите номер полностью: +7 (___) ___-__-__'; msg.className='form-msg show bad'; return; }
+    if(form.querySelector('input[name=website]').value){ done(form); return; }
+    var body = new URLSearchParams({
+      name: nameEl.value.trim(), phone: '+'+digits, vacancy: form.querySelector('input[name=vacancy]').value,
+      region: REGION, page: location.host + location.pathname, utm: utm()
+    }).toString();
+    btn.disabled = true; var old = btn.textContent; btn.textContent = 'Отправляем…';
+    if(!ENDPOINTS.length){ console.warn('ENDPOINTS не заданы (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
+    function post(url, ms){
+      var ctl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = setTimeout(function(){ if(ctl) ctl.abort(); }, ms);
+      var opts = {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body};
+      if(ctl) opts.signal = ctl.signal;
+      if(url.indexOf('script.google.com')>-1){ opts.mode='no-cors'; opts.redirect='follow'; }
+      return fetch(url, opts).then(function(r){
+        clearTimeout(timer);
+        if(r.type==='opaque') return {ok:true};
+        return r.json();
+      }).then(function(j){ if(!j.ok) throw new Error(j.error||'bad'); return true; })
+        .catch(function(e){ clearTimeout(timer); throw e; });
+    }
+    var i = 0;
+    function next(){
+      if(i >= ENDPOINTS.length){
+        btn.disabled=false; btn.textContent=old;
+        msg.innerHTML = 'Не получилось отправить. Позвоните <a href="tel:'+PHONE_LINK+'">'+PHONE+'</a> или напишите в <a href="'+TG+'" target="_blank" rel="noopener">MAX</a>.';
+        msg.className='form-msg show bad'; return;
+      }
+      var url = ENDPOINTS[i++];
+      post(url, i===1 ? 7000 : 12000).then(function(){ done(form); }).catch(function(){ next(); });
+    }
+    next();
+  }
+  function done(form){
+    ym_(GOAL);
+    form.innerHTML = '<div class="success"><div class="ok-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>'+
+      '<h3>Заявка принята</h3><p>Перезвоним в течение 15 минут в рабочее время. Если удобнее, напишите нам в MAX.</p>'+
+      '<a class="btn btn-tg btn-block" href="'+TG+'" target="_blank" rel="noopener">Написать в MAX</a></div>';
+  }
+  document.querySelectorAll('form').forEach(function(f){ f.addEventListener('submit', function(e){ e.preventDefault(); submit(f); }); });
+  document.querySelectorAll('[data-ym]').forEach(function(a){ a.addEventListener('click', function(){ ym_(a.getAttribute('data-ym')); }); });
+})();
+</script>
+

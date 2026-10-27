@@ -1,0 +1,48 @@
+name: Daily industry digest
+
+on:
+  schedule:
+    # GitHub запускает cron с задержкой (очередь), особенно в :00.
+    # 04:23 UTC = 07:23 МСК; с типичной задержкой 15-40 минут дайджест приходит к ~8:00 МСК.
+    - cron: '23 4 * * *'
+  workflow_dispatch:      # кнопка ручного запуска для проверки
+    inputs:
+      dry_run:
+        description: 'Только собрать выпуск и показать в логе, никому не отправлять'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # чтобы коммитить кэш последнего выпуска
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install feedparser requests beautifulsoup4
+
+      - name: Send digest
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DRY_RUN: ${{ inputs.dry_run == true && '1' || '' }}
+        run: python digest_bot.py
+
+      - name: Commit digest cache
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name "digest-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git pull --rebase || true
+          git add digest_latest.json sent_links.json
+          git diff --cached --quiet || git commit -m "Кэш выпуска"
+          git push || true
