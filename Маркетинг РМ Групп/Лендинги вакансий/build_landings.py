@@ -6,7 +6,7 @@
 Правки контента — только в landings.json. Дизайн/логика — в TEMPLATE ниже.
 """
 import json, os, sys, html, re
-from skins import SKINS, BASE_CSS
+from skins import SKINS, BASE_CSS, CITY_CSS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))          # корень репозитория (Сlaude Code)
@@ -54,10 +54,10 @@ TAIL = r"""
     <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
     <form class="lead-modal" id="modalForm" novalidate>
       <div class="field"><label for="m-name">Ваше имя</label><input id="m-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
-      <div class="field"><label for="m-phone">Телефон</label><input id="m-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <div class="field"><label for="m-phone">Телефон</label><input id="m-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>{{modal_city}}
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
       <input type="hidden" name="vacancy" value="{{sheet_vacancy}}">
-      <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
+      <button class="btn btn-primary btn-block" type="submit">{{modal_btn}}</button>
       <div class="form-msg"></div>
       <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="{{policy_url}}" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="{{consent_url}}" target="_blank" rel="noopener">согласие на обработку ПД</a>.</p>
     </form>
@@ -125,11 +125,11 @@ TAIL = r"""
     var msg = form.querySelector('.form-msg'), btn = form.querySelector('button[type=submit]');
     var digits = phoneEl.value.replace(/\D/g,'');
     phoneEl.classList.remove('err'); msg.className='form-msg';
-    if(digits.length!==11){ phoneEl.classList.add('err'); phoneEl.focus(); msg.textContent='Введите номер полностью: +7 (___) ___-__-__'; msg.className='form-msg show bad'; return; }
+    if(digits.length!==11){ phoneEl.classList.add('err'); phoneEl.focus(); msg.textContent='Введите номер полностью: +7 (___) ___-__-__'; msg.className='form-msg show bad'; return; }{{city_check}}
     if(form.querySelector('input[name=website]').value){ done(form); return; }
     var body = new URLSearchParams({
       name: nameEl.value.trim(), phone: '+'+digits, vacancy: form.querySelector('input[name=vacancy]').value,
-      region: REGION, page: location.host + location.pathname, utm: utm()
+      region: {{region_expr}}, page: location.host + location.pathname, utm: utm()
     }).toString();
     btn.disabled = true; var old = btn.textContent; btn.textContent = 'Отправляем…';
     if(!ENDPOINTS.length){ console.warn('ENDPOINTS не заданы (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
@@ -161,11 +161,11 @@ TAIL = r"""
   function done(form){
     ym_(GOAL);
     form.innerHTML = '<div class="success"><div class="ok-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>'+
-      '<h3>Заявка принята</h3><p>Перезвоним в течение 15 минут в рабочее время. Если удобнее, напишите нам в MAX.</p>'+
+      '<h3>{{ok_title}}</h3><p>{{ok_text}}</p>'+
       '<a class="btn btn-tg btn-block" href="'+TG+'" target="_blank" rel="noopener">Написать в MAX</a></div>';
   }
   document.querySelectorAll('form').forEach(function(f){ f.addEventListener('submit', function(e){ e.preventDefault(); submit(f); }); });
-  document.querySelectorAll('[data-ym]').forEach(function(a){ a.addEventListener('click', function(){ ym_(a.getAttribute('data-ym')); }); });
+  document.querySelectorAll('[data-ym]').forEach(function(a){ a.addEventListener('click', function(){ ym_(a.getAttribute('data-ym')); }); });{{city_js}}
 })();
 </script>
 <!-- Yandex.Metrika counter -->
@@ -181,6 +181,46 @@ ym({{metrika_id}}, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:
 </body>
 </html>
 """
+
+# Режим «вакансии по городам» (ТЗ sbor 27.10.2026): включается, если у вакансий есть ключ cities.
+# Город из списка уходит в колонку «Регион» таблицы «Отклики», приёмники заявок не меняются.
+CITY_CHECK_JS = ("\n    var cityEl = form.querySelector('select[name=city]'); if(cityEl){ cityEl.classList.remove('err'); "
+                 "if(!cityEl.value){ cityEl.classList.add('err'); cityEl.focus(); msg.textContent='Выберите город'; msg.className='form-msg show bad'; return; } }")
+CITY_REGION_JS = "(form.querySelector('select[name=city]') ? form.querySelector('select[name=city]').value : REGION)"
+CITY_JS = r"""
+
+  /* вакансии по городам: город из карточки подставляется в форму отклика */
+  var ALL_CITIES = __ALL__;
+  var mTitle = document.getElementById('m-title');
+  function fillCities(sel, list, pre){
+    if(!sel) return;
+    sel.innerHTML = '';
+    if(list.length !== 1){ var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Выберите город'; sel.appendChild(o0); }
+    list.forEach(function(c){ var o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); });
+    sel.value = list.length === 1 ? list[0] : (pre || '');
+    sel.classList.remove('err');
+  }
+  document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click', function(){
+    var vac = b.getAttribute('data-open'), list = ALL_CITIES, pre = '';
+    if(b.getAttribute('data-cities')){ try{ list = JSON.parse(b.getAttribute('data-cities')); }catch(e){} }
+    var card = b.closest ? b.closest('.vac') : null, cs = card ? card.querySelector('select') : null;
+    if(cs) pre = cs.value;
+    mTitle.textContent = vac ? 'Отклик на вакансию «' + vac + '»' : 'Оставить заявку';
+    mVac.style.display = 'none';
+    fillCities(document.getElementById('m-city'), list, pre);
+  }); });
+  document.querySelectorAll('select').forEach(function(s){ s.addEventListener('change', function(){ s.classList.remove('err'); }); });
+  document.querySelectorAll('a[data-scroll]').forEach(function(a){ a.addEventListener('click', function(e){
+    var t = document.querySelector(a.getAttribute('href')); if(!t) return;
+    e.preventDefault();
+    var hd = document.querySelector('header'), off = hd ? hd.offsetHeight + 8 : 0;
+    window.scrollTo({top: t.getBoundingClientRect().top + window.pageYOffset - off, behavior: 'smooth'});
+  }); });"""
+
+def city_select(id_, name, cities):
+    opts = ('' if len(cities) == 1 else '<option value="">Выберите город</option>') + ''.join(f'<option>{esc(c)}</option>' for c in cities)
+    nm = f' name="{name}" required' if name else ' aria-label="Город"'
+    return f'<select id="{id_}"{nm}>{opts}</select>'
 
 
 ICONS = [
@@ -273,19 +313,52 @@ def render(l):
     ctx['steps_html'] = ''.join(f'<div class="step reveal"><i>{i+1}</i><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(g['steps']))
     ctx['partners_html'] = ''.join(f'<img src="../assets/{p}.png" alt="{p}" loading="lazy">' for p in g['partners'])
 
+    max_btn = (f'<a class="btn btn-ghost" href="{esc(l.get("max_url", g["max_url"]))}" target="_blank" rel="noopener" data-ym="max_click">'
+               f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a>')
     if l.get('general'):
         ctx['hero_buttons'] = (f'<a class="btn btn-primary" href="#vacancies">{esc(l["cta"])}</a>'
                                f'<a class="btn btn-ghost" href="#about">{esc(l.get("cta_secondary","Узнать больше"))}</a>')
+    elif l.get('cta_href'):
+        # кнопка первого экрана ведёт к блоку на странице (sbor: «Посмотреть вакансии» → #vacancies)
+        ctx['hero_buttons'] = f'<a class="btn btn-primary" href="{esc(l["cta_href"])}" data-scroll>{esc(l["cta"])}</a>' + max_btn
     else:
-        ctx['hero_buttons'] = (f'<button class="btn btn-primary" data-open="">{esc(l["cta"])}</button>'
-                               f'<a class="btn btn-ghost" href="{esc(l.get("max_url", g["max_url"]))}" target="_blank" rel="noopener" data-ym="max_click">'
-                               f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a>')
+        ctx['hero_buttons'] = f'<button class="btn btn-primary" data-open="">{esc(l["cta"])}</button>' + max_btn
 
     # бейдж на фото: первый факт
     ctx['badge_b'], ctx['badge_s'] = esc(l['facts'][0][0]), esc(l['facts'][0][1])
 
+    # режим «вакансии по городам»: значения по умолчанию дают прежнюю разметку остальных лендингов
+    ctx.update(main_city='', modal_city='', city_check='', city_js='', vacancies_intro='', region_expr='REGION',
+               modal_btn=esc(l.get('modal_btn', 'Отправить заявку')),
+               ok_title=esc(l.get('ok_title', 'Заявка принята')),
+               ok_text=esc(l.get('ok_text', 'Перезвоним в течение 15 минут в рабочее время. Если удобнее, напишите нам в MAX.')))
+    cities_mode = any('cities' in v for v in l['vacancies'])
+    all_cities = []
+    if cities_mode:
+        for v in l['vacancies']:
+            for c in v.get('cities', []):
+                if c not in all_cities: all_cities.append(c)
+        ctx['main_city'] = '\n      <div class="field"><label for="f-city">Город</label>' + city_select('f-city', 'city', all_cities) + '</div>'
+        ctx['modal_city'] = '\n      <div class="field"><label for="m-city">Город</label>' + city_select('m-city', 'city', all_cities) + '</div>'
+        ctx['city_check'] = CITY_CHECK_JS
+        ctx['region_expr'] = CITY_REGION_JS
+        ctx['city_js'] = CITY_JS.replace('__ALL__', json.dumps(all_cities, ensure_ascii=False))
+        if l.get('vacancies_intro'):
+            ctx['vacancies_intro'] = f'<p class="vac-intro">{esc(l["vacancies_intro"])}</p>'
+
     cards = []
-    for v in l['vacancies']:
+    for i, v in enumerate(l['vacancies']):
+        if 'cities' in v:
+            cs = v['cities']
+            city = (f'<div class="vac-city"><small>Город</small>{esc(cs[0])}</div>' if len(cs) == 1
+                    else f'<div class="field">{city_select(f"c-{i+1}", "", cs)}</div>')
+            cards.append(f'''<article class="vac reveal">
+  <h3>{esc(v["name"])}</h3>
+  <p class="vac-desc">{esc(v.get("desc",""))}</p>
+  {city}
+  <button class="btn btn-block" data-open="{esc(v["name"])}" data-cities="{esc(json.dumps(cs, ensure_ascii=False))}">Откликнуться</button>
+</article>''')
+            continue
         rate = (f'<b>{esc(v["rate"])}</b><span>{esc(v.get("rate_note",""))}</span>' if v.get('rate')
                 else f'<b class="tbd">{esc(v.get("rate_note","ставку уточним по телефону"))}</b>')
         cond = ''.join(f'<li>{esc(c)}</li>' for c in v.get('conditions', []))
@@ -305,6 +378,8 @@ def render(l):
 
     skin = SKINS[l.get('brand','rmgk')]
     ctx['skin_css'] = (BASE_CSS + skin['css']).replace('{{hero_pos}}', ctx['hero_pos'])
+    if cities_mode:
+        ctx['skin_css'] += CITY_CSS.replace('ACCENT_HEX', b['c_accent'].lstrip('#'))
     f = l['facts'] + [['',''],['',''],['','']]
     for i in range(3):
         ctx[f'fact{i+1}_b'], ctx[f'fact{i+1}_s'] = esc(f[i][0]), esc(f[i][1])
@@ -314,6 +389,7 @@ def render(l):
         if v['name'] not in names: names.append(v['name'])
     for extra in ['Без опыта', 'Выплаты каждую неделю', l.get('region_label','')]:
         if extra and len(names) < 5: names.append(extra)
+    if 'tags' in l: names = list(l['tags'])
     ctx['tags_html'] = ''.join(f'<span class="tag">{esc(n)}</span>' for n in names[:5])
     words = l['h1'].split(' ')
     ctx['h1_accent'] = esc(' '.join(words[:-1])) + ' <span class="g">' + esc(words[-1]) + '</span>' if len(words) > 1 else esc(l['h1'])
@@ -328,6 +404,7 @@ def render(l):
         lines = [w[0], w[1], ' '.join(w[2:])]
     else:
         lines = w
+    if l.get('h1_lines'): lines = l['h1_lines']   # ручная разбивка H1 на 3 строки (тёмная / медная / контурная)
     cls = ['', 'cu', 'outline']
     ctx['h1_arkada'] = '<br>'.join((f'<span class="{cls[i]}">' + esc(t) + '</span>') if i else esc(t) for i, t in enumerate(lines[:3]))
     out = HEAD + skin['body'] + TAIL
@@ -342,7 +419,7 @@ def render(l):
 TILDA_DIR = os.path.join(HERE, 'tilda')
 ASSETS_URL = CFG.get('base_url', '') + 'assets/'
 
-def tilda_version(html_full):
+def tilda_version(html_full, l=None):
     """Фрагмент для блока Tilda T123 (HTML-код): стили + разметка + скрипты, без doctype/head/body и без счётчика Метрики."""
     body = html_full.split('<body>', 1)[1].rsplit('</body>', 1)[0]
     head = html_full.split('<head>', 1)[1].split('</head>', 1)[0]
@@ -352,6 +429,9 @@ def tilda_version(html_full):
     a = body.index('<!-- Yandex.Metrika counter -->'); b = body.index('<!-- /Yandex.Metrika counter -->') + len('<!-- /Yandex.Metrika counter -->')
     body = body[:a] + body[b:]
     out = fonts + '\n' + style + '\n' + body
+    # в Тильде может стоять свой счётчик (sbor: 113315490) — цели шлём в него, иначе они теряются
+    if l and l.get('tilda_metrika_id'):
+        out = out.replace(f"ym({CFG['metrika_id']}, 'reachGoal'", f"ym({l['tilda_metrika_id']}, 'reachGoal'")
     return out.replace('../assets/', ASSETS_URL)
 
 def build_tilda():
@@ -359,7 +439,7 @@ def build_tilda():
     for l in CFG['landings']:
         html_full = render(l)
         p = os.path.join(TILDA_DIR, l['slug'] + '.html')
-        open(p, 'w', encoding='utf-8').write(tilda_version(html_full))
+        open(p, 'w', encoding='utf-8').write(tilda_version(html_full, l))
         print('✓ tilda/' + l['slug'] + '.html', f'({os.path.getsize(p)//1024} KB)')
 
 # ---------------------------------------------------------------- политика ПД (страница /<slug>/policy/)

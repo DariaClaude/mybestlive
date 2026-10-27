@@ -78,7 +78,7 @@ FORM_MAIN = '''<form class="lead" id="mainForm" novalidate>
       <h3>Оставить заявку</h3>
       <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
       <div class="field"><label for="f-name">Ваше имя</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
-      <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>{{main_city}}
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
       <input type="hidden" name="vacancy" value="{{sheet_vacancy}}">
       <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
@@ -836,7 +836,7 @@ ARKADA_BODY = f'''
 <div class="facts"><div class="wrap">{{{{facts_html}}}}</div></div>
 <div class="stats"><div class="wrap">{{{{stats_html}}}}</div><div class="wrap stats-note">«{{{{brand_name}}}}» входит в группу компаний «РМ Групп»</div></div>
 <section id="about"><div class="wrap"><div class="sec-label">Почему мы</div><h2>Почему с нами</h2><div class="why-grid">{{{{why_html}}}}</div></div></section>
-<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>{{{{vacancies_title}}}}</h2><div class="vac-grid">{{{{vacancies_html}}}}</div></div></section>
+<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>{{{{vacancies_title}}}}</h2>{{{{vacancies_intro}}}}<div class="vac-grid">{{{{vacancies_html}}}}</div></div></section>
 <div class="partners"><div class="wrap"><h2>Наши сотрудники работают в</h2><p>Смены в крупных сетях и на складах, официально через «{{{{brand_name}}}}»</p><div class="logos">{{{{partners_html}}}}</div></div></div>
 <section id="steps"><div class="wrap"><div class="sec-label">Этапы</div><h2>Как выйти на работу</h2><div class="steps">{{{{steps_html}}}}</div></div></section>
 <section class="form-sec" id="form"><div class="wrap form-grid">
@@ -858,3 +858,18 @@ ARKADA_BODY = f'''
 
 SKINS['orion']  = dict(css=ORION_CSS,  body=ORION_BODY)
 SKINS['arkada'] = dict(css=ARKADA_CSS, body=ARKADA_BODY)
+
+# Режим «вакансии по городам» (sbor, ТЗ 27.10.2026): карточка = название + описание + список городов,
+# в формах поле «Город». Подключается в build_landings.py, только если у вакансий есть ключ cities.
+# ACCENT_HEX — цвет стрелки списка, подставляется из бренда.
+CITY_CSS = r"""
+.field select{width:100%;height:54px;border:2px solid var(--line);border-radius:var(--in-r);padding:0 44px 0 16px;font:inherit;font-size:17px;color:var(--ink);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ACCENT_HEX' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center/16px;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;text-overflow:ellipsis}
+.field select:focus{border-color:var(--accent)}
+.field select.err{border-color:#E5484D}
+.vac-intro{font-size:16px;line-height:1.6;color:var(--ink2);max-width:640px;margin:-8px 0 28px}
+.vac-desc{font-size:15px;line-height:1.55;color:var(--ink2)}
+.vac .field{margin:0}
+.vac .field select{height:50px;font-size:16px}
+.vac-city{background:var(--bg);border:1px solid var(--line);padding:10px 14px;font-size:16px;font-weight:600;color:var(--ink)}
+.vac-city small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-bottom:2px}
+"""
