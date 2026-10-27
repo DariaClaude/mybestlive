@@ -670,7 +670,7 @@ ORION_BODY = f'''
 <div class="wrap facts">{{{{facts_html}}}}</div>
 <div class="stats"><div class="wrap">{{{{stats_html}}}}</div><div class="wrap stats-note">«{{{{brand_name}}}}» входит в группу компаний «РМ Групп»</div></div>
 <section id="about"><div class="wrap"><div class="sec-label">Почему мы</div><h2>Почему с нами</h2><div class="why-grid">{{{{why_html}}}}</div></div></section>
-<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>{{{{vacancies_title}}}}</h2><div class="vac-grid">{{{{vacancies_html}}}}</div></div></section>
+<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>{{{{vacancies_title}}}}</h2>{{{{vacancies_intro}}}}<div class="vac-grid">{{{{vacancies_html}}}}</div></div></section>
 <div class="partners"><div class="wrap"><h2>Наши сотрудники работают в</h2><p>Смены в крупных сетях и на складах, официально через «{{{{brand_name}}}}»</p><div class="logos">{{{{partners_html}}}}</div></div></div>
 <section id="steps"><div class="wrap"><div class="sec-label">Этапы</div><h2>Как выйти на работу</h2><div class="steps">{{{{steps_html}}}}</div></div></section>
 <section class="form-sec" id="form"><div class="wrap form-grid">
@@ -873,3 +873,15 @@ CITY_CSS = r"""
 .vac-city{background:var(--bg);border:1px solid var(--line);padding:10px 14px;font-size:16px;font-weight:600;color:var(--ink)}
 .vac-city small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-bottom:2px}
 """
+
+# Поправки режима «вакансии по городам» под скин: у Ориона тёмные карточки и белые формы,
+# поэтому список в карточке тёмный с голубой стрелкой, а в формах — тёмный текст на белом.
+CITY_CSS_BRAND = {
+  'orion': r"""
+form.lead .field select,.modal .field select{border-color:#E5E7EB;color:#111827;background-color:#fff}
+.vac .field select{background-color:#121B2E;color:#fff;border-color:rgba(255,255,255,.2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360A5FA' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+.vac .field select option{background:#0D1424;color:#fff}
+.vac-city{background:rgba(255,255,255,.04);border-radius:var(--in-r);color:#fff}
+@media(min-width:1000px){.vac-grid{grid-template-columns:repeat(3,1fr)}}
+""",
+}

@@ -95,7 +95,7 @@ p.lead{font-size:16px;line-height:1.65;color:rgba(255,255,255,.85);max-width:560
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
 .hero-actions .btn{flex:1 1 100%}@media(min-width:640px){.hero-actions .btn{flex:0 0 auto;min-width:200px}}
 .hero-photo{position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.2);box-shadow:0 30px 60px rgba(0,0,0,.4)}
-.hero-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center 35%}
+.hero-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:30% 40%}
 @media(min-width:960px){.hero-photo img{aspect-ratio:4/4.2}}
 .hero-badge{position:absolute;left:14px;bottom:14px;right:14px;background:rgba(2,6,23,.72);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 16px;display:flex;gap:12px;align-items:center}
 .hero-badge b{font-family:var(--font-h);font-size:24px;font-weight:700;color:var(--mist);line-height:1}.hero-badge span{font-size:12px;color:rgba(255,255,255,.7)}
@@ -162,6 +162,22 @@ footer{border-top:1px solid var(--line);color:var(--muted);padding:24px 0;font-s
 footer .row{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:center}
 footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:24px;height:24px}footer a{text-decoration:none}
 
+.field select{width:100%;height:54px;border:2px solid var(--line);border-radius:var(--in-r);padding:0 44px 0 16px;font:inherit;font-size:17px;color:var(--ink);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D4ED8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center/16px;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;text-overflow:ellipsis}
+.field select:focus{border-color:var(--accent)}
+.field select.err{border-color:#E5484D}
+.vac-intro{font-size:16px;line-height:1.6;color:var(--ink2);max-width:640px;margin:-8px 0 28px}
+.vac-desc{font-size:15px;line-height:1.55;color:var(--ink2)}
+.vac .field{margin:0}
+.vac .field select{height:50px;font-size:16px}
+.vac-city{background:var(--bg);border:1px solid var(--line);padding:10px 14px;font-size:16px;font-weight:600;color:var(--ink)}
+.vac-city small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-bottom:2px}
+
+form.lead .field select,.modal .field select{border-color:#E5E7EB;color:#111827;background-color:#fff}
+.vac .field select{background-color:#121B2E;color:#fff;border-color:rgba(255,255,255,.2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360A5FA' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+.vac .field select option{background:#0D1424;color:#fff}
+.vac-city{background:rgba(255,255,255,.04);border-radius:var(--in-r);color:#fff}
+@media(min-width:1000px){.vac-grid{grid-template-columns:repeat(3,1fr)}}
+
 </style>
 
 
@@ -179,60 +195,34 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
   <div class="stars" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
-      <div class="chip">Санкт-Петербург · 4 адреса</div>
-      <h1>Пикеры (сборщики <span class="g">заказов)</span></h1>
-      <p class="lead">Собираете онлайн-заказы в магазине рядом с домом. Без опыта, обучение в первую смену.</p>
-      <div class="hero-actions"><button class="btn btn-primary" data-open="">Оставить заявку и выйти на работу</button><a class="btn btn-ghost" href="https://web.max.ru/386377559" target="_blank" rel="noopener" data-ym="max_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a></div>
+      <div class="chip">Санкт-Петербург и регионы · 3 вакансии</div>
+      <h1>Найдите работу, которая подходит именно <span class="g">вам</span></h1>
+      <p class="lead">Выбирайте вакансию в удобном городе и оставляйте заявку. Мы свяжемся с вами, расскажем об условиях работы и ответим на вопросы.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#vacancies" data-scroll>Посмотреть вакансии</a><a class="btn btn-ghost" href="https://web.max.ru/386377559" target="_blank" rel="noopener" data-ym="max_click"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a></div>
     </div>
     <div class="hero-photo">
       <img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/hero-spb-pikery.jpg" alt="" loading="eager" fetchpriority="high" onerror="this.parentNode.remove()">
-      <div class="hero-badge"><b>до 3 440 ₽</b><span>за смену</span></div>
     </div>
   </div>
 </section>
-<div class="wrap facts"><div class="fact"><b>до 3 440 ₽</b><span>за смену</span></div><div class="fact"><b>5 000 ₽</b><span>бонус за друга после 10 смен</span></div><div class="fact"><b>без опыта</b><span>обучим на месте</span></div></div>
+<div class="wrap facts"><div class="fact"><b>3 вакансии</b><span>в Санкт-Петербурге и регионах</span></div><div class="fact"><b>каждую неделю</b><span>выплаты на карту</span></div><div class="fact"><b>без опыта</b><span>обучим на месте</span></div></div>
 <div class="stats"><div class="wrap"><div class="stat"><b>16 <small style="font-size:.45em;font-weight:700">лет</small></b><span>выводим людей на работу</span></div><div class="stat"><b>4000<i>+</i> <small style="font-size:.45em;font-weight:700">человек</small></b><span>работают с нами сегодня</span></div><div class="stat"><b>93 <small style="font-size:.45em;font-weight:700">проекта</small></b><span>в крупных компаниях</span></div></div><div class="wrap stats-note">«Орион» входит в группу компаний «РМ Групп»</div></div>
 <section id="about"><div class="wrap"><div class="sec-label">Почему мы</div><h2>Почему с нами</h2><div class="why-grid"><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Выплаты каждую неделю</h3><p>Деньги на карту раз в неделю, без задержек и «в конце месяца».</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Официальный договор</h3><p>Все условия прописаны на бумаге: ставка, график, выплаты.</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3>Любое гражданство с документами</h3><p>Берём с 18 лет, опыт не обязателен: покажем всё на месте.</p></div><div class="why reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#1C1C2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Свой куратор на объекте</h3><p>Поможет в первую смену и ответит на вопросы по телефону.</p></div></div></div></section>
-<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>Выберите адрес</h2><div class="vac-grid"><article class="vac reveal">
-  <div class="vac-head"><h3>Пикер (сборщик)</h3><div class="rate"><b>2 833 ₽</b><span>за смену</span></div></div>
-  <div class="meta">
-    <div><small>График</small>4/3, пт–пн, смены от 6 часов</div>
-    <div><small>Выплаты</small>ежедневно первые 2 недели, далее каждую неделю</div>
-    <div class="full"><small>Санкт-Петербург</small>Выборгское шоссе, 216/1А, пос. Парголово</div>
-  </div>
-  <div><div class="lbl">Условия</div><ul><li>Сборка онлайн-заказов</li><li>Общение с покупателями по телефону при замене товара</li><li>Компенсация ЛМК после 25 смен</li></ul></div>
-  <div><div class="lbl">Требования</div><ul class="req"><li>Телефон на Android</li><li>Приложение MAX или готовность установить</li></ul></div>
-  <button class="btn btn-block" data-open="Пикер (сборщик)">Оставить заявку на вакансию</button>
+<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>Актуальные вакансии</h2><p class="vac-intro">Выберите подходящую вакансию и город. Оставьте заявку, и мы свяжемся с вами, чтобы рассказать подробнее об условиях работы.</p><div class="vac-grid"><article class="vac reveal">
+  <h3>Сотрудник на инвентаризацию</h3>
+  <p class="vac-desc">Пересчёт товара с помощью ТСД-сканера</p>
+  <div class="field"><select id="c-1" aria-label="Город"><option value="">Выберите город</option><option>Санкт-Петербург</option><option>Оренбург</option><option>Пенза</option></select></div>
+  <button class="btn btn-block" data-open="Сотрудник на инвентаризацию" data-cities="[&quot;Санкт-Петербург&quot;, &quot;Оренбург&quot;, &quot;Пенза&quot;]">Откликнуться</button>
 </article><article class="vac reveal">
-  <div class="vac-head"><h3>Пикер (сборщик)</h3><div class="rate"><b>3 311 ₽</b><span>за смену</span></div></div>
-  <div class="meta">
-    <div><small>График</small>полная занятость</div>
-    <div><small>Выплаты</small>каждую неделю</div>
-    <div class="full"><small>Санкт-Петербург</small>Выборгское шоссе, 11</div>
-  </div>
-  <div><div class="lbl">Условия</div><ul><li>Сборка товара по списку заказов</li><li>Акция «Приведи друга»: 5 000 ₽ после 10 смен</li><li>Компенсация ЛМК после 25 смен</li></ul></div>
-  <div><div class="lbl">Требования</div><ul class="req"><li>Телефон на Android обязательно</li><li>Полная занятость, не подработка</li></ul></div>
-  <button class="btn btn-block" data-open="Пикер (сборщик)">Оставить заявку на вакансию</button>
+  <h3>Пикер (сборщик)</h3>
+  <p class="vac-desc">Сбор товаров по списку, проверка качества и сроков, связь с клиентами при отсутствии товаров</p>
+  <div class="field"><select id="c-2" aria-label="Город"><option value="">Выберите город</option><option>Санкт-Петербург</option><option>Самара</option></select></div>
+  <button class="btn btn-block" data-open="Пикер (сборщик)" data-cities="[&quot;Санкт-Петербург&quot;, &quot;Самара&quot;]">Откликнуться</button>
 </article><article class="vac reveal">
-  <div class="vac-head"><h3>Пикер (сборщик)</h3><div class="rate"><b>3 440 ₽</b><span>за смену</span></div></div>
-  <div class="meta">
-    <div><small>График</small>2/2, дневные смены, постоянный график</div>
-    <div><small>Выплаты</small>каждую неделю</div>
-    <div class="full"><small>Санкт-Петербург</small>наб. Обводного канала, 118/7</div>
-  </div>
-  <div><div class="lbl">Условия</div><ul><li>Сборка товара по списку заказов</li><li>Только постоянный график, без сокращённых смен</li></ul></div>
-  <div><div class="lbl">Требования</div><ul class="req"><li>Хорошее знание русского языка</li><li>ЛМК</li><li>Гражданство РФ, СНГ, полный пакет документов</li></ul></div>
-  <button class="btn btn-block" data-open="Пикер (сборщик)">Оставить заявку на вакансию</button>
-</article><article class="vac reveal">
-  <div class="vac-head"><h3>Пикер (сборщик)</h3><div class="rate"><b>3 208 ₽</b><span>за смену</span></div></div>
-  <div class="meta">
-    <div><small>График</small>смены от 8 часов, упор на пт, сб, вс</div>
-    <div><small>Выплаты</small>каждую неделю</div>
-    <div class="full"><small>Санкт-Петербург</small>ул. Академика Александрова, 2</div>
-  </div>
-  <div><div class="lbl">Условия</div><ul><li>Сборка интернет-заказов</li></ul></div>
-  <div><div class="lbl">Требования</div><ul class="req"><li>Полный пакет документов</li><li>Можно без ЛМК, но после 10 смен она нужна</li></ul></div>
-  <button class="btn btn-block" data-open="Пикер (сборщик)">Оставить заявку на вакансию</button>
+  <h3>Автокурьер</h3>
+  <p class="vac-desc">Доставка заказов от пункта отправления до получателя с использованием личного автомобиля</p>
+  <div class="field"><select id="c-3" aria-label="Город"><option value="">Выберите город</option><option>Нижний Новгород</option><option>Казань</option><option>Пермь</option></select></div>
+  <button class="btn btn-block" data-open="Автокурьер" data-cities="[&quot;Нижний Новгород&quot;, &quot;Казань&quot;, &quot;Пермь&quot;]">Откликнуться</button>
 </article></div></div></section>
 <div class="partners"><div class="wrap"><h2>Наши сотрудники работают в</h2><p>Смены в крупных сетях и на складах, официально через «Орион»</p><div class="logos"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/ozon.png" alt="ozon" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/lenta.png" alt="lenta" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/pyaterochka.png" alt="pyaterochka" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/x5.png" alt="x5" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/vkusvill.png" alt="vkusvill" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/samokat.png" alt="samokat" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/okey.png" alt="okey" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/diksi.png" alt="diksi" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/selgros.png" alt="selgros" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/fmlogistic.png" alt="fmlogistic" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/miratorg.png" alt="miratorg" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/gazprom.png" alt="gazprom" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/katren.png" alt="katren" loading="lazy"><img src="https://dariaclaude.github.io/mybestlive/sites/rabota/assets/verniy.png" alt="verniy" loading="lazy"></div></div></div>
 <section id="steps"><div class="wrap"><div class="sec-label">Этапы</div><h2>Как выйти на работу</h2><div class="steps"><div class="step reveal"><i>1</i><h3>Оставляете заявку</h3><p>Имя и телефон, 20 секунд.</p></div><div class="step reveal"><i>2</i><h3>Перезваниваем</h3><p>Подбираем объект рядом с вами и удобные смены.</p></div><div class="step reveal"><i>3</i><h3>Оформляем официально</h3><p>Заключаем договор, где прописаны все условия.</p></div><div class="step reveal"><i>4</i><h3>Выходите на работу</h3><p>Первая выплата уже через неделю.</p></div></div></div></section>
@@ -251,8 +241,9 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
       <p class="hint">Перезвоним в течение 15 минут в рабочее время</p>
       <div class="field"><label for="f-name">Ваше имя</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
       <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <div class="field"><label for="f-city">Город</label><select id="f-city" name="city" required><option value="">Выберите город</option><option>Санкт-Петербург</option><option>Оренбург</option><option>Пенза</option><option>Самара</option><option>Нижний Новгород</option><option>Казань</option><option>Пермь</option></select></div>
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
-      <input type="hidden" name="vacancy" value="Пикер СПб">
+      <input type="hidden" name="vacancy" value="Общая заявка">
       <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
       <div class="form-msg"></div>
       <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/spb-pikery/policy/" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/spb-pikery/policy/" target="_blank" rel="noopener">согласие на обработку персональных данных</a>.</p>
@@ -278,9 +269,10 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
     <form class="lead-modal" id="modalForm" novalidate>
       <div class="field"><label for="m-name">Ваше имя</label><input id="m-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться"></div>
       <div class="field"><label for="m-phone">Телефон</label><input id="m-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></div>
+      <div class="field"><label for="m-city">Город</label><select id="m-city" name="city" required><option value="">Выберите город</option><option>Санкт-Петербург</option><option>Оренбург</option><option>Пенза</option><option>Самара</option><option>Нижний Новгород</option><option>Казань</option><option>Пермь</option></select></div>
       <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
-      <input type="hidden" name="vacancy" value="Пикер СПб">
-      <button class="btn btn-primary btn-block" type="submit">Отправить заявку</button>
+      <input type="hidden" name="vacancy" value="Общая заявка">
+      <button class="btn btn-primary btn-block" type="submit">Оставить заявку</button>
       <div class="form-msg"></div>
       <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/spb-pikery/policy/" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="https://dariaclaude.github.io/mybestlive/sites/rabota/spb-pikery/policy/" target="_blank" rel="noopener">согласие на обработку ПД</a>.</p>
     </form>
@@ -296,7 +288,7 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
   var PHONE_LINK = "+74995048804";
   var PHONE = "8 (499) 504-88-04";
 
-  function ym_(goal){ try{ if(window.ym && GOAL){ ym(99547216, 'reachGoal', goal); } }catch(e){} }
+  function ym_(goal){ try{ if(window.ym && GOAL){ ym(113314585, 'reachGoal', goal); } }catch(e){} }
 
   /* phone mask */
   function mask(input){
@@ -349,10 +341,11 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
     var digits = phoneEl.value.replace(/\D/g,'');
     phoneEl.classList.remove('err'); msg.className='form-msg';
     if(digits.length!==11){ phoneEl.classList.add('err'); phoneEl.focus(); msg.textContent='Введите номер полностью: +7 (___) ___-__-__'; msg.className='form-msg show bad'; return; }
+    var cityEl = form.querySelector('select[name=city]'); if(cityEl){ cityEl.classList.remove('err'); if(!cityEl.value){ cityEl.classList.add('err'); cityEl.focus(); msg.textContent='Выберите город'; msg.className='form-msg show bad'; return; } }
     if(form.querySelector('input[name=website]').value){ done(form); return; }
     var body = new URLSearchParams({
       name: nameEl.value.trim(), phone: '+'+digits, vacancy: form.querySelector('input[name=vacancy]').value,
-      region: REGION, page: location.host + location.pathname, utm: utm()
+      region: (form.querySelector('select[name=city]') ? form.querySelector('select[name=city]').value : REGION), page: location.host + location.pathname, utm: utm()
     }).toString();
     btn.disabled = true; var old = btn.textContent; btn.textContent = 'Отправляем…';
     if(!ENDPOINTS.length){ console.warn('ENDPOINTS не заданы (demo)'); setTimeout(function(){ btn.disabled=false; btn.textContent=old; done(form); }, 600); return; }
@@ -384,11 +377,39 @@ footer .brand{color:rgba(255,255,255,.5);font-size:14px}footer .brand svg{width:
   function done(form){
     ym_(GOAL);
     form.innerHTML = '<div class="success"><div class="ok-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>'+
-      '<h3>Заявка принята</h3><p>Перезвоним в течение 15 минут в рабочее время. Если удобнее, напишите нам в MAX.</p>'+
+      '<h3>Спасибо за отклик!</h3><p>Мы свяжемся с вами в ближайшее время.</p>'+
       '<a class="btn btn-tg btn-block" href="'+TG+'" target="_blank" rel="noopener">Написать в MAX</a></div>';
   }
   document.querySelectorAll('form').forEach(function(f){ f.addEventListener('submit', function(e){ e.preventDefault(); submit(f); }); });
   document.querySelectorAll('[data-ym]').forEach(function(a){ a.addEventListener('click', function(){ ym_(a.getAttribute('data-ym')); }); });
+
+  /* вакансии по городам: город из карточки подставляется в форму отклика */
+  var ALL_CITIES = ["Санкт-Петербург", "Оренбург", "Пенза", "Самара", "Нижний Новгород", "Казань", "Пермь"];
+  var mTitle = document.getElementById('m-title');
+  function fillCities(sel, list, pre){
+    if(!sel) return;
+    sel.innerHTML = '';
+    if(list.length !== 1){ var o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Выберите город'; sel.appendChild(o0); }
+    list.forEach(function(c){ var o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); });
+    sel.value = list.length === 1 ? list[0] : (pre || '');
+    sel.classList.remove('err');
+  }
+  document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click', function(){
+    var vac = b.getAttribute('data-open'), list = ALL_CITIES, pre = '';
+    if(b.getAttribute('data-cities')){ try{ list = JSON.parse(b.getAttribute('data-cities')); }catch(e){} }
+    var card = b.closest ? b.closest('.vac') : null, cs = card ? card.querySelector('select') : null;
+    if(cs) pre = cs.value;
+    mTitle.textContent = vac ? 'Отклик на вакансию «' + vac + '»' : 'Оставить заявку';
+    mVac.style.display = 'none';
+    fillCities(document.getElementById('m-city'), list, pre);
+  }); });
+  document.querySelectorAll('select').forEach(function(s){ s.addEventListener('change', function(){ s.classList.remove('err'); }); });
+  document.querySelectorAll('a[data-scroll]').forEach(function(a){ a.addEventListener('click', function(e){
+    var t = document.querySelector(a.getAttribute('href')); if(!t) return;
+    e.preventDefault();
+    var hd = document.querySelector('header'), off = hd ? hd.offsetHeight + 8 : 0;
+    window.scrollTo({top: t.getBoundingClientRect().top + window.pageYOffset - off, behavior: 'smooth'});
+  }); });
 })();
 </script>
 

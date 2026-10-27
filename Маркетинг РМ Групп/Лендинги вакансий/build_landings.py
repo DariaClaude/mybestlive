@@ -6,7 +6,7 @@
 Правки контента — только в landings.json. Дизайн/логика — в TEMPLATE ниже.
 """
 import json, os, sys, html, re
-from skins import SKINS, BASE_CSS, CITY_CSS
+from skins import SKINS, BASE_CSS, CITY_CSS, CITY_CSS_BRAND
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))          # корень репозитория (Сlaude Code)
@@ -379,7 +379,7 @@ def render(l):
     skin = SKINS[l.get('brand','rmgk')]
     ctx['skin_css'] = (BASE_CSS + skin['css']).replace('{{hero_pos}}', ctx['hero_pos'])
     if cities_mode:
-        ctx['skin_css'] += CITY_CSS.replace('ACCENT_HEX', b['c_accent'].lstrip('#'))
+        ctx['skin_css'] += CITY_CSS.replace('ACCENT_HEX', b['c_accent'].lstrip('#')) + CITY_CSS_BRAND.get(l.get('brand', 'rmgk'), '')
     f = l['facts'] + [['',''],['',''],['','']]
     for i in range(3):
         ctx[f'fact{i+1}_b'], ctx[f'fact{i+1}_s'] = esc(f[i][0]), esc(f[i][1])
@@ -410,6 +410,8 @@ def render(l):
     out = HEAD + skin['body'] + TAIL
     for k, v in ctx.items():
         out = out.replace('{{' + k + '}}', v)
+    if l.get('hero_badge') is False:   # без плашки на фото (sbor, Орион: ставки к новым вакансиям не относятся)
+        out = re.sub(r'\s*<div class="hero-badge">.*?</div>', '', out, count=1, flags=re.S)
     left = re.findall(r'\{\{(\w+)\}\}', out)
     if left:
         raise SystemExit(f'Незаполненные плейсхолдеры в {l["slug"]}: {sorted(set(left))}')
