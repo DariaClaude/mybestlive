@@ -710,9 +710,41 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "19–25 октября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:960, adapted:null, convCollecting:true,
+      tools:{ avito:{leads:1054,spend:112569}, direct:null, social:{leads:14,spend:11392}, yula:{leads:7,spend:2863} },
+      projects:[
+        {n:"Урбан Дикси МСК",plan:30,fact:28,spend:5960,ad:null},
+        {n:"Табыш ЧЛБ",plan:150,fact:194,spend:20499,ad:null},
+        {n:"Лента ЧЛБ",plan:100,fact:102,spend:12497,ad:null},
+        {n:"Пятёрочка ЧЛБ",plan:100,fact:124,spend:12593,ad:null},
+        {n:"Табыш КЗН",plan:30,fact:44,spend:5158,ad:null},
+        {n:"Лента КЗН",plan:60,fact:58,spend:11222,ad:null},
+        {n:"Пятёрочка КЗН",plan:10,fact:4,spend:615,ad:null},
+        {n:"Лента КРД",plan:300,fact:316,spend:20539,ad:null},
+        {n:"Лента СПБ",plan:100,fact:104,spend:16110,ad:null},
+        {n:"Верный",plan:50,fact:51,spend:5343,ad:null},
+        {n:"Рэми",plan:30,fact:29,spend:2033,ad:null}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2985, adapted:37,
+      tools:{ avito:{leads:3148,spend:240160}, direct:{leads:11,spend:7013}, social:{leads:46,spend:37550}, yula:{leads:4,spend:1636} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:250,fact:271,spend:23484,ad:null},
+        {n:"ЛЕНТА КРД",plan:100,fact:127,spend:11013,ad:0},
+        {n:"ЛЕНТА КЗН",plan:50,fact:47,spend:3838,ad:0},
+        {n:"ЛЕНТА ЧЛБ",plan:20,fact:64,spend:6171,ad:1},
+        {n:"Курьеры",plan:445,fact:498,spend:28290,ad:6},
+        {n:"Инвентаризация",plan:2000,fact:1989,spend:153949,ad:29},
+        {n:"Гравис",plan:5,fact:6,spend:524,ad:1},
+        {n:"Пятёрочка ЧЛБ",plan:15,fact:19,spend:1247,ad:0},
+        {n:"Магнит КЗН",plan:40,fact:45,spend:3764,ad:0},
+        {n:"Пирелли",plan:50,fact:66,spend:6117,ad:0},
+        {n:"Таблоджикс МСК",plan:10,fact:16,spend:1763,ad:0}
+      ] },
+  ],
   "12–18 октября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:485, adapted:21, convCollecting:true,
-      tools:{ avito:{leads:498,spend:61473}, direct:null, social:{leads:25,spend:13212}, yula:{leads:9,spend:4265} },
+      tools:{ avito:{leads:498,spend:61473}, direct:null, social:{leads:25,spend:13212}, yula:{leads:7,spend:3447} },
       projects:[
         {n:"Урбан Дикси МСК",plan:35,fact:34,spend:3275,ad:6},
         {n:"Табыш ЧЛБ",plan:100,fact:121,spend:16912,ad:10},
@@ -724,14 +756,14 @@ var CLIENTS = {
         {n:"Лента КРД",plan:70,fact:77,spend:6829,ad:null},
         {n:"Лента СПБ",plan:10,fact:9,spend:1448,ad:null}
       ] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:3025, adapted:111,
-      tools:{ avito:{leads:3411,spend:273969}, direct:{leads:33,spend:18150}, social:{leads:65,spend:31232}, yula:{leads:11,spend:5213} },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2970, adapted:111,
+      tools:{ avito:{leads:3411,spend:273969}, direct:{leads:25,spend:13750}, social:{leads:47,spend:24461}, yula:{leads:11,spend:5417} },
       projects:[
         {n:"МАГНИТ КРД",plan:300,fact:360,spend:32665,ad:9},
         {n:"ЛЕНТА КРД",plan:150,fact:93,spend:8022,ad:2},
         {n:"ЛЕНТА КЗН",plan:50,fact:58,spend:4899,ad:3},
         {n:"ЛЕНТА ЧЛБ",plan:20,fact:16,spend:1467,ad:4},
-        {n:"Курьеры",plan:500,fact:530,spend:39819,ad:13},
+        {n:"Курьеры",plan:445,fact:530,spend:39819,ad:13},
         {n:"Инвентаризация",plan:2000,fact:2348,spend:186447,ad:65},
         {n:"Гравис",plan:5,fact:6,spend:650,ad:1}
       ] },
