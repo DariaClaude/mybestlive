@@ -38,3 +38,7 @@ PM Excellence/Чек-лист самооценки*.xlsx
 *.gz
 *.log
 *.onnx
+
+# Приватный репозиторий workspace-private — служебный git-каталог и скрипт выгрузки
+/.git-private/
+tools/private_sync.sh
