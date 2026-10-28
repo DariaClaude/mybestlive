@@ -3708,8 +3708,8 @@ const WAR_ROOM_DATA = {
           ]
         },
         {
-          "name": "✈ Страница компании",
-          "platform": "Telegram · Команда RM Group",
+          "name": "✈ Страница компании Telegram",
+          "platform": "Команда RM Group",
           "stats": [
             { "label": "Подписчики за октябрь", "value": "123 → 126 (+3)" },
             { "label": "Уведомления включены", "value": "67%" },
