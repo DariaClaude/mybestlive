@@ -36,7 +36,7 @@ HEAD = r"""<!DOCTYPE html>
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon-{{brand_key}}-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Oswald:wght@500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Oswald:wght@500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">{{fonts_extra}}
 <style>
 {{skin_css}}
 </style>
@@ -253,6 +253,12 @@ ARKADA_MARK = ('<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/20
   '<circle r="11" fill="#C98F60"/><circle r="5" fill="#2E2318"/><path d="M-2.4 3.8 L0 -4 L2.4 3.8 M-1.2 1.2 L1.2 1.2" stroke="#C98F60" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg>')
 ORION_ICON = ('<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="10" fill="#0C1527"/><g transform="translate(16,16) scale(1)">' + ORION_MARK.split('aria-hidden="true">',1)[1].replace('</svg>','') + '</g></svg>')
 ARKADA_ICON = ('<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="6" fill="#2E2318"/><g transform="translate(14,14)">' + ARKADA_MARK.split('aria-hidden="true">',1)[1].replace('</svg>','') + '</g></svg>')
+# Альянс Кадров: монограмма «АК» на шалфее, как в шапке и подвале alliance-kadrov-landing.html
+ALLIANCE_MARK = '<span class="mono" aria-hidden="true">АК</span>'
+ALLIANCE_ICON = ('<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="14" fill="#5C7F62"/>'
+  '<text x="32" y="43" text-anchor="middle" font-family="Georgia,Times New Roman,serif" font-size="29" font-weight="700" fill="#fff">АК</text></svg>')
+# шрифты сверх общего набора Inter/Oswald/Space Grotesk (у остальных брендов пусто, их страницы не меняются)
+FONTS_EXTRA = {'alliance': '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">'}
 
 BRANDS = {
   'orion': dict(brand_name='Орион', brand_name_head='Орион', brand_logo=ORION_MARK,
@@ -280,12 +286,17 @@ BRANDS = {
     c_accent='#FF5B1F', c_accent_rgb='255,91,31', c_accent_d='#E04A0F', c_accent_lt='#FF8A5C', c_accent_soft='#FFE6DB',
     c_hi='#FFD9C7', c_hi_d='#FFC3A8', c_hi_soft='#FFF2EB', c_hi_ink='#7A2A0C',
     font_h='Inter,system-ui,sans-serif', h_case='none', h_ls='-.02em', h_w='900'),
+  'alliance': dict(brand_name='Альянс Кадров', brand_name_head='Альянс Кадров', brand_logo=ALLIANCE_MARK,
+    c_ink='#1E293B', c_ink2='#334155', c_muted='#64748B', c_line='rgba(30,41,59,.12)', c_bg='#F8F4EE',
+    c_accent='#5C7F62', c_accent_rgb='92,127,98', c_accent_d='#3F5C45', c_accent_lt='#7DA884', c_accent_soft='#E3ECE4',
+    c_hi='#E3ECE4', c_hi_d='#C9DACB', c_hi_soft='#F8F4EE', c_hi_ink='#1E293B',
+    font_h='"Playfair Display",Georgia,serif', h_case='none', h_ls='-.02em', h_w='500'),
 }
 import urllib.parse
 # фавиконы: знак бренда (у Инстафф словесный знак нечитаем в 16px — отдельная иконка «IN» на синем)
 INSTAFF_ICON = ('<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="8" fill="#5B8BD0"/>'
   '<text x="32" y="46" text-anchor="middle" font-family="Oswald,Arial Narrow,Arial,sans-serif" font-size="40" font-weight="700" fill="#fff">IN</text></svg>')
-FAVICONS = {'instaff': INSTAFF_ICON, 'urban': URBAN_MARK, 'rmgk': RMGK_MARK, 'orion': ORION_ICON, 'arkada': ARKADA_ICON}
+FAVICONS = {'instaff': INSTAFF_ICON, 'urban': URBAN_MARK, 'rmgk': RMGK_MARK, 'orion': ORION_ICON, 'arkada': ARKADA_ICON, 'alliance': ALLIANCE_ICON}
 
 def favicon(svg):
     return 'data:image/svg+xml,' + urllib.parse.quote(svg)
@@ -299,6 +310,7 @@ def render(l):
     ctx.update({k: (v if k=='brand_logo' else esc(v)) for k, v in b.items()})
     ctx['favicon'] = favicon(FAVICONS[l.get('brand','rmgk')])
     ctx['brand_key'] = l.get('brand','rmgk')
+    ctx['fonts_extra'] = ('\n' + FONTS_EXTRA[ctx['brand_key']]) if ctx['brand_key'] in FONTS_EXTRA else ''
     ctx['hero_pos'] = esc(l.get('hero_pos', 'center 22%'))
     ctx['og_image'] = esc(CFG.get('base_url','') + 'assets/hero-' + l['slug'] + '.jpg')
     if l.get('policy_local'):
@@ -426,7 +438,8 @@ def tilda_version(html_full, l=None):
     body = html_full.split('<body>', 1)[1].rsplit('</body>', 1)[0]
     head = html_full.split('<head>', 1)[1].split('</head>', 1)[0]
     style = head[head.index('<style>'):head.index('</style>') + len('</style>')]
-    fonts = '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Oswald:wght@500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">'
+    # все шрифтовые ссылки из head: общий набор + шрифт бренда (Альянс Кадров: Playfair Display)
+    fonts = '\n'.join(re.findall(r'<link href="https://fonts\.googleapis\.com/css2[^>]*>', head))
     # счётчик Метрики убираем: в Tilda он подключается в настройках сайта, цели ym() из скрипта продолжат работать
     a = body.index('<!-- Yandex.Metrika counter -->'); b = body.index('<!-- /Yandex.Metrika counter -->') + len('<!-- /Yandex.Metrika counter -->')
     body = body[:a] + body[b:]
@@ -454,7 +467,7 @@ POLICY_TPL = r"""<!DOCTYPE html>
 <meta name="robots" content="noindex">
 <link rel="icon" href="{{favicon}}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">{{fonts_extra}}
 <style>
 {{skin_css}}
 .policy{max-width:820px;margin:0 auto;padding:40px 20px 80px}
@@ -519,6 +532,7 @@ def build_policies():
         ctx.update({k: esc(v) for k, v in l.items() if isinstance(v, str)})
         ctx.update({k: (v if k=='brand_logo' else esc(v)) for k, v in b.items()})
         ctx['favicon'] = favicon(FAVICONS[l.get('brand','rmgk')])
+        ctx['fonts_extra'] = ('\n' + FONTS_EXTRA[l.get('brand','rmgk')]) if l.get('brand','rmgk') in FONTS_EXTRA else ''
         ctx['skin_css'] = (BASE_CSS + skin['css']).replace('{{hero_pos}}', 'center')
         ctx['brand_head'] = head; ctx['phone_svg'] = PHONE_SVG
         ctx['title'] = esc(title); ctx['body_html'] = body

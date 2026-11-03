@@ -859,6 +859,164 @@ ARKADA_BODY = f'''
 SKINS['orion']  = dict(css=ORION_CSS,  body=ORION_BODY)
 SKINS['arkada'] = dict(css=ARKADA_CSS, body=ARKADA_BODY)
 
+# =====================================================================================
+# АЛЬЯНС КАДРОВ — по брендбуку и alliance-kadrov-landing.html: тёмно-сланцевая шапка и hero (#0F172A) с шалфейным
+# свечением, монограмма «АК» на шалфее, серифный H1 с курсивной шалфейной последней строкой, линия у надписи,
+# факты под тонкой линией внизу hero, кремовые секции (#F8F4EE), белые карточки 12px, шалфейная полоса с формой.
+# В DM Serif Display из брендбука нет кириллицы, поэтому заголовки набраны Playfair Display (подключается отдельно).
+# =====================================================================================
+ALLIANCE_CSS = r"""
+:root{--ink:#1E293B;--ink2:#334155;--muted:#64748B;--line:rgba(30,41,59,.12);--bg:#F8F4EE;--bg2:#EDE8E0;--slate:#1E293B;--slate2:#0F172A;--ts:#E2E8F0;--tm:#94A3B8;--accent:#5C7F62;--accent-d:#3F5C45;--accent-lt:#7DA884;--accent-soft:#E3ECE4;
+--font-h:"Playfair Display",Georgia,"Times New Roman",serif;--font-btn:Inter,system-ui,sans-serif;--h-case:none;--h-ls:-.02em;--btn-r:8px;--in-r:8px;--card-r:12px;--max:1200px}
+body{background:var(--bg)}
+h1,h2,h3{font-weight:500}
+.btn{font-size:15px;font-weight:600}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-d)}
+.btn-ghost{border:1px solid rgba(30,41,59,.25)}
+header{position:sticky;top:0;z-index:40;background:rgba(15,23,42,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ts);font-family:var(--font-h);font-size:18px;font-weight:500;line-height:1.1}
+.brand .mono{width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--font-h);font-size:15px;font-weight:600;flex:none}
+.brand small{display:block;font-family:Inter,sans-serif;font-weight:400;font-size:11px;color:var(--tm);margin-top:3px}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-phone{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;text-decoration:none;padding:9px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.16);color:var(--ts)}
+.nav-phone svg{color:var(--accent-lt)}.nav-phone span{display:none}@media(min-width:640px){.nav-phone span{display:inline}}
+.nav-cta{display:none}@media(min-width:860px){.nav-cta{display:inline-flex;min-height:40px;padding:0 22px;font-size:13px}}
+.hero{position:relative;overflow:hidden;background:var(--slate2);color:var(--ts);padding:40px 0 0}
+@media(min-width:860px){.hero{padding:72px 0 0}}
+.hero::before{content:"";position:absolute;right:-160px;bottom:-160px;width:720px;height:720px;background:radial-gradient(circle,rgba(92,127,98,.18) 0%,transparent 60%);pointer-events:none}
+.hero::after{content:"";position:absolute;left:-220px;top:60px;width:540px;height:540px;background:radial-gradient(circle,rgba(59,130,246,.06) 0%,transparent 60%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;gap:28px;align-items:center}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.1fr .9fr;gap:56px}}
+.kicker{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-lt);margin-bottom:22px}
+.kicker::before{content:"";width:28px;height:1px;background:var(--accent);flex:none}
+h1{font-size:clamp(38px,5.4vw,68px);line-height:1.02;letter-spacing:-.02em;color:var(--ts);margin-bottom:22px}
+h1 .outline{font-style:italic;color:var(--accent-lt)}
+p.lead{font-size:16px;line-height:1.65;color:var(--tm);max-width:520px;margin-bottom:26px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-actions .btn{flex:1 1 100%}@media(min-width:640px){.hero-actions .btn{flex:0 0 auto;min-width:200px}}
+.hero .btn-ghost{color:var(--ts);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04)}.hero .btn-ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{border:1px solid rgba(125,168,132,.45);color:var(--accent-lt);font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px}
+.hero-photo{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.hero-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:{{hero_pos}}}
+@media(min-width:960px){.hero-photo img{aspect-ratio:4/3.4}}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid rgba(255,255,255,.08);margin-top:36px;padding:24px 0 32px}
+@media(min-width:860px){.facts{margin-top:56px;padding:28px 0 44px}}
+@media(max-width:480px){.facts{grid-template-columns:1fr 1fr}.fact:last-child{grid-column:1/-1}}
+.fact{min-width:0}
+.fact b{display:block;font-family:var(--font-h);font-weight:500;font-size:clamp(22px,3vw,32px);line-height:1.05;color:var(--ts)}
+.fact span{display:block;font-size:12px;color:var(--tm);margin-top:5px}
+.stats{padding:32px 0 0}
+.stats .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat b{display:block;font-family:var(--font-h);font-weight:500;font-size:clamp(28px,4vw,46px);line-height:1;color:var(--ink);letter-spacing:-.02em}
+.stat b i{font-style:normal;color:var(--accent)}
+.stat span{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.stats .stats-note{display:block;font-size:11px;color:var(--muted);padding-top:12px}
+section{padding:56px 0}@media(min-width:860px){section{padding:88px 0}}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+h2{font-size:clamp(28px,3.6vw,46px);line-height:1.1;margin-bottom:28px;color:var(--ink)}
+.why-grid{display:grid;gap:14px}@media(min-width:640px){.why-grid{grid-template-columns:1fr 1fr}}@media(min-width:1000px){.why-grid{grid-template-columns:repeat(4,1fr)}}
+.why{background:#fff;border:1px solid var(--line);border-radius:var(--card-r);padding:28px 24px;transition:transform .25s,box-shadow .25s}
+.why:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.07)}
+.why .ic{width:42px;height:42px;border-radius:10px;background:rgba(92,127,98,.1);display:grid;place-items:center;margin-bottom:20px}
+.why .ic svg{width:20px;height:20px;stroke:var(--accent)}
+.why h3{font-family:Inter,sans-serif;font-size:15px;font-weight:600;letter-spacing:0;line-height:1.3;margin-bottom:8px}.why p{font-size:13.5px;line-height:1.65;color:var(--muted)}
+.vac-grid{display:grid;gap:14px}@media(min-width:640px){.vac-grid{grid-template-columns:1fr 1fr}}@media(min-width:1000px){.vac-grid{grid-template-columns:repeat(3,1fr)}}
+.vac{background:#fff;border:1px solid var(--line);border-radius:var(--card-r);padding:26px 24px;display:flex;flex-direction:column;gap:14px;transition:border-color .25s,box-shadow .25s}
+.vac:hover{border-color:rgba(92,127,98,.45);box-shadow:0 16px 48px rgba(0,0,0,.06)}
+.vac-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.vac h3{font-size:23px;line-height:1.15;color:var(--ink)}
+.rate{text-align:right}
+.rate b{display:block;font-family:var(--font-h);font-size:24px;font-weight:600;color:var(--accent-d);white-space:nowrap;line-height:1}
+.rate b.tbd{font-size:13px;font-family:Inter,sans-serif;white-space:normal;max-width:150px}
+.rate span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.meta div{background:var(--bg);border:1px solid var(--line)}
+.vac ul li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.vac ul.req li::before{background:transparent;border:2px solid var(--accent)}
+.vac .btn{background:var(--accent);color:#fff}.vac .btn:hover{background:var(--accent-d)}
+.partners{background:var(--bg2);padding:48px 0}
+.partners h2{font-size:26px;text-align:center;margin-bottom:6px}
+.partners p{text-align:center;color:var(--muted);margin-bottom:26px;font-size:14px}
+.steps{display:grid;gap:0;border-top:1px solid var(--line)}
+@media(min-width:860px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{padding:22px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:48px 1fr;gap:4px 14px;align-content:start}
+.step i{grid-row:1/3;font-family:var(--font-h);font-style:normal;font-size:26px;font-weight:500;line-height:1.1;color:var(--accent)}
+.step i::before{content:"0"}
+.step h3,.step p{grid-column:2}
+.step h3{font-family:Inter,sans-serif;font-size:16px;font-weight:600;letter-spacing:0;margin-bottom:4px}.step p{font-size:14px;color:var(--muted)}
+@media(min-width:860px){.step{display:block;padding:28px 22px 28px 0;border-bottom:0}.step+.step{padding-left:22px;border-left:1px solid var(--line)}.step i{display:block;font-size:40px;margin-bottom:14px}}
+.form-sec{background:var(--accent);color:#fff}
+.form-sec .sec-label{color:rgba(255,255,255,.6)}
+.form-sec h2{color:#fff}
+.form-grid{display:grid;gap:28px;align-items:center}@media(min-width:860px){.form-grid{grid-template-columns:1fr 1fr;gap:56px}}
+.form-sec p.lead{color:rgba(255,255,255,.85);margin-bottom:22px}
+.contact-lines{display:grid;gap:10px;font-weight:600}
+.contact-lines a{text-decoration:none;display:flex;gap:10px;align-items:center;color:#fff}
+.contact-lines svg{color:#fff;opacity:.8}
+form.lead{background:#fff;color:var(--ink);border-radius:var(--card-r);padding:28px 24px;box-shadow:0 24px 60px rgba(15,23,42,.18)}@media(min-width:640px){form.lead{padding:34px 32px}}
+form.lead h3{font-size:26px;margin-bottom:4px}form.lead .hint{font-size:14px;color:var(--muted);margin-bottom:18px}
+form.lead .btn-primary{background:var(--slate)}form.lead .btn-primary:hover{background:var(--slate2)}
+.modal h3{font-size:24px}
+footer{background:var(--slate2);color:var(--tm);padding:26px 0;font-size:12px;border-top:1px solid rgba(255,255,255,.08)}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;align-items:center}
+footer .brand{font-size:16px}footer .brand .mono{width:28px;height:28px;font-size:13px}footer a{text-decoration:none}
+.bar{background:rgba(248,244,238,.97)}.bar .call{background:var(--slate)}
+"""
+
+ALLIANCE_BODY = f'''
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="{{{{brand_name}}}}">{{{{brand_logo}}}}<span>{{{{brand_name}}}}<small>вакансии рядом с домом</small></span></a>
+    <div class="nav-right">
+      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
+      <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
+    </div>
+  </div>
+</header>
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">{{{{eyebrow}}}}</div>
+        <h1>{{{{h1_arkada}}}}</h1>
+        <p class="lead">{{{{sub}}}}</p>
+        <div class="hero-actions">{{{{hero_buttons}}}}</div>
+        <div class="tags">{{{{tags_html}}}}</div>
+      </div>
+      <div class="hero-photo">
+        <img src="{{{{hero_photo}}}}" alt="" loading="eager" fetchpriority="high" onerror="this.parentNode.remove()">
+      </div>
+    </div>
+    <div class="facts">{{{{facts_html}}}}</div>
+  </div>
+</section>
+<div class="stats"><div class="wrap">{{{{stats_html}}}}</div><div class="wrap stats-note">«{{{{brand_name}}}}» входит в группу компаний «РМ Групп»</div></div>
+<section id="about"><div class="wrap"><div class="sec-label">Почему мы</div><h2>Почему с нами</h2><div class="why-grid">{{{{why_html}}}}</div></div></section>
+<section id="vacancies" style="padding-top:0"><div class="wrap"><div class="sec-label">Вакансии</div><h2>{{{{vacancies_title}}}}</h2>{{{{vacancies_intro}}}}<div class="vac-grid">{{{{vacancies_html}}}}</div></div></section>
+<div class="partners"><div class="wrap"><h2>Наши сотрудники работают в</h2><p>Смены в крупных сетях и на складах, официально через «{{{{brand_name}}}}»</p><div class="logos">{{{{partners_html}}}}</div></div></div>
+<section id="steps"><div class="wrap"><div class="sec-label">Этапы</div><h2>Как выйти на работу</h2><div class="steps">{{{{steps_html}}}}</div></div></section>
+<section class="form-sec" id="form"><div class="wrap form-grid">
+  <div>
+    <div class="sec-label">Контакты</div><h2>Ответим на все вопросы</h2>
+    <p class="lead">Оставьте номер: перезвоним, подберём смены рядом с домом и расскажем, что взять с собой в первый день.</p>
+    {CONTACT_LINES}
+  </div>
+  {FORM_MAIN}
+</div></section>
+</main>
+<footer><div class="wrap row">
+  <a class="brand" href="#top">{{{{brand_logo}}}}<span>{{{{brand_name}}}}</span></a>
+  <div>{{{{legal}}}} · {{{{address}}}}</div>
+  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+</div></footer>
+{BAR}
+'''
+
+SKINS['alliance'] = dict(css=ALLIANCE_CSS, body=ALLIANCE_BODY)
+
 # Режим «вакансии по городам» (sbor, ТЗ 27.10.2026): карточка = название + описание + список городов,
 # в формах поле «Город». Подключается в build_landings.py, только если у вакансий есть ключ cities.
 # ACCENT_HEX — цвет стрелки списка, подставляется из бренда.
@@ -883,5 +1041,8 @@ form.lead .field select,.modal .field select{border-color:#E5E7EB;color:#111827;
 .vac .field select option{background:#0D1424;color:#fff}
 .vac-city{background:rgba(255,255,255,.04);border-radius:var(--in-r);color:#fff}
 @media(min-width:1000px){.vac-grid{grid-template-columns:repeat(3,1fr)}}
+""",
+  'alliance': r"""
+.vac-city{border-radius:var(--in-r)}
 """,
 }
