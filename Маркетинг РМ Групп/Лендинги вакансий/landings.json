@@ -186,7 +186,7 @@
       "address": "107113, Москва, ул. Маленковская, д. 32, стр. 2А, помещ. 1/1",
       "brand": "alliance",
       "domain": "inv.urban-company.ru",
-      "hero_photo_src": "https://images.unsplash.com/photo-1741707041658-5bbcf8eaaaea?auto=format&fit=crop&w=1100&q=75",
+      "hero_photo_src": "~/Downloads/кассирр.png (Дарья, 03.11.2026), осветлено: яркость +10 %, насыщенность +15 %",
       "max_url": "https://max.ru/u/f9LHodD0cOKcVD2TQWyTnsYIV2DimvyChLsTWu2TAC9ER0bWlOBqNCbPnBU",
       "h1_lines": [
         "Найдите работу,",
@@ -203,7 +203,8 @@
       "ok_title": "Спасибо за отклик!",
       "ok_text": "Мы свяжемся с вами в ближайшее время.",
       "tilda_metrika_id": 113313576,
-      "hero_badge": false
+      "hero_badge": false,
+      "hero_pos": "68% center"
     },
     {
       "slug": "rtz",

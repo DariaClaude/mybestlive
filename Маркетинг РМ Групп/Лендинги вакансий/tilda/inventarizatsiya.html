@@ -89,10 +89,10 @@ header{position:sticky;top:0;z-index:40;background:rgba(15,23,42,.96);backdrop-f
 .hero::after{content:"";position:absolute;left:-220px;top:60px;width:540px;height:540px;background:radial-gradient(circle,rgba(59,130,246,.06) 0%,transparent 60%);pointer-events:none}
 .hero .wrap{position:relative;z-index:1}
 .hero-grid{display:grid;gap:28px;align-items:center}
-@media(min-width:960px){.hero-grid{grid-template-columns:1.1fr .9fr;gap:56px}}
+@media(min-width:960px){.hero-grid{grid-template-columns:1fr 1.1fr;gap:48px}}
 .kicker{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent-lt);margin-bottom:22px}
 .kicker::before{content:"";width:28px;height:1px;background:var(--accent);flex:none}
-h1{font-size:clamp(38px,5.4vw,68px);line-height:1.02;letter-spacing:-.02em;color:var(--ts);margin-bottom:22px}
+h1{font-size:clamp(38px,4.8vw,60px);line-height:1.02;letter-spacing:-.02em;color:var(--ts);margin-bottom:22px}
 h1 .outline{font-style:italic;color:var(--accent-lt)}
 p.lead{font-size:16px;line-height:1.65;color:var(--tm);max-width:520px;margin-bottom:26px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
@@ -101,8 +101,8 @@ p.lead{font-size:16px;line-height:1.65;color:var(--tm);max-width:520px;margin-bo
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 .tag{border:1px solid rgba(125,168,132,.45);color:var(--accent-lt);font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px}
 .hero-photo{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 60px rgba(0,0,0,.35)}
-.hero-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center 22%}
-@media(min-width:960px){.hero-photo img{aspect-ratio:4/3.4}}
+.hero-photo img{width:100%;aspect-ratio:4/3.2;object-fit:cover;object-position:68% center}
+@media(min-width:960px){.hero-photo img{aspect-ratio:4/3.7}}
 .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid rgba(255,255,255,.08);margin-top:36px;padding:24px 0 32px}
 @media(min-width:860px){.facts{margin-top:56px;padding:28px 0 44px}}
 @media(max-width:480px){.facts{grid-template-columns:1fr 1fr}.fact:last-child{grid-column:1/-1}}
