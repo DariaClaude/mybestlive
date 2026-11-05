@@ -710,6 +710,36 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "26 октября–1 ноября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:1220, adapted:21, convCollecting:true,
+      tools:{ avito:{leads:1325,spend:105654}, direct:null, social:{pending:true}, yula:{pending:true} },
+      projects:[
+        {n:"Урбан Дикси МСК",plan:30,fact:29,spend:3121,ad:5},
+        {n:"Табыш ЧЛБ",plan:250,fact:270,spend:21059,ad:11},
+        {n:"Лента ЧЛБ",plan:100,fact:106,spend:8961,ad:null},
+        {n:"Пятёрочка ЧЛБ",plan:50,fact:51,spend:3543,ad:4},
+        {n:"Табыш КЗН",plan:50,fact:60,spend:4961,ad:1},
+        {n:"Лента КЗН",plan:200,fact:212,spend:18247,ad:null},
+        {n:"Лента КРД",plan:400,fact:426,spend:28228,ad:null},
+        {n:"Лента СПБ",plan:100,fact:106,spend:14441,ad:null},
+        {n:"Верный",plan:10,fact:10,spend:693,ad:null},
+        {n:"Рэми",plan:30,fact:55,spend:2400,ad:null}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:4035, adapted:41,
+      tools:{ avito:{leads:4402,spend:348714}, direct:{pending:true}, social:{pending:true}, yula:{pending:true} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:100,fact:187,spend:13981,ad:1},
+        {n:"ЛЕНТА КРД",plan:250,fact:288,spend:9157,ad:0},
+        {n:"ЛЕНТА КЗН",plan:50,fact:50,spend:4218,ad:0},
+        {n:"ЛЕНТА ЧЛБ",plan:60,fact:68,spend:5646,ad:1},
+        {n:"Курьеры",plan:500,fact:541,spend:50855,ad:3},
+        {n:"Инвентаризация",plan:3000,fact:3189,spend:258693,ad:36},
+        {n:"Гравис",plan:5,fact:3,spend:283,ad:0},
+        {n:"Пятёрочка ЧЛБ",plan:10,fact:14,spend:1065,ad:0},
+        {n:"Магнит КЗН",plan:20,fact:18,spend:1493,ad:0},
+        {n:"Пирелли",plan:30,fact:29,spend:2187,ad:0},
+        {n:"Таблоджикс МСК",plan:10,fact:15,spend:1136,ad:0}
+      ] } ],
   "19–25 октября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:960, adapted:20, convCollecting:true,
       tools:{ avito:{leads:1054,spend:112569}, direct:null, social:{leads:16,spend:6512}, yula:{leads:7,spend:2863} },
@@ -1062,6 +1092,34 @@ var CLIENTS = {
         {n:"Гравис",plan:100,fact:118,spend:42583,ad:3}
       ] },
   ],
+  "Октябрь · факт": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:3857, adapted:254,
+      tools:{ avito:{leads:4254,spend:412721}, direct:null, social:{leads:91,spend:46890}, yula:{leads:34,spend:12180} },
+      projects:[
+        {n:"Урбан Дикси МСК",plan:180,fact:176,spend:20900,ad:32},
+        {n:"Табыш ЧЛБ",plan:900,fact:1039,spend:100941,ad:54},
+        {n:"Лента ЧЛБ",plan:400,fact:551,spend:58257,ad:15},
+        {n:"Пятёрочка ЧЛБ",plan:300,fact:304,spend:27877,ad:40},
+        {n:"Табыш КЗН",plan:260,fact:271,spend:25437,ad:19},
+        {n:"Лента КЗН",plan:500,fact:532,spend:59272,ad:19},
+        {n:"Пятёрочка КЗН",plan:67,fact:62,spend:8985,ad:16},
+        {n:"Лента КРД",plan:870,fact:910,spend:63053,ad:12},
+        {n:"Лента СПБ",plan:260,fact:264,spend:37530,ad:46},
+        {n:"Верный",plan:60,fact:61,spend:6036,ad:0},
+        {n:"Рэми",plan:60,fact:84,spend:4433,ad:1}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:14590, adapted:464, outNote:"Москва 45, СПб 16, Таблоджикс МСК 4, Пирелли 3",
+      tools:{ avito:{leads:15003,spend:1203354}, direct:{leads:92,spend:52835}, social:{leads:233,spend:116433}, yula:{leads:46,spend:16804} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:1400,fact:1412,spend:129934,ad:32},
+        {n:"ЛЕНТА КРД",plan:550,fact:564,spend:44148,ad:26},
+        {n:"ЛЕНТА КЗН",plan:450,fact:447,spend:29113,ad:10},
+        {n:"ЛЕНТА ЧЛБ",plan:170,fact:176,spend:16183,ad:14},
+        {n:"Курьеры",plan:2000,fact:2010,spend:198196,ad:55},
+        {n:"Инвентаризация",plan:10000,fact:10375,spend:782502,ad:258},
+        {n:"Гравис",plan:20,fact:19,spend:3278,ad:1}
+      ] },
+  ],
 };
 
 var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, {k:"social",n:"ВК"}, {k:"yula",n:"Юла"} ];
@@ -1071,10 +1129,10 @@ var NEW_TOOLS = [ {k:"avito",n:"Авито"}, {k:"direct",n:"Я.Директ"}, 
 // проекты по имени, вышедшие. Сравнений с прошлым периодом нет — это итог.
 // CPL считается расход ÷ лиды (ручной cplManual недели в сумму не переносится).
 var SUMMARIES = [
-  { key: "sum-sep", label: "01.09–30.09 · итого",
-    title: "Сводно за 1 – 30 сентября",
-    note: "Авито — вкладка «Сентябрь факт» таблицы (календарный месяц; ЛЕНТЫ МСК и Ростикса в месячной вкладке нет); вышедшие Даниила — сумма недель дашборда по табелям Дани (в том числе ЛЕНТА МСК, СПб и Магнит сборка — без строк в таблице); ВК и Юла — сумма недель 31.08–28.09, Директа в сентябре не было",
-    weeks: ["Сентябрь · факт"] }
+  { key: "sum-oct", label: "01.10–31.10 · итого",
+    title: "Сводно за 1 – 31 октября",
+    note: "Авито — вкладка «Факт октябрь» таблицы, по Ленте КРД, Ленте СПБ, Верному и Рэми — сумма недель 05.10–01.11; вышедшие Даниила — сумма недель 28.09–01.11 по табелям Дани; ВК, Юла и Директ — сумма недель 28.09–25.10",
+    weeks: ["Октябрь · факт"] }
 ];
 
 function sumClients(labels) {
@@ -1237,6 +1295,11 @@ function renderCliKPI(cw, pcw, w, pw) {
   // цифры показываем, сравнение с прошлой неделей — нет, иначе получится ложное «−77%».
   var partial = cw.some(function(c){ return (c.tools.avito && c.tools.avito.pending) || c.avitoPartial; });
   if (partial) pt = null;
+  // ВК, Юла и Директ Дарья присылает отдельным сообщением: пока их нет, лиды и бюджет
+  // недели неполные и с прошлой неделей не сравниваются; CPL Авито сравниваем как обычно.
+  var chPend = cw.some(function(c){ return ['social','yula','direct'].some(function(k){ return c.tools[k] && c.tools[k].pending; }); });
+  var chNote = '<div class="kpi-delta neutral">сравнение — после внесения ВК и Юлы</div>';
+  function chSpend(b){ return (b.pending && !b.any) ? '<b style="color:#F59E0B">не внесено</b>' : '<b style="color:#475569">'+fmt(b.spend)+' ₽</b>'; }
   var waitNote = '<div class="kpi-delta neutral">сравнение — после '+(cw.some(function(c){ return c.avitoPartial; }) ? 'заполнения Авито в таблице' : 'внесения Авито')+'</div>';
   var bAv=cliToolTotal(cw,'avito'), bVk=cliToolTotal(cw,'social'), bYu=cliToolTotal(cw,'yula'), bDi=cliToolTotal(cw,'direct');
   // Авито внесён не по всем клиентам: показываем то, что есть, с пометкой, кого не хватает
@@ -1248,12 +1311,12 @@ function renderCliKPI(cw, pcw, w, pw) {
   h+='<div class="kpi-card"><div class="kpi-label">Лиды</div><div class="kpi-value kpi-accent">'+fmt(t.leads)+'</div>'+
      '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+'<div style="margin-top:4px"><span class="pill '+(t.leads>=t.plan?'pill-ok':'pill-no')+'" style="font-size:12px;padding:2px 8px;white-space:nowrap;display:inline-block">'+(t.leads>=t.plan?'✓ план выполнен':'план не выполнен')+' · '+Math.round(t.leads/t.plan*100)+'%</span></div>'
         : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
-     (partial ? waitNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
+     (partial ? waitNote : chPend ? chNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
      '<div class="kpi-sub" style="line-height:1.7">Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>'+
-     'ВК <b style="color:#475569">'+fmt(bVk.spend)+' ₽</b> · Юла <b style="color:#475569">'+fmt(bYu.spend)+' ₽</b>'+
-     (bDi.any ? ' · Директ '+(bDi.spend?'<b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>':'<span style="color:#F59E0B">расход не внесён</span>') : '')+'</div>'+
-     (partial ? waitNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
+     'ВК '+chSpend(bVk)+' · Юла '+chSpend(bYu)+
+     (bDi.any ? ' · Директ '+(bDi.spend?'<b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>':'<span style="color:#F59E0B">расход не внесён</span>') : (bDi.pending ? ' · Директ '+chSpend(bDi) : ''))+'</div>'+
+     (partial ? waitNote : chPend ? chNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
   // CPL в шапке считаем по Авито — это основной канал; ВК и Юла с их ценой лида
   // перекашивали сводную цифру вверх.
   var pbAv = pcw ? cliToolTotal(pcw,'avito') : null;
@@ -1343,7 +1406,8 @@ function renderCliMatrix(cw, pcw) {
   h+='<th class="col-tot">Бюджет</th><th class="col-tot">CPL средний</th><th class="col-tot">Конверсия</th><th class="col-tot">₽ / вышедший</th></tr></thead><tbody>';
   var partial = cw.some(function(c){ return (c.tools.avito && c.tools.avito.pending) || c.avitoPartial; });
   cw.forEach(function(c,i){
-    var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=pc?cliTotals(pc):null;
+    var cPend = ['social','yula','direct'].some(function(k){ return c.tools[k] && c.tools[k].pending; });
+    var pc = partial ? null : (pcw && pcw[i]), t=cliTotals(c), ptt=(pc && !cPend)?cliTotals(pc):null;
     var av=c.tools.avito;
     h+='<tr><td><div class="cl-name">'+esc(c.name)+'</div><div class="cl-scope">'+esc(c.scope)+'</div></td>';
     h+='<td class="col-tot">'+planCell(c.plan, (av && !av.pending) ? av.leads : null)+'</td>';
@@ -1352,7 +1416,7 @@ function renderCliMatrix(cw, pcw) {
     NEW_TOOLS.forEach(function(tool){
       var v=c.tools[tool.k], pv = pc && pc.tools ? pc.tools[tool.k] : null;
       if(!v){ h+='<td><span class="cell-none">в разработке</span></td>'; return; }
-      if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">не внесено<br>в таблицу</span></td>'; return; }
+      if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">'+(tool.k==='avito'?'не внесено<br>в таблицу':'не внесено')+'</span></td>'; return; }
       var partNote = (tool.k==='avito' && c.avitoPartial) ? '<span class="cell-s" style="color:#F59E0B">внесено частично</span>' : '';
       h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
          ((pv && !pv.pending) ? cellDelta(v.leads, pv.leads, true) : '')+
