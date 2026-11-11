@@ -269,6 +269,9 @@
   .pt tr.sum td { border-top:2px solid #E2E8F0; font-weight:700; background:#F8FAFC; }
   .pill { font-size:11px; font-weight:700; padding:1px 6px; border-radius:4px; }
   .pill-ok { background:#ECFDF5; color:#059669; } .pill-no { background:#FFF7ED; color:#EA580C; }
+  /* Детализация с колонками бюджета недели: 12 колонок — без переносов в ячейках, до 1700px карточки друг под другом. */
+  .pt-wb td { white-space:nowrap; }
+  @media(max-width:1700px){ .split2-wide{ grid-template-columns:1fr; } }
   .newnote { font-size:12px; color:#64748B; line-height:1.6; margin-top:10px; padding:12px 14px; background:#FFFBEB; border-left:3px solid #F59E0B; border-radius:0 8px 8px 0; }
   .fmt-badge { background:#8B5CF6; color:#fff; font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; letter-spacing:.4px; margin-left:auto; }
   @media(max-width:1200px){ .bars{grid-template-columns:repeat(2,1fr)} .split2{grid-template-columns:1fr} }
@@ -731,20 +734,20 @@ var CLIENTS = {
         {n:"Ламода",plan:50,fact:51,spend:5814,ad:0,wb:10000},
         {n:"АРСТ Логистика",plan:70,fact:78,spend:8892,ad:4,wb:12500}
       ] },
-    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2866, adapted:83,
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:2866, adapted:115,
       tools:{ avito:{leads:3147,spend:271808}, direct:{leads:111,spend:35877}, social:{leads:36,spend:30596}, yula:{leads:15,spend:17150} },
       projects:[
-        {n:"МАГНИТ КРД",plan:100,fact:129,spend:8414,ad:null,wb:32500},
-        {n:"ЛЕНТА КРД",plan:100,fact:103,spend:6686,ad:null,wb:17500},
-        {n:"ЛЕНТА КЗН",plan:50,fact:49,spend:3943,ad:null,wb:17500},
+        {n:"МАГНИТ КРД",plan:100,fact:129,spend:8414,ad:11,wb:32500},
+        {n:"ЛЕНТА КРД",plan:100,fact:103,spend:6686,ad:3,wb:17500},
+        {n:"ЛЕНТА КЗН",plan:50,fact:49,spend:3943,ad:2,wb:17500},
         {n:"ЛЕНТА ЧЛБ",plan:70,fact:80,spend:3394,ad:null,wb:7500},
-        {n:"Курьеры",plan:500,fact:446,spend:52203,ad:1,wb:75000},
-        {n:"Инвентаризация",plan:2000,fact:2287,spend:193286,ad:82,wb:75000},
-        {n:"Гравис",plan:5,fact:4,spend:404,ad:null,wb:5000},
-        {n:"Пятёрочка ЧЛБ",plan:20,fact:21,spend:1646,ad:null,wb:3750},
-        {n:"Магнит КЗН",plan:10,fact:12,spend:919,ad:null,wb:5000},
-        {n:"Пирелли",plan:1,fact:1,spend:3,ad:null,wb:10000},
-        {n:"Таблоджикс МСК",plan:10,fact:15,spend:910,ad:null,wb:5000}
+        {n:"Курьеры",plan:500,fact:446,spend:52203,ad:12,wb:75000},
+        {n:"Инвентаризация",plan:2000,fact:2287,spend:193286,ad:86,wb:75000},
+        {n:"Гравис",plan:5,fact:4,spend:404,ad:0,wb:5000},
+        {n:"Пятёрочка ЧЛБ",plan:20,fact:21,spend:1646,ad:0,wb:3750},
+        {n:"Магнит КЗН",plan:10,fact:12,spend:919,ad:0,wb:5000},
+        {n:"Пирелли",plan:1,fact:1,spend:3,ad:0,wb:10000},
+        {n:"Таблоджикс МСК",plan:10,fact:15,spend:910,ad:1,wb:5000}
       ] } ],
   "26 октября–1 ноября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:1220, adapted:23,
@@ -1494,24 +1497,39 @@ function renderCliMatrix(cw, pcw) {
   return h+'</tbody></table></div>';
 }
 
+// Колонки бюджета недели в детализации: wb = месячный бюджет проекта (колонка M таблицы Авито) ÷ 4.
+// Месячный бюджет на дашборд не выводим. Без wb у проектов недели колонки не рисуются.
+function budgetCells(wb, spend) {
+  if (wb == null) return '<td colspan="4"></td>';
+  var pct = Math.round(spend / wb * 100), rest = wb - spend;
+  return '<td>'+fmt(wb)+' ₽</td><td>'+fmt(spend)+' ₽</td>'+
+         '<td><span class="pill '+(pct>100?'pill-no':'pill-ok')+'">'+pct+'%</span></td>'+
+         '<td'+(rest<0?' style="color:#EF4444;font-weight:700"':'')+'>'+fmt(rest)+' ₽</td>';
+}
+
 function renderCliDetails(cw, pcw) {
   if (!cw.some(function(c){ return c.projects && c.projects.length; })) return '';
-  var h='<div class="split2">';
+  var anyWb = cw.some(function(c){ return (c.projects||[]).some(function(p){ return p.wb != null; }); });
+  var h='<div class="split2'+(anyWb?' split2-wide':'')+'">';
   cw.forEach(function(c, ci){
     var pc = pcw && pcw[ci] ? pcw[ci] : null;
     if (!c.projects || !c.projects.length) return;
+    var hasWb = c.projects.some(function(p){ return p.wb != null; });
     h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — детализация'+
-       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито</span></div>'+
-       '<table class="pt"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th><th>₽ / выш.</th></tr></thead><tbody>';
-    var sp=0,sf=0,ss=0,sa=0;
+       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито'+(hasWb?' · бюджет недели = месячный ÷ 4':'')+'</span></div>'+
+       '<table class="pt'+(hasWb?' pt-wb':'')+'"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th><th>₽ / выш.</th>'+
+       (hasWb?'<th>Бюджет / нед</th><th>Расход</th><th>% бюджета</th><th>Остаток</th>':'')+'</tr></thead><tbody>';
+    var sp=0,sf=0,ss=0,sa=0,sb=0,ssb=0;
     c.projects.forEach(function(p){
       // pctPlan, не pc — иначе затеняется клиент прошлой недели и сравнение конверсий не считается
       var pctPlan=Math.round(p.fact/p.plan*100); sp+=p.plan; sf+=p.fact; ss+=p.spend; sa+=(p.ad||0);
+      if (p.wb != null) { sb+=p.wb; ssb+=p.spend; }
       h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.plan)+'</td><td>'+fmt(p.fact)+'</td>'+
          '<td><span class="pill '+(pctPlan>=100?'pill-ok':'pill-no')+'">'+pctPlan+'%</span></td>'+
          '<td>'+fmt(Math.round(p.spend/p.fact))+' ₽</td><td>'+(p.ad==null?'<span class="conv-zero">—</span>':fmt(p.ad))+'</td>'+
          '<td>'+projConv(p.ad, p.fact)+'</td>'+
-         '<td>'+(p.ad?fmt(Math.round(p.spend/p.ad))+' ₽':'<span class="conv-zero">—</span>')+'</td></tr>';
+         '<td>'+(p.ad?fmt(Math.round(p.spend/p.ad))+' ₽':'<span class="conv-zero">—</span>')+'</td>'+
+         (hasWb?budgetCells(p.wb, p.spend):'')+'</tr>';
     });
     var avg = cliConv(c), pavg = pc ? cliConv(pc) : null, cost = cliCostOut(c);
     var rows = cliRows(c), outN = (c.adapted != null && rows && rows.any) ? c.adapted - rows.ad : 0;
@@ -1525,34 +1543,10 @@ function renderCliDetails(cw, pcw) {
        (davg==null?'':(Math.abs(davg)<0.05?'<div style="font-size:10px;color:#94A3B8">\u2192 0 п.п.</div>'
          :'<div style="font-size:10px;font-weight:700;color:'+(davg>0?'#10B981':'#F59E0B')+'">'+
            (davg>0?'\u2191 +':'\u2193 ')+dec1(davg)+' п.п.</div>'))+
-       '</td><td>'+(cost!=null?fmt(cost)+' ₽':'<span class="conv-zero">—</span>')+'</td></tr></tbody></table>'+
+       '</td><td>'+(cost!=null?fmt(cost)+' ₽':'<span class="conv-zero">—</span>')+'</td>'+
+       (hasWb?budgetCells(sb, ssb):'')+'</tr></tbody></table>'+
        (outN > 0 ? '<div style="font-size:11px;color:#94A3B8;margin-top:8px">Ещё '+fmt(outN)+' вышедших вне проектов недели'+
          (c.outNote ? ' ('+esc(c.outNote)+')' : '')+', в конверсию и стоимость вышедшего не входят.</div>' : '')+'</div>';
-  });
-  return h+'</div>';
-}
-
-// Бюджет недели по проектам: wb = месячный бюджет проекта (колонка M таблицы Авито) ÷ 4,
-// как в блоке «Бюджет (неделя …)» недельной вкладки. Месячный бюджет на дашборд не выводим.
-function renderCliBudget(cw) {
-  if (!cw.some(function(c){ return (c.projects||[]).some(function(p){ return p.wb != null; }); })) return '';
-  var h='<div class="split2">';
-  cw.forEach(function(c){
-    var pr=(c.projects||[]).filter(function(p){ return p.wb != null; });
-    if (!pr.length) return;
-    h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — бюджет недели'+
-       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">Авито · план недели = месячный ÷ 4</span></div>'+
-       '<table class="pt"><thead><tr><th>Проект</th><th>Бюджет / нед</th><th>Расход</th><th>% бюджета</th><th>Остаток</th></tr></thead><tbody>';
-    var sb=0,ss=0;
-    function rest(v){ return '<td'+(v<0?' style="color:#EF4444;font-weight:700"':'')+'>'+fmt(v)+' ₽</td>'; }
-    pr.forEach(function(p){
-      var pct=Math.round(p.spend/p.wb*100); sb+=p.wb; ss+=p.spend;
-      h+='<tr><td>'+esc(p.n)+'</td><td>'+fmt(p.wb)+' ₽</td><td>'+fmt(p.spend)+' ₽</td>'+
-         '<td><span class="pill '+(pct>100?'pill-no':'pill-ok')+'">'+pct+'%</span></td>'+rest(p.wb-p.spend)+'</tr>';
-    });
-    var tp=Math.round(ss/sb*100);
-    h+='<tr class="sum"><td>Итого</td><td>'+fmt(sb)+' ₽</td><td>'+fmt(ss)+' ₽</td>'+
-       '<td><span class="pill '+(tp>100?'pill-no':'pill-ok')+'">'+tp+'%</span></td>'+rest(sb-ss)+'</tr></tbody></table></div>';
   });
   return h+'</div>';
 }
@@ -1564,7 +1558,7 @@ function renderPeriod(idx) {
   if (cw) {
     // Новый формат — только для недель, где заведён разрез по клиентам.
     // Соцсети идут сразу после детализации по клиентам — «Требует внимания» замыкает период.
-    body = renderCliKPI(cw, pcw, w, prev) + renderCliMatrix(cw, pcw) + renderCliDetails(cw, pcw) + renderCliBudget(cw) +
+    body = renderCliKPI(cw, pcw, w, prev) + renderCliMatrix(cw, pcw) + renderCliDetails(cw, pcw) +
            renderSocial(w) +
            '<div class="main-grid" style="grid-template-columns:1fr">' + renderAlerts(w, prev, idx) + '</div>';
   } else {
