@@ -41,9 +41,9 @@
   /* KPI BAR */
   .kpi-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
   .kpi-card { background: #fff; border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
-  .kpi-label { font-size: 11px; color: #64748B; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
-  .kpi-value { font-size: 26px; font-weight: 800; color: #0F172A; line-height: 1; }
-  .kpi-sub { font-size: 12px; color: #94A3B8; margin-top: 4px; }
+  .kpi-label { font-size: 12px; color: #64748B; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 8px; }
+  .kpi-value { font-size: 30px; font-weight: 800; color: #0F172A; line-height: 1; }
+  .kpi-sub { font-size: 13px; color: #94A3B8; margin-top: 4px; }
   .kpi-delta { font-size: 12px; font-weight: 600; margin-top: 4px; }
   .kpi-delta.up { color: #10B981; }
   .kpi-delta.down { color: #EF4444; }
@@ -111,8 +111,8 @@
   .social-platform { font-size: 11px; color: #64748B; }
   .social-stat { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid #F8FAFC; }
   .social-stat:first-of-type { border-top: none; padding-top: 0; }
-  .stat-label { font-size: 11px; color: #94A3B8; }
-  .stat-val { font-size: 12px; font-weight: 600; color: #334155; }
+  .stat-label { font-size: 12px; color: #94A3B8; }
+  .stat-val { font-size: 13px; font-weight: 600; color: #334155; }
   .stat-val.stat-up { color: #059669; }
   .stat-val.stat-down { color: #DC2626; }
   .stat-badge { display: inline-block; margin-left: 4px; padding: 1px 6px; border-radius: 5px; font-size: 11px; font-weight: 700; }
@@ -192,7 +192,7 @@
     .kpi-bar { gap: 8px; margin-bottom: 14px; }
     .kpi-card { padding: 12px 12px; }
     .kpi-label { font-size: 10px; }
-    .kpi-value { font-size: 21px; }
+    .kpi-value { font-size: 24px; }
     .kpi-sub { font-size: 11px; }
     .kpi-delta { font-size: 11px; }
 
@@ -238,17 +238,17 @@
 
   /* ── НОВЫЙ ФОРМАТ: клиенты × инструменты ─────────────────── */
   .mx { width:100%; border-collapse:collapse; }
-  .mx th { font-size:10px; color:#94A3B8; text-transform:uppercase; letter-spacing:.4px; font-weight:600; padding:8px 10px; text-align:center; border-bottom:1px solid #E2E8F0; }
+  .mx th { font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:.4px; font-weight:600; padding:8px 10px; text-align:center; border-bottom:1px solid #E2E8F0; }
   .mx th:first-child { text-align:left; }
-  .mx td { padding:12px 10px; text-align:center; border-bottom:1px solid #F1F5F9; font-size:13px; color:#334155; }
+  .mx td { padding:12px 10px; text-align:center; border-bottom:1px solid #F1F5F9; font-size:14px; color:#334155; }
   .mx td:first-child { text-align:left; }
   .mx tr.total td { background:#F8FAFC; font-weight:700; border-top:2px solid #E2E8F0; border-bottom:none; }
   .cl-name { font-weight:700; font-size:14px; color:#0F172A; }
   .cl-scope { font-size:11px; color:#94A3B8; margin-top:2px; }
-  .cell-l { font-weight:700; font-size:15px; color:#0F172A; display:block; }
-  .cell-s { font-size:11px; color:#94A3B8; display:block; margin-top:2px; }
-  .cell-b { font-size:11px; color:#64748B; font-weight:600; display:block; margin-top:1px; }
-  .cell-none { color:#CBD5E1; font-size:12px; }
+  .cell-l { font-weight:700; font-size:17px; color:#0F172A; display:block; }
+  .cell-s { font-size:12px; color:#94A3B8; display:block; margin-top:2px; }
+  .cell-b { font-size:12px; color:#64748B; font-weight:600; display:block; margin-top:1px; }
+  .cell-none { color:#CBD5E1; font-size:13px; }
   .col-tot { background:#F8FAFC; }
   .conv-hi { color:#10B981; } .conv-mid { color:#F59E0B; }
   .conv-yellow { color:#CA8A04; } .conv-lo { color:#EF4444; } .conv-zero { color:#CBD5E1; }
@@ -262,12 +262,12 @@
   .bar-fill { height:100%; background:#0EA5E9; border-radius:2px; }
   .split2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
   .pt { width:100%; border-collapse:collapse; }
-  .pt th { font-size:10px; color:#94A3B8; text-transform:uppercase; letter-spacing:.4px; font-weight:600; padding:5px 6px; text-align:right; }
+  .pt th { font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:.4px; font-weight:600; padding:5px 6px; text-align:right; }
   .pt th:first-child { text-align:left; }
-  .pt td { font-size:12px; padding:6px; border-top:1px solid #F8FAFC; color:#334155; text-align:right; }
+  .pt td { font-size:13px; padding:6px; border-top:1px solid #F8FAFC; color:#334155; text-align:right; }
   .pt td:first-child { text-align:left; font-weight:600; }
   .pt tr.sum td { border-top:2px solid #E2E8F0; font-weight:700; background:#F8FAFC; }
-  .pill { font-size:11px; font-weight:700; padding:1px 6px; border-radius:4px; }
+  .pill { font-size:12px; font-weight:700; padding:1px 6px; border-radius:4px; }
   .pill-ok { background:#ECFDF5; color:#059669; } .pill-no { background:#FFF7ED; color:#EA580C; }
   /* Детализация с колонками бюджета недели: 12 колонок — без переносов в ячейках, до 1700px карточки друг под другом. */
   .pt-wb td { white-space:nowrap; }
@@ -1378,14 +1378,14 @@ function renderCliKPI(cw, pcw, w, pw) {
     // convCollecting — Дарья помечает клиента недели «идёт сбор информации»: сравнение конверсии в шапке не показываем.
     var d = (!c.convCollecting && convReady(c) && pc && ct.conv!=null && pc.conv!=null) ? ct.conv-pc.conv : null;
     convRows += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:'+(i?8:2)+'px">'+
-      '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
-      '<span style="font-size:20px;font-weight:800" class="'+convClass(ct.conv)+'">'+(ct.conv==null?'—':dec1(ct.conv)+'%')+'</span></div>'+
+      '<span style="font-size:13px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
+      '<span style="font-size:24px;font-weight:800" class="'+convClass(ct.conv)+'">'+(ct.conv==null?'—':dec1(ct.conv)+'%')+'</span></div>'+
       '<div style="display:flex;justify-content:space-between;gap:8px">'+
-      '<span style="font-size:10px;color:#CBD5E1">'+adLabel(c)+'</span>'+
-      (d!=null?'<span class="kpi-delta '+(d>0.05?'up':'neutral')+'" style="margin-top:0;font-size:11px'+(d<-0.05?';color:#F59E0B':'')+'">'+
+      '<span style="font-size:11px;color:#CBD5E1">'+adLabel(c)+'</span>'+
+      (d!=null?'<span class="kpi-delta '+(d>0.05?'up':'neutral')+'" style="margin-top:0;font-size:12px'+(d<-0.05?';color:#F59E0B':'')+'">'+
         (d>0.05?'↑':d<-0.05?'↓':'→')+' '+dec1(pc.conv)+'% → '+dec1(ct.conv)+'% ('+(d>0?'+':'')+dec1(d)+' п.п.)</span>'
-        : (c.convCollecting ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:11px">идёт сбор информации</span>'
-        : (!convReady(c) ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:11px">в процессе сбора информации</span>' : '')))+'</div>';
+        : (c.convCollecting ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:12px">идёт сбор информации</span>'
+        : (!convReady(c) ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:12px">в процессе сбора информации</span>' : '')))+'</div>';
   });
   h+='<div class="kpi-card"><div class="kpi-label">Конверсия в вышедших</div>'+convRows+'</div>';
   // Стоимость 1 вышедшего — по каждому клиенту, общей цифры нет (разные воронки).
@@ -1394,13 +1394,13 @@ function renderCliKPI(cw, pcw, w, pw) {
     var v = cliCostOut(c), pv = (pcw && pcw[i] && !partial) ? cliCostOut(pcw[i]) : null;
     var d = (!c.convCollecting && convReady(c) && v != null && pv != null) ? v - pv : null;
     costRows += '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:'+(i?8:2)+'px">'+
-      '<span style="font-size:12px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
-      '<span style="font-size:20px;font-weight:800;color:'+(v==null?'#CBD5E1':'#0F172A')+'">'+(v==null?'—':fmt(v)+' ₽')+'</span></div>'+
+      '<span style="font-size:13px;color:#64748B;font-weight:600">'+esc(c.name)+'</span>'+
+      '<span style="font-size:24px;font-weight:800;color:'+(v==null?'#CBD5E1':'#0F172A')+'">'+(v==null?'—':fmt(v)+' ₽')+'</span></div>'+
       '<div style="display:flex;justify-content:space-between;gap:8px">'+
-      '<span style="font-size:10px;color:#CBD5E1">'+(v==null?'нет вышедших':'')+'</span>'+
-      (d!=null?'<span class="kpi-delta '+(d<0?'up':d>0?'down':'neutral')+'" style="margin-top:0;font-size:11px">'+
+      '<span style="font-size:11px;color:#CBD5E1">'+(v==null?'нет вышедших':'')+'</span>'+
+      (d!=null?'<span class="kpi-delta '+(d<0?'up':d>0?'down':'neutral')+'" style="margin-top:0;font-size:12px">'+
         (d<0?'↓':d>0?'↑':'→')+' '+fmt(pv)+' → '+fmt(v)+' ₽</span>'
-        : (c.convCollecting ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:11px">идёт сбор информации</span>' : ''))+'</div>';
+        : (c.convCollecting ? '<span class="kpi-delta neutral" style="margin-top:0;font-size:12px">идёт сбор информации</span>' : ''))+'</div>';
   });
   h+='<div class="kpi-card"><div class="kpi-label">Стоимость 1 вышедшего</div>'+costRows+'</div>';
   return h+'</div>';
