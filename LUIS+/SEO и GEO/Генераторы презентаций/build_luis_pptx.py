@@ -59,8 +59,8 @@ BADBG = RGBColor(0xFB,0xE7,0xEA)
 
 HEAD = "Exo 2 SemiBold"
 BODY = "Exo 2"
-LOGO = "/Users/daria/Desktop/Сlaude Code/LUIS+/luis_logo.png"
-TEMPLATE = "/Users/daria/Desktop/Сlaude Code/LUIS+/Презентации/LUIS+ 2026_расширенная.pptx"
+LOGO = "/Users/daria/Desktop/Сlaude Code/LUIS+/Контент и материалы/luis_logo.png"
+TEMPLATE = "/Users/daria/Desktop/Сlaude Code/LUIS+/Контент и материалы/Презентации/LUIS+ 2026_расширенная.pptx"
 
 def heat(p):
     """Тепловая шкала в фирменной сине-стальной гамме (светлая → тёмно-синяя)."""
@@ -339,7 +339,7 @@ for i,(h,p) in enumerate(R):
     txt(s, x+Inches(1.05), y+Inches(0.78), cw2-Inches(1.3), Inches(1.15), [[(p, 11.5, False, INK2, False, BODY)]], line_sp=1.1)
 footer(s)
 
-out = "/Users/daria/Desktop/Сlaude Code/LUIS+/LUIS_SEO_GEO_Июнь_2026.pptx"
+out = "/Users/daria/Desktop/Сlaude Code/LUIS+/SEO и GEO/Отчёты и дашборды/LUIS_SEO_GEO_Июнь_2026.pptx"
 os.makedirs(os.path.dirname(out), exist_ok=True)
 prs.save(out)
 print("OK:", out)

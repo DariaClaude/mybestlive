@@ -3,7 +3,7 @@
 Использование: from gs_read import token, get; tok = token(); get(url, tok).
 Ключ лежит в keys/ (в .gitignore), в этом файле секретов нет."""
 import json,base64,time,subprocess,tempfile,os,urllib.request,urllib.parse,urllib.error
-KEY=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'keys','pme-sheets-0591ecbcdf46.json')
+KEY=os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),'keys','pme-sheets-0591ecbcdf46.json')  # 13.11.2026: скрипт лежит на два уровня ниже корня
 def b64(b): return base64.urlsafe_b64encode(b).rstrip(b'=')
 def token():
     k=json.load(open(KEY)); now=int(time.time())

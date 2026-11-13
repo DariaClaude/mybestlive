@@ -100,7 +100,7 @@ function colLetter(n){ var s=''; while(n>0){var m=(n-1)%26; s=String.fromCharCod
 ```
 
 ### 7.2. ⭐ Запись веб-замера — `fillGeoJune` (основной)
-Заполняет строки с пустым GEO: позиция luis.ru из `MEASURED` → в LUIS+ (F,M,T), остальное «-». Не перезаписывает непустое. Полный рабочий файл: `LUIS+/fill_geo_june.gs`.
+Заполняет строки с пустым GEO: позиция luis.ru из `MEASURED` → в LUIS+ (F,M,T), остальное «-». Не перезаписывает непустое. Полный рабочий файл: `LUIS+/SEO и GEO/Таблица позиций/fill_geo_june.gs`.
 ```javascript
 var SPREADSHEET_ID = '16GXxvAtU4JnG9OxYRpTXkYxSKgwGbp1chMH87rHx8YA';
 var SHEET_GID      = 75367906;

@@ -9,7 +9,7 @@ import json, os, sys, html, re
 from skins import SKINS, BASE_CSS, CITY_CSS, CITY_CSS_BRAND
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))          # корень репозитория (Сlaude Code)
+ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))    # корень репозитория (Сlaude Code); 13.11.2026: папка на уровень глубже
 OUT_DIR = os.path.join(ROOT, 'sites', 'rabota')
 CFG = json.load(open(os.path.join(HERE, 'landings.json'), encoding='utf-8'))
 
