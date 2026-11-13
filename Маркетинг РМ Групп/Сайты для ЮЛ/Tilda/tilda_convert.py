@@ -98,5 +98,8 @@ def convert(path, out_path):
     assert '&ROOT&' not in final and '<!DOCTYPE' not in final and '<body>' not in final
     print(f'OK: {out_path} ({len(final)})')
 
-convert('Маркетинг РМ Групп/Сайты для ЮЛ/Сайты/fabrika-resheniy-landing.html', 'tilda/fabrika-v2.html')
-convert('Маркетинг РМ Групп/Сайты для ЮЛ/Сайты/orion-landing.html', 'tilda/orion-v2.html')
+# Пути относительно этого файла: исходники лендингов лежат в ../Сайты, результат пишется рядом со скриптом
+HERE = os.path.dirname(os.path.abspath(__file__))
+SITES = os.path.normpath(os.path.join(HERE, '..', 'Сайты'))
+convert(os.path.join(SITES, 'fabrika-resheniy-landing.html'), os.path.join(HERE, 'fabrika-v2.html'))
+convert(os.path.join(SITES, 'orion-landing.html'), os.path.join(HERE, 'orion-v2.html'))

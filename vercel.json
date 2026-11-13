@@ -1,27 +1,21 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/war-room-matrix"
-    },
-    {
-      "source": "/luis",
-      "destination": "/luis-dashboard"
-    }
+    { "source": "/", "destination": "/war-room/war-room-matrix" },
+    { "source": "/war-room", "destination": "/war-room/war-room" },
+    { "source": "/war-room-matrix", "destination": "/war-room/war-room-matrix" },
+    { "source": "/war-room-data.js", "destination": "/war-room/war-room-data.js" },
+    { "source": "/war-room-favicon.svg", "destination": "/war-room/war-room-favicon.svg" },
+    { "source": "/war-room-favicon-32.png", "destination": "/war-room/war-room-favicon-32.png" },
+    { "source": "/war-room-apple-touch-icon.png", "destination": "/war-room/war-room-apple-touch-icon.png" },
+    { "source": "/luis", "destination": "/luis-dashboard" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate, max-age=0"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        }
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, max-age=0" },
+        { "key": "Pragma", "value": "no-cache" }
       ]
     }
   ]
