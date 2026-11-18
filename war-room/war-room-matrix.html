@@ -1391,8 +1391,28 @@ function renderCliKPI(cw, pcw, w, pw) {
      '<div class="kpi-sub">'+(t.plan ? 'план '+fmt(t.plan)+'<div style="margin-top:4px"><span class="pill '+(t.leads>=t.plan?'pill-ok':'pill-no')+'" style="font-size:12px;padding:2px 8px;white-space:nowrap;display:inline-block">'+(t.leads>=t.plan?'✓ план выполнен':'план не выполнен')+' · '+Math.round(t.leads/t.plan*100)+'%</span></div>'
         : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
      (partial ? waitNote : chPend ? chNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
+  // План расхода недели по клиентам (Дарья 18.11.2026: «сколько по Диане потратить планировали, сколько по Дане
+  // и сколько итогово потратили»). План есть только у Авито: сумма бюджетов проектов wb (месячный ÷ 4).
+  // У ВК, Юлы и Директа плана расхода нет — они остаются строкой под табличкой.
+  var bRows = cw.map(function(c){ var r={n:c.name, pl:0, sp:0, any:false};
+    (c.projects||[]).forEach(function(p){ if(p.wb!=null){ r.any=true; r.pl+=p.wb; r.sp+=(p.spend||0); } }); return r; });
+  var showWb = !avNone && !avPartial && bRows.some(function(r){ return r.any; });
+  var wbTable = '';
+  if (showWb) {
+    var bRow = function(n, pl, sp, tot){ var pct = pl ? Math.round(sp/pl*100) : null;
+      return '<tr'+(tot?' style="font-weight:700"':'')+'><td style="text-align:left;padding:2px 6px 2px 0'+(tot?';border-top:1px solid #E2E8F0':'')+'">'+n+'</td>'+
+        '<td style="text-align:right;padding:2px 6px;white-space:nowrap'+(tot?';border-top:1px solid #E2E8F0':'')+'">'+fmt(pl)+'</td>'+
+        '<td style="text-align:right;padding:2px 6px;white-space:nowrap;color:#0F172A'+(tot?';border-top:1px solid #E2E8F0':'')+'">'+fmt(sp)+'</td>'+
+        '<td style="text-align:right;padding:2px 0 2px 2px'+(tot?';border-top:1px solid #E2E8F0':'')+'">'+(pct!=null?'<span class="pill '+(pct>100?'pill-no':'pill-ok')+'" style="font-size:11px;padding:1px 6px">'+pct+'%</span>':'')+'</td></tr>'; };
+    var tPl=0, tSp=0;
+    wbTable = '<div style="font-size:11px;color:#94A3B8;margin:2px 0 2px">Авито: план недели и расход, ₽</div>'+
+      '<table style="border-collapse:collapse;font-size:13px;color:#475569;margin-bottom:6px">'+
+      '<tr style="font-size:11px;color:#94A3B8"><td></td><td style="text-align:right;padding:0 6px">план</td><td style="text-align:right;padding:0 6px">потрачено</td><td></td></tr>';
+    bRows.forEach(function(r){ if(!r.any) return; tPl+=r.pl; tSp+=r.sp; wbTable+=bRow(esc(r.n), r.pl, r.sp, false); });
+    wbTable += bRow('Итого', tPl, tSp, true) + '</table>';
+  }
   h+='<div class="kpi-card"><div class="kpi-label">Бюджет</div><div class="kpi-value">'+fmt(t.spend)+' ₽</div>'+
-     '<div class="kpi-sub" style="line-height:1.7">Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>'+
+     '<div class="kpi-sub" style="line-height:1.7">'+wbTable+(showWb?'':'Авито '+(avNone?'<b style="color:#F59E0B">не внесено</b>':'<b style="color:#475569">'+fmt(bAv.spend)+' ₽</b>'+(avPartial?' <span style="color:#F59E0B">'+pendNote+'</span>':''))+'<br>')+
      'ВК '+chSpend(bVk)+' · Юла '+chSpend(bYu)+
      (bDi.any ? ' · Директ '+(bDi.spend?'<b style="color:#475569">'+fmt(bDi.spend)+' ₽</b>':'<span style="color:#F59E0B">расход не внесён</span>') : (bDi.pending ? ' · Директ '+chSpend(bDi) : ''))+'</div>'+
      (partial ? waitNote : chPend ? chNote : delta(t.spend, pt&&pt.spend, {goodUp:false, mode:'pctOnly'}))+'</div>';
