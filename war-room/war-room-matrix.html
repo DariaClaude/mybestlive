@@ -713,6 +713,39 @@ function renderSocial(w) {
 // Применяется только к неделям, для которых заведён разрез по клиентам.
 // Остальные периоды рендерятся как раньше.
 var CLIENTS = {
+  "16–22 ноября": [
+    { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:3200, adapted:20, convCollecting:true,
+      tools:{ avito:{leads:3329,spend:263229}, direct:null, social:{leads:9,spend:11826,ad:0}, yula:{leads:5,spend:1641,ad:0} },
+      projects:[
+        {n:"Урбан Дикси МСК",plan:50,fact:56,spend:6055,ad:null,wb:7500,cp:{vk:1,yu:0}},
+        {n:"Табыш ЧЛБ",plan:300,fact:300,spend:20803,ad:17,wb:30000,cp:{vk:3,yu:2}},
+        {n:"Лента ЧЛБ",plan:180,fact:188,spend:14442,ad:1,wb:12500,cp:{vk:2,yu:1}},
+        {n:"Пятёрочка ЧЛБ",plan:70,fact:70,spend:4738,ad:null,wb:10000,cp:{vk:1,yu:1}},
+        {n:"Табыш КЗН",plan:50,fact:53,spend:4638,ad:null,wb:10000,cp:{vk:1,yu:0}},
+        {n:"Лента КЗН",plan:330,fact:337,spend:31676,ad:null,wb:17500,cp:{vk:3,yu:2}},
+        {n:"Пятёрочка КЗН",plan:20,fact:25,spend:2870,ad:null,wb:3750,cp:{vk:0,yu:0}},
+        {n:"Лента КРД",plan:1700,fact:1748,spend:112390,ad:null,wb:62500,cp:{vk:17,yu:11}},
+        {n:"Магнит КРД",plan:70,fact:72,spend:4809,ad:null,wb:5191,cp:{vk:1,yu:1}},
+        {n:"Лента СПБ",plan:200,fact:226,spend:33140,ad:null,wb:25000,cp:{vk:2,yu:1}},
+        {n:"Верный",plan:50,fact:57,spend:3820,ad:null,wb:10000,cp:{vk:0,yu:0}},
+        {n:"Рэми",plan:70,fact:75,spend:3216,ad:null,wb:10000,cp:{vk:1,yu:1}},
+        {n:"Сбер Логистика",plan:40,fact:46,spend:5593,ad:null,wb:25000,cp:{vk:0,yu:0}},
+        {n:"Нойтэк",plan:30,fact:30,spend:6409,ad:null,wb:12500,cp:{vk:0,yu:0}},
+        {n:"Ламода",plan:40,fact:46,spend:8630,ad:2,wb:10000,cp:{vk:0,yu:0}}
+      ] },
+    { name:"Даниил", scope:"ОПИ — Авито, ВК, Юла", plan:1465, adapted:120, outNote:"Магнит КЗН 1, Яндекс Директ 2",
+      tools:{ avito:{leads:1475,spend:118390}, direct:{leads:113,spend:59664,ad:2}, social:{leads:23,spend:24189,ad:0}, yula:{leads:20,spend:6565,ad:0} },
+      projects:[
+        {n:"МАГНИТ КРД",plan:150,fact:144,spend:9058,ad:4,wb:32500,cp:{vk:3,yu:1,di:11}},
+        {n:"ЛЕНТА КРД",plan:80,fact:83,spend:4893,ad:3,wb:17500,cp:{vk:2,yu:0,di:6}},
+        {n:"ЛЕНТА КЗН",plan:30,fact:30,spend:2136,ad:1,wb:17500,cp:{vk:1,yu:0,di:2}},
+        {n:"ЛЕНТА ЧЛБ",plan:10,fact:17,spend:1270,ad:2,wb:7500,cp:{vk:0,yu:0,di:1}},
+        {n:"Курьеры",plan:550,fact:565,spend:44797,ad:11,wb:75000,cp:{vk:10,yu:4,di:41}},
+        {n:"Инвентаризация",plan:400,fact:393,spend:36833,ad:75,wb:50000,cp:{vk:8,yu:3,di:30}},
+        {n:"Инвентаризация Вахта",plan:230,fact:237,spend:18887,ad:21,wb:25000,cp:{vk:4,yu:2,di:17}},
+        {n:"Гравис",plan:5,fact:2,spend:248,ad:0,wb:5000,cp:{vk:0,yu:0,di:1}},
+        {n:"Пятёрочка ЧЛБ",plan:10,fact:4,spend:268,ad:0,wb:3750,cp:{vk:0,yu:0,di:1}}
+      ] } ],
   "9–15 ноября": [
     { name:"Диана", scope:"ДРС — Авито, ВК, Юла (оперблок)", plan:2395, adapted:33,
       tools:{ avito:{leads:2445,spend:230763}, direct:null, social:{leads:22,spend:4275}, yula:{leads:19,spend:5165} },
@@ -1226,8 +1259,9 @@ function sumClients(labels) {
         var v = c.tools[t.k];
         if (v === null || v === undefined) { if (!(t.k in a.tools)) a.tools[t.k] = null; return; }
         if (v.pending) return;
-        var cur = a.tools[t.k] || { leads:0, spend:0 };
-        a.tools[t.k] = { leads: cur.leads + (v.leads || 0), spend: cur.spend + (v.spend || 0) };
+        var cur = a.tools[t.k] || { leads:0, spend:0, ad:null };
+        a.tools[t.k] = { leads: cur.leads + (v.leads || 0), spend: cur.spend + (v.spend || 0),
+                         ad: (v.ad != null || cur.ad != null) ? (cur.ad || 0) + (v.ad || 0) : null };
       });
       (c.projects || []).forEach(function(pr){
         var q = a._pr[pr.n];
@@ -1392,7 +1426,7 @@ function renderCliKPI(cw, pcw, w, pw) {
         : '<span style="color:#F59E0B">Авито не внесён в таблицу</span>')+'</div>'+
      (partial ? waitNote : chPend ? chNote : delta(t.leads, pt&&pt.leads, {goodUp:true, mode:'series'}))+'</div>';
   // План расхода недели по клиентам (Дарья 18.11.2026: «сколько по Диане потратить планировали, сколько по Дане
-  // и сколько итогово потратили»). План есть только у Авито: сумма бюджетов проектов wb (месячный ÷ 4).
+  // и сколько итогово потратили»). План есть только у Авито: сумма бюджетов проектов wb (колонка «План бюджет на неделю» таблицы Авито).
   // У ВК, Юлы и Директа плана расхода нет — они остаются строкой под табличкой.
   var bRows = cw.map(function(c){ var r={n:c.name, pl:0, sp:0, any:false};
     (c.projects||[]).forEach(function(p){ if(p.wb!=null){ r.any=true; r.pl+=p.wb; r.sp+=(p.spend||0); } }); return r; });
@@ -1539,7 +1573,9 @@ function renderCliMatrix(cw, pcw) {
          (v.spend==null
             ? '<span class="cell-s" style="color:#F59E0B">расход не внесён</span>'
             : '<span class="cell-s">'+(v.leads?'CPL '+fmt(Math.round(v.spend/v.leads))+' ₽':'лидов нет')+'</span>'+
-              '<span class="cell-b">'+fmt(v.spend)+' ₽</span>')+'</td>';
+              '<span class="cell-b">'+fmt(v.spend)+' ₽</span>')+
+         // Вышедшие из лидов канала (ВК, Юла, Директ) Дарья присылает отдельно с 25.11.2026: tools.<канал>.ad.
+         (tool.k!=='avito' && v.ad!=null ? '<span class="cell-s">вышедших: '+fmt(v.ad)+'</span>' : '')+'</td>';
     });
     h+='<td class="col-tot"><span class="cell-l">'+fmt(t.spend)+' ₽</span>'+
        (ptt?cellDelta(t.spend, ptt.spend, false):'')+'</td>';
@@ -1561,7 +1597,8 @@ function renderCliMatrix(cw, pcw) {
     var showD = ptv && ptv.any && tv.any && (tool.k!=='avito' || !partial);
     var noSpend = tv.any && cw.some(function(c){ var v=c.tools[tool.k]; return v && !v.pending && v.spend==null; });
     var tPlan = 0; cw.forEach(function(c){ tPlan += (cliChPlan(c, tool.k) || 0); });
-    h+='<td>'+(tv.any? fmt(tv.leads)+(showD?leadDelta(tv.leads, ptv.leads):'')+(tool.k!=='avito'?chPlanNote(tv.leads, tPlan):'')+(noSpend?'<span class="cell-s" style="color:#F59E0B">расход не внесён</span>':'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>')
+    var tAd = null; cw.forEach(function(c){ var v=c.tools[tool.k]; if (tool.k!=='avito' && v && !v.pending && v.ad!=null) tAd = (tAd||0) + v.ad; });
+    h+='<td>'+(tv.any? fmt(tv.leads)+(showD?leadDelta(tv.leads, ptv.leads):'')+(tool.k!=='avito'?chPlanNote(tv.leads, tPlan):'')+(noSpend?'<span class="cell-s" style="color:#F59E0B">расход не внесён</span>':'<span class="cell-b">'+fmt(tv.spend)+' ₽</span>')+(tAd!=null?'<span class="cell-s">вышедших: '+fmt(tAd)+'</span>':'')
              : tv.pending ? '<span class="cell-none" style="color:#F59E0B">не внесено</span>'
              : '<span class="cell-none">—</span>')+'</td>';
   });
@@ -1595,7 +1632,7 @@ function renderCliDetails(cw, pcw) {
     var hasCp = c.projects.some(function(p){ return p.cp; }), hasDi = c.projects.some(function(p){ return p.cp && p.cp.di != null; });
     var cpCell = function(cp){ return '<td style="white-space:nowrap">'+fmt(cp.vk||0)+' / '+fmt(cp.yu||0)+(hasDi?' / '+fmt(cp.di||0):'')+'</td>'; };
     h+='<div class="card"><div class="card-title"><span class="dot dot-'+(c.name==='Даниил'?'blue':'orange')+'"></span>'+esc(c.name)+' — детализация'+
-       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито'+(hasWb?' · бюджет недели = месячный ÷ 4':'')+'</span></div>'+
+       '<span class="fmt-badge" style="background:#E2E8F0;color:#64748B">'+esc(c.scope.split(' — ')[0])+' · проекты Авито'+(hasWb?' · бюджет недели по таблице Авито':'')+'</span></div>'+
        '<table class="pt'+(hasWb?' pt-wb':'')+'"><thead><tr><th>Проект</th><th>План</th><th>Факт</th><th>%</th><th>CPL</th><th>Вышедш.</th><th>Конверсия</th><th>₽ / выш.</th>'+
        (hasWb?'<th>Бюджет / нед</th><th>Расход</th><th>% бюджета</th><th>Остаток</th>':'')+
        (hasCp?'<th>План ВК / Юла'+(hasDi?' / Директ':'')+'</th>':'')+'</tr></thead><tbody>';
