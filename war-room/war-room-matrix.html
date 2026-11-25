@@ -1583,7 +1583,8 @@ function renderCliMatrix(cw, pcw) {
       if(v.pending){ h+='<td><span class="cell-none" style="color:#F59E0B">'+(tool.k==='avito'?'не внесено<br>в таблицу':'не внесено')+'</span></td>'; return; }
       var partNote = (tool.k==='avito' && c.avitoPartial) ? '<span class="cell-s" style="color:#F59E0B">внесено частично</span>' : '';
       h+='<td><span class="cell-l'+(v.leads?'':' conv-mid')+'">'+fmt(v.leads)+'</span>'+
-         ((pv && !pv.pending) ? cellDelta(v.leads, pv.leads, true) : '')+
+         // ВК, Юла, Директ с прошлой неделей не сравниваем (Дарья 25.11.2026): только план и цена лида.
+         ((tool.k==='avito' && pv && !pv.pending) ? cellDelta(v.leads, pv.leads, true) : '')+
          (tool.k!=='avito' ? chPlanNote(v.leads, cliChPlan(c, tool.k)) : '')+
          partNote+
          (v.spend==null
@@ -1610,7 +1611,8 @@ function renderCliMatrix(cw, pcw) {
   NEW_TOOLS.forEach(function(tool){
     var tv=cliToolTotal(cw,tool.k), ptv = pcw ? cliToolTotal(pcw,tool.k) : null;
     // ВК и Юла сравниваем с прошлой неделей всегда; Авито — только когда обе недели полные.
-    var showD = ptv && ptv.any && tv.any && (tool.k!=='avito' || !partial);
+    // Дельта к прошлой неделе — только у Авито и только когда обе недели полные; ВК, Юлу и Директ не сравниваем (Дарья 25.11.2026).
+    var showD = tool.k==='avito' && ptv && ptv.any && tv.any && !partial;
     var noSpend = tv.any && cw.some(function(c){ var v=c.tools[tool.k]; return v && !v.pending && v.spend==null; });
     var tPlan = 0; cw.forEach(function(c){ tPlan += (cliChPlan(c, tool.k) || 0); });
     var tAd = null; cw.forEach(function(c){ var v=c.tools[tool.k]; if (tool.k!=='avito' && v && !v.pending && v.ad!=null) tAd = (tAd||0) + v.ad; });
