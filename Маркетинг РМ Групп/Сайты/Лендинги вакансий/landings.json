@@ -383,7 +383,8 @@
       "ok_title": "Спасибо за отклик!",
       "ok_text": "Мы свяжемся с вами в ближайшее время.",
       "tilda_metrika_id": 113315490,
-      "hero_badge": false
+      "hero_badge": false,
+      "no_max": true
     },
     {
       "slug": "vakansii",

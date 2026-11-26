@@ -6,7 +6,7 @@
 Правки контента — только в landings.json. Дизайн/логика — в TEMPLATE ниже.
 """
 import json, os, sys, html, re
-from skins import SKINS, BASE_CSS, CITY_CSS, CITY_CSS_BRAND
+from skins import SKINS, BASE_CSS, CITY_CSS, CITY_CSS_BRAND, MAX_SVG
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))    # корень репозитория (Сlaude Code); 13.11.2026: папка на уровень глубже
@@ -148,7 +148,7 @@ TAIL = r"""
     function next(){
       if(i >= ENDPOINTS.length){
         btn.disabled=false; btn.textContent=old;
-        msg.innerHTML = 'Не получилось отправить. Напишите нам в <a href="'+TG+'" target="_blank" rel="noopener">MAX</a>.';
+        msg.innerHTML = '{{fail_html}}';
         msg.className='form-msg show bad'; return;
       }
       var url = ENDPOINTS[i++];
@@ -160,7 +160,7 @@ TAIL = r"""
     ym_(GOAL);
     form.innerHTML = '<div class="success"><div class="ok-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>'+
       '<h3>{{ok_title}}</h3><p>{{ok_text}}</p>'+
-      '<a class="btn btn-tg btn-block" href="'+TG+'" target="_blank" rel="noopener">Написать в MAX</a></div>';
+      '{{ok_max_btn}}</div>';
   }
   document.querySelectorAll('form').forEach(function(f){ f.addEventListener('submit', function(e){ e.preventDefault(); submit(f); }); });
   document.querySelectorAll('[data-ym]').forEach(function(a){ a.addEventListener('click', function(){ ym_(a.getAttribute('data-ym')); }); });{{city_js}}
@@ -323,7 +323,16 @@ def render(l):
     ctx['steps_html'] = ''.join(f'<div class="step reveal"><i>{i+1}</i><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(g['steps']))
     ctx['partners_html'] = ''.join(f'<img src="../assets/{p}.png" alt="{p}" loading="lazy">' for p in g['partners'])
 
-    max_btn = (f'<a class="btn btn-ghost" href="{esc(l.get("max_url", g["max_url"]))}" target="_blank" rel="noopener" data-ym="max_click">'
+    # MAX отключается лендингу ключом "no_max": true в landings.json (sbor с 26.11.2026):
+    # пропадают кнопка на первом экране, строка в контактах, кнопка после заявки; в ошибке формы вместо MAX почта
+    no_max = bool(l.get('no_max'))
+    max_href = esc(l.get('max_url', g['max_url']))
+    ctx['max_url'] = '' if no_max else max_href
+    ctx['max_line'] = '' if no_max else (f'\n        <a href="{max_href}" target="_blank" rel="noopener" data-ym="max_click">{MAX_SVG}Написать в MAX</a>')
+    ctx['fail_html'] = (f'Не получилось отправить. Попробуйте ещё раз или напишите нам на <a href="mailto:{ctx["email"]}">{ctx["email"]}</a>.' if no_max
+                        else "Не получилось отправить. Напишите нам в <a href=\"'+TG+'\" target=\"_blank\" rel=\"noopener\">MAX</a>.")
+    ctx['ok_max_btn'] = '' if no_max else "<a class=\"btn btn-tg btn-block\" href=\"'+TG+'\" target=\"_blank\" rel=\"noopener\">Написать в MAX</a>"
+    max_btn = '' if no_max else (f'<a class="btn btn-ghost" href="{max_href}" target="_blank" rel="noopener" data-ym="max_click">'
                f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg>Написать в MAX</a>')
     if l.get('general'):
         ctx['hero_buttons'] = (f'<a class="btn btn-primary" href="#vacancies">{esc(l["cta"])}</a>'
@@ -341,7 +350,7 @@ def render(l):
     ctx.update(main_city='', modal_city='', city_check='', city_js='', vacancies_intro='', region_expr='REGION',
                modal_btn=esc(l.get('modal_btn', 'Отправить заявку')),
                ok_title=esc(l.get('ok_title', 'Заявка принята')),
-               ok_text=esc(l.get('ok_text', 'Перезвоним в течение 15 минут в рабочее время. Если удобнее, напишите нам в MAX.')))
+               ok_text=esc(l.get('ok_text', 'Перезвоним в течение 15 минут в рабочее время.' + ('' if no_max else ' Если удобнее, напишите нам в MAX.'))))
     cities_mode = any('cities' in v for v in l['vacancies'])
     all_cities = []
     if cities_mode:

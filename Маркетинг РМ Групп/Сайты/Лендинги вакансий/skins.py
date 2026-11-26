@@ -86,8 +86,7 @@ FORM_MAIN = '''<form class="lead" id="mainForm" novalidate>
       <p class="consent">Нажимая кнопку, вы соглашаетесь с <a href="{{policy_url}}" target="_blank" rel="noopener">политикой конфиденциальности</a> и даёте <a href="{{consent_url}}" target="_blank" rel="noopener">согласие на обработку персональных данных</a>.</p>
     </form>'''
 
-CONTACT_LINES = f'''<div class="contact-lines">
-        <a href="{{{{max_url}}}}" target="_blank" rel="noopener" data-ym="max_click">{MAX_SVG}Написать в MAX</a>
+CONTACT_LINES = f'''<div class="contact-lines">{{{{max_line}}}}
         <a href="mailto:{{{{email}}}}">{MAIL_SVG}{{{{email}}}}</a>
       </div>'''
 
