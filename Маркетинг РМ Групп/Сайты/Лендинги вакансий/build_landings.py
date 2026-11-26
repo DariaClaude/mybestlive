@@ -70,8 +70,6 @@ TAIL = r"""
   var REGION = "{{region}}";
   var GOAL = "{{metrika_goal}}";
   var TG = "{{max_url}}";
-  var PHONE_LINK = "{{phone_link}}";
-  var PHONE = "{{phone_display}}";
 
   function ym_(goal){ try{ if(window.ym && GOAL){ ym({{metrika_id}}, 'reachGoal', goal); } }catch(e){} }
 
@@ -150,7 +148,7 @@ TAIL = r"""
     function next(){
       if(i >= ENDPOINTS.length){
         btn.disabled=false; btn.textContent=old;
-        msg.innerHTML = 'Не получилось отправить. Позвоните <a href="tel:'+PHONE_LINK+'">'+PHONE+'</a> или напишите в <a href="'+TG+'" target="_blank" rel="noopener">MAX</a>.';
+        msg.innerHTML = 'Не получилось отправить. Напишите нам в <a href="'+TG+'" target="_blank" rel="noopener">MAX</a>.';
         msg.className='form-msg show bad'; return;
       }
       var url = ENDPOINTS[i++];
@@ -484,7 +482,6 @@ body{padding-bottom:0}
 <header>
   <div class="wrap nav">
     {{brand_head}}
-    <div class="nav-right"><a class="nav-phone" href="tel:{{phone_link}}">{{phone_svg}}<span>{{phone_display}}</span></a></div>
   </div>
 </header>
 <main class="policy">
@@ -495,7 +492,7 @@ body{padding-bottom:0}
 </main>
 <footer><div class="wrap row">
   <div>{{legal}} · {{address}}</div>
-  <div><a href="tel:{{phone_link}}">{{phone_display}}</a> · <a href="mailto:{{email}}">{{email}}</a></div>
+  <div><a href="mailto:{{email}}">{{email}}</a></div>
 </div></footer>
 </body>
 </html>
@@ -516,7 +513,6 @@ def policy_html(text):
     return title, '\n'.join(out)
 
 def build_policies():
-    from skins import PHONE_SVG
     pol_path = os.path.join(HERE, 'policies.json')
     if not os.path.exists(pol_path): return {}
     pols = json.load(open(pol_path, encoding='utf-8'))
@@ -534,7 +530,7 @@ def build_policies():
         ctx['favicon'] = favicon(FAVICONS[l.get('brand','rmgk')])
         ctx['fonts_extra'] = ('\n' + FONTS_EXTRA[l.get('brand','rmgk')]) if l.get('brand','rmgk') in FONTS_EXTRA else ''
         ctx['skin_css'] = (BASE_CSS + skin['css']).replace('{{hero_pos}}', 'center')
-        ctx['brand_head'] = head; ctx['phone_svg'] = PHONE_SVG
+        ctx['brand_head'] = head
         ctx['title'] = esc(title); ctx['body_html'] = body
         out = POLICY_TPL
         for k, v in ctx.items(): out = out.replace('{{' + k + '}}', v)

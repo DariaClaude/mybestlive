@@ -87,14 +87,12 @@ FORM_MAIN = '''<form class="lead" id="mainForm" novalidate>
     </form>'''
 
 CONTACT_LINES = f'''<div class="contact-lines">
-        <a href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}{{{{phone_display}}}}</a>
         <a href="{{{{max_url}}}}" target="_blank" rel="noopener" data-ym="max_click">{MAX_SVG}Написать в MAX</a>
         <a href="mailto:{{{{email}}}}">{MAIL_SVG}{{{{email}}}}</a>
       </div>'''
 
 BAR = f'''<div class="bar" id="bar">
   <button class="btn btn-primary" data-open="">Откликнуться</button>
-  <a class="call" href="tel:{{{{phone_link}}}}" aria-label="Позвонить" data-ym="phone_click">{PHONE_SVG}</a>
 </div>'''
 
 # =====================================================================================
@@ -200,7 +198,6 @@ RMGK_BODY = f'''
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="{{{{brand_name}}}}"><span class="bar-mark"></span><span><b>{{{{brand_name}}}}</b><small>вакансии рядом с домом</small></span></a>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
       <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
     </div>
   </div>
@@ -249,7 +246,7 @@ RMGK_BODY = f'''
 <footer><div class="wrap row">
   <a class="brand" href="#top"><span class="bar-mark"></span><b>{{{{brand_name}}}}</b></a>
   <div>{{{{legal}}}} · {{{{address}}}}</div>
-  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+  <div><a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
 </div></footer>
 {BAR}
 '''
@@ -360,7 +357,6 @@ URBAN_BODY = f'''
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="{{{{brand_name}}}}">{{{{brand_logo}}}}<span>Урбан <em>Сервис</em><small>вакансии рядом с домом</small></span></a>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
       <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
     </div>
   </div>
@@ -406,7 +402,7 @@ URBAN_BODY = f'''
 <footer><div class="wrap row">
   <a class="brand" href="#top">{{{{brand_logo}}}}<span>Урбан <em>Сервис</em></span></a>
   <div>{{{{legal}}}} · {{{{address}}}}</div>
-  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+  <div><a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
 </div></footer>
 {BAR}
 '''
@@ -495,7 +491,6 @@ INSTAFF_BODY = f'''
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="{{{{brand_name}}}}">{{{{brand_logo}}}}<small>вакансии рядом с домом</small></a>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
       <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
     </div>
   </div>
@@ -528,7 +523,7 @@ INSTAFF_BODY = f'''
 <footer><div class="wrap row">
   <a class="brand" href="#top">{{{{brand_logo}}}}</a>
   <div>{{{{legal}}}} · {{{{address}}}}</div>
-  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+  <div><a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
 </div></footer>
 {BAR}
 '''
@@ -646,7 +641,6 @@ ORION_BODY = f'''
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="{{{{brand_name}}}}">{{{{brand_logo}}}}<span>{{{{brand_name}}}}<small>вакансии рядом с домом</small></span></a>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
       <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
     </div>
   </div>
@@ -685,7 +679,7 @@ ORION_BODY = f'''
 <footer><div class="wrap row">
   <a class="brand" href="#top">{{{{brand_logo}}}}<span>{{{{brand_name}}}}</span></a>
   <div>{{{{legal}}}} · {{{{address}}}}</div>
-  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+  <div><a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
 </div></footer>
 {BAR}
 '''
@@ -810,7 +804,6 @@ ARKADA_BODY = f'''
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="{{{{brand_name}}}}">{{{{brand_logo}}}}<span>{{{{brand_name}}}}<small>вакансии рядом с домом</small></span></a>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
       <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
     </div>
   </div>
@@ -851,7 +844,7 @@ ARKADA_BODY = f'''
 <footer><div class="wrap row">
   <a class="brand" href="#top">{{{{brand_logo}}}}<span>{{{{brand_name}}}}</span></a>
   <div>{{{{legal}}}} · {{{{address}}}}</div>
-  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+  <div><a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
 </div></footer>
 {BAR}
 '''
@@ -970,7 +963,6 @@ ALLIANCE_BODY = f'''
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="{{{{brand_name}}}}">{{{{brand_logo}}}}<span>{{{{brand_name}}}}<small>вакансии рядом с домом</small></span></a>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:{{{{phone_link}}}}" data-ym="phone_click">{PHONE_SVG}<span>{{{{phone_display}}}}</span></a>
       <button class="btn btn-primary nav-cta" data-open="">Откликнуться</button>
     </div>
   </div>
@@ -1010,7 +1002,7 @@ ALLIANCE_BODY = f'''
 <footer><div class="wrap row">
   <a class="brand" href="#top">{{{{brand_logo}}}}<span>{{{{brand_name}}}}</span></a>
   <div>{{{{legal}}}} · {{{{address}}}}</div>
-  <div><a href="tel:{{{{phone_link}}}}">{{{{phone_display}}}}</a> · <a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
+  <div><a href="mailto:{{{{email}}}}">{{{{email}}}}</a></div>
 </div></footer>
 {BAR}
 '''
